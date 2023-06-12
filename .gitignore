@@ -6,6 +6,7 @@ pyvenv.cfg
 *.egg-info
 .ipynb_checkpoints/
 .bashrc
+.DS_STORE
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -169,3 +170,5 @@ cython_debug/
 #.idea/
 
 tmp*/
+
+*.duckdb

@@ -5,7 +5,8 @@ setup(
     packages=find_packages(exclude=["dagster_university_tests"]),
     install_requires=[
         "dagster",
-        "dagster-cloud"
+        "dagster-cloud",
+        "pandas",
     ],
     extras_require={"dev": ["dagit", "pytest"]},
 )
