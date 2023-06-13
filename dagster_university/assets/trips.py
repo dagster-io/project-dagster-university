@@ -21,7 +21,8 @@ def taxi_zones(taxi_zones_file, database: DuckDBResource):
             select
                 LocationID as location_id,
                 zone,
-                borough
+                borough,
+                the_geom as zone_polygon
             from 'taxi_zones.csv'
         );
     """
