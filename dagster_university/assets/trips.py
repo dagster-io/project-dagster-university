@@ -15,9 +15,9 @@ def taxi_zones_file():
         f.write(raw_taxi_zones.content)
 
 @asset
-def taxi_zones(taxi_zones_file, database: DuckDBResource):
+def raw_taxi_zones(taxi_zones_file, database: DuckDBResource):
     query = f"""
-        create or replace table zones as (
+        create or replace table raw_taxi_zones as (
             select
                 LocationID as location_id,
                 zone,
@@ -41,13 +41,13 @@ def taxi_trips_file(context):
         f"https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_{month_to_fetch}.parquet"
     )
 
-    with open(f"trips-{month_to_fetch}.parquet", "wb") as f:
+    with open(f"data/trips-{month_to_fetch}.parquet", "wb") as f:
         f.write(raw_trips.content)
 
 @asset(
     partitions_def=monthly_partitions,
 )
-def taxi_trips(context, taxi_trips_file, database: DuckDBResource):
+def raw_taxi_trips(context, taxi_trips_file, database: DuckDBResource):
     partition_date_str = context.asset_partition_key_for_output()
     month_to_fetch = partition_date_str[:-3]
 
@@ -85,7 +85,7 @@ def taxi_trips(context, taxi_trips_file, database: DuckDBResource):
             tpep_pickup_datetime, trip_distance, passenger_count, store_and_fwd_flag, fare_amount, 
             congestion_surcharge, improvement_surcharge, airport_fee, mta_tax, extra, tip_amount, 
             tolls_amount, total_amount, '{month_to_fetch}' as partition_date
-        from 'trips-{month_to_fetch}.parquet';
+        from 'data/trips-{month_to_fetch}.parquet';
     """
 
     with database.get_connection() as conn:

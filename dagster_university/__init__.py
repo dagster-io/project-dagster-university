@@ -7,7 +7,7 @@ from .assets import trips
 all_assets = load_assets_from_modules([trips])
 
 duckdb_resource = DuckDBResource(
-    database="data.duckdb",
+    database="data/data.duckdb",
 )
 
 defs = Definitions(
