@@ -1,6 +1,10 @@
 from dagster import asset
 from dagster_duckdb import DuckDBResource
-
+from dagster import MetadataValue, Output
+import seaborn
+import matplotlib.pyplot as plt
+import base64
+from io import BytesIO
 import pandas as pd
 
 from ..partitions import monthly_partition
@@ -128,3 +132,34 @@ def trips_by_airport(raw_taxi_trips, raw_taxi_zones, database: DuckDBResource):
     # trips_by_airport["percent_of_total"] = (trips_by_airport["num_trips"] / total_trips).round(4) * 100
     
     trips_by_airport.to_csv("data/trips_by_airport.csv", index=False)
+
+
+@asset()
+def airport_pickup_trips(raw_taxi_trips, database: DuckDBResource):
+
+
+    query = f"""
+        select *
+        from raw_trips
+    """
+
+    with database.get_connection() as conn:
+        raw_trip_dataframe = conn.execute(query).fetch_df()
+    airport_trips = raw_trip_dataframe[raw_trip_dataframe.pickup_location_id.isin([1, 138, 132]) 
+                                        # | raw_trip_dataframe.dropoff_location_id.isin([1, 138, 132])
+                                        ]
+    
+    airport_zones = {132: "JFK Airport",
+                  138: "LaGuardia Airport", 
+                  1: "Newark Airport"
+                  }
+    airport_trips['airport_pickup_name'] = airport_trips.pickup_location_id.map(airport_zones)
+    plt.clf()
+    my_plot = seaborn.boxplot(x='airport_pickup_name', y='total_amount', data=airport_trips)
+    fig = my_plot.get_figure()
+    buffer = BytesIO()
+    fig.savefig(buffer)
+    image_data = base64.b64encode(buffer.getvalue())
+    airport_plot = MetadataValue.md(f"![img](data:image/png;base64,{image_data.decode()})")
+    
+    return Output(airport_trips, metadata= {"airport plot":airport_plot})
