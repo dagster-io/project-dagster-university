@@ -1,6 +1,6 @@
 # dagster_university
 
-This is a [Dagster](https://dagster.io/) project scaffolded with [`dagster project scaffold`](https://docs.dagster.io/getting-started/create-new-project).
+This is a [Dagster](https://dagster.io/) project made to accompany Dagster University coursework.
 
 ## Getting started
 
@@ -10,6 +10,8 @@ First, install your Dagster code location as a Python package. By using the --ed
 pip install -e ".[dev]"
 ```
 
+Duplicate the `.env.example` file and rename it to `.env`. Then, fill in the values for the environment variables in the file.
+
 Then, start the Dagster UI web server:
 
 ```bash
@@ -18,7 +20,6 @@ dagster dev
 
 Open http://localhost:3000 with your browser to see the project.
 
-You can start writing assets in `dagster_university/assets.py`. The assets are automatically loaded into the Dagster code location as you define them.
 
 ## Development
 

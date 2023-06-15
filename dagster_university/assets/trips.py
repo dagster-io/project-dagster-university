@@ -3,7 +3,7 @@ from dagster_duckdb import DuckDBResource
 
 import requests
 
-from ..partitions import monthly_partitions
+from ..partitions import monthly_partition
 
 @asset(
     group_name="raw_files",
@@ -42,7 +42,7 @@ def raw_taxi_zones(taxi_zones_file, database: DuckDBResource):
         conn.execute(query)
 
 @asset(
-    partitions_def=monthly_partitions,
+    partitions_def=monthly_partition,
     group_name="raw_files",
 )
 def taxi_trips_file(context):
@@ -61,7 +61,7 @@ def taxi_trips_file(context):
         output_file.write(raw_trips.content)
 
 @asset(
-    partitions_def=monthly_partitions,
+    partitions_def=monthly_partition,
     group_name="ingested",
 )
 def raw_taxi_trips(context, taxi_trips_file, database: DuckDBResource):
