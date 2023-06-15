@@ -6,9 +6,10 @@ setup(
     install_requires=[
         "dagster==1.3.9",
         "dagster-cloud",
+        "dagster-gcp",
+        "dagster-slack",
         "pandas",
-        "seaborn",
-        "dagster-slack"
+        "seaborn"
     ],
     extras_require={"dev": ["dagit", "pytest"]},
 )

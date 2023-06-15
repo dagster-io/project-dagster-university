@@ -1,9 +1,7 @@
 from dagster import Definitions, EnvVar, load_assets_from_modules
-from dagster_duckdb import DuckDBResource
-import duckdb
 
 from .assets import trips, metrics
-from .resources import duckdb_resource
+from .resources import database_resource
 from .sensors import make_slack_on_failure_sensor
 from .schedules import monthly_raw_files_schedule
 
@@ -19,7 +17,7 @@ all_schedules = [monthly_raw_files_schedule]
 defs = Definitions(
     assets=[*trip_assets, *metric_assets],
     resources={
-        "database": duckdb_resource
+        "database": database_resource
     },
     # sensors=all_sensors,
     schedules=all_schedules
