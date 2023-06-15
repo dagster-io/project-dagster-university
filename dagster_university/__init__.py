@@ -3,15 +3,12 @@ from dagster_duckdb import DuckDBResource
 import duckdb
 
 from .assets import trips, metrics
+from .resources import duckdb_resource
 
 trip_assets = load_assets_from_modules([trips])
 metric_assets = load_assets_from_modules(
     modules=[metrics],
     group_name="metrics",
-)
-
-duckdb_resource = DuckDBResource(
-    database=EnvVar("DUCKDB_DATABASE"),
 )
 
 defs = Definitions(
