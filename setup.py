@@ -8,8 +8,11 @@ setup(
         "dagster-cloud",
         "dagster-gcp",
         "dagster-slack",
+        "geopandas",
+        "kaleido",
         "pandas",
-        "seaborn"
+        "plotly",
+        "shapely"
     ],
     extras_require={"dev": ["dagit", "pytest"]},
 )

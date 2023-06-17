@@ -2,10 +2,7 @@ from dagster_duckdb import DuckDBResource
 from dagster_gcp import BigQueryResource
 from dagster import EnvVar
 
-from os import environ
-
-def get_database_resource():
-    environment = environ.get("DAGSTER_ENVIRONMENT", "local")
+def get_database_resource(environment):
 
     if environment == "prod":
         database_resource = BigQueryResource(

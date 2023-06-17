@@ -33,7 +33,7 @@ def raw_taxi_zones(taxi_zones_file, database: DuckDBResource):
                 LocationID as location_id,
                 zone,
                 borough,
-                the_geom as zone_polygon
+                the_geom as geometry
             from 'data/taxi_zones.csv'
         );
     """

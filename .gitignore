@@ -175,3 +175,5 @@ tmp*/
 *.geojson
 *.csv
 *.parquet
+
+data/*
