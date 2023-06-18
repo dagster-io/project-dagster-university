@@ -1,9 +1,9 @@
-from dagster import Definitions, EnvVar, load_assets_from_modules
+from dagster import Definitions, load_assets_from_modules
 
 import os
 
-from .assets import trips, metrics, requests
-from .resources import get_database_resource
+from .assets import trips, metrics, requests, dbt_assets
+from .resources import get_database_resource, dbt_resource
 from .jobs import trip_update_job, weekly_update_job, adhoc_request_job
 from .schedules import trip_update_schedule, weekly_update_schedule
 from .sensors import adhoc_request_sensor
@@ -18,18 +18,19 @@ requests_assets = load_assets_from_modules(
     group_name="requests",
 )
 
+
 all_jobs = [trip_update_job, weekly_update_job, adhoc_request_job]
 all_schedules = [trip_update_schedule, weekly_update_schedule]
 all_sensors = [adhoc_request_sensor]
-
 
 environment = os.getenv("DAGSTER_ENVIRONMENT", "local")
 database_resource = get_database_resource(environment)
 
 defs = Definitions(
-    assets=[*trip_assets, *metric_assets, *requests_assets],
+    assets=[*trip_assets, *metric_assets, *requests_assets, dbt_assets.transformations],
     resources={
-        "database": database_resource
+        "database": database_resource,
+        "dbt": dbt_resource,
     },
     jobs=all_jobs,
     schedules=all_schedules,

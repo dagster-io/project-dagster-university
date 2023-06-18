@@ -72,7 +72,17 @@ def taxi_trips(context, taxi_trips_file, database: DuckDBResource):
     partition_date_str = context.asset_partition_key_for_output()
     month_to_fetch = partition_date_str[:-3]
 
-    insert_query = f"""
+    query = f"""
+        create table if not exists trips (
+            vendor_id integer, pickup_zone_id integer, dropoff_zone_id integer,
+            rate_code_id double, payment_type integer, dropoff_datetime timestamp,
+            pickup_datetime timestamp, trip_distance double, passenger_count double,
+            store_and_forwarded_flag varchar, fare_amount double, congestion_surcharge double,
+            improvement_surcharge double, airport_fee double, mta_tax double,
+            extra double, tip_amount double, tolls_amount double,
+            total_amount double, partition_date varchar
+        );
+
         delete from trips where partition_date = '{month_to_fetch}';
     
         insert into trips
@@ -85,4 +95,4 @@ def taxi_trips(context, taxi_trips_file, database: DuckDBResource):
     """
 
     with database.get_connection() as conn:
-        conn.execute(insert_query)
+        conn.execute(query)

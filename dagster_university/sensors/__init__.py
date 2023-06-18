@@ -13,9 +13,7 @@ from ..jobs import adhoc_request_job
 # recipient_string = os.getenv("ALERT_EMAIL_RECIPIENTS", "")
 # recipients = recipient_string.split(",")
 
-# NOTE: This doesn't work anymore because Google has disabled the ability to send emails from "less secure apps".
-# By default, tries connecting to GMail. See the docs for more info about connecting via SMTP:
-# https://docs.dagster.io/_apidocs/utilities#dagster.make_email_on_run_failure_sensor
+# NOTE: This doesn't work anymore because Google has disabled the ability to send emails from unauthorized apps
 # on_global_failure_sensor = make_email_on_run_failure_sensor(
 #     email_subject_fn=lambda context: "Job failed!",
 #     email_from=os.getenv("ALERT_EMAIL_FROM", ""),

@@ -38,6 +38,7 @@ def trips_by_airport(taxi_trips, taxi_zones, database: DuckDBResource):
     trips_by_airport.to_csv(FILE_PATH, index=False)
 
 
+# Note: potentially drop it?
 @asset(
     partitions_def=weekly_partition,
 )
@@ -86,12 +87,12 @@ def trips_by_week(context, taxi_trips, database: DuckDBResource):
         aggregate.to_csv(FILE_PATH, index=False)
 
 @asset
-def manhattan_map(context, taxi_trips, taxi_zones, database: DuckDBResource):
+def manhattan_stats(taxi_trips, taxi_zones, database: DuckDBResource):
     """
-        A map of the number of trips per taxi zone in Manhattan
+        Metrics on taxi trips in Manhattan
     """
 
-    FILE_PATH = "data/outputs/manhattan_map.png"
+    FILE_PATH = "data/staging/manhattan_stats.geojson"
 
     query = """
         select
@@ -110,6 +111,19 @@ def manhattan_map(context, taxi_trips, taxi_zones, database: DuckDBResource):
 
     trips_by_zone["geometry"] = gpd.GeoSeries.from_wkt(trips_by_zone["geometry"])
     trips_by_zone = gpd.GeoDataFrame(trips_by_zone)
+
+    with open(FILE_PATH, 'w') as output_file:
+        output_file.write(trips_by_zone.to_json())
+
+@asset
+def manhattan_map(context, manhattan_stats):
+    """
+        A map of the number of trips per taxi zone in Manhattan
+    """
+
+    FILE_PATH = "data/outputs/manhattan_map.png"
+
+    trips_by_zone = gpd.read_file("data/staging/manhattan_stats.geojson")
 
     fig = px.choropleth_mapbox(trips_by_zone,
         geojson=trips_by_zone.geometry.__geo_interface__,
