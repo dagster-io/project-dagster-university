@@ -176,4 +176,4 @@ tmp*/
 *.csv
 *.parquet
 
-data/*
+data/*/*

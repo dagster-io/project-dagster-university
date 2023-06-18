@@ -1,28 +1,37 @@
 from dagster import Definitions, EnvVar, load_assets_from_modules
-from os import environ
 
-from .assets import trips, metrics
+import os
+
+from .assets import trips, metrics, requests
 from .resources import get_database_resource
-from .sensors import make_slack_on_failure_sensor
-from .schedules import monthly_raw_files_schedule
+from .jobs import trip_update_job, weekly_update_job, adhoc_request_job
+from .schedules import trip_update_schedule, weekly_update_schedule
+from .sensors import adhoc_request_sensor
 
 trip_assets = load_assets_from_modules([trips])
 metric_assets = load_assets_from_modules(
     modules=[metrics],
     group_name="metrics",
 )
+requests_assets = load_assets_from_modules(
+    modules=[requests],
+    group_name="requests",
+)
 
-all_sensors = [make_slack_on_failure_sensor(base_url="my_dagit_url")]
-all_schedules = [monthly_raw_files_schedule]
+all_jobs = [trip_update_job, weekly_update_job, adhoc_request_job]
+all_schedules = [trip_update_schedule, weekly_update_schedule]
+all_sensors = [adhoc_request_sensor]
 
-environment = environ.get("DAGSTER_ENVIRONMENT", "local")
+
+environment = os.getenv("DAGSTER_ENVIRONMENT", "local")
 database_resource = get_database_resource(environment)
 
 defs = Definitions(
-    assets=[*trip_assets, *metric_assets],
+    assets=[*trip_assets, *metric_assets, *requests_assets],
     resources={
         "database": database_resource
     },
-    # sensors=all_sensors,
-    schedules=all_schedules
+    jobs=all_jobs,
+    schedules=all_schedules,
+    sensors=all_sensors,
 )

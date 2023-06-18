@@ -1,6 +1,12 @@
-from dagster import AssetSelection, define_asset_job, ScheduleDefinition
+from dagster import ScheduleDefinition
+from ..jobs import trip_update_job, weekly_update_job
 
+trip_update_schedule = ScheduleDefinition(
+    job=trip_update_job,
+    cron_schedule="0 0 5 * *", # every 5th of the month at midnight
+)
 
-raw_files_job = define_asset_job("raw_files_job", AssetSelection.groups('raw_files'))
-
-monthly_raw_files_schedule = ScheduleDefinition(job=raw_files_job, cron_schedule="0 0 1 * *")
+weekly_update_schedule = ScheduleDefinition(
+    job=weekly_update_job,
+    cron_schedule="0 0 * * 1", # every Monday at midnight
+)

@@ -10,12 +10,12 @@ import pandas as pd
 from ..partitions import weekly_partition
 
 @asset
-def trips_by_airport(raw_taxi_trips, raw_taxi_zones, database: DuckDBResource):
+def trips_by_airport(taxi_trips, taxi_zones, database: DuckDBResource):
     """
         Metrics on taxi trips from the three major NYC airports
     """
 
-    FILE_PATH = "data/trips_by_airport.csv"
+    FILE_PATH = "data/outputs/trips_by_airport.csv"
 
     query = """
         select
@@ -26,9 +26,9 @@ def trips_by_airport(raw_taxi_trips, raw_taxi_zones, database: DuckDBResource):
             round(sum(passenger_count) / count(1), 2) as avg_passenger_count,
             round(sum(total_amount) / count(1), 2) as avg_cost_per_trip,
             round(sum(total_amount) / sum(passenger_count), 2) as avg_price_per_passenger
-        from raw_trips
-        left join raw_taxi_zones on raw_trips.pickup_location_id = raw_taxi_zones.location_id
-        where raw_taxi_zones like '%Airport'
+        from trips
+        left join zones on trips.pickup_zone_id = zones.zone_id
+        where zones.zone like '%Airport'
         group by zone
     """
 
@@ -41,20 +41,20 @@ def trips_by_airport(raw_taxi_trips, raw_taxi_zones, database: DuckDBResource):
 @asset(
     partitions_def=weekly_partition,
 )
-def trips_by_week(context, raw_taxi_trips, database: DuckDBResource):
+def trips_by_week(context, taxi_trips, database: DuckDBResource):
     """
         The number of trips per week, aggregated by week.
         These date-based aggregations are done in-memory, which is expensive, but enables you to do time-based aggregations consistently across data warehouses (ex. DuckDB and BigQuery)
     """
 
-    FILE_PATH = "data/trips_by_week.csv"
+    FILE_PATH = "data/outputs/trips_by_week.csv"
     
     period_to_fetch = context.asset_partition_key_for_output()
 
     # get all trips for the week
     query = f"""
         select vendor_id, total_amount, trip_distance, passenger_count
-        from raw_trips
+        from trips
         where pickup_datetime >= '{period_to_fetch}-01' and pickup_datetime < '{period_to_fetch}-01'::date + interval '1 week'
     """
 
@@ -86,21 +86,21 @@ def trips_by_week(context, raw_taxi_trips, database: DuckDBResource):
         aggregate.to_csv(FILE_PATH, index=False)
 
 @asset
-def manhattan_map(context, raw_taxi_trips, raw_taxi_zones, database: DuckDBResource):
+def manhattan_map(context, taxi_trips, taxi_zones, database: DuckDBResource):
     """
         A map of the number of trips per taxi zone in Manhattan
     """
 
-    FILE_PATH = "data/trips_by_zone.png"
+    FILE_PATH = "data/outputs/manhattan_map.png"
 
     query = """
         select
-            raw_taxi_zones.zone,
-            raw_taxi_zones.borough,
-            raw_taxi_zones.geometry,
+            zones.zone,
+            zones.borough,
+            zones.geometry,
             count(1) as num_trips,
-        from raw_trips
-        left join raw_taxi_zones on raw_trips.pickup_location_id = raw_taxi_zones.location_id
+        from trips
+        left join zones on trips.pickup_zone_id = zones.zone_id
         where geometry is not null
         group by zone, borough, geometry
     """
