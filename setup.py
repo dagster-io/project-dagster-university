@@ -14,7 +14,8 @@ setup(
         "pandas",
         "plotly",
         "shapely",
-        "psycopg2-binary"
+        "psycopg2-binary",
+        "dagster-duckdb"
     ],
     extras_require={"dev": ["dagit", "pytest"]},
 )
