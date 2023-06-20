@@ -12,6 +12,12 @@ pip install -e ".[dev]"
 
 Duplicate the `.env.example` file and rename it to `.env`. Then, fill in the values for the environment variables in the file.
 
+Afterward, you'll generate a `manifest.json` from the contained dbt project. To do this, run the following command from the root of the Dagster project:
+
+```bash
+python dagster_university/utilities/generate_dbt_manifest.py ./transformations/ ./data/staging/
+```
+
 Then, start the Dagster UI web server:
 
 ```bash
