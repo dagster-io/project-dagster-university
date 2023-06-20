@@ -9,15 +9,19 @@ def generate_dbt_manifest(dbt_project_dir, manifest_path):
     
     print(f"Building manifest.json for dbt project at {dbt_project_dir}")
 
-    res = dbtRunner().invoke([
-        "parse",
+    base_args = [
         "--project-dir",
         dbt_project_dir,
         "--profiles-dir",
         dbt_project_dir,
         "--target",
         "dagster"
-    ])
+    ]
+
+    # TODO: Figure out why this causes the line below to fail
+    # dbtRunner().invoke(["deps", *base_args])
+    
+    res = dbtRunner().invoke(["parse", *base_args])
 
     manifest: Manifest = res.result # type: ignore
 

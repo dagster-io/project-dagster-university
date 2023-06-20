@@ -15,6 +15,7 @@ Duplicate the `.env.example` file and rename it to `.env`. Then, fill in the val
 Afterward, you'll generate a `manifest.json` from the contained dbt project. To do this, run the following command from the root of the Dagster project:
 
 ```bash
+cd transformations && dbt deps && cd ..
 python dagster_university/utilities/generate_dbt_manifest.py ./transformations/ ./data/staging/
 ```
 
