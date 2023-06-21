@@ -5,7 +5,7 @@ import plotly.express as px
 import plotly.io as pio
 import base64
 
-import constants
+from . import constants
 
 class AdhocRequestConfig(Config):
     filename: str

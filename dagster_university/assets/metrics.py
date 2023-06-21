@@ -7,7 +7,7 @@ import geopandas as gpd
 import base64
 import pandas as pd
 
-import constants
+from . import constants
 
 from ..partitions import weekly_partition
 

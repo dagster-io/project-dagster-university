@@ -24,7 +24,7 @@ all_schedules = [trip_update_schedule, weekly_update_schedule]
 all_sensors = [adhoc_request_sensor]
 
 defs = Definitions(
-    assets=[*trip_assets, *metric_assets, *requests_assets, dbt_assets.transformations],
+    assets=[*trip_assets, *metric_assets, *requests_assets], # dbt_assets.transformations],
     resources={
         "database": database_resource,
         "dbt": dbt_resource,

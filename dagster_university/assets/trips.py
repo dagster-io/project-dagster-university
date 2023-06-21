@@ -3,7 +3,7 @@ from dagster_duckdb import DuckDBResource
 
 import requests
 
-import constants
+from . import constants
 
 from ..partitions import monthly_partition
 
