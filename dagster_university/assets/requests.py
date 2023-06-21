@@ -5,6 +5,7 @@ import plotly.express as px
 import plotly.io as pio
 import base64
 
+import constants
 
 class AdhocRequestConfig(Config):
     filename: str
@@ -21,7 +22,7 @@ def adhoc_request(context, config: AdhocRequestConfig, taxi_zones, taxi_trips, d
     """
 
     # strip the file extension from the filename, and use it as the output filename
-    FILE_PATH = f"data/outputs/{config.filename.split('.')[0]}.png"
+    file_path = constants.REQUEST_DESTINATION_TEMPLATE_FILE_PATH.format(config.filename.split('.')[0])
 
     # count the number of trips that picked up in a given borough, aggregated by time of day and hour of day
     query = f"""
@@ -68,9 +69,9 @@ def adhoc_request(context, config: AdhocRequestConfig, taxi_zones, taxi_trips, d
         }
     )
 
-    pio.write_image(fig, FILE_PATH)
+    pio.write_image(fig, file_path)
 
-    with open(FILE_PATH, 'rb') as file:
+    with open(file_path, 'rb') as file:
         image_data = file.read()
 
     base64_data = base64.b64encode(image_data).decode('utf-8')

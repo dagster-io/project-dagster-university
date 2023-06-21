@@ -7,39 +7,12 @@ import geopandas as gpd
 import base64
 import pandas as pd
 
+import constants
+
 from ..partitions import weekly_partition
 
-## Not using rn
-@asset
-def trips_by_airport(taxi_trips, taxi_zones, database: DuckDBResource):
-    """
-        Metrics on taxi trips from the three major NYC airports
-    """
-
-    FILE_PATH = "data/outputs/trips_by_airport.csv"
-
-    query = """
-        select
-            zone as airport,
-            count(1) as num_trips,
-            round(sum(total_amount), 2) as total_amount,
-            round(sum(trip_distance) / count(1), 2) as avg_trip_distance,
-            round(sum(passenger_count) / count(1), 2) as avg_passenger_count,
-            round(sum(total_amount) / count(1), 2) as avg_cost_per_trip,
-            round(sum(total_amount) / sum(passenger_count), 2) as avg_price_per_passenger
-        from trips
-        left join zones on trips.pickup_zone_id = zones.zone_id
-        where zones.zone like '%Airport'
-        group by zone
-    """
-
-    with database.get_connection() as conn:
-        trips_by_airport = conn.execute(query).fetch_df()
-     
-    trips_by_airport.to_csv(FILE_PATH, index=False)
-
-
 # Note: potentially drop it?
+## Introduce in Lesson 8 (Homework? Maybe give the basic code to them and tell them to refactor it to use partitions)
 @asset(
     partitions_def=weekly_partition,
 )
@@ -48,8 +21,6 @@ def trips_by_week(context, taxi_trips, database: DuckDBResource):
         The number of trips per week, aggregated by week.
         These date-based aggregations are done in-memory, which is expensive, but enables you to do time-based aggregations consistently across data warehouses (ex. DuckDB and BigQuery)
     """
-
-    FILE_PATH = "data/outputs/trips_by_week.csv"
     
     period_to_fetch = context.asset_partition_key_for_output()
 
@@ -80,12 +51,12 @@ def trips_by_week(context, taxi_trips, database: DuckDBResource):
 
     try:
         # If the file already exists, append to it, but replace the existing month's data
-        existing = pd.read_csv(FILE_PATH)
+        existing = pd.read_csv(constants.TRIPS_BY_WEEK_FILE_PATH)
         existing = existing[existing["period"] != period_to_fetch]
         existing = pd.concat([existing, aggregate]).sort_values(by="period")
-        existing.to_csv(FILE_PATH, index=False)
+        existing.to_csv(constants.TRIPS_BY_WEEK_FILE_PATH, index=False)
     except FileNotFoundError:
-        aggregate.to_csv(FILE_PATH, index=False)
+        aggregate.to_csv(constants.TRIPS_BY_WEEK_FILE_PATH, index=False)
 
 
 ## Lesson 4 (later part)
@@ -94,8 +65,6 @@ def manhattan_stats(taxi_trips, taxi_zones, database: DuckDBResource):
     """
         Metrics on taxi trips in Manhattan
     """
-
-    FILE_PATH = "data/staging/manhattan_stats.geojson"
 
     query = """
         select
@@ -115,7 +84,7 @@ def manhattan_stats(taxi_trips, taxi_zones, database: DuckDBResource):
     trips_by_zone["geometry"] = gpd.GeoSeries.from_wkt(trips_by_zone["geometry"])
     trips_by_zone = gpd.GeoDataFrame(trips_by_zone)
 
-    with open(FILE_PATH, 'w') as output_file:
+    with open(constants.MANHATTAN_STATS_FILE_PATH, 'w') as output_file:
         output_file.write(trips_by_zone.to_json())
 
 ## Lesson 4 (later part)
@@ -124,8 +93,6 @@ def manhattan_map(context, manhattan_stats):
     """
         A map of the number of trips per taxi zone in Manhattan
     """
-
-    FILE_PATH = "data/outputs/manhattan_map.png"
 
     trips_by_zone = gpd.read_file("data/staging/manhattan_stats.geojson")
 
@@ -141,9 +108,9 @@ def manhattan_map(context, manhattan_stats):
         labels={'num_trips': 'Number of Trips'}
     )
 
-    pio.write_image(fig, FILE_PATH)
+    pio.write_image(fig, constants.MANHATTAN_MAP_FILE_PATH)
 
-    with open(FILE_PATH, 'rb') as file:
+    with open(constants.MANHATTAN_MAP_FILE_PATH, 'rb') as file:
         image_data = file.read()
 
     # Convert the image data to base64

@@ -3,6 +3,8 @@ from dagster_duckdb import DuckDBResource
 
 import requests
 
+import constants
+
 from ..partitions import monthly_partition
 
 ## Lesson 3 (change this to HW)
@@ -17,7 +19,7 @@ def taxi_zones_file():
         "https://data.cityofnewyork.us/api/views/755u-8jsi/rows.csv?accessType=DOWNLOAD"
     )
 
-    with open("data/raw/taxi_zones.csv", "wb") as output_file:
+    with open(constants.TAXI_ZONES_FILE_PATH, "wb") as output_file:
         output_file.write(raw_taxi_zones.content)
 
 ## Lesson 4 (HW) , 6
@@ -36,7 +38,7 @@ def taxi_zones(taxi_zones_file, database: DuckDBResource):
                 zone,
                 borough,
                 the_geom as geometry
-            from 'data/raw/taxi_zones.csv'
+            from '{constants.TAXI_ZONES_FILE_PATH}'
         );
     """
 
@@ -60,7 +62,7 @@ def taxi_trips_file(context):
         f"https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_{month_to_fetch}.parquet"
     )
 
-    with open(f"data/raw/trips-{month_to_fetch}.parquet", "wb") as output_file:
+    with open(constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch), "wb") as output_file:
         output_file.write(raw_trips.content)
 
 ## Lesson 4, 8, 6
@@ -95,7 +97,7 @@ def taxi_trips(context, taxi_trips_file, database: DuckDBResource):
             tpep_pickup_datetime, trip_distance, passenger_count, store_and_fwd_flag, fare_amount, 
             congestion_surcharge, improvement_surcharge, airport_fee, mta_tax, extra, tip_amount, 
             tolls_amount, total_amount, '{month_to_fetch}' as partition_date
-        from 'data/raw/trips-{month_to_fetch}.parquet';
+        from '{constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch)}';
     """
 
     with database.get_connection() as conn:

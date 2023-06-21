@@ -10,17 +10,6 @@ import json
 
 from ..jobs import adhoc_request_job
 
-# recipient_string = os.getenv("ALERT_EMAIL_RECIPIENTS", "")
-# recipients = recipient_string.split(",")
-
-# NOTE: This doesn't work anymore because Google has disabled the ability to send emails from unauthorized apps
-# on_global_failure_sensor = make_email_on_run_failure_sensor(
-#     email_subject_fn=lambda context: "Job failed!",
-#     email_from=os.getenv("ALERT_EMAIL_FROM", ""),
-#     email_to=recipients,
-#     email_password=os.getenv("ALERT_EMAIL_PASSWORD", ""),
-# )
-
 ## Lesson 9
 
 @sensor(
