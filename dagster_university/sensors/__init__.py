@@ -21,6 +21,8 @@ from ..jobs import adhoc_request_job
 #     email_password=os.getenv("ALERT_EMAIL_PASSWORD", ""),
 # )
 
+## Lesson 9
+
 @sensor(
     job=adhoc_request_job
 )

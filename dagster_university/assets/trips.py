@@ -5,6 +5,7 @@ import requests
 
 from ..partitions import monthly_partition
 
+## Lesson 3 (change this to HW)
 @asset(
     group_name="raw_files",
 )
@@ -19,6 +20,7 @@ def taxi_zones_file():
     with open("data/raw/taxi_zones.csv", "wb") as output_file:
         output_file.write(raw_taxi_zones.content)
 
+## Lesson 4 (HW) , 6
 @asset(
     group_name="ingested",
 )
@@ -41,6 +43,7 @@ def taxi_zones(taxi_zones_file, database: DuckDBResource):
     with database.get_connection() as conn:
         conn.execute(query)
 
+## Lesson 3, 8
 @asset(
     partitions_def=monthly_partition,
     group_name="raw_files",
@@ -60,6 +63,7 @@ def taxi_trips_file(context):
     with open(f"data/raw/trips-{month_to_fetch}.parquet", "wb") as output_file:
         output_file.write(raw_trips.content)
 
+## Lesson 4, 8, 6
 @asset(
     partitions_def=monthly_partition,
     group_name="ingested",

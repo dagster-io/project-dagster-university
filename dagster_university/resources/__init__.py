@@ -4,6 +4,7 @@ from dagster import EnvVar, file_relative_path
 
 from .postgres import PostgresResource
 
+
 def get_database_resource(environment):
 
     print("Environment: ", environment)
@@ -15,6 +16,7 @@ def get_database_resource(environment):
             url=EnvVar("POSTGRES_URL"),
         )
     else:
+        ## Lesson 6 and go over .env file 
         database_resource = DuckDBResource(
             database=EnvVar("DUCKDB_DATABASE"),
         )

@@ -5,12 +5,14 @@ import plotly.express as px
 import plotly.io as pio
 import base64
 
+
 class AdhocRequestConfig(Config):
     filename: str
     borough: str
     start_date: str
     end_date: str
 
+## Lesson 9
 @asset
 def adhoc_request(context, config: AdhocRequestConfig, taxi_zones, taxi_trips, database: DuckDBResource):
     """

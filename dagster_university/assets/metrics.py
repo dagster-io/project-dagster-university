@@ -9,6 +9,7 @@ import pandas as pd
 
 from ..partitions import weekly_partition
 
+## Not using rn
 @asset
 def trips_by_airport(taxi_trips, taxi_zones, database: DuckDBResource):
     """
@@ -86,6 +87,8 @@ def trips_by_week(context, taxi_trips, database: DuckDBResource):
     except FileNotFoundError:
         aggregate.to_csv(FILE_PATH, index=False)
 
+
+## Lesson 4 (later part)
 @asset
 def manhattan_stats(taxi_trips, taxi_zones, database: DuckDBResource):
     """
@@ -115,6 +118,7 @@ def manhattan_stats(taxi_trips, taxi_zones, database: DuckDBResource):
     with open(FILE_PATH, 'w') as output_file:
         output_file.write(trips_by_zone.to_json())
 
+## Lesson 4 (later part)
 @asset
 def manhattan_map(context, manhattan_stats):
     """

@@ -2,6 +2,8 @@ from dagster import define_asset_job, AssetSelection, AssetKey
 
 from ..partitions import monthly_partition, weekly_partition
 
+## Not included in any lessons!
+
 trips_by_week = AssetKey("trips_by_week")
 adhoc_request = AssetKey("adhoc_request")
 
