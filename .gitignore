@@ -176,4 +176,7 @@ tmp*/
 *.csv
 *.parquet
 
-data/*/*
+data/outputs/*
+data/raw/*
+data/requests/*.json
+data/staging/*
