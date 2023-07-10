@@ -6,7 +6,7 @@ setup(
     install_requires=[
         "dagster==1.3.*",
         "dagster-cloud",
-        "dagster-duckdb"
+        "dagster-duckdb",
         "dagster-gcp",
         "geopandas",
         "kaleido",
