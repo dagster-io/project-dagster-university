@@ -1,4 +1,4 @@
-from dagster import asset
+from dagster import asset, MetadataValue
 from dagster_duckdb import DuckDBResource
 
 import requests
@@ -64,6 +64,8 @@ def taxi_trips_file(context):
 
     with open(constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch), "wb") as output_file:
         output_file.write(raw_trips.content)
+    context.add_output_metadata({'Number of records': MetadataValue.int(len(raw_trips.content))})
+    
 
 ## Lesson 4, 8, 6
 @asset(
