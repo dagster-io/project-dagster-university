@@ -24,4 +24,3 @@ Here is a sample request:
 
 Assuming that the file is named `january-staten-island.json`, the result of the pipeline will be stored in `data/results/january-staten-island.json`.
 
-#
