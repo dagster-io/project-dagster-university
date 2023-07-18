@@ -11,7 +11,7 @@ from . import constants
 
 from ..partitions import weekly_partition
 
-# Note: potentially drop it?
+# Note: potentially drop it? 
 ## Introduce in Lesson 8 (Homework? Maybe give the basic code to them and tell them to refactor it to use partitions)
 @asset(
     partitions_def=weekly_partition,
