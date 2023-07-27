@@ -1,4 +1,4 @@
-from dagster import asset, MetadataValue
+from dagster import asset, AssetIn, MetadataValue
 from dagster_duckdb import DuckDBResource
 
 import plotly.express as px
@@ -11,12 +11,11 @@ from . import constants
 
 from ..partitions import weekly_partition
 
-# Note: potentially drop it?
-## Introduce in Lesson 8 (Homework? Maybe give the basic code to them and tell them to refactor it to use partitions)
 @asset(
+    deps=["taxi_trips"],
     partitions_def=weekly_partition,
 )
-def trips_by_week(context, taxi_trips, database: DuckDBResource):
+def trips_by_week(context, database: DuckDBResource) -> None:
     """
         The number of trips per week, aggregated by week.
         These date-based aggregations are done in-memory, which is expensive, but enables you to do time-based aggregations consistently across data warehouses (ex. DuckDB and BigQuery)
@@ -28,7 +27,8 @@ def trips_by_week(context, taxi_trips, database: DuckDBResource):
     query = f"""
         select vendor_id, total_amount, trip_distance, passenger_count
         from trips
-        where pickup_datetime >= '{period_to_fetch}-01' and pickup_datetime < '{period_to_fetch}-01'::date + interval '1 week'
+        where pickup_datetime >= '{period_to_fetch}'
+            and pickup_datetime < '{period_to_fetch}'::date + interval '1 week'
     """
 
     with database.get_connection() as conn:
@@ -60,8 +60,10 @@ def trips_by_week(context, taxi_trips, database: DuckDBResource):
 
 
 ## Lesson 4 (later part)
-@asset
-def manhattan_stats(taxi_trips, taxi_zones, database: DuckDBResource):
+@asset(
+    deps=["taxi_trips", "taxi_zones"]
+)
+def manhattan_stats(database: DuckDBResource):
     """
         Metrics on taxi trips in Manhattan
     """
@@ -88,8 +90,10 @@ def manhattan_stats(taxi_trips, taxi_zones, database: DuckDBResource):
         output_file.write(trips_by_zone.to_json())
 
 ## Lesson 4 (later part)
-@asset
-def manhattan_map(context, manhattan_stats):
+@asset(
+    deps=["manhattan_stats"]
+)
+def manhattan_map(context):
     """
         A map of the number of trips per taxi zone in Manhattan
     """

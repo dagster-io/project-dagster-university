@@ -14,8 +14,10 @@ class AdhocRequestConfig(Config):
     end_date: str
 
 ## Lesson 9
-@asset
-def adhoc_request(context, config: AdhocRequestConfig, taxi_zones, taxi_trips, database: DuckDBResource):
+@asset(
+    deps=["taxi_trips", "taxi_zones"]
+)
+def adhoc_request(context, config: AdhocRequestConfig, database: DuckDBResource):
     """
         The response to an request made in the `requests` directory.
         See `requests/README.md` for more information.
