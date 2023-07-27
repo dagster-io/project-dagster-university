@@ -1,4 +1,4 @@
-from dagster import asset, AssetIn, MetadataValue
+from dagster import asset, AssetKey, MetadataValue
 from dagster_duckdb import DuckDBResource
 
 import plotly.express as px
@@ -12,7 +12,7 @@ from . import constants
 from ..partitions import weekly_partition
 
 @asset(
-    deps=["taxi_trips"],
+    deps=[AssetKey(["taxi_trips"])],
     partitions_def=weekly_partition,
 )
 def trips_by_week(context, database: DuckDBResource):
@@ -61,7 +61,8 @@ def trips_by_week(context, database: DuckDBResource):
 
 ## Lesson 4 (later part)
 @asset(
-    deps=["taxi_trips", "taxi_zones"]
+    deps=[AssetKey(["taxi_trips"]), AssetKey(["taxi_zones"])],
+    key_prefix="manhattan"
 )
 def manhattan_stats(database: DuckDBResource):
     """
@@ -91,7 +92,7 @@ def manhattan_stats(database: DuckDBResource):
 
 ## Lesson 4 (later part)
 @asset(
-    deps=["manhattan_stats"]
+    deps=[AssetKey(["manhattan", "manhattan_stats"])]
 )
 def manhattan_map(context):
     """
