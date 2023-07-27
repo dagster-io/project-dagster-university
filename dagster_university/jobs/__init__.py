@@ -10,7 +10,7 @@ adhoc_request = AssetKey("adhoc_request")
 trip_update_job = define_asset_job(
     name="trip_update_job",
     partitions_def=monthly_partition,
-    selection=AssetSelection.all() - AssetSelection.keys(["trips_by_week"]),
+    selection=AssetSelection.all() - AssetSelection.keys(["trips_by_week"], ["adhoc_request"]),
 )
 
 weekly_update_job = define_asset_job(
