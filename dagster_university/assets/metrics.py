@@ -15,7 +15,7 @@ from ..partitions import weekly_partition
     deps=["taxi_trips"],
     partitions_def=weekly_partition,
 )
-def trips_by_week(context, database: DuckDBResource) -> None:
+def trips_by_week(context, database: DuckDBResource):
     """
         The number of trips per week, aggregated by week.
         These date-based aggregations are done in-memory, which is expensive, but enables you to do time-based aggregations consistently across data warehouses (ex. DuckDB and BigQuery)
