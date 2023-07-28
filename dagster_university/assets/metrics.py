@@ -13,7 +13,7 @@ from ..partitions import weekly_partition
 
 @asset(
     deps=[AssetKey(["taxi_trips"])],
-    partitions_def=weekly_partition,
+    partitions_def=weekly_partition
 )
 def trips_by_week(context, database: DuckDBResource):
     """
