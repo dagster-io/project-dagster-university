@@ -9,7 +9,7 @@ from ..partitions import monthly_partition
 
 ## Lesson 3 (change this to HW)
 @asset(
-    group_name="raw_files",
+    group_name="raw_files"
 )
 def taxi_zones_file(context):
     """
@@ -28,7 +28,7 @@ def taxi_zones_file(context):
 ## Lesson 4 (HW) , 6
 @asset(
     deps=["taxi_zones_file"],
-    group_name="ingested",
+    group_name="ingested"
 )
 def taxi_zones(database: DuckDBResource):
     """
@@ -52,7 +52,7 @@ def taxi_zones(database: DuckDBResource):
 ## Lesson 3, 8
 @asset(
     partitions_def=monthly_partition,
-    group_name="raw_files",
+    group_name="raw_files"
 )
 def taxi_trips_file(context):
     """
@@ -76,7 +76,7 @@ def taxi_trips_file(context):
 @asset(
     deps=["taxi_trips_file"],
     partitions_def=monthly_partition,
-    group_name="ingested",
+    group_name="ingested"
 )
 def taxi_trips(context, database: DuckDBResource):
     """

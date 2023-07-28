@@ -1,7 +1,7 @@
 from dagster import (
     RunRequest,
     SensorResult,
-    sensor,
+    sensor
 )
 import os
 import json
