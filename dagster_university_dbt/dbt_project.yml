@@ -33,5 +33,10 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   dagster_university_dbt:
     # Config indicated by + and applies to all files under models/example/
-    example:
-      +materialized: view
+    +materialized: view
+    staging:
+      schema: staging
+    intermediate:
+      schema: intermediate
+    marts:
+      schema: marts
