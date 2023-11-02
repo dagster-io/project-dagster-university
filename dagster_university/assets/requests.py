@@ -15,7 +15,7 @@ class AdhocRequestConfig(Config):
 
 ## Lesson 9
 @asset(
-    deps=["taxi_trips", "taxi_zones"]
+    deps=["trips", "zones"]
 )
 def adhoc_request(context, config: AdhocRequestConfig, database: DuckDBResource):
     """

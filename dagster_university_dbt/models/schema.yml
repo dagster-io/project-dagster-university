@@ -1,0 +1,7 @@
+
+version: 2
+
+models:
+  - name: zones
+  - name: trips
+  - name: manhattan_stats

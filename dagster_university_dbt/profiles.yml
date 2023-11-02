@@ -9,7 +9,7 @@ dagster_university_dbt:
         - parquet
     dagster:
       type: duckdb
-      path: '../../data/staging/data.duckdb'
+      path: '../data/staging/data.duckdb'
       extensions:
         - spatial
         - parquet

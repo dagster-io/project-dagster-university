@@ -7,6 +7,15 @@ from . import constants
 
 from ..partitions import monthly_partition
 
+from dagster import Config 
+class DbtConfig(Config):
+    full_refresh: bool = False
+
+from dagster_dbt import dbt_assets
+from dagster import AssetExecutionContext
+from ..resources import DBT_MANIFEST_PATH, dbt_resource
+
+
 ## Lesson 3 (change this to HW)
 @asset(
     group_name="raw_files"
@@ -72,7 +81,7 @@ def taxi_trips_file(context):
     context.add_output_metadata({'Number of records':MetadataValue.int(num_rows)})
 
 
-## Lesson 4, 8, 6
+# Lesson 4, 8, 6
 @asset(
     deps=["taxi_trips_file"],
     partitions_def=monthly_partition,
@@ -100,8 +109,16 @@ def taxi_trips(context, database: DuckDBResource):
         select
             VendorID, PULocationID, DOLocationID, RatecodeID, payment_type, tpep_dropoff_datetime, 
             tpep_pickup_datetime, trip_distance, passenger_count, total_amount, '{month_to_fetch}' as partition_date
-        from '{constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch)}';
+taxi        from '{constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch)}';
     """
 
     with database.get_connection() as conn:
         conn.execute(query)
+
+
+@dbt_assets(
+    manifest=DBT_MANIFEST_PATH,
+)
+def dagster_university_dbt_assets(context: AssetExecutionContext):
+    dbt_resource.cli(["seed"], context=context).wait()
+    yield from dbt_resource.cli(["build"], context=context).stream()
