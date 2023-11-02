@@ -15,6 +15,9 @@ sources:
             description: The zone
           - name: service_zone
             description: The service zone
+        meta:
+          dagster:
+            asset_key: [""]
     
       - name: trips
         description: The NYC taxi trips
