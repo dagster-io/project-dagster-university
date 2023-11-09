@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: dim_rate_codes
+    description: >
+      This is a table of rate codes
+    columns:
+      - name: rate_code_id
+        description: >
+          The rate code id
+        tests:
+          - unique
+      - name: rate_code
+        description: >
+          The rate code
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Standard rate
+                - JFK
+                - Newark
+                - Nassau or Westchester
+                - Negotiated fare
+                - Group ride
+                - Unknown
