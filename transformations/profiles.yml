@@ -1,0 +1,18 @@
+# This is a profiles.yml for dbt, stored in the transformations dbt project.
+# This file is pushed to git, so *DO NOT* store secrets in this file. Instead, use ~/.dbt/profiles.yml
+
+transformations:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: '../data/staging/data.duckdb'
+      extensions:
+        - spatial
+        - parquet
+    dagster:
+      type: duckdb
+      path: '../../data/staging/data.duckdb'
+      extensions:
+        - spatial
+        - parquet

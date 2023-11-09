@@ -1,0 +1,45 @@
+version: 2
+
+sources:
+  - name: raw_taxis
+    schema: main
+    tables:
+      - name: zones
+        description: The NYC taxi zones
+        meta: 
+          dagster:
+            asset_key: ["taxi_zones"]
+        columns:
+          - name: location_id
+            description: The location id
+          - name: borough
+            description: The borough
+          - name: zone
+            description: The zone
+          - name: service_zone
+            description: The service zone
+    
+      - name: trips
+        description: The NYC taxi trips
+        meta: 
+          dagster:
+            asset_key: ["taxi_trips"]
+        columns:
+          - name: vendor_id
+            description: The vendor id
+          - name: pickup_datetime
+            description: The pickup datetime
+          - name: dropoff_datetime
+            description: The dropoff datetime
+          - name: passenger_count
+            description: The passenger count
+          - name: trip_distance
+            description: The trip distance
+          - name: pickup_location_id
+            description: The pickup location id
+          - name: dropoff_location_id
+            description: The dropoff location id
+          - name: fare_amount
+            description: The fare amount
+          - name: total_amount
+            description: The total amount
