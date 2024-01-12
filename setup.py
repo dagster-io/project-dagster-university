@@ -7,6 +7,8 @@ setup(
         "dagster==1.5.*",
         "dagster-cloud",
         "dagster-duckdb",
+        "dagster-dbt",
+        "dbt-duckdb",
         "geopandas",
         "kaleido",
         "pandas",

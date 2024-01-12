@@ -1,5 +1,4 @@
-from dagster import MonthlyPartitionsDefinition, WeeklyPartitionsDefinition
-from os import environ
+from dagster import MonthlyPartitionsDefinition, WeeklyPartitionsDefinition, DailyPartitionsDefinition
 
 from ..assets import constants
 
@@ -13,6 +12,11 @@ monthly_partition = MonthlyPartitionsDefinition(
 )
 
 weekly_partition = WeeklyPartitionsDefinition(
+    start_date=start_date,
+    end_date=end_date
+)
+
+daily_partition = DailyPartitionsDefinition(
     start_date=start_date,
     end_date=end_date
 )

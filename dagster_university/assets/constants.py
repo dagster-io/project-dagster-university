@@ -1,3 +1,4 @@
+from pathlib import Path
 import os
 
 TAXI_ZONES_FILE_PATH = "data/raw/taxi_zones.csv"
@@ -17,3 +18,5 @@ DATE_FORMAT = "%Y-%m-%d"
 
 START_DATE = "2023-01-01"
 END_DATE = "2023-04-01"
+
+DBT_DIRECTORY = Path(__file__).joinpath("..", "..", "..", "analytics").resolve()

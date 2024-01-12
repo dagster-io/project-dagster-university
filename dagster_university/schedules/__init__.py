@@ -1,6 +1,5 @@
 from dagster import ScheduleDefinition
 from ..jobs import trip_update_job, weekly_update_job
-
 ## Lesson 7
 trip_update_schedule = ScheduleDefinition(
     job=trip_update_job,
