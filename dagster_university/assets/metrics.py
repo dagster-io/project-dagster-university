@@ -13,7 +13,8 @@ from ..partitions import weekly_partition
 
 @asset(
     deps=[AssetKey(["taxi_trips"])],
-    partitions_def=weekly_partition
+    partitions_def=weekly_partition,
+    compute_kind="DuckDB",
 )
 def trips_by_week(context, database: DuckDBResource):
     """
@@ -62,7 +63,8 @@ def trips_by_week(context, database: DuckDBResource):
 ## Lesson 4 (later part)
 @asset(
     deps=[AssetKey(["taxi_trips"]), AssetKey(["taxi_zones"])],
-    key_prefix="manhattan"
+    key_prefix="manhattan",
+    compute_kind="DuckDB",
 )
 def manhattan_stats(database: DuckDBResource):
     """
@@ -92,7 +94,8 @@ def manhattan_stats(database: DuckDBResource):
 
 ## Lesson 4 (later part)
 @asset(
-    deps=[AssetKey(["manhattan", "manhattan_stats"])]
+    deps=[AssetKey(["manhattan", "manhattan_stats"])],
+    compute_kind="Python",
 )
 def manhattan_map(context):
     """
