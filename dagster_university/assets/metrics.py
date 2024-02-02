@@ -1,4 +1,4 @@
-from dagster import asset, AssetKey, MetadataValue
+from dagster import asset, AssetKey, MetadataValue, MaterializeResult
 from dagster_duckdb import DuckDBResource
 
 import plotly.express as px
@@ -97,7 +97,7 @@ def manhattan_stats(database: DuckDBResource):
     deps=[AssetKey(["manhattan", "manhattan_stats"])],
     compute_kind="Python",
 )
-def manhattan_map(context):
+def manhattan_map():
     """
         A map of the number of trips per taxi zone in Manhattan
     """
@@ -124,7 +124,9 @@ def manhattan_map(context):
     # Convert the image data to base64
     base64_data = base64.b64encode(image_data).decode('utf-8')
     md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
-    
-    context.add_output_metadata({
-        "preview": MetadataValue.md(md_content)
-    })
+
+    return MaterializeResult(
+        metadata={
+            "preview": MetadataValue.md(md_content)
+        }
+    )
