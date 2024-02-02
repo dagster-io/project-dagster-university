@@ -11,6 +11,7 @@ setup(
         "kaleido",
         "pandas",
         "plotly",
+        "pyarrow",
         "shapely",
     ],
     extras_require={"dev": ["dagster-webserver", "pytest"]},
