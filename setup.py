@@ -12,6 +12,7 @@ setup(
         "pandas",
         "plotly",
         "shapely",
+        "pyarrow",
     ],
     extras_require={"dev": ["dagster-webserver", "pytest"]},
 )
