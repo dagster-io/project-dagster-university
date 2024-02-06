@@ -9,7 +9,7 @@ setup(
         "dagster-duckdb",
         "geopandas",
         "kaleido",
-        "pandas",
+        "pandas[parquet]",
         "plotly",
         "shapely",
     ],
