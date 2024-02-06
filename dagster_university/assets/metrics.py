@@ -128,3 +128,50 @@ def manhattan_map(context):
     context.add_output_metadata({
         "preview": MetadataValue.md(md_content)
     })
+
+@asset(
+    deps=["location_metrics"],
+)
+def airport_trips(context, database: DuckDBResource):
+    """
+        A chart of where trips from the airport go
+    """
+
+    query = """
+        select
+            zone,
+            destination_borough,
+            trips
+        from location_metrics
+        where from_airport
+    """
+
+    with database.get_connection() as conn:
+        airport_trips = conn.execute(query).fetch_df()
+
+    fig = px.bar(
+        airport_trips,
+        x="zone",
+        y="trips",
+        color="destination_borough",
+        barmode="relative",
+        labels={
+            "zone": "Zone",
+            "trips": "Number of Trips",
+            "destination_borough": "Destination Borough"
+        },
+    )
+
+    pio.write_image(fig, constants.AIRPORT_TRIPS_FILE_PATH)
+
+    with open(constants.AIRPORT_TRIPS_FILE_PATH, 'rb') as file:
+        image_data = file.read()
+
+    # Convert the image data to base64
+    base64_data = base64.b64encode(image_data).decode('utf-8')
+    md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
+    
+    context.add_output_metadata({
+        "preview": MetadataValue.md(md_content),
+        "data": MetadataValue.json(airport_trips.to_dict(orient="records"))
+    })

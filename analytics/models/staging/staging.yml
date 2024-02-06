@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: stg_trips
-    description: The staging models
+    description: The trips source table, cleaned up and decoded
     columns:
       - name: pickup_datetime
         description: The pickup datetime
@@ -21,7 +21,7 @@ models:
       - name: total_amount
         description: The total amount
   - name: stg_zones
-    description: The staged taxi zones
+    description: The taxi zones, with enriched records and additional flags
     columns:
       - name: zone_id
         description: The location id

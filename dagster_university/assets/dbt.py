@@ -17,10 +17,12 @@ class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
 
     @classmethod
     def get_asset_key(cls, dbt_resource_props):
-        if dbt_resource_props["resource_type"] == "source":
-            return AssetKey(f"taxi_{dbt_resource_props['name']}")
+        type = dbt_resource_props["resource_type"]
+        name = dbt_resource_props["name"]
+        if type == "source":
+            return AssetKey(f"taxi_{name}")
         else:
-            return AssetKey(dbt_resource_props["name"])
+            return super().get_asset_key(dbt_resource_props)
         
     @classmethod
     def get_metadata(cls, dbt_node_info):
@@ -47,8 +49,8 @@ else:
     dagster_dbt_translator=CustomizedDagsterDbtTranslator(),
     exclude="config.materialized:incremental",
 )
-def analytics_project(context: AssetExecutionContext, dbt: DbtCliResource):
-    yield from dbt.cli(["run"], context=context).stream()
+def dbt_analytics(context: AssetExecutionContext, dbt: DbtCliResource):
+    yield from dbt.cli(["build"], context=context).stream()
 
 
 @dbt_assets(

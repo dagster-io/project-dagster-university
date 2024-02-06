@@ -2,8 +2,6 @@ from dagster_duckdb import DuckDBResource
 from dagster_dbt import DbtCliResource
 from dagster import EnvVar
 
-import os
-
 from ..assets.constants import DBT_DIRECTORY
 
 
@@ -13,5 +11,5 @@ database_resource = DuckDBResource(
 )
 
 dbt_resource = DbtCliResource(
-    project_dir=os.fspath(DBT_DIRECTORY)
+    project_dir=DBT_DIRECTORY,
 )
