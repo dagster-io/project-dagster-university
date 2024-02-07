@@ -31,6 +31,10 @@ class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
             "sources": dbt_node_info["sources"],
             "description": dbt_node_info["description"],
         }
+
+    @classmethod
+    def get_group_name(cls, dbt_resource_props):
+        return dbt_resource_props["fqn"][1]
         
 if os.getenv("DAGSTER_DBT_PARSE_PROJECT_ON_LOAD"):
     dbt_manifest_path = (

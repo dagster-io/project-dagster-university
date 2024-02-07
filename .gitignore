@@ -180,3 +180,7 @@ data/outputs/*
 data/raw/*
 data/requests/*.json
 data/staging/*
+
+*.user.yml
+
+*/package-lock.yml
