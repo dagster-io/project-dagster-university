@@ -1,4 +1,4 @@
-from dagster import asset, MetadataValue
+from dagster import asset, MaterializeResult, MetadataValue
 from dagster_duckdb import DuckDBResource
 import pandas as pd 
 import requests
@@ -12,7 +12,7 @@ from ..partitions import monthly_partition
     group_name="raw_files",
     compute_kind="Python",
 )
-def taxi_zones_file(context):
+def taxi_zones_file():
     """
         The raw CSV file for the taxi zones dataset. Sourced from the NYC Open Data portal.
     """
@@ -23,7 +23,12 @@ def taxi_zones_file(context):
     with open(constants.TAXI_ZONES_FILE_PATH, "wb") as output_file:
         output_file.write(raw_taxi_zones.content)
     num_rows = len(pd.read_csv(constants.TAXI_ZONES_FILE_PATH))
-    context.add_output_metadata({'Number of records': MetadataValue.int(num_rows)})
+
+    return MaterializeResult(
+        metadata={
+            'Number of records': MetadataValue.int(num_rows)
+        }
+    )
     
 
 ## Lesson 4 (HW) , 6
@@ -72,7 +77,12 @@ def taxi_trips_file(context):
     with open(constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch), "wb") as output_file:
         output_file.write(raw_trips.content)
     num_rows = len(pd.read_parquet(constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch)))
-    context.add_output_metadata({'Number of records':MetadataValue.int(num_rows)})
+
+    return MaterializeResult(
+        metadata={
+            'Number of records': MetadataValue.int(num_rows)
+        }
+    )
 
 
 ## Lesson 4, 8, 6
