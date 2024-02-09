@@ -20,12 +20,11 @@ with
             sum(total_amount) as total_amount,
             sum(total_amount) / count(*) as average_amount,
             sum(case when duration > 30 then 1 else 0 end) / count(*) as pct_over_30_min,
-            mode() within group (order by pickup_zone_id) as busiest_zone_id,
         from trips
         group by all
     )
 select *
 from daily_summary
 {% if is_incremental() %}
-    where date_of_business >= '{{ var('min_date') }}' and date_of_business < '{{ var('max_date') }}'
+    where date_of_business >= strptime('{{ var('min_date') }}', '%c') and date_of_business < strptime('{{ var('max_date') }}', '%c')
 {% endif %}

@@ -1,4 +1,4 @@
-from dagster import AssetKey, AssetExecutionContext, Config, BackfillPolicy
+from dagster import AssetKey, AssetExecutionContext, BackfillPolicy
 from dagster_dbt import dbt_assets, DbtCliResource, DagsterDbtTranslator
 
 from pathlib import Path
@@ -9,9 +9,6 @@ import json
 from .constants import DBT_DIRECTORY
 from ..resources import dbt_resource
 from ..partitions import daily_partition
-
-class DbtConfig(Config):
-    full_refresh: bool = False
 
 class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
 
@@ -48,10 +45,12 @@ if os.getenv("DAGSTER_DBT_PARSE_PROJECT_ON_LOAD"):
 else:
     dbt_manifest_path = DBT_DIRECTORY.joinpath("target", "manifest.json")
 
+INCREMENTAL_SELECTOR = "config.materialized:incremental"
+
 @dbt_assets(
     manifest=dbt_manifest_path,
     dagster_dbt_translator=CustomizedDagsterDbtTranslator(),
-    exclude="config.materialized:incremental",
+    exclude=INCREMENTAL_SELECTOR,
 )
 def dbt_analytics(context: AssetExecutionContext, dbt: DbtCliResource):
     yield from dbt.cli(["build"], context=context).stream()
@@ -60,26 +59,19 @@ def dbt_analytics(context: AssetExecutionContext, dbt: DbtCliResource):
 @dbt_assets(
     manifest=dbt_manifest_path,
     dagster_dbt_translator=CustomizedDagsterDbtTranslator(),
-    select="config.materialized:incremental",
+    select=INCREMENTAL_SELECTOR,
     partitions_def=daily_partition,
-    backfill_policy=BackfillPolicy.single_run()
+    backfill_policy=BackfillPolicy.single_run(),
 )
 def incremental_dbt_models(
     context: AssetExecutionContext,
-    dbt: DbtCliResource,
-    config: DbtConfig
+    dbt: DbtCliResource
 ):
-    time_window = context.asset_partitions_time_window_for_output(
-        next(iter(context.selected_output_names))
-    )
-
+    time_window = context.partition_time_window
+    context.partition
     dbt_vars = {
         "min_date": time_window.start.isoformat(),
         "max_date": time_window.end.isoformat()
     }
-    args = (
-        ["build", "--full-refresh"]
-        if config.full_refresh
-        else ["build", "--vars", json.dumps(dbt_vars)]
-    )
-    yield from dbt.cli(args, context=context).stream()
+    
+    yield from dbt.cli(["build", "--vars", json.dumps(dbt_vars)], context=context).stream()
