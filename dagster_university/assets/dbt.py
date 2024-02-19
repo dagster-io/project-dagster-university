@@ -35,10 +35,7 @@ class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
         
 if os.getenv("DAGSTER_DBT_PARSE_PROJECT_ON_LOAD"):
     dbt_manifest_path = (
-        dbt_resource.cli(
-            ["--quiet", "parse"],
-            target_path=Path("target"),
-        )
+        dbt_resource.cli(["--quiet", "parse"])
         .wait()
         .target_path.joinpath("manifest.json")
     )
