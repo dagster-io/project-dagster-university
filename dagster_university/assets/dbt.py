@@ -1,7 +1,5 @@
-from dagster import AssetKey, AssetExecutionContext, BackfillPolicy
+from dagster import AssetKey, AssetExecutionContext
 from dagster_dbt import dbt_assets, DbtCliResource, DagsterDbtTranslator
-
-from pathlib import Path
 
 import os
 import json
@@ -58,7 +56,6 @@ def dbt_analytics(context: AssetExecutionContext, dbt: DbtCliResource):
     dagster_dbt_translator=CustomizedDagsterDbtTranslator(),
     select=INCREMENTAL_SELECTOR,
     partitions_def=daily_partition,
-    backfill_policy=BackfillPolicy.single_run(),
 )
 def incremental_dbt_models(
     context: AssetExecutionContext,

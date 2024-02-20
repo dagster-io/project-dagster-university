@@ -1,13 +1,15 @@
 from dagster import asset, MetadataValue
 from dagster_duckdb import DuckDBResource
-import pandas as pd 
+from io import BytesIO
+from smart_open import open
+import pandas as pd
 import requests
 
 from . import constants
 
+from ..resources import smart_open_config
 from ..partitions import monthly_partition
 
-## Lesson 3 (change this to HW)
 @asset(
     group_name="raw_files",
     compute_kind="Python",
@@ -20,9 +22,10 @@ def taxi_zones_file(context):
         "https://data.cityofnewyork.us/api/views/755u-8jsi/rows.csv?accessType=DOWNLOAD"
     )
 
-    with open(constants.TAXI_ZONES_FILE_PATH, "wb") as output_file:
+    with open(constants.TAXI_ZONES_FILE_PATH, "wb", transport_params=smart_open_config) as output_file:
         output_file.write(raw_taxi_zones.content)
-    num_rows = len(pd.read_csv(constants.TAXI_ZONES_FILE_PATH))
+    
+    num_rows = len(pd.read_csv(BytesIO(raw_taxi_zones.content)))
     context.add_output_metadata({'Number of records': MetadataValue.int(num_rows)})
     
 
@@ -32,7 +35,7 @@ def taxi_zones_file(context):
     group_name="ingested",
     compute_kind="DuckDB",
 )
-def taxi_zones(database: DuckDBResource):
+def taxi_zones(context, database: DuckDBResource):
     """
         The raw taxi zones dataset, loaded into a DuckDB database.
     """
@@ -50,6 +53,7 @@ def taxi_zones(database: DuckDBResource):
 
     with database.get_connection() as conn:
         conn.execute(query)
+    
 
 ## Lesson 3, 8
 @asset(
@@ -69,9 +73,10 @@ def taxi_trips_file(context):
         f"https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_{month_to_fetch}.parquet"
     )
 
-    with open(constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch), "wb") as output_file:
+    with open(constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch), "wb", transport_params=smart_open_config) as output_file:
         output_file.write(raw_trips.content)
-    num_rows = len(pd.read_parquet(constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch)))
+
+    num_rows = len(pd.read_parquet(BytesIO(raw_trips.content)))
     context.add_output_metadata({'Number of records':MetadataValue.int(num_rows)})
 
 

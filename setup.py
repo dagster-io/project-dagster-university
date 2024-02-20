@@ -14,6 +14,8 @@ setup(
         "pandas",
         "plotly",
         "shapely",
+        "smart_open[s3]",
+        "s3fs",
     ],
     extras_require={"dev": ["dagster-webserver", "pytest"]},
 )

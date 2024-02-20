@@ -6,4 +6,4 @@ dagster_dbt_university:
       path: '../{{ env_var("DUCKDB_DATABASE", "data/staging/data.duckdb") }}'
     prod:
       type: duckdb
-      path: '{{ env_var("MOTHERDUCK_TOKEN", "") }}'
+      path: '{{ env_var("DUCKDB_DATABASE", "") }}'

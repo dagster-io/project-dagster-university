@@ -1,11 +1,13 @@
-from dagster import Config, asset, MetadataValue, get_dagster_logger
+from dagster import Config, asset, MetadataValue
 from dagster_duckdb import DuckDBResource
+from smart_open import open
 
 import plotly.express as px
 import plotly.io as pio
 import base64
 
 from . import constants
+from ..resources import smart_open_config
 
 class AdhocRequestConfig(Config):
     filename: str
@@ -72,11 +74,11 @@ def adhoc_request(context, config: AdhocRequestConfig, database: DuckDBResource)
         }
     )
 
-    pio.write_image(fig, file_path)
+    with open(file_path, 'wb', transport_params=smart_open_config) as output_file:
+        pio.write_image(fig, output_file)
 
-    with open(file_path, 'rb') as file:
-        image_data = file.read()
-
+    # Convert the image data to base64
+    image_data = fig.to_image()
     base64_data = base64.b64encode(image_data).decode('utf-8')
     md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
     

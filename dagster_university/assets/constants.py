@@ -1,18 +1,34 @@
 from pathlib import Path
 import os
 
-TAXI_ZONES_FILE_PATH = "data/raw/taxi_zones.csv"
-TAXI_TRIPS_TEMPLATE_FILE_PATH = "data/raw/taxi_trips_{}.parquet"
+S3_BUCKET_PREFIX = "s3://dagster-university/"
 
-TAXI_ZONES_FILE_PATH = os.path.join("data", "raw", "taxi_zones.csv")
-TAXI_TRIPS_TEMPLATE_FILE_PATH = os.path.join("data", "raw", "taxi_trips_{}.parquet")
+def get_path_for_env(path: str) -> str:
+    """A utility method for Dagster University. Generates a path based on the environment.
 
-TRIPS_BY_AIRPORT_FILE_PATH = os.path.join("data", "outputs", "trips_by_airport.csv")
-TRIPS_BY_WEEK_FILE_PATH = os.path.join("data", "outputs", "trips_by_week.csv")
-MANHATTAN_STATS_FILE_PATH = os.path.join("data", "staging", "manhattan_stats.geojson")
-MANHATTAN_MAP_FILE_PATH = os.path.join("data", "outputs", "manhattan_map.png")
+    Args:
+        path (str): The local path to the file.
 
-REQUEST_DESTINATION_TEMPLATE_FILE_PATH = os.path.join("data", "outputs", "{}.png")
+    Returns:
+        result_path (str): The path to the file, based on the environment.
+    """
+    if os.getenv("DAGSTER_ENVIRONMENT") == "prod":
+        return S3_BUCKET_PREFIX + path
+    else:
+        return path
+
+TAXI_ZONES_FILE_PATH = get_path_for_env("data/raw/taxi_zones.csv")
+TAXI_TRIPS_TEMPLATE_FILE_PATH = get_path_for_env("data/raw/taxi_trips_{}.parquet")
+
+TAXI_ZONES_FILE_PATH = get_path_for_env(os.path.join("data", "raw", "taxi_zones.csv"))
+TAXI_TRIPS_TEMPLATE_FILE_PATH = get_path_for_env(os.path.join("data", "raw", "taxi_trips_{}.parquet"))
+
+TRIPS_BY_AIRPORT_FILE_PATH = get_path_for_env(os.path.join("data", "outputs", "trips_by_airport.csv"))
+TRIPS_BY_WEEK_FILE_PATH = get_path_for_env(os.path.join("data", "outputs", "trips_by_week.csv"))
+MANHATTAN_STATS_FILE_PATH = get_path_for_env(os.path.join("data", "staging", "manhattan_stats.geojson"))
+MANHATTAN_MAP_FILE_PATH = get_path_for_env(os.path.join("data", "outputs", "manhattan_map.png"))
+
+REQUEST_DESTINATION_TEMPLATE_FILE_PATH = get_path_for_env(os.path.join("data", "outputs", "{}.png"))
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -21,4 +37,4 @@ END_DATE = "2023-04-01"
 
 DBT_DIRECTORY = Path(__file__).joinpath("..", "..", "..", "analytics").resolve()
 
-AIRPORT_TRIPS_FILE_PATH = os.path.join("data", "outputs", "airport_trips.png")
+AIRPORT_TRIPS_FILE_PATH = get_path_for_env(os.path.join("data", "outputs", "airport_trips.png"))

@@ -1,5 +1,6 @@
 from dagster import asset, AssetKey, MetadataValue
 from dagster_duckdb import DuckDBResource
+from smart_open import open
 
 import plotly.express as px
 import plotly.io as pio
@@ -10,6 +11,7 @@ import pandas as pd
 from . import constants
 
 from ..partitions import weekly_partition
+from ..resources import smart_open_config
 
 @asset(
     deps=[AssetKey(["taxi_trips"])],
@@ -116,12 +118,11 @@ def manhattan_map(context):
         labels={'num_trips': 'Number of Trips'}
     )
 
-    pio.write_image(fig, constants.MANHATTAN_MAP_FILE_PATH)
-
-    with open(constants.MANHATTAN_MAP_FILE_PATH, 'rb') as file:
-        image_data = file.read()
+    with open(constants.MANHATTAN_MAP_FILE_PATH, 'wb', transport_params=smart_open_config) as output_file:
+        pio.write_image(fig, output_file)
 
     # Convert the image data to base64
+    image_data = fig.to_image()
     base64_data = base64.b64encode(image_data).decode('utf-8')
     md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
     
@@ -162,16 +163,14 @@ def airport_trips(context, database: DuckDBResource):
         },
     )
 
-    pio.write_image(fig, constants.AIRPORT_TRIPS_FILE_PATH)
-
-    with open(constants.AIRPORT_TRIPS_FILE_PATH, 'rb') as file:
-        image_data = file.read()
+    with open(constants.AIRPORT_TRIPS_FILE_PATH, 'wb', transport_params=smart_open_config) as output_file:
+        pio.write_image(fig, output_file)
 
     # Convert the image data to base64
+    image_data = fig.to_image()
     base64_data = base64.b64encode(image_data).decode('utf-8')
     md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
     
     context.add_output_metadata({
-        "preview": MetadataValue.md(md_content),
-        "data": MetadataValue.json(airport_trips.to_dict(orient="records"))
+        "preview": MetadataValue.md(md_content)
     })
