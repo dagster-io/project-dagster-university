@@ -48,7 +48,13 @@ INCREMENTAL_SELECTOR = "config.materialized:incremental"
     exclude=INCREMENTAL_SELECTOR,
 )
 def dbt_analytics(context: AssetExecutionContext, dbt: DbtCliResource):
-    yield from dbt.cli(["build"], context=context).stream()
+    dbt_build_invocation = dbt.cli(["build"], context=context)
+
+    yield from dbt_build_invocation.stream()
+
+    run_results_json = dbt_build_invocation.get_artifact("run_results.json")
+    for result in run_results_json["results"]:
+        context.log.debug(result["compiled_code"])
 
 
 @dbt_assets(
