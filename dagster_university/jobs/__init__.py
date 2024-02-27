@@ -1,4 +1,4 @@
-from dagster import define_asset_job, AssetSelection, RunConfig
+from dagster import define_asset_job, AssetSelection
 from dagster_dbt import build_dbt_asset_selection
 
 from ..assets.dbt import dbt_analytics
