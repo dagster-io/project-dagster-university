@@ -1,4 +1,3 @@
-from pathlib import Path
 import os
 
 S3_BUCKET_PREFIX = os.getenv("S3_BUCKET_PREFIX", "s3://dagster-university/")
@@ -35,6 +34,6 @@ DATE_FORMAT = "%Y-%m-%d"
 START_DATE = "2023-01-01"
 END_DATE = "2023-04-01"
 
-DBT_DIRECTORY = Path(__file__).joinpath("..", "..", "..", "analytics").resolve()
+DBT_DIRECTORY = os.path.abspath(os.path.join(__file__, "..", "..", "..", "analytics"))
 
 AIRPORT_TRIPS_FILE_PATH = get_path_for_env(os.path.join("data", "outputs", "airport_trips.png"))
