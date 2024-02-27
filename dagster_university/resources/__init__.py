@@ -1,10 +1,7 @@
 from dagster_duckdb import DuckDBResource
-from dagster_dbt import DbtCliResource
 from dagster import EnvVar
 import boto3
 import os
-
-from ..assets.constants import DBT_DIRECTORY
 
 
 database_resource = DuckDBResource(
