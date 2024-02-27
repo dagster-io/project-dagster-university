@@ -16,6 +16,8 @@ setup(
         "shapely",
         "smart_open[s3]",
         "s3fs",
+        "smart_open",
+        "boto3",
     ],
     extras_require={"dev": ["dagster-webserver", "pytest"]},
 )
