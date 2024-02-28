@@ -68,7 +68,7 @@ def incremental_dbt_models(
     dbt: DbtCliResource
 ):
     time_window = context.partition_time_window
-    context.partition
+
     dbt_vars = {
         "min_date": time_window.start.isoformat(),
         "max_date": time_window.end.isoformat()
