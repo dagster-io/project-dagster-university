@@ -1,4 +1,4 @@
-from dagster import asset, MetadataValue
+from dagster import asset, MetadataValue, MaterializeResult
 from dagster_duckdb import DuckDBResource
 from io import BytesIO
 from smart_open import open
@@ -26,7 +26,11 @@ def taxi_zones_file(context):
         output_file.write(raw_taxi_zones.content)
     
     num_rows = len(pd.read_csv(BytesIO(raw_taxi_zones.content)))
-    context.add_output_metadata({'Number of records': MetadataValue.int(num_rows)})
+    return MaterializeResult(
+        metadata={
+            'Number of records': MetadataValue.int(num_rows)
+        }
+    )
     
 
 ## Lesson 4 (HW) , 6
@@ -77,7 +81,11 @@ def taxi_trips_file(context):
         output_file.write(raw_trips.content)
 
     num_rows = len(pd.read_parquet(BytesIO(raw_trips.content)))
-    context.add_output_metadata({'Number of records':MetadataValue.int(num_rows)})
+    return MaterializeResult(
+        metadata={
+            'Number of records': MetadataValue.int(num_rows)
+        }
+    )
 
 
 ## Lesson 4, 8, 6
