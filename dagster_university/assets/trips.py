@@ -14,7 +14,7 @@ from ..partitions import monthly_partition
     group_name="raw_files",
     compute_kind="Python",
 )
-def taxi_zones_file(context):
+def taxi_zones_file() -> MaterializeResult:
     """
         The raw CSV file for the taxi zones dataset. Sourced from the NYC Open Data portal.
     """
@@ -65,7 +65,7 @@ def taxi_zones(context, database: DuckDBResource):
     group_name="raw_files",
     compute_kind="DuckDB",
 )
-def taxi_trips_file(context):
+def taxi_trips_file(context) -> MaterializeResult:
     """
         The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal.
     """

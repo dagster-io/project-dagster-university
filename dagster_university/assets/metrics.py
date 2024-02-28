@@ -99,7 +99,7 @@ def manhattan_stats(database: DuckDBResource):
     deps=[AssetKey(["manhattan", "manhattan_stats"])],
     compute_kind="Python",
 )
-def manhattan_map(context):
+def manhattan_map() -> MaterializeResult:
     """
         A map of the number of trips per taxi zone in Manhattan
     """
@@ -135,7 +135,7 @@ def manhattan_map(context):
 @asset(
     deps=["location_metrics"],
 )
-def airport_trips(context, database: DuckDBResource):
+def airport_trips(database: DuckDBResource) -> MaterializeResult:
     """
         A chart of where trips from the airport go
     """

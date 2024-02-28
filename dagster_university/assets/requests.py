@@ -20,7 +20,7 @@ class AdhocRequestConfig(Config):
     deps=["taxi_trips", "taxi_zones"],
     compute_kind="Python",
 )
-def adhoc_request(context, config: AdhocRequestConfig, database: DuckDBResource):
+def adhoc_request(config: AdhocRequestConfig, database: DuckDBResource) -> MaterializeResult:
     """
         The response to an request made in the `requests` directory.
         See `requests/README.md` for more information.
