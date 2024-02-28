@@ -11,7 +11,7 @@ setup(
         "dbt-duckdb",
         "geopandas",
         "kaleido",
-        "pandas",
+        "pandas[parquet]",
         "plotly",
         "shapely",
         "smart_open[s3]",
