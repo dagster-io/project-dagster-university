@@ -1,4 +1,4 @@
-from dagster import Config, asset, MetadataValue
+from dagster import Config, asset, MetadataValue, MaterializeResult
 from dagster_duckdb import DuckDBResource
 from smart_open import open
 
@@ -20,7 +20,7 @@ class AdhocRequestConfig(Config):
     deps=["taxi_trips", "taxi_zones"],
     compute_kind="Python",
 )
-def adhoc_request(context, config: AdhocRequestConfig, database: DuckDBResource):
+def adhoc_request(config: AdhocRequestConfig, database: DuckDBResource) -> MaterializeResult:
     """
         The response to an request made in the `requests` directory.
         See `requests/README.md` for more information.
@@ -82,6 +82,8 @@ def adhoc_request(context, config: AdhocRequestConfig, database: DuckDBResource)
     base64_data = base64.b64encode(image_data).decode('utf-8')
     md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
     
-    context.add_output_metadata({
-        "preview": MetadataValue.md(md_content)
-    })
+    return MaterializeResult(
+        metadata={
+            "preview": MetadataValue.md(md_content)
+        }
+    )
