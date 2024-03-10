@@ -18,6 +18,8 @@ setup(
         "s3fs",
         "smart_open",
         "boto3",
+        "pyarrow",
+        "fastparquet",
     ],
     extras_require={"dev": ["dagster-webserver", "pytest"]},
 )
