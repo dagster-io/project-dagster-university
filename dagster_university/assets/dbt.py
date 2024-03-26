@@ -1,5 +1,6 @@
 from dagster import AssetKey, AssetExecutionContext
 from dagster_dbt import dbt_assets, DbtCliResource, DagsterDbtTranslator
+from pathlib import Path
 
 import os
 import json
@@ -33,7 +34,10 @@ class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
         
 if os.getenv("DAGSTER_DBT_PARSE_PROJECT_ON_LOAD"):
     dbt_manifest_path = (
-        dbt_resource.cli(["--quiet", "parse"])
+        dbt_resource.cli(
+            ["--quiet", "parse"],
+            target_path=Path("target")
+        )
         .wait()
         .target_path.joinpath("manifest.json")
     )
