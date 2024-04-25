@@ -25,5 +25,5 @@ with
 select *
 from daily_summary
 {% if is_incremental() %}
-    where date_of_business >= strptime('{{ var('min_date') }}', '%c') and date_of_business < strptime('{{ var('max_date') }}', '%c')
+    where date_of_business >= '{{ var('min_date') }}' and date_of_business < '{{ var('max_date') }}'
 {% endif %}
