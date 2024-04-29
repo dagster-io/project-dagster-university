@@ -74,8 +74,8 @@ def incremental_dbt_models(
     time_window = context.partition_time_window
 
     dbt_vars = {
-        "min_date": time_window.start.isoformat(),
-        "max_date": time_window.end.isoformat()
+        "min_date": time_window.start.strftime('%Y-%m-%d'),
+        "max_date": time_window.end.strftime('%Y-%m-%d')
     }
     
     yield from dbt.cli(["build", "--vars", json.dumps(dbt_vars)], context=context).stream()
