@@ -1,4 +1,4 @@
-from dagster import asset, AssetKey, MetadataValue, MaterializeResult
+from dagster import asset, AssetKey, MetadataValue, MaterializeResult, AssetExecutionContext
 from dagster_duckdb import DuckDBResource
 from smart_open import open
 
@@ -18,13 +18,13 @@ from ..resources import smart_open_config
     partitions_def=weekly_partition,
     compute_kind="DuckDB",
 )
-def trips_by_week(context, database: DuckDBResource):
+def trips_by_week(context: AssetExecutionContext, database: DuckDBResource):
     """
         The number of trips per week, aggregated by week.
         These date-based aggregations are done in-memory, which is expensive, but enables you to do time-based aggregations consistently across data warehouses (ex. DuckDB and BigQuery)
     """
     
-    period_to_fetch = context.asset_partition_key_for_output()
+    period_to_fetch = context.partition_key
 
     # get all trips for the week
     query = f"""
@@ -62,7 +62,6 @@ def trips_by_week(context, database: DuckDBResource):
         aggregate.to_csv(constants.TRIPS_BY_WEEK_FILE_PATH, index=False)
 
 
-## Lesson 4 (later part)
 @asset(
     deps=[AssetKey(["taxi_trips"]), AssetKey(["taxi_zones"])],
     key_prefix="manhattan",
@@ -94,7 +93,6 @@ def manhattan_stats(database: DuckDBResource):
     with open(constants.MANHATTAN_STATS_FILE_PATH, 'w') as output_file:
         output_file.write(trips_by_zone.to_json())
 
-## Lesson 4 (later part)
 @asset(
     deps=[AssetKey(["manhattan", "manhattan_stats"])],
     compute_kind="Python",

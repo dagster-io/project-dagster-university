@@ -6,8 +6,6 @@ from .jobs import trip_update_job, weekly_update_job, adhoc_request_job
 from .schedules import trip_update_schedule, weekly_update_schedule
 from .sensors import adhoc_request_sensor
 
-
-## Lesson 5 -> prob every other section after that
 trip_assets = load_assets_from_modules([trips])
 metric_assets = load_assets_from_modules(
     modules=[metrics],
