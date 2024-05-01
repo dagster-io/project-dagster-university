@@ -1,4 +1,4 @@
-from dagster import asset, MaterializeResult, MetadataValue
+from dagster import asset, MaterializeResult, MetadataValue, AssetExecutionContext
 from dagster_duckdb import DuckDBResource
 import pandas as pd 
 import requests
@@ -7,7 +7,6 @@ from . import constants
 
 from ..partitions import monthly_partition
 
-## Lesson 3 (change this to HW)
 @asset(
     group_name="raw_files",
     compute_kind="Python",
@@ -31,7 +30,6 @@ def taxi_zones_file():
     )
     
 
-## Lesson 4 (HW) , 6
 @asset(
     deps=["taxi_zones_file"],
     group_name="ingested",
@@ -56,18 +54,17 @@ def taxi_zones(database: DuckDBResource):
     with database.get_connection() as conn:
         conn.execute(query)
 
-## Lesson 3, 8
 @asset(
     partitions_def=monthly_partition,
     group_name="raw_files",
     compute_kind="DuckDB",
 )
-def taxi_trips_file(context):
+def taxi_trips_file(context: AssetExecutionContext):
     """
         The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal.
     """
 
-    partition_date_str = context.asset_partition_key_for_output()
+    partition_date_str = context.partition_key
     month_to_fetch = partition_date_str[:-3]
 
     raw_trips = requests.get(
@@ -85,19 +82,18 @@ def taxi_trips_file(context):
     )
 
 
-## Lesson 4, 8, 6
 @asset(
     deps=["taxi_trips_file"],
     partitions_def=monthly_partition,
     group_name="ingested",
     compute_kind="DuckDB",
 )
-def taxi_trips(context, database: DuckDBResource):
+def taxi_trips(context: AssetExecutionContext, database: DuckDBResource):
     """
         The raw taxi trips dataset, loaded into a DuckDB database, partitioned by month.
     """
 
-    partition_date_str = context.asset_partition_key_for_output()
+    partition_date_str = context.partition_key
     month_to_fetch = partition_date_str[:-3]
 
     query = f"""
