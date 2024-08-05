@@ -4,7 +4,7 @@ from dagster import EnvVar
 import boto3
 import os
 
-from ..assets.constants import DBT_DIRECTORY
+from ..project import dbt_project
 
 
 database_resource = DuckDBResource(
@@ -22,6 +22,5 @@ else:
     smart_open_config = {}
 
 dbt_resource = DbtCliResource(
-    project_dir=DBT_DIRECTORY,
-    target=os.getenv("DAGSTER_ENVIRONMENT", "dev")
+    project_dir=dbt_project
 )
