@@ -11,9 +11,9 @@ INCREMENTAL_SELECTOR = "config.materialized:incremental"
 
 class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
     def get_asset_key(self, dbt_resource_props):
-        type = dbt_resource_props["resource_type"]
+        resource_type = dbt_resource_props["resource_type"]
         name = dbt_resource_props["name"]
-        if type == "source":
+        if resource_type == "source":
             return AssetKey(f"taxi_{name}")
         else:
             return super().get_asset_key(dbt_resource_props)
