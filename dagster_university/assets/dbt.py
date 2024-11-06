@@ -10,28 +10,25 @@ from ..resources import dbt_resource
 from ..partitions import daily_partition
 
 class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
-
-    @classmethod
-    def get_asset_key(cls, dbt_resource_props):
-        type = dbt_resource_props["resource_type"]
+    def get_asset_key(self, dbt_resource_props):
+        resource_type = dbt_resource_props["resource_type"]
         name = dbt_resource_props["name"]
-        if type == "source":
+        if resource_type == "source":
             return AssetKey(f"taxi_{name}")
         else:
             return super().get_asset_key(dbt_resource_props)
-        
-    @classmethod
-    def get_metadata(cls, dbt_node_info):
+
+    def get_metadata(self, dbt_node_info):
         return {
             "columns": dbt_node_info["columns"],
             "sources": dbt_node_info["sources"],
             "description": dbt_node_info["description"],
         }
 
-    @classmethod
-    def get_group_name(cls, dbt_resource_props):
+    def get_group_name(self, dbt_resource_props):
         return dbt_resource_props["fqn"][1]
-        
+
+
 if os.getenv("DAGSTER_DBT_PARSE_PROJECT_ON_LOAD"):
     dbt_manifest_path = (
         dbt_resource.cli(
