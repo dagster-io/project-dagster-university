@@ -173,10 +173,11 @@ tmp*/
 
 *.duckdb
 *.geojson
-*.csv
 *.parquet
 
 data/outputs/*
 data/raw/*
 data/requests/*.json
 data/staging/*
+
+.ruff_cache

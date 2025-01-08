@@ -26,6 +26,11 @@ dagster dev
 
 Open http://localhost:3000 with your browser to see the project.
 
+> [!NOTE]
+> Running `dagster dev` will put you in the finished Dagster University project (at the end of lesson 9). To see any of the other lessons run:
+> `dagster dev -m dagster_university.lesson_{LESSON NUMBER}.definitions`
+>
+> Lessons 3 and 4 do not use a `definition` in the content.
 
 ## Development
 
@@ -40,6 +45,12 @@ Tests are in the `dagster_university_tests` directory and you can run tests usin
 
 ```bash
 pytest dagster_university_tests
+```
+
+### Formatting / Linting
+
+```bash
+ruff check --select I --fix . 
 ```
 
 ### Schedules and sensors
