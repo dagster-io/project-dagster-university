@@ -8,6 +8,7 @@ setup(
         "dagster-cloud",
         "dagster-duckdb",
         "geopandas",
+        "kaleido",
         "pandas[parquet]",
         "plotly",
         "kaleido",
