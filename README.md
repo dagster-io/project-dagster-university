@@ -1,66 +1,8 @@
 # Dagster University
 
-This is a [Dagster](https://dagster.io/) project made to accompany Dagster University coursework. The branches of this repository contain projects for different Dagster University courses:
+This is a [Dagster](https://dagster.io/) project made to accompany [Dagster University](https://courses.dagster.io/) coursework. Each course is located within the `dagster_university` directory:
 
-| Branch name | Description |
+| Course Name | Description |
 |-------------|-------------|
-| `main`       | [Dagster Essentials](https://courses.dagster.io/courses/dagster-essentials) finished project |
-| `module/dagster-and-dbt` | [Dagster + dbt](https://courses.dagster.io/courses/dagster-dbt) finished project |
-| `module/dagster-and-dbt-starter` | Starter project for [Dagster + dbt](https://courses.dagster.io/courses/dagster-dbt) |
-
-## Getting started
-
-First, install your Dagster code location as a Python package. By using the --editable flag, pip will install your Python package in ["editable mode"](https://pip.pypa.io/en/latest/topics/local-project-installs/#editable-installs) so that as you develop, local code changes will automatically apply.
-
-```bash
-uv pip install -e ".[dev]"
-```
-
-Duplicate the `.env.example` file and rename it to `.env`. Then, fill in the values for the environment variables in the file.
-
-Then, start the Dagster UI web server:
-
-```bash
-dagster dev
-```
-
-Open http://localhost:3000 with your browser to see the project.
-
-> [!NOTE]
-> Running `dagster dev` will put you in the finished Dagster University project (at the end of lesson 9). To see any of the other lessons run:
-> `dagster dev -m dagster_university.lesson_{LESSON NUMBER}.definitions`
->
-> Lessons 3 and 4 do not use a `definition` in the content.
-
-## Development
-
-
-### Adding new Python dependencies
-
-You can specify new Python dependencies in `setup.py`.
-
-### Unit testing
-
-Tests are in the `dagster_university_tests` directory and you can run tests using `pytest`:
-
-```bash
-pytest dagster_university_tests
-```
-
-### Formatting / Linting
-
-```bash
-ruff check --select I --fix . 
-```
-
-### Schedules and sensors
-
-If you want to enable Dagster [Schedules](https://docs.dagster.io/concepts/partitions-schedules-sensors/schedules) or [Sensors](https://docs.dagster.io/concepts/partitions-schedules-sensors/sensors) for your jobs, the [Dagster Daemon](https://docs.dagster.io/deployment/dagster-daemon) process must be running. This is done automatically when you run `dagster dev`.
-
-Once your Dagster Daemon is running, you can start turning on schedules and sensors for your jobs.
-
-## Deploy on Dagster Cloud
-
-The easiest way to deploy your Dagster project is to use Dagster Cloud.
-
-Check out the [Dagster Cloud Documentation](https://docs.dagster.cloud) to learn more. 
+| `Dagster Essentials` | [Dagster Essentials](https://courses.dagster.io/courses/dagster-essentials) finished project |
+| `Dagster & dbt` | [Dagster + dbt](https://courses.dagster.io/courses/dagster-dbt) finished project |

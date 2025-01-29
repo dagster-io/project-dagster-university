@@ -1,0 +1,46 @@
+name: quality-check
+
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        required: true
+        type: string
+
+jobs:
+  check:
+    strategy:
+      matrix:
+        os:
+          # TODO: Re-enable when testing done
+          # - windows-latest
+          - ubuntu-latest
+        python-version:
+          # - "3.9"
+          # - "3.10"
+          # - "3.11"
+          - "3.12"
+
+    runs-on: ${{ matrix.os }}
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv and set the python version
+        working-directory: ${{ inputs.working_directory }}
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Sync dependencies
+        working-directory: ${{ inputs.working_directory }}
+        run: uv sync
+
+      - name: Ruff
+        working-directory: ${{ inputs.working_directory }}
+        run: uv run ruff check
+
+      - name: Pytest
+        working-directory: ${{ inputs.working_directory }}
+        run: uv run pytest -v

@@ -1,0 +1,23 @@
+name: quality-check-dagster-dbt
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+
+  push:
+    branches:
+      - "main"
+    paths:
+      - dagster_university/dagster_and_dbt/**
+  
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - dagster_university/dagster_and_dbt/**
+
+jobs:
+  check:
+    uses: ./.github/workflows/template-quality-check.yml
+    with:
+      working_directory: ./dagster_university/dagster_and_dbt

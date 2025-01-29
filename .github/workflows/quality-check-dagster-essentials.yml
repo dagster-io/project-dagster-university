@@ -1,0 +1,23 @@
+name: quality-check-dagster-essentials
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+
+  push:
+    branches:
+      - "main"
+    paths:
+      - dagster_university/dagster_essentials/**
+  
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - dagster_university/dagster_essentials/**
+
+jobs:
+  check:
+    uses: ./.github/workflows/template-quality-check.yml
+    with:
+      working_directory: ./dagster_university/dagster_essentials

@@ -1,0 +1,27 @@
+[project]
+name = "dagster-example"
+version = "0.0.1"
+description = "Dagster Example"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "dagster==1.9.*",
+    "dagster-webserver",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "ruff",
+    "pytest",
+]
+
+[tool.dagster]
+module_name = "dagster_example.lesson_9.definitions"
+code_location_name = "dagster_example"
+
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["dagster_example"]
