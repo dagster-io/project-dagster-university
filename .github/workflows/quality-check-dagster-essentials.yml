@@ -1,9 +1,6 @@
 name: quality-check-dagster-essentials
 
 on:
-  schedule:
-    - cron: "0 0 * * 0"
-
   push:
     branches:
       - "main"
