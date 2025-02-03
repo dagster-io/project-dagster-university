@@ -9,15 +9,21 @@ on:
 
 jobs:
   check:
+    name: ${{ matrix.os }} with Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
+        os:
+          # TODO: Re-enable when testing done
+          # - windows-latest
+          - ubuntu-latest
         python-version:
           # - "3.9"
           # - "3.10"
           # - "3.11"
           - "3.12"
 
-    runs-on: "ubuntu-latest"
     steps:
 
       - name: Checkout
