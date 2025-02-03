@@ -2,7 +2,7 @@ from dagster import AssetSelection, define_asset_job
 from dagster_dbt import build_dbt_asset_selection
 
 from .assets.dbt import dbt_analytics
-from .partitions import monthly_partition, weekly_partition
+from .partitions import weekly_partition
 
 trips_by_week = AssetSelection.assets("trips_by_week")
 adhoc_request = AssetSelection.assets("adhoc_request")
