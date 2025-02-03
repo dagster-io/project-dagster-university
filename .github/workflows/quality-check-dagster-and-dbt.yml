@@ -4,14 +4,14 @@ on:
   push:
     branches:
       - "main"
-    paths:
-      - dagster_university/dagster_and_dbt/**
+    # paths:
+    #   - dagster_university/dagster_and_dbt/**
   
   pull_request:
     branches:
       - "main"
-    paths:
-      - dagster_university/dagster_and_dbt/**
+    # paths:
+    #   - dagster_university/dagster_and_dbt/**
 
 jobs:
   check:
