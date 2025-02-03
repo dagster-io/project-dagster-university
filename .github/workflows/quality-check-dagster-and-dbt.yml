@@ -1,17 +1,10 @@
-name: quality-check-dagster-dbt
+name: quality-check-dagster-and-dbt
 
 on:
-  push:
-    branches:
-      - "main"
-    # paths:
-    #   - dagster_university/dagster_and_dbt/**
-  
   pull_request:
-    branches:
-      - "main"
-    # paths:
-    #   - dagster_university/dagster_and_dbt/**
+    types: [opened, synchronize, reopened]
+    paths:
+      - dagster_university/dagster_and_dbt/**
 
 jobs:
   check:
