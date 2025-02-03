@@ -30,7 +30,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install uv and set the python version
-        working-directory: ${{ inputs.working_directory }}
         uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
