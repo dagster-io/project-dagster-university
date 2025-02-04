@@ -1,5 +1,4 @@
 import dagster as dg
-
 from dagster_essentials.lesson_8.assets import metrics, trips
 from dagster_essentials.lesson_8.definitions import defs
 from dagster_essentials.lesson_8.jobs import (
@@ -12,6 +11,7 @@ from dagster_essentials.lesson_8.schedules import (
     trip_update_schedule,
     weekly_update_schedule,
 )
+
 from dagster_essentials_tests.fixtures import drop_tax_trips_table  # noqa: F401
 
 

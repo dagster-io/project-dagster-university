@@ -1,8 +1,7 @@
 import dagster as dg
-
 from dagster_and_dbt.lesson_4.assets import dbt
 from dagster_and_dbt.lesson_4.definitions import defs
-from dagster_and_dbt.lesson_4.resources import database_resource, dbt_resource
+from dagster_and_dbt.lesson_4.resources import dbt_resource
 
 dbt_analytics_assets = dg.load_assets_from_modules(modules=[dbt])
 
@@ -11,7 +10,6 @@ def test_dbt_assets():
     result = dg.materialize(
         assets=[*dbt_analytics_assets],
         resources={
-            "database": database_resource,
             "dbt": dbt_resource,
         },
     )

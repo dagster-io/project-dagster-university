@@ -1,5 +1,4 @@
 import dagster as dg
-
 from dagster_and_dbt.lesson_7.assets import dbt, metrics, trips
 from dagster_and_dbt.lesson_7.definitions import defs
 from dagster_and_dbt.lesson_7.resources import database_resource, dbt_resource
@@ -45,7 +44,6 @@ def test_dbt_partitioned_incremental_assets():
     result = dg.materialize(
         assets=[*dbt_analytics_assets],
         resources={
-            "database": database_resource,
             "dbt": dbt_resource,
         },
         partition_key="2023-01-01",

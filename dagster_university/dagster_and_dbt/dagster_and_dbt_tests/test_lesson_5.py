@@ -1,9 +1,11 @@
 import dagster as dg
-
+import pytest
 from dagster_and_dbt.lesson_4.definitions import defs
 from dagster_and_dbt.lesson_5.assets import dbt, metrics
 from dagster_and_dbt.lesson_5.jobs import trip_update_job
 from dagster_and_dbt.lesson_5.resources import database_resource, dbt_resource
+
+from dagster_and_dbt_tests.fixtures import _dbt_command
 
 dbt_analytics_assets = dg.load_assets_from_modules(modules=[dbt])
 
