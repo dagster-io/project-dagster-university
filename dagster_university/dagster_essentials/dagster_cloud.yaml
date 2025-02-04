@@ -1,0 +1,4 @@
+locations:
+  - location_name: dagster_essentials
+    code_source:
+      package_name: dagster_essentials

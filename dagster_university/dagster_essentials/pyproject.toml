@@ -1,0 +1,34 @@
+[project]
+name = "dagster-essentials"
+version = "0.0.1"
+description = "Dagster Essentials"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "dagster==1.9.*",
+    "dagster-webserver",
+    "dagster-cloud",
+    "dagster-duckdb",
+    "geopandas",
+    "kaleido==0.2.0",
+    "pandas[parquet]",
+    "plotly",
+    "shapely",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "ruff",
+    "pytest",
+]
+
+[tool.dagster]
+module_name = "dagster_essentials.lesson_9.definitions"
+code_location_name = "dagster_essentials"
+
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["dagster_essentials"]
