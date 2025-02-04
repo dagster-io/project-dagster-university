@@ -15,13 +15,14 @@ jobs:
     strategy:
       matrix:
         os:
-          # TODO: Re-enable when testing done
+          # TODO: Reenable after remove Kaliedo dep
+          # Issue: CE-682
           # - windows-latest
           - ubuntu-latest
         python-version:
-          # - "3.9"
-          # - "3.10"
-          # - "3.11"
+          - "3.9"
+          - "3.10"
+          - "3.11"
           - "3.12"
 
     steps:

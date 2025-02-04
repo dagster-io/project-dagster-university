@@ -1,4 +1,7 @@
-# Example Module
+# Template Module
+
+> [!NOTE]  
+> This is an internal template for creating new modules. It is not content for any specific course.
 
 Use this template when creating a new Dagster University module.
 
