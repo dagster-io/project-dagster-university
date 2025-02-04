@@ -18,7 +18,7 @@ from dagster_essentials.lesson_9.sensors import (
 from dagster_essentials_tests.fixtures import drop_tax_trips_table  # noqa: F401
 
 
-def test_trips_partitioned_assets(drop_tax_trips_table):  # noqa: F811
+def test_trips_partitioned_assets(drop_tax_trips_table): # noqa: F811
     assets = [
         trips.taxi_trips_file,
         trips.taxi_zones_file,

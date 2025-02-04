@@ -1,14 +1,16 @@
 import dagster as dg
-from dagster_and_dbt.lesson_4.definitions import defs
-from dagster_and_dbt.lesson_5.assets import dbt, metrics
-from dagster_and_dbt.lesson_5.jobs import trip_update_job
-from dagster_and_dbt.lesson_5.resources import database_resource, dbt_resource
+import pytest
+
+from dagster_and_dbt_tests.fixtures import setup_dbt_env  # noqa: F401
 
 
-dbt_analytics_assets = dg.load_assets_from_modules(modules=[dbt])
+@pytest.mark.parametrize("setup_dbt_env", ["lesson_5"], indirect=True)
+def test_dbt_assets(setup_dbt_env): # noqa: F811
+    from dagster_and_dbt.lesson_5.assets import dbt, metrics
+    from dagster_and_dbt.lesson_5.resources import database_resource, dbt_resource
 
+    dbt_analytics_assets = dg.load_assets_from_modules(modules=[dbt])
 
-def test_dbt_assets():
     result = dg.materialize(
         assets=[metrics.airport_trips, *dbt_analytics_assets],
         resources={
@@ -18,10 +20,14 @@ def test_dbt_assets():
     )
     assert result.success
 
+@pytest.mark.parametrize("setup_dbt_env", ["lesson_5"], indirect=True)
+def test_jobs(setup_dbt_env): # noqa: F811
+    from dagster_and_dbt.lesson_5.jobs import trip_update_job
 
-def test_jobs():
     assert trip_update_job
 
+@pytest.mark.parametrize("setup_dbt_env", ["lesson_5"], indirect=True)
+def test_def_can_load(setup_dbt_env): # noqa: F811
+    from dagster_and_dbt.lesson_4.definitions import defs
 
-def test_def_can_load():
     assert defs
