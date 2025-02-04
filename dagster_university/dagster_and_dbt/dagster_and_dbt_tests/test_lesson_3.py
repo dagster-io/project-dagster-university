@@ -1,5 +1,4 @@
 import dagster as dg
-import pytest
 from dagster_and_dbt.lesson_3.assets import dbt
 from dagster_and_dbt.lesson_3.definitions import defs
 from dagster_and_dbt.lesson_3.resources import dbt_resource
