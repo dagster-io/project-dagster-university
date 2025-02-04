@@ -175,15 +175,13 @@ tmp*/
 *.geojson
 *.parquet
 
-data/outputs/*
-data/raw/*
-data/requests/*.json
-data/staging/*
+**/data/outputs/*.csv
+**/data/outputs/*.png
+**/data/raw/*
+**/data/requests/*.json
+**/data/staging/*
 
 .ruff_cache
 
 # dbt
 .user.yml
-
-dagster_university/dagster_and_dbt/data/outputs
-dagster_university/dagster_essentials/data/outputs
