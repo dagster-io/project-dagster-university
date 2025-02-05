@@ -1,0 +1,48 @@
+name: quality-check
+
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        required: true
+        type: string
+
+jobs:
+  check:
+    name: ${{ matrix.os }} with Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os:
+          # TODO: Reenable after remove Kaliedo dep
+          # Issue: CE-682
+          # - windows-latest
+          - ubuntu-latest
+        python-version:
+          - "3.9"
+          - "3.10"
+          - "3.11"
+          - "3.12"
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv and set the python version
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Sync dependencies
+        working-directory: ${{ inputs.working_directory }}
+        run: uv sync
+
+      - name: Ruff
+        working-directory: ${{ inputs.working_directory }}
+        run: uv run ruff check
+
+      - name: Pytest
+        working-directory: ${{ inputs.working_directory }}
+        run: uv run pytest -v
