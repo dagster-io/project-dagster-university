@@ -15,9 +15,7 @@ jobs:
     strategy:
       matrix:
         os:
-          # TODO: Reenable after remove Kaliedo dep
-          # Issue: CE-682
-          # - windows-latest
+          - windows-latest
           - ubuntu-latest
         python-version:
           - "3.9"

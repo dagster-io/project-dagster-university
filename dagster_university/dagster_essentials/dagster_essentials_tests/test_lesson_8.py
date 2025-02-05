@@ -1,8 +1,8 @@
 import dagster as dg
+
 from dagster_essentials.lesson_8.assets import metrics, trips
 from dagster_essentials.lesson_8.definitions import defs
 from dagster_essentials.lesson_8.jobs import (
-    adhoc_request_job,
     trip_update_job,
     weekly_update_job,
 )
@@ -11,7 +11,6 @@ from dagster_essentials.lesson_8.schedules import (
     trip_update_schedule,
     weekly_update_schedule,
 )
-
 from dagster_essentials_tests.fixtures import drop_tax_trips_table  # noqa: F401
 
 
@@ -51,7 +50,6 @@ def test_trips_by_week_partitioned_assets():
 def test_jobs():
     assert trip_update_job
     assert weekly_update_job
-    assert adhoc_request_job
 
     assert trip_update_job.name == "trip_update_job"
     assert weekly_update_job.name == "weekly_update_job"

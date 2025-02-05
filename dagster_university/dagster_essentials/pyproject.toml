@@ -10,10 +10,9 @@ dependencies = [
     "dagster-cloud",
     "dagster-duckdb",
     "geopandas",
-    "kaleido==0.2.0",
     "pandas[parquet]",
-    "plotly",
     "shapely",
+    "matplotlib",
 ]
 
 [tool.uv]

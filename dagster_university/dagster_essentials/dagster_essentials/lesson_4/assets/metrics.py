@@ -4,9 +4,8 @@ from datetime import datetime, timedelta
 import dagster as dg
 import duckdb
 import geopandas as gpd
+import matplotlib.pyplot as plt
 import pandas as pd
-import plotly.express as px
-import plotly.io as pio
 from dagster._utils.backoff import backoff
 
 from . import constants
@@ -102,17 +101,13 @@ def manhattan_stats() -> None:
 def manhattan_map() -> None:
     trips_by_zone = gpd.read_file(constants.MANHATTAN_STATS_FILE_PATH)
 
-    fig = px.choropleth_mapbox(
-        trips_by_zone,
-        geojson=trips_by_zone.geometry.__geo_interface__,
-        locations=trips_by_zone.index,
-        color="num_trips",
-        color_continuous_scale="Plasma",
-        mapbox_style="carto-positron",
-        center={"lat": 40.758, "lon": -73.985},
-        zoom=11,
-        opacity=0.7,
-        labels={"num_trips": "Number of Trips"},
-    )
+    fig, ax = plt.subplots(figsize=(10, 10))
+    trips_by_zone.plot(column="num_trips", cmap="plasma", legend=True, ax=ax, edgecolor="black")
+    ax.set_title("Number of Trips per Taxi Zone in Manhattan")
 
-    pio.write_image(fig, constants.MANHATTAN_MAP_FILE_PATH)
+    ax.set_xlim([-74.05, -73.90])  # Adjust longitude range
+    ax.set_ylim([40.70, 40.82])  # Adjust latitude range
+    
+    # Save the image
+    plt.savefig(constants.MANHATTAN_MAP_FILE_PATH, format="png", bbox_inches="tight")
+    plt.close(fig)

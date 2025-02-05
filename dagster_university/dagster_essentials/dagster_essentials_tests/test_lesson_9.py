@@ -1,5 +1,9 @@
+from pathlib import Path
+
 import dagster as dg
-from dagster_essentials.lesson_9.assets import metrics, trips
+import yaml
+
+from dagster_essentials.lesson_9.assets import metrics, requests, trips
 from dagster_essentials.lesson_9.definitions import defs
 from dagster_essentials.lesson_9.jobs import (
     adhoc_request_job,
@@ -14,7 +18,6 @@ from dagster_essentials.lesson_9.schedules import (
 from dagster_essentials.lesson_9.sensors import (
     adhoc_request_sensor,
 )
-
 from dagster_essentials_tests.fixtures import drop_tax_trips_table  # noqa: F401
 
 
@@ -26,6 +29,7 @@ def test_trips_partitioned_assets(drop_tax_trips_table): # noqa: F811
         trips.taxi_zones,
         metrics.manhattan_stats,
         metrics.manhattan_map,
+        requests.adhoc_request,
     ]
     result = dg.materialize(
         assets=assets,
@@ -33,6 +37,9 @@ def test_trips_partitioned_assets(drop_tax_trips_table): # noqa: F811
             "database": database_resource,
         },
         partition_key="2023-01-01",
+        run_config=yaml.safe_load(
+            (Path(__file__).absolute().parent / "run_config.yaml").open()
+        ),
     )
     assert result.success
 
