@@ -14,7 +14,6 @@ from dagster_duckdb import DuckDBResource
 from smart_open import open
 
 from ..partitions import weekly_partition
-from ..resources import smart_open_config
 from . import constants
 
 

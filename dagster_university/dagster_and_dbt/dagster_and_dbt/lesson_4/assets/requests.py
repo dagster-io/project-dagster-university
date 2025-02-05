@@ -5,7 +5,6 @@ from dagster import Config, MaterializeResult, MetadataValue, asset
 from dagster_duckdb import DuckDBResource
 from smart_open import open
 
-from ..resources import smart_open_config
 from . import constants
 
 
