@@ -150,24 +150,19 @@ def airport_trips(database: DuckDBResource) -> MaterializeResult:
     with database.get_connection() as conn:
         airport_trips = conn.execute(query).fetch_df()
 
+    # Plot bars
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Plot bars
-    airport_trips.groupby("destination_borough").plot(
-        kind="bar",
-        x="zone",
-        y="trips",
-        ax=ax,
-        colormap="viridis",
-        legend=True
+    # Group data by destination_borough and plot the bar chart
+    airport_trips.groupby(['zone', 'destination_borough']).sum()['trips'].unstack().plot(
+        kind='bar', stacked=True, ax=ax
     )
 
-    ax.set_title("Number of Trips by Zone")
+    # Customize the plot
     ax.set_xlabel("Zone")
     ax.set_ylabel("Number of Trips")
+    ax.set_title("Trips from Airport by Destination Borough")
     ax.legend(title="Destination Borough")
-    plt.xticks(rotation=45)
-    plt.tight_layout()
 
     # Save the image
     plt.savefig(constants.AIRPORT_TRIPS_FILE_PATH, format="png", bbox_inches="tight")
