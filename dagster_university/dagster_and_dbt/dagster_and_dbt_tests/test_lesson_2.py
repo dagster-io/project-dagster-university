@@ -1,4 +1,5 @@
 import dagster as dg
+
 from dagster_and_dbt.lesson_2.assets import metrics, trips
 from dagster_and_dbt.lesson_2.definitions import defs
 from dagster_and_dbt.lesson_2.jobs import trip_update_job
