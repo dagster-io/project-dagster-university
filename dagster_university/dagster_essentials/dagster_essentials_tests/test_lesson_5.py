@@ -1,4 +1,5 @@
 import dagster as dg
+
 from dagster_essentials.lesson_5.assets import metrics, trips
 from dagster_essentials.lesson_5.definitions import defs
 

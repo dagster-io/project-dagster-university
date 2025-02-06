@@ -1,4 +1,5 @@
 import dagster as dg
+
 from dagster_essentials.lesson_7.assets import metrics, trips
 from dagster_essentials.lesson_7.definitions import defs
 from dagster_essentials.lesson_7.jobs import trip_update_job, weekly_update_job

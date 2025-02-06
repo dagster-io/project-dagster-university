@@ -1,9 +1,8 @@
 import base64
 
 import geopandas as gpd
+import matplotlib.pyplot as plt
 import pandas as pd
-import plotly.express as px
-import plotly.io as pio
 from dagster import (
     AssetExecutionContext,
     AssetKey,
@@ -15,7 +14,6 @@ from dagster_duckdb import DuckDBResource
 from smart_open import open
 
 from ..partitions import weekly_partition
-from ..resources import smart_open_config
 from . import constants
 
 
@@ -112,26 +110,21 @@ def manhattan_map() -> MaterializeResult:
     """A map of the number of trips per taxi zone in Manhattan."""
     trips_by_zone = gpd.read_file("data/staging/manhattan_stats.geojson")
 
-    fig = px.choropleth_mapbox(
-        trips_by_zone,
-        geojson=trips_by_zone.geometry.__geo_interface__,
-        locations=trips_by_zone.index,
-        color="num_trips",
-        color_continuous_scale="Plasma",
-        mapbox_style="carto-positron",
-        center={"lat": 40.758, "lon": -73.985},
-        zoom=11,
-        opacity=0.7,
-        labels={"num_trips": "Number of Trips"},
-    )
+    fig, ax = plt.subplots(figsize=(10, 10))
+    trips_by_zone.plot(column="num_trips", cmap="plasma", legend=True, ax=ax, edgecolor="black")
+    ax.set_title("Number of Trips per Taxi Zone in Manhattan")
 
-    with open(
-        constants.MANHATTAN_MAP_FILE_PATH, "wb", transport_params=smart_open_config
-    ) as output_file:
-        pio.write_image(fig, output_file)
+    ax.set_xlim([-74.05, -73.90])  # Adjust longitude range
+    ax.set_ylim([40.70, 40.82])  # Adjust latitude range
+    
+    # Save the image
+    plt.savefig(constants.MANHATTAN_MAP_FILE_PATH, format="png", bbox_inches="tight")
+    plt.close(fig)
+
+    with open(constants.MANHATTAN_MAP_FILE_PATH, "rb") as file:
+        image_data = file.read()
 
     # Convert the image data to base64
-    image_data = fig.to_image()
     base64_data = base64.b64encode(image_data).decode("utf-8")
     md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
 
@@ -157,21 +150,25 @@ def airport_trips(database: DuckDBResource) -> MaterializeResult:
     with database.get_connection() as conn:
         airport_trips = conn.execute(query).fetch_df()
 
-    fig = px.bar(
-        airport_trips,
-        x="zone",
-        y="trips",
-        color="destination_borough",
-        barmode="relative",
-        labels={
-            "zone": "Zone",
-            "trips": "Number of Trips",
-            "destination_borough": "Destination Borough",
-        },
+    # Plot bars
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Group data by destination_borough and plot the bar chart
+    airport_trips.groupby(['zone', 'destination_borough']).sum()['trips'].unstack().plot(
+        kind='bar', stacked=True, ax=ax
     )
 
-    pio.write_image(fig, constants.AIRPORT_TRIPS_FILE_PATH)
+    # Customize the plot
+    ax.set_xlabel("Zone")
+    ax.set_ylabel("Number of Trips")
+    ax.set_title("Trips from Airport by Destination Borough")
+    ax.legend(title="Destination Borough")
 
+    # Save the image
+    plt.savefig(constants.AIRPORT_TRIPS_FILE_PATH, format="png", bbox_inches="tight")
+    plt.close(fig)
+
+    # Convert the image data to base64
     with open(constants.AIRPORT_TRIPS_FILE_PATH, "rb") as file:
         image_data = file.read()
 

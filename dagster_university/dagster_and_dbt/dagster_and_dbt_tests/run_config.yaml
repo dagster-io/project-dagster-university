@@ -1,0 +1,7 @@
+ops:
+  adhoc_request:
+    config:
+      filename: "example.json"
+      borough: "Staten Island"
+      start_date: "2023-01-10"
+      end_date: "2023-01-25"

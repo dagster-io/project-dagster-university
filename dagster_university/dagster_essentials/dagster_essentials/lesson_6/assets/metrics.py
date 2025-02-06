@@ -2,9 +2,8 @@ import base64
 from datetime import datetime, timedelta
 
 import geopandas as gpd
+import matplotlib.pyplot as plt
 import pandas as pd
-import plotly.express as px
-import plotly.io as pio
 from dagster import (
     AssetKey,
     MaterializeResult,
@@ -14,72 +13,6 @@ from dagster import (
 from dagster_duckdb import DuckDBResource
 
 from . import constants
-
-
-@asset(
-    deps=[AssetKey(["taxi_trips"]), AssetKey(["taxi_zones"])],
-    key_prefix="manhattan",
-)
-def manhattan_stats(database: DuckDBResource):
-    """
-    Metrics on taxi trips in Manhattan
-    """
-
-    query = """
-        select
-            zones.zone,
-            zones.borough,
-            zones.geometry,
-            count(1) as num_trips,
-        from trips
-        left join zones on trips.pickup_zone_id = zones.zone_id
-        where geometry is not null
-        group by zone, borough, geometry
-    """
-
-    with database.get_connection() as conn:
-        trips_by_zone = conn.execute(query).fetch_df()
-
-    trips_by_zone["geometry"] = gpd.GeoSeries.from_wkt(trips_by_zone["geometry"])
-    trips_by_zone = gpd.GeoDataFrame(trips_by_zone)
-
-    with open(constants.MANHATTAN_STATS_FILE_PATH, "w") as output_file:
-        output_file.write(trips_by_zone.to_json())
-
-
-@asset(
-    deps=[AssetKey(["manhattan", "manhattan_stats"])],
-)
-def manhattan_map():
-    """
-    A map of the number of trips per taxi zone in Manhattan
-    """
-
-    trips_by_zone = gpd.read_file("data/staging/manhattan_stats.geojson")
-
-    fig = px.choropleth_mapbox(
-        trips_by_zone,
-        geojson=trips_by_zone.geometry.__geo_interface__,
-        locations=trips_by_zone.index,
-        color="num_trips",
-        color_continuous_scale="Plasma",
-        mapbox_style="carto-positron",
-        center={"lat": 40.758, "lon": -73.985},
-        zoom=11,
-        opacity=0.7,
-        labels={"num_trips": "Number of Trips"},
-    )
-
-    pio.write_image(fig, constants.MANHATTAN_MAP_FILE_PATH)
-
-    with open(constants.MANHATTAN_MAP_FILE_PATH, "rb") as file:
-        image_data = file.read()
-
-    # Convert the image data to base64
-    base64_data = base64.b64encode(image_data).decode("utf-8")
-    md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
-
-    return MaterializeResult(metadata={"preview": MetadataValue.md(md_content)})
 
 
 @asset(deps=["taxi_trips"])
@@ -132,3 +65,65 @@ def trips_by_week(database: DuckDBResource) -> None:
     result = result.sort_values(by="period")
 
     result.to_csv(constants.TRIPS_BY_WEEK_FILE_PATH, index=False)
+
+
+@asset(
+    deps=[AssetKey(["taxi_trips"]), AssetKey(["taxi_zones"])],
+    key_prefix="manhattan",
+)
+def manhattan_stats(database: DuckDBResource):
+    """
+    Metrics on taxi trips in Manhattan
+    """
+
+    query = """
+        select
+            zones.zone,
+            zones.borough,
+            zones.geometry,
+            count(1) as num_trips,
+        from trips
+        left join zones on trips.pickup_zone_id = zones.zone_id
+        where geometry is not null
+        group by zone, borough, geometry
+    """
+
+    with database.get_connection() as conn:
+        trips_by_zone = conn.execute(query).fetch_df()
+
+    trips_by_zone["geometry"] = gpd.GeoSeries.from_wkt(trips_by_zone["geometry"])
+    trips_by_zone = gpd.GeoDataFrame(trips_by_zone)
+
+    with open(constants.MANHATTAN_STATS_FILE_PATH, "w") as output_file:
+        output_file.write(trips_by_zone.to_json())
+
+
+@asset(
+    deps=[AssetKey(["manhattan", "manhattan_stats"])],
+)
+def manhattan_map():
+    """
+    A map of the number of trips per taxi zone in Manhattan
+    """
+
+    trips_by_zone = gpd.read_file("data/staging/manhattan_stats.geojson")
+
+    fig, ax = plt.subplots(figsize=(10, 10))
+    trips_by_zone.plot(column="num_trips", cmap="plasma", legend=True, ax=ax, edgecolor="black")
+    ax.set_title("Number of Trips per Taxi Zone in Manhattan")
+
+    ax.set_xlim([-74.05, -73.90])  # Adjust longitude range
+    ax.set_ylim([40.70, 40.82])  # Adjust latitude range
+    
+    # Save the image
+    plt.savefig(constants.MANHATTAN_MAP_FILE_PATH, format="png", bbox_inches="tight")
+    plt.close(fig)
+
+    with open(constants.MANHATTAN_MAP_FILE_PATH, "rb") as file:
+        image_data = file.read()
+
+    # Convert the image data to base64
+    base64_data = base64.b64encode(image_data).decode("utf-8")
+    md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
+
+    return MaterializeResult(metadata={"preview": MetadataValue.md(md_content)})
