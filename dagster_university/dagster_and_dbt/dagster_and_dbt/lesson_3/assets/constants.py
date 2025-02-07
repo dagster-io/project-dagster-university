@@ -18,9 +18,7 @@ def get_path_for_env(path: str) -> str:
         return path
 
 
-# TODO: Fix when self host CSV
-# TAXI_ZONES_FILE_PATH = get_path_for_env("data/raw/taxi_zones.csv")
-TAXI_ZONES_FILE_PATH = os.path.join("data", "source", "taxi_zones.csv")
+TAXI_ZONES_FILE_PATH = get_path_for_env("data/raw/taxi_zones.csv")
 TAXI_TRIPS_TEMPLATE_FILE_PATH = get_path_for_env("data/raw/taxi_trips_{}.parquet")
 
 TRIPS_BY_AIRPORT_FILE_PATH = get_path_for_env(

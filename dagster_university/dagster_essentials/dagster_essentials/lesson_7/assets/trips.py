@@ -26,13 +26,12 @@ def taxi_zones_file() -> None:
     """
     The raw CSV file for the taxi zones dataset. Sourced from the NYC Open Data portal.
     """
-    # TODO: Fix when self host CSV
-    # raw_taxi_zones = requests.get(
-    #     "https://data.cityofnewyork.us/api/views/755u-8jsi/rows.csv?accessType=DOWNLOAD"
-    # )
+    raw_taxi_zones = requests.get(
+        "https://community-engineering-artifacts.s3.us-west-2.amazonaws.com/dagster-university/data/taxi_zones.csv"
+    )
 
-    # with open(constants.TAXI_ZONES_FILE_PATH, "wb") as output_file:
-    #     output_file.write(raw_taxi_zones.content)
+    with open(constants.TAXI_ZONES_FILE_PATH, "wb") as output_file:
+        output_file.write(raw_taxi_zones.content)
 
 
 @asset(deps=["taxi_trips_file"])
