@@ -111,12 +111,14 @@ def manhattan_map() -> MaterializeResult:
     trips_by_zone = gpd.read_file("data/staging/manhattan_stats.geojson")
 
     fig, ax = plt.subplots(figsize=(10, 10))
-    trips_by_zone.plot(column="num_trips", cmap="plasma", legend=True, ax=ax, edgecolor="black")
+    trips_by_zone.plot(
+        column="num_trips", cmap="plasma", legend=True, ax=ax, edgecolor="black"
+    )
     ax.set_title("Number of Trips per Taxi Zone in Manhattan")
 
     ax.set_xlim([-74.05, -73.90])  # Adjust longitude range
     ax.set_ylim([40.70, 40.82])  # Adjust latitude range
-    
+
     # Save the image
     plt.savefig(constants.MANHATTAN_MAP_FILE_PATH, format="png", bbox_inches="tight")
     plt.close(fig)
@@ -154,9 +156,9 @@ def airport_trips(database: DuckDBResource) -> MaterializeResult:
     fig, ax = plt.subplots(figsize=(10, 6))
 
     # Group data by destination_borough and plot the bar chart
-    airport_trips.groupby(['zone', 'destination_borough']).sum()['trips'].unstack().plot(
-        kind='bar', stacked=True, ax=ax
-    )
+    airport_trips.groupby(["zone", "destination_borough"]).sum()[
+        "trips"
+    ].unstack().plot(kind="bar", stacked=True, ax=ax)
 
     # Customize the plot
     ax.set_xlabel("Zone")
