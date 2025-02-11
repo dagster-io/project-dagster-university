@@ -5,9 +5,11 @@ on:
       - main
     paths:
       - course/**
+      - .github/workflows/build-dagster-university.yml
   pull_request:
     paths:
       - course/**
+      - .github/workflows/build-dagster-university.yml
 concurrency:
   # Cancel in-progress runs on same branch
   group: ${{ github.ref }}
@@ -31,8 +33,8 @@ jobs:
         if: github.event.pull_request
         run: echo "PR_FETCH_DEPTH=$(( ${{ github.event.pull_request.commits }} + 1 ))" >> "${GITHUB_ENV}"
 
-      - name: Checkout master branch
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      - name: Checkout main branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/checkout@v4
 
       - name: Checkout PR branch
@@ -51,14 +53,14 @@ jobs:
           scope: ${{ secrets.VERCEL_ORG_ID }}
           alias-domains: ${{ env.BRANCH_PREVIEW_SUBDOMAIN }}.dagster-university.dagster-docs.io
 
-      # Deploy to Vercel Production on push to master branch
+      # Deploy to Vercel Production on push to main branch
       - name: Checkout docs-prod branch
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/checkout@v4
 
       - name: Publish to Vercel Production
         uses: amondnet/vercel-action@v25
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
