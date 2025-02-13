@@ -42,19 +42,7 @@ Once the new step is pushed to the remote, GitHub will automatically try to run 
 
 At this point, your dbt project will be successfully deployed onto Dagster+ and you should be able to see your models in the asset graph!
 
-{% table %}
-
-- Successful deployment
-- dbt assets in the Asset graph
-
----
-
-- ![Successful deployment screen in Dagster+](/images/dagster-dbt/lesson-7/successful-cloud-setup.png)
-- ![dbt models in the Asset graph in Dagster+](/images/dagster-dbt/lesson-7/asset-graph.png)
-
-{% /table %}
-
----
+![dbt models in the Asset graph in Dagster+](/images/dagster-dbt/lesson-7/asset-graph.png)
 
 ## Experiencing issues?
 
