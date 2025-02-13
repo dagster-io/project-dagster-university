@@ -17,6 +17,10 @@ from . import constants
 
 @asset(deps=["taxi_trips"])
 def trips_by_week(database: DuckDBResource) -> None:
+    """
+    The number of trips per week, aggregated by week.
+    These date-based aggregations are done in-memory, which is expensive, but enables you to do time-based aggregations consistently across data warehouses (ex. DuckDB and BigQuery)
+    """
     current_date = datetime.strptime("2023-01-01", constants.DATE_FORMAT)
     end_date = datetime.now()
 
@@ -70,7 +74,6 @@ def trips_by_week(database: DuckDBResource) -> None:
 @asset(
     deps=[AssetKey(["taxi_trips"]), AssetKey(["taxi_zones"])],
     key_prefix="manhattan",
-    compute_kind="DuckDB",
 )
 def manhattan_stats(database: DuckDBResource):
     """
@@ -101,7 +104,6 @@ def manhattan_stats(database: DuckDBResource):
 
 @asset(
     deps=[AssetKey(["manhattan", "manhattan_stats"])],
-    compute_kind="Python",
 )
 def manhattan_map():
     """

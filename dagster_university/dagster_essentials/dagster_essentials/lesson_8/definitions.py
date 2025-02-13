@@ -8,7 +8,6 @@ from .schedules import trip_update_schedule, weekly_update_schedule
 trip_assets = load_assets_from_modules([trips])
 metric_assets = load_assets_from_modules(
     modules=[metrics],
-    group_name="metrics",
 )
 
 all_jobs = [trip_update_job, weekly_update_job]

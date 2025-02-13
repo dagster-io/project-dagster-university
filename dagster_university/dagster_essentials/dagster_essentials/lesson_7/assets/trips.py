@@ -62,6 +62,9 @@ def taxi_trips(database: DuckDBResource) -> None:
 
 @asset(deps=["taxi_zones_file"])
 def taxi_zones(database: DuckDBResource) -> None:
+    """
+    The raw taxi zones dataset, loaded into a DuckDB database.
+    """
     query = f"""
         create or replace table zones as (
             select
