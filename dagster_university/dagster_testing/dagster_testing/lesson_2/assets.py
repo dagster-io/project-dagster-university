@@ -15,6 +15,15 @@ def processed_file(loaded_file: str) -> str:
     return loaded_file.strip()
 
 
+def func_wrong_type() -> str:
+    return 2
+
+
+@dg.asset
+def wrong_type_annotation() -> str:
+    return 2
+
+
 class FilepathConfig(dg.Config):
     path: str
 

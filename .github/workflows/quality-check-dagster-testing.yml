@@ -1,0 +1,16 @@
+name: quality-check-dagster-testing
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - dagster_university/dagster_testing/**
+
+jobs:
+  check:
+    uses: ./.github/workflows/template-quality-check.yml
+    with:
+      working_directory: ./dagster_university/dagster_testing

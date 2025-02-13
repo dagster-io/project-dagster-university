@@ -1,12 +1,15 @@
 import pytest
 import yaml
 from pathlib import Path
+from dagster._core.errors import DagsterTypeCheckDidNotPass
 
 import dagster as dg
-from dagster_testing.lesson_1.assets import (
+from dagster_testing.lesson_2.assets import (
     loaded_file,
     processed_file,
+    wrong_type_annotation,
     FilepathConfig,
+    func_wrong_type,
     loaded_file_config,
     processed_file_config,
 )
@@ -25,6 +28,19 @@ def test_processed_file():
     assert processed_file(" contents  ") == "contents"
 
 
+def test_func_wrong_type():
+    assert func_wrong_type() == 2
+
+
+# def test_wrong_type_annotation():
+#     assert wrong_type_annotation() == 2
+
+
+def test_wrong_type_annotation_error():
+    with pytest.raises(DagsterTypeCheckDidNotPass):
+        wrong_type_annotation()
+
+
 def test_assets():
     assets = [
         loaded_file,
@@ -39,7 +55,7 @@ def test_assets():
 
 def test_loaded_file_config():
     config = FilepathConfig(path="path.txt")
-    loaded_file_config(config)
+    loaded_file_config(config) == "  example  "
 
 
 @pytest.fixture()
@@ -59,7 +75,7 @@ def test_assets_config():
     result = dg.materialize(
         assets=assets,
         run_config=yaml.safe_load(
-            (Path(__file__).absolute().parent / "lesson_1_run_config.yaml").open()
+            (Path(__file__).absolute().parent / "lesson_2_run_config.yaml").open()
         ),
     )
     assert result.success
