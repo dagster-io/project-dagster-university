@@ -1,0 +1,4 @@
+ops:
+  author_works_with_resource_config:
+    config:
+      name: "Twain"
