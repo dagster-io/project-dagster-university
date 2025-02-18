@@ -9,7 +9,9 @@ import pytest
 def docker_compose():
     # Start Docker Compose
     file_path = Path(__file__).absolute().parent / "docker-compose.yaml"
-    subprocess.run(["docker-compose", "-f", file_path, "up", "-d"], check=True)
+    subprocess.run(
+        ["docker", "compose", "-f", file_path, "up", "--build", "-d"], check=True
+    )
 
     max_retries = 5
     for i in range(max_retries):
@@ -24,4 +26,4 @@ def docker_compose():
     yield
 
     # Tear down Docker Compose
-    subprocess.run(["docker-compose", "-f", file_path, "down"], check=True)
+    subprocess.run(["docker", "compose", "-f", file_path, "down"], check=True)
