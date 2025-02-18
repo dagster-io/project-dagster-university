@@ -1,17 +1,18 @@
-import pytest
-import yaml
 from pathlib import Path
-from dagster._core.errors import DagsterTypeCheckDidNotPass
 
 import dagster as dg
+import pytest
+import yaml
+from dagster._core.errors import DagsterTypeCheckDidNotPass
+
 from dagster_testing.lesson_2.assets import (
-    loaded_file,
-    processed_file,
-    wrong_type_annotation,
     FilepathConfig,
     func_wrong_type,
+    loaded_file,
     loaded_file_config,
+    processed_file,
     processed_file_config,
+    wrong_type_annotation,
 )
 
 

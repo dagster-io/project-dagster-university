@@ -1,5 +1,4 @@
 import dagster as dg
-
 import requests
 
 API_URL = "https://openlibrary.org/search/authors.json"

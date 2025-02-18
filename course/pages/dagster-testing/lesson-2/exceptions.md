@@ -4,7 +4,7 @@ module: 'dagster_testing'
 lesson: '2'
 ---
 
-In generic Python a function does not need to match it's type annotation. For example:
+In generic Python a function does not need to match its type annotation. For example:
 
 ```python
 def func_wrong_type() -> str:

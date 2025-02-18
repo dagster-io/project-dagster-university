@@ -1,13 +1,19 @@
 import dagster as dg
 
-from .assets import CatFacts, cat_facts_with_resource, cat_facts
-
-
-catfacts_resource = CatFacts()
+from .assets import (
+    AuthorResource,
+    author_works,
+    author_works_with_resource,
+    author_works_with_resource_config,
+)
 
 defs = dg.Definitions(
-    assets=[cat_facts, cat_facts_with_resource],
+    assets=[
+        author_works,
+        author_works_with_resource,
+        author_works_with_resource_config,
+    ],
     resources={
-        "catfacts_resource": catfacts_resource,
+        "author_resource": AuthorResource(),
     },
 )

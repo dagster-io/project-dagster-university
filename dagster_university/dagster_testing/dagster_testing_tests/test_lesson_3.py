@@ -1,12 +1,13 @@
-from unittest.mock import patch, Mock
 from pathlib import Path
+from unittest.mock import Mock, patch
 
-import yaml
 import dagster as dg
+import yaml
+
 from dagster_testing.lesson_3.assets import (
-    author_works,
     API_URL,
     AuthorResource,
+    author_works,
     author_works_with_resource,
     author_works_with_resource_config,
 )
@@ -60,21 +61,6 @@ def test_author_resource_mock(mock_get):
     mock_get.assert_called_once_with(API_URL, params={"q": "twain"})
 
 
-def test_author_mocked_resource():
-    fake_author = {
-        "author": "Nick",
-        "top_work": "Dagster",
-    }
-
-    mocked_resource = Mock()
-    mocked_resource.get_authors.return_value = [fake_author]
-
-    result = author_works_with_resource("twain", mocked_resource)
-
-    assert len(result) == 1
-    assert result[0] == fake_author
-
-
 @patch("requests.get")
 def test_author_assets_config(mock_get):
     mock_response = Mock()
@@ -90,3 +76,18 @@ def test_author_assets_config(mock_get):
         ),
     )
     assert result.success
+
+
+def test_author_mocked_resource():
+    fake_author = {
+        "author": "Mark Twain",
+        "top_work": "Adventures of Huckleberry Finn",
+    }
+
+    mocked_resource = Mock()
+    mocked_resource.get_authors.return_value = [fake_author]
+
+    result = author_works_with_resource("twain", mocked_resource)
+
+    assert len(result) == 1
+    assert result[0] == fake_author

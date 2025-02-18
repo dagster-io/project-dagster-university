@@ -4,23 +4,22 @@ module: 'dagster_testing'
 lesson: '2'
 ---
 
-Some assets in our pipelines might be dynamic and set at execution time with a run configuration. Let's rework `loaded_file` asset to take in a configuration so it can accept any file.
+Some assets in our pipelines might be dynamic and set at execution time with a run configuration. Let's rework the `loaded_file` asset to take in a configuration so it can accept any file.
 
 ```python
 class FilepathConfig(dg.Config):
-    path: str
+   path: str
 
 
 @dg.asset
 def loaded_file_config(config: FilepathConfig) -> str:
-    current_file_path = os.path.dirname(os.path.realpath(__file__))
-    file_name = os.path.join(current_file_path, config.path)
-    with open(file_name) as file:
-        return file.read()
+   current_file_path = os.path.dirname(os.path.realpath(__file__))
+   file_name = os.path.join(current_file_path, config.path)
+   with open(file_name) as file:
+       return file.read()
 ```
 
-Now let's write a new test to ensure that file in the tests directory `path.txt` works as expected. **Hint** The contents of that file is "  example  ".
-
+Now let's write a new test to ensure that the file in the tests directory `path.txt` works as expected. **Hint** The contents of that file is "  example  ".
 
 ```python {% obfuscated="true" %}
 def test_loaded_file_config():
