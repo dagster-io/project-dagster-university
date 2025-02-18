@@ -14,3 +14,6 @@ jobs:
     uses: ./.github/workflows/template-quality-check.yml
     with:
       working_directory: ./dagster_university/dagster_testing
+      # TODO:  Disable integration tests from GHA
+      # postgres image has no windows/amd64
+      pytest_cmd: uv run pytest -v -m "not integration"

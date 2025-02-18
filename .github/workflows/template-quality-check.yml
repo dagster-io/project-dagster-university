@@ -6,6 +6,10 @@ on:
       working_directory:
         required: true
         type: string
+      pytest_cmd:
+        required: false
+        type: string
+        default: uv run pytest -v
 
 jobs:
   check:
@@ -43,4 +47,4 @@ jobs:
 
       - name: Pytest
         working-directory: ${{ inputs.working_directory }}
-        run: uv run pytest -v
+        run: ${{ inputs.pytest_cmd }}

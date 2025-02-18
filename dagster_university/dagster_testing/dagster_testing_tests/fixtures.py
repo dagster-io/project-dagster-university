@@ -10,7 +10,9 @@ def docker_compose():
     # Start Docker Compose
     file_path = Path(__file__).absolute().parent / "docker-compose.yaml"
     subprocess.run(
-        ["docker", "compose", "-f", file_path, "up", "--build", "-d"], check=True
+        ["docker", "compose", "-f", file_path, "up", "--build", "-d"],
+        check=True,
+        capture_output=True,
     )
 
     max_retries = 5
