@@ -1,7 +1,5 @@
 from datetime import datetime
 
-import dagster as dg
-
 import dagster_testing.lesson_5.jobs as jobs
 from dagster_testing.lesson_5.assets import (
     my_partitioned_config,

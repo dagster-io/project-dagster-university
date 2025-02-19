@@ -1,8 +1,6 @@
-from pathlib import Path
 from unittest.mock import Mock, patch
 
 import dagster as dg
-import yaml
 
 from dagster_testing.lesson_3.assets import (
     API_URL,
