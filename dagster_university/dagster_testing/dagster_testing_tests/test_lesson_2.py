@@ -14,6 +14,7 @@ from dagster_testing.lesson_2.assets import (
     processed_file_config,
     wrong_type_annotation,
 )
+from dagster_testing.lesson_2.definitions import defs
 
 
 @pytest.fixture()
@@ -100,3 +101,7 @@ def test_assets_config_yaml():
 
     result.output_for_node("loaded_file_config") == "  example  "
     result.output_for_node("processed_file_config") == "example"
+
+
+def test_def():
+    assert defs

@@ -33,14 +33,14 @@ def test_author(mock_get):
     mock_response.raise_for_status.return_value = None
     mock_get.return_value = mock_response
 
-    result = author_works("twain")
+    result = author_works()
 
     assert len(result) == 2
     assert result[0] == {
         "author": "Mark Twain",
         "top_work": "Adventures of Huckleberry Finn",
     }
-    mock_get.assert_called_once_with(API_URL, params={"q": "twain"})
+    mock_get.assert_called_once_with(API_URL, params={"q": "Twain"})
 
 
 @patch("requests.get")
@@ -50,14 +50,14 @@ def test_author_resource_mock(mock_get):
     mock_response.raise_for_status.return_value = None
     mock_get.return_value = mock_response
 
-    result = author_works_with_resource("twain", AuthorResource())
+    result = author_works_with_resource(AuthorResource())
 
     assert len(result) == 2
     assert result[0] == {
         "author": "Mark Twain",
         "top_work": "Adventures of Huckleberry Finn",
     }
-    mock_get.assert_called_once_with(API_URL, params={"q": "twain"})
+    mock_get.assert_called_once_with(API_URL, params={"q": "Twain"})
 
 
 @patch("requests.get")
@@ -86,7 +86,7 @@ def test_author_mocked_resource():
     mocked_resource = Mock()
     mocked_resource.get_authors.return_value = [fake_author]
 
-    result = author_works_with_resource("twain", mocked_resource)
+    result = author_works_with_resource(mocked_resource)
 
     assert len(result) == 1
     assert result[0] == fake_author

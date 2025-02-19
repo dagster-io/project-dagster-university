@@ -7,6 +7,7 @@ import pytest
 from dagster_testing.lesson_4.assets import (
     my_sql_table,
 )
+from dagster_testing.lesson_4.definitions import defs
 
 from .fixtures import docker_compose  # noqa: F401
 
@@ -37,3 +38,6 @@ def test_my_sql_table(docker_compose):  # noqa: F811
     )
 
     my_sql_table(postgres_resource)
+
+def test_def():
+    assert defs

@@ -5,10 +5,10 @@ API_URL = "https://openlibrary.org/search/authors.json"
 
 
 @dg.asset
-def author_works(author: str) -> list:
+def author_works() -> list:
     output = []
     try:
-        response = requests.get(API_URL, params={"q": author})
+        response = requests.get(API_URL, params={"q": "Twain"})
         response.raise_for_status()
 
         for doc in response.json().get("docs"):
@@ -47,8 +47,8 @@ class AuthorResource(dg.ConfigurableResource):
 
 
 @dg.asset
-def author_works_with_resource(author: str, author_resource: AuthorResource) -> list:
-    return author_resource.get_authors(author)
+def author_works_with_resource(author_resource: AuthorResource) -> list:
+    return author_resource.get_authors("Twain")
 
 
 class AuthorConfig(dg.Config):
