@@ -6,8 +6,8 @@ import yaml
 
 from dagster_testing.lesson_3.assets import (
     API_URL,
-    AuthorResource,
     AuthorConfig,
+    AuthorResource,
     author_works,
     author_works_with_resource,
     author_works_with_resource_config,
@@ -73,9 +73,7 @@ def test_author_assets_config(mock_get):
         assets=[author_works_with_resource_config],
         resources={"author_resource": AuthorResource()},
         run_config=dg.RunConfig(
-            {
-                "author_works_with_resource_config": AuthorConfig(name="Twain")
-            }
+            {"author_works_with_resource_config": AuthorConfig(name="Twain")}
         ),
     )
     assert result.success

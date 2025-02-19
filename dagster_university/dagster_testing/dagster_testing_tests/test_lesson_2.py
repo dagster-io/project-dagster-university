@@ -76,9 +76,7 @@ def test_assets_config():
     result = dg.materialize(
         assets=assets,
         run_config=dg.RunConfig(
-            {
-                "loaded_file_config": FilepathConfig(path="path.txt")
-            }
+            {"loaded_file_config": FilepathConfig(path="path.txt")}
         ),
     )
     assert result.success

@@ -28,7 +28,7 @@ def resource_asset(number: resources.ExampleResource) -> int:
     return number.number_5()
 
 
-number_partitions = dg.StaticPartitionsDefinition(["1","2","3"])
+number_partitions = dg.StaticPartitionsDefinition(["1", "2", "3"])
 
 
 @dg.asset(partitions_def=number_partitions)
