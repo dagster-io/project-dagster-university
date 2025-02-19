@@ -75,6 +75,25 @@ def test_assets_config():
     ]
     result = dg.materialize(
         assets=assets,
+        run_config=dg.RunConfig(
+            {
+                "loaded_file_config": FilepathConfig(path="path.txt")
+            }
+        ),
+    )
+    assert result.success
+
+    result.output_for_node("loaded_file_config") == "  example  "
+    result.output_for_node("processed_file_config") == "example"
+
+
+def test_assets_config_yaml():
+    assets = [
+        loaded_file_config,
+        processed_file_config,
+    ]
+    result = dg.materialize(
+        assets=assets,
         run_config=yaml.safe_load(
             (Path(__file__).absolute().parent / "lesson_2_run_config.yaml").open()
         ),

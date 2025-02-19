@@ -7,6 +7,7 @@ import yaml
 from dagster_testing.lesson_3.assets import (
     API_URL,
     AuthorResource,
+    AuthorConfig,
     author_works,
     author_works_with_resource,
     author_works_with_resource_config,
@@ -71,8 +72,10 @@ def test_author_assets_config(mock_get):
     result = dg.materialize(
         assets=[author_works_with_resource_config],
         resources={"author_resource": AuthorResource()},
-        run_config=yaml.safe_load(
-            (Path(__file__).absolute().parent / "lesson_3_run_config.yaml").open()
+        run_config=dg.RunConfig(
+            {
+                "author_works_with_resource_config": AuthorConfig(name="Twain")
+            }
         ),
     )
     assert result.success

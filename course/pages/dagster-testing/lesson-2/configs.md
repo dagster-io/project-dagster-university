@@ -43,7 +43,7 @@ def test_loaded_file_config_fixture(example_config):
 
 ## Config pipelines
 
-The final thing to mention about configs is how to pass them in if we want to structure a test around `materialize`. In order to provide the run configuration to materialize, we will need an additional parameter:
+The final thing to mention about configs is how to pass them in if we want to structure a test around `materialize`. In order to provide the run configuration to materialize, we will need an additional parameter `run_config`. This will take in a `RunConfig` that matches the custom configuration we defined:
 
 ```python
 def test_assets_config():
@@ -53,14 +53,19 @@ def test_assets_config():
     ]
     result = dg.materialize(
         assets=assets,
-        run_config=yaml.safe_load(
-            (Path(__file__).absolute().parent / "lesson_1_run_config.yaml").open()
+        run_config=dg.RunConfig(
+            {
+                "loaded_file_config": FilepathConfig(path="path.txt")
+            }
         ),
     )
     assert result.success
+
+    result.output_for_node("loaded_file_config") == "  example  "
+    result.output_for_node("processed_file_config") == "example"
 ```
 
-Here we are providing the `run_config` by parsing the contents of a yaml file:
+You can also pass in this information via yaml as you would in the Dagster UI when you launch a pipeline that has a run configuration.
 
 ```yaml
 ops:
@@ -69,12 +74,10 @@ ops:
       path: "path.txt"
 ```
 
-This yaml format matches the yaml sync that is required in the Dagster UI when you launch a pipeline that has a run configuration.
-
 How would you add to the `test_assets_config` test to ensure the output of the assets matches what is expected?
 
 ```python {% obfuscated="true" %}
-def test_assets_config():
+def test_assets_config_yaml():
     assets = [
         loaded_file_config,
         processed_file_config,
@@ -82,12 +85,11 @@ def test_assets_config():
     result = dg.materialize(
         assets=assets,
         run_config=yaml.safe_load(
-            (Path(__file__).absolute().parent / "lesson_1_run_config.yaml").open()
+            (Path(__file__).absolute().parent / "lesson_2_run_config.yaml").open()
         ),
     )
     assert result.success
 
-    # Ensure assets return expected results
     result.output_for_node("loaded_file_config") == "  example  "
     result.output_for_node("processed_file_config") == "example"
 ```
