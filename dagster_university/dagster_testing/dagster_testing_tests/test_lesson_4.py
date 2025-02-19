@@ -39,5 +39,7 @@ def test_my_sql_table(docker_compose):  # noqa: F811
 
     my_sql_table(postgres_resource)
 
+
+@pytest.mark.integration
 def test_def():
     assert defs
