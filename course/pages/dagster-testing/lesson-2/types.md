@@ -1,5 +1,5 @@
 ---
-title: 'Lesson 2: Exceptions'
+title: 'Lesson 2: Types'
 module: 'dagster_testing'
 lesson: '2'
 ---

@@ -1,19 +1,13 @@
 import dagster as dg
 
-from .assets import (
-    AuthorResource,
-    author_works,
-    author_works_with_resource,
-    author_works_with_resource_config,
-)
+import dagster_testing.lesson_3.assets as assets
+
+all_assets = dg.load_assets_from_modules([assets])
+
 
 defs = dg.Definitions(
-    assets=[
-        author_works,
-        author_works_with_resource,
-        author_works_with_resource_config,
-    ],
+    assets=all_assets,
     resources={
-        "author_resource": AuthorResource(),
+        "author_resource": assets.AuthorResource(),
     },
 )

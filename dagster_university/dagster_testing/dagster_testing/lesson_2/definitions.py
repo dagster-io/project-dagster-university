@@ -1,19 +1,10 @@
 import dagster as dg
 
-from .assets import (
-    loaded_file,
-    loaded_file_config,
-    processed_file,
-    processed_file_config,
-    wrong_type_annotation,
-)
+import dagster_testing.lesson_2.assets as assets
+
+all_assets = dg.load_assets_from_modules([assets])
+
 
 defs = dg.Definitions(
-    assets=[
-        loaded_file,
-        processed_file,
-        wrong_type_annotation,
-        loaded_file_config,
-        processed_file_config,
-    ],
+    assets=all_assets,
 )

@@ -1,7 +1,10 @@
 import dagster as dg
 from dagster_snowflake import SnowflakeResource
 
-from .assets import my_sql_table
+import dagster_testing.lesson_4.assets as assets
+
+all_assets = dg.load_assets_from_modules([assets])
+
 
 snowflake_resource = SnowflakeResource(
     account=dg.EnvVar("SNOWFLAKE_ACCOUNT"),
@@ -12,7 +15,7 @@ snowflake_resource = SnowflakeResource(
 
 
 defs = dg.Definitions(
-    assets=[my_sql_table],
+    assets=all_assets,
     resources={
         "database": snowflake_resource,
     },

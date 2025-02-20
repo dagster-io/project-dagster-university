@@ -6,10 +6,10 @@ import dagster_testing.lesson_5.resources as resources
 import dagster_testing.lesson_5.schedules as schedules
 import dagster_testing.lesson_5.sensors as sensors
 
-my_assets = dg.load_assets_from_modules([assets])
+all_assets = dg.load_assets_from_modules([assets])
 
 defs = dg.Definitions(
-    assets=my_assets,
+    assets=all_assets,
     asset_checks=[assets.non_negative],
     jobs=[jobs.my_job, jobs.my_job_configured],
     resources={

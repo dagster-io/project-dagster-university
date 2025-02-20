@@ -43,5 +43,3 @@ This resource provides everything we need and can be used in place of Snowflake 
 The final piece will be writing a test that uses Postgres instead of Snowflake.
 
 ## Similar resources
-
-When thinking about using other resources, think in terms of the resource methods more than anything else. For example you may wanted to use DuckDB and the native Dagster DuckDB resource, you would need to use the `cursor`.

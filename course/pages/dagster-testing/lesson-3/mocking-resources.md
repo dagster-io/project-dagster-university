@@ -39,5 +39,3 @@ def test_author_mocked_resource():
 ```
 
 ## What to mock
-Mocking the resource can be 
-

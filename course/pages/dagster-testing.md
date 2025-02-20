@@ -2,11 +2,17 @@
 title: Dagster Testing
 ---
 
+- Lesson 1: Introduction
+  - [about this course](/dagster-testing/lesson-1/about-this-course)
+  - [project-preview](/dagster-testing/lesson-1/project-preview)
+  - [testing](/dagster-testing/lesson-1/testing)
+  - [testing-data-applications](/dagster-testing/lesson-1/testing-data-applications)
 - Lesson 2: Testing fundamentals
   - [unit tests](/dagster-testing/lesson-2/unit-tests)
   - [configs](/dagster-testing/lesson-2/configs)
   - [dependencies](/dagster-testing/lesson-2/dependencies)
-  - [exceptions](/dagster-testing/lesson-2/exceptions)
+  - [types](/dagster-testing/lesson-2/types)
+  - [context](/dagster-testing/lesson-2/context)
 - Lesson 3: Mocking
   - [mocks](/dagster-testing/lesson-3/mocks)
   - [resources](/dagster-testing/lesson-3/resources)
@@ -16,4 +22,8 @@ title: Dagster Testing
   - [integration-tests](/dagster-testing/lesson-4/integration-tests)
   - [integration-resources](/dagster-testing/lesson-4/integration-resources)
   - [configuring-integration-tests](/dagster-testing/lesson-4/configuring-integration-tests)
-- Lesson 5: Best Practices in Dagster
+- Lesson 5: Dagster Best Practices
+  - [definitions](/dagster-testing/lesson-5/definitions)
+  - [code-locations](/dagster-testing/lesson-5/code-locations)
+  - [asset-checks](/dagster-testing/lesson-5/asset-checks)
+  - [dagster-objects](/dagster-testing/lesson-5/dagster-objects)

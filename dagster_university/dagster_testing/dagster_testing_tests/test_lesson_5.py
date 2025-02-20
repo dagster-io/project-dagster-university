@@ -1,17 +1,24 @@
 from datetime import datetime
 
+import dagster_testing.lesson_5.assets as assets
 import dagster_testing.lesson_5.jobs as jobs
-from dagster_testing.lesson_5.assets import (
-    my_partitioned_config,
-)
 from dagster_testing.lesson_5.definitions import defs
 
 
 def test_my_partitioned_config():
-    run_config = my_partitioned_config(datetime(2020, 1, 3), datetime(2020, 1, 4))
+    run_config = assets.my_partitioned_config(
+        datetime(2020, 1, 3), datetime(2020, 1, 4)
+    )
     assert run_config == {
         "ops": {"process_data_for_date": {"config": {"date": "2020-01-03"}}}
     }
+
+
+def test_non_negative():
+    asset_check_pass = assets.non_negative(10)
+    assert asset_check_pass.passed
+    asset_check_fail = assets.non_negative(-10)
+    assert not asset_check_fail.passed
 
 
 def test_jobs():
