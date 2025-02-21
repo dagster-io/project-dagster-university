@@ -4,7 +4,9 @@ module: 'dagster_testing'
 lesson: '2'
 ---
 
-Most likely your assets do not exist in isolation but are downstream of other assets. Let's add another asset that takes a dependency on the `loaded_file` asset:
+When working with assets it is unlikely that they entirely live in isolation. Your Dagster asset graph is made up of the interplay of all the various assets you define and likely takes in outputs from other assets.
+
+We will add an additional asset downstream of `loaded_file` that takes in its output:
 
 ```python
 @dg.asset
@@ -14,18 +16,17 @@ def processed_file(loaded_file: str) -> str:
 
 The code above:
 
-1. Takes in content returned by the `loaded_file` asset
-2. Returns that contents stripped of whitespace as a `str`
+1. Takes in the string returned by `loaded_file`
+2. Returns the string stripped of whitespace
 
-
-The only difference from the `loaded_file` asset is that `processed_file` takes in an argument which is the string returned by `loaded_file`. Think of what a test may look like. Click **View answer** to view it.
+The relationship of `loaded_file` and `processed_file` is defined by the input parameter. What would a test look like for this asset? Click **View answer** to view it.
 
 ```python {% obfuscated="true" %}
 def test_processed_file():
     assert processed_file(" contents  ") == "contents"
 ```
 
-Like before you do not need to do anything special. Writing a unit test for this asset behaves like a regular Python function.
+Like the other asset, nothing about this test looks different from standard Python. Again we can run this test with pytest.
 
 ```bash
 > pytest dagster_testing_tests/test_lesson_2.py::test_processed_file
@@ -35,9 +36,9 @@ dagster_testing_tests/test_lesson_2.py .                                        
 
 ## Testing materializations
 
-As your pipelines get more complex, it can be helpful to also run tests by running your assets the way Dagster would materialize them.
+As your pipelines become more complex and start to contain multiple assets, it can be helpful to also run tests by running your assets as a Dagster materialization.
 
-Since `loaded_file` is completely hardcoded and `processed_file` only relies on the output of `loaded_file` we can materialize both of those assets together to ensure they are working as expected.
+Since `processed_file` only relies on the output of `loaded_file` we can materialize both of those assets together to ensure they are working as expected.
 
 ```python
 def test_assets():
@@ -55,7 +56,7 @@ def test_assets():
 dagster_testing_tests/test_lesson_2.py .                                                          [100%]
 ```
 
-This is a great start since we know the assets materialize without issue but we may still want to check the return values of each asset. Luckily `materialize` allows us to access the output value for all the assets.
+This is a great start since we know the assets materialize without issue but we still want to check the return values of each asset. Luckily `materialize` allows us to access the output value for all the assets from the materialization.
 
 ```python
 def test_assets():
@@ -70,11 +71,11 @@ def test_assets():
     result.output_for_node("processed_file") == "contents"
 ```
 
-Using `output_for_node` we access the individual assets and ensure that everything is still behaving as expected.
+Using `output_for_node` we access the individual assets and ensure that their output still matches what we expect.
 
 ## Logging
 
-One thing to note about using `materialize`. Since we are using Dagster to execute the assets, the default event execution will be logged as well. If you rerun `pytest` with the `-s` flag set to view the logs, all of the Dagster logs will be included as well:
+One thing to note about using `materialize`. Since we are using Dagster to execute the assets, the default Dagster event execution will be logged. If you rerun `pytest` with the `-s` flag set to view the logs, all of the Dagster logs will be included as well as the test output:
 
 ```bash
 > pytest dagster_testing_tests/test_lesson_2.py::test_assets -s

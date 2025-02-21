@@ -4,7 +4,7 @@ module: 'dagster_testing'
 lesson: '2'
 ---
 
-Some assets in our pipelines might be dynamic and set at execution time with a run configuration. Let's rework the `loaded_file` asset to take in a configuration so it can accept any file.
+Some assets in our pipelines may take in parameters defined outside of asset outputs. Typically these are run configurations that are set at execution time. Let's rework the `loaded_file` asset to take in a run configuration so it processes different files.
 
 ```python
 class FilepathConfig(dg.Config):
@@ -19,7 +19,7 @@ def loaded_file_config(config: FilepathConfig) -> str:
        return file.read()
 ```
 
-Now let's write a new test to ensure that the file in the tests directory `path.txt` works as expected. **Hint** The contents of that file is "  example  ".
+Now let's write a new test to ensure that the file in the tests directory `path.txt` works as expected (the contents of that file is "  example  ").
 
 ```python {% obfuscated="true" %}
 def test_loaded_file_config():
@@ -29,7 +29,7 @@ def test_loaded_file_config():
 
 ## Pytest fixtures
 
-Testing with Dagster does not prevent us from using other traditional pytest practices. If that `FilepathConfig` was used by multiple tests. We might benefit from creating a pytest fixture that can be easily reused:
+Testing with Dagster and pytest together we take advantage of some pytest functionality to make the testing code easier to reuse. If the `FilepathConfig` was used by multiple tests, we might benefit from creating a pytest fixture:
 
 ```python
 @pytest.fixture()
@@ -43,7 +43,7 @@ def test_loaded_file_config_fixture(example_config):
 
 ## Config pipelines
 
-The final thing to mention about configs is how to pass them in if we want to structure a test around `materialize`. In order to provide the run configuration to materialize, we will need an additional parameter `run_config`. This will take in a `RunConfig` that matches the custom configuration we defined:
+The final thing to mention about configs is how to pass them to the materialization run. In order to provide the run configuration, we will need an additional parameter `run_config` within `materialize`. This will take in a `RunConfig` that maps the specific run configuration to the asset that requires it:
 
 ```python
 def test_assets_config():
@@ -65,7 +65,7 @@ def test_assets_config():
     result.output_for_node("processed_file_config") == "example"
 ```
 
-You can also pass in this information via yaml as you would in the Dagster UI when you launch a pipeline that has a run configuration.
+You can also pass in this information via yaml in a format similar to the Dagster UI. Here is the same run configuration as yaml:
 
 ```yaml
 ops:
@@ -74,7 +74,7 @@ ops:
       path: "path.txt"
 ```
 
-How would you add to the `test_assets_config` test to ensure the output of the assets matches what is expected?
+Then we can update the `run_config` to use that yaml file:
 
 ```python {% obfuscated="true" %}
 def test_assets_config_yaml():
@@ -85,7 +85,7 @@ def test_assets_config_yaml():
     result = dg.materialize(
         assets=assets,
         run_config=yaml.safe_load(
-            (Path(__file__).absolute().parent / "lesson_2_run_config.yaml").open()
+            (Path(__file__).absolute().parent / "configs/lesson_2.yaml").open()
         ),
     )
     assert result.success

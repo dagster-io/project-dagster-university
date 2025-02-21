@@ -61,6 +61,20 @@ def test_author_resource_mock(mock_get):
 
 
 @patch("requests.get")
+def test_author_assets(mock_get):
+    mock_response = Mock()
+    mock_response.json.return_value = EXAMPLE_RESPONSE
+    mock_response.raise_for_status.return_value = None
+    mock_get.return_value = mock_response
+
+    result = dg.materialize(
+        assets=[author_works_with_resource],
+        resources={"author_resource": AuthorResource()},
+    )
+    assert result.success
+
+
+@patch("requests.get")
 def test_author_assets_config(mock_get):
     mock_response = Mock()
     mock_response.json.return_value = EXAMPLE_RESPONSE

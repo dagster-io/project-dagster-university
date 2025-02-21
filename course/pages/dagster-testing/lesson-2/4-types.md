@@ -4,7 +4,7 @@ module: 'dagster_testing'
 lesson: '2'
 ---
 
-In generic Python a function does not need to match its type annotation. For example:
+In standard Python a function does not need to match its type annotation in order to execute properly. For example:
 
 ```python
 def func_wrong_type() -> str:
@@ -15,9 +15,9 @@ def test_func_wrong_type():
     assert func_wrong_type() == 2
 ```
 
-Will still pass even though the function is marked as producing a `str` while an `int` is returned.
+Will pass even though the function is marked as producing a `str` while an `int` is returned.
 
-Now let's try the same example with Dagster:
+Let's try the same example with Dagster:
 
 ```python
 @dg.asset
@@ -41,11 +41,11 @@ E           dagster._core.errors.DagsterTypeCheckDidNotPass: Type check failed f
 FAILED dagster_testing_tests/test_lesson_2.py::test_wrong_type_annotation - dagster._core.errors.DagsterTypeCheckDidNotPass: Type check failed...
 ```
 
-A benefit of Dagster is that it enforces type checking. This helps improve data quality and the integrity of your pipelines by ensuring the output always matches what is set in the asset.
+A benefit of Dagster is that it enforces type checking when set in assets. This helps improve data quality and the integrity of the pipelines by ensuring the output always matches its expected type.
 
 ## Exception handling
 
-While Dagster handles type checking for us. We can still write tests for exceptions in the same way we would any other test. For example:
+Handling exceptions within Dagster is the same as other functions with pytest. Though it is not necessary, if we wanted to write a test to ensure that this asset would raise an error, it would look like this:
 
 ```python
 @dg.asset
@@ -58,4 +58,4 @@ def test_wrong_type_annotation_error():
         wrong_type_annotation()
 ```
 
-However we would not need to write a test like this because this asset would never be able to materialize successfully.
+While testing for exceptions can be beneficial, you will not need to write tests to ensure type. This is much better served by including type annotations.

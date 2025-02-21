@@ -25,7 +25,7 @@ To successfully complete this course, you'll need:
    - [Decorators](https://realpython.com/primer-on-python-decorators/)
    - [Type hints](https://dagster.io/blog/python-type-hinting).
 
-- **Testing knowledge** - This will cover the different types of testing and when to use each. If you have never written tests for code before, this will serve as a good overall introduction.
+- **Testing knowledge** - This will cover the different types of testing and when to use each. If you have never written tests for code before, this will serve as a good overall introduction. Throughout the course we will be using [pytest](https://docs.pytest.org/en/stable/).
 
 ---
 
