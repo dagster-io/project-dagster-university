@@ -10,7 +10,7 @@ Your tests should be tailored to your specific code location but your CI will de
 
 ## Multi Repo
 
-![Multi Repo](/images/dagster-essentials/lesson-5/multi-repo.png)
+![Multi Repo](/images/dagster-testing/lesson-5/multi-repo.png)
 
 If you have a dedicated repository for each code location. You will likely have a single place where Python dependencies are defined and a single suite of tests to run.
 
@@ -49,7 +49,7 @@ The code above:
 
 ## Monorepo
 
-![Mono Repo](/images/dagster-essentials/lesson-5/monorepo.png)
+![Mono Repo](/images/dagster-testing/lesson-5/monorepo.png)
 
 In a monorepo, the various code locations likely exist within different directories in the main project. Each of these directories will contain environment configurations specific to the code location and must be run separately.
 

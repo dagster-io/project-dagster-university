@@ -8,11 +8,11 @@ One key aspect of testing data is validation. Tests like this are special and ha
 
 Generally we want this code to exist separately from the core logic of our assets to keep things more maintainable. To solve this problem, Dagster offers asset checks which validate assets when they execute. Asset checks are part of your Dagster project and are set in the definitions like any other Dagster object. When looking in the asset graph you will not see them directly but will see them associated with their asset.
 
-![Asset checks](/images/dagster-essentials/lesson-5/asset-check.png)
+![Asset checks](/images/dagster-testing/lesson-5/asset-check.png)
 
 When the asset runs, we can see that its asset check also validates.
 
-![Asset checks success](/images/dagster-essentials/lesson-5/asset-check-success.png)
+![Asset checks success](/images/dagster-testing/lesson-5/asset-check-success.png)
 
 # Defining asset checks
 
