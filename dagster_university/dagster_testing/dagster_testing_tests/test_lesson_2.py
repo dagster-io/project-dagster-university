@@ -151,7 +151,7 @@ def test_partition_asset_number() -> None:
     assert partition_asset_number(context) == 1
 
 
-def test_asssets_partition() -> None:
+def test_assets_partition() -> None:
     result = dg.materialize(
         assets=[
             partition_asset_number,
@@ -165,7 +165,7 @@ def test_asssets_partition() -> None:
 
 # Test intended to fail
 @pytest.mark.skip
-def test_asssets_multiple_partition() -> None:
+def test_assets_multiple_partition() -> None:
     result = dg.materialize(
         assets=[
             partition_asset_number,

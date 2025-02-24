@@ -28,17 +28,9 @@ def resource_asset(number: resources.ExampleResource) -> int:
     return number.number_5()
 
 
-number_partitions = dg.StaticPartitionsDefinition(["1", "2", "3"])
-
-
-@dg.asset(partitions_def=number_partitions)
-def partition_asset(context: dg.AssetExecutionContext) -> int:
-    return int(context.partition_key)
-
-
 @dg.asset
-def combine_asset(config_asset: int, resource_asset: int, partition_asset: int) -> int:
-    return config_asset + resource_asset + partition_asset
+def combine_asset(config_asset: int, resource_asset: int) -> int:
+    return config_asset + resource_asset
 
 
 @dg.asset_check(asset=combine_asset)
@@ -51,3 +43,11 @@ def non_negative(combine_asset):
 @dg.asset
 def final_asset(combine_asset: int) -> int:
     return combine_asset * 10
+
+
+number_partitions = dg.StaticPartitionsDefinition(["1", "2", "3"])
+
+
+@dg.asset(partitions_def=number_partitions)
+def partition_asset(context: dg.AssetExecutionContext) -> int:
+    return int(context.partition_key)

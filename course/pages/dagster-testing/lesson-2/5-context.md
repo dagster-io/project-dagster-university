@@ -82,7 +82,7 @@ def test_partition_asset_number() -> None:
 We can still use `materialize` to execute our assets that use context, though we will need to set the specific partition:
 
 ```python
-def test_asssets_partition() -> None:
+def test_assets_partition() -> None:
     result = dg.materialize(
         assets=[
             partition_asset_number,
@@ -98,7 +98,7 @@ One thing to note about materializing multiple partitioned assets. Just like whe
 
 ```python
 @pytest.mark.skip
-def test_asssets_multiple_partition() -> None:
+def test_assets_multiple_partition() -> None:
     result = dg.materialize(
         assets=[
             partition_asset_number,

@@ -6,8 +6,6 @@ lesson: '2'
 
 # Unit tests
 
-At the beginning of the course we discussed the various types of tests. The best place to start with testing are unit tests.
-
 Unit tests are small, isolated tests that check individual pieces of code (usually functions or methods). They focus on testing one unit of functionality at a time, ensuring that each component behaves correctly in isolation.
 
 * Catch Bugs Early – Identify issues before they become bigger problems.
@@ -15,6 +13,17 @@ Unit tests are small, isolated tests that check individual pieces of code (usual
 * Improve Refactoring Confidence – You can safely modify code knowing tests will catch regressions.
 * Continuous Integration (CI) – Automated tests speed up development and deployment.
 * Documentation – Since unit tests are tied directly to the code itself, they can serve as a great form of documentation.
+
+Unit tests in Python generally focus on a single function and ensure it works as expected:
+
+```python
+def my_func():
+   return 5
+
+
+def test_my_func():
+   assert my_func() == 5
+```
 
 ### Asset tests
 

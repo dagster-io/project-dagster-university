@@ -6,13 +6,13 @@ lesson: '1'
 
 # Project preview
 
-In this course, we’ll focus on the craft of writing tests to cover a production level Dagster application.
+In this course, we’ll focus on the craft of testing and how to maintain test coverage for a production Dagster platform.
 
 By the end of the course, you will:
 
 - Know how to test your Dagster assets
-- How to mock external dependencies
+- Understand mocking external dependencies
 - Manage integration testing
-- Tips for ensuring your Dagster maintains a high standard
+- Recognize best practices for testing in Dagster
 
 If you get stuck or want to jump ahead, check out the [finished project here on GitHub](https://github.com/dagster-io/project-dagster-university/tree/main/dagster_university/dagster_testing).

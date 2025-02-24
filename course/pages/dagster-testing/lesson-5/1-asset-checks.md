@@ -4,17 +4,27 @@ module: 'dagster_testing'
 lesson: '5'
 ---
 
-One aspect of testing that is key in data is validation. As well as ensuring that everything runs without error, we need to be sure to assess the quality of the data. Tests like this are special and need to exist live in the production environment as data is flowing. To accomplish this Dagster offers asset checks which are tests that verify specific properties of your data assets, allowing you to execute data quality checks on your data.
+One key aspect of testing data is validation. Tests like this are special and have a different work flow than our unit and integration tests. Instead of being run outside of the main application before the code is live, these data validation checks exist in the production environment and are run as our assets are executing.
 
-Asset checks are associated with the assets themselves. So we will start with an asset `combine_asset` that takes in several other assets and combines their values:
+Generally we want this code to exist separately from the core logic of our assets to keep things more maintainable. To solve this problem, Dagster offers asset checks which validate assets when they execute. Asset checks are part of your Dagster project and are set in the definitions like any other Dagster object. When looking in the asset graph you will not see them directly but will see them associated with their asset.
+
+![Asset checks](/images/dagster-essentials/lesson-5/asset-check.png)
+
+When the asset runs, we can see that its asset check also validates.
+
+![Asset checks success](/images/dagster-essentials/lesson-5/asset-check-success.png)
+
+# Defining asset checks
+
+To define an asset check we first need an asset. `combine_asset` takes in the output of several other assets and sums their values:
 
 ```python
 @dg.asset
-def combine_asset(config_asset: int, resource_asset: int, partition_asset: int) -> int:
-    return config_asset + resource_asset + partition_asset
+def combine_asset(config_asset: int, resource_asset: int) -> int:
+    return config_asset + resource_asset
 ```
 
-Say we wanted to write a test for `combine_asset` to ensure that number returned is positive. What would that look like?
+Say we wanted to write a test for this asset to ensure that number returned is positive. What would that look like?
 
 ```python {% obfuscated="true" %}
 @dg.asset_check(asset=combine_asset)
@@ -37,3 +47,5 @@ def test_non_negative():
     asset_check_fail = assets.non_negative(-10)
     assert not asset_check_fail.passed
 ```
+
+Writing a test for our asset check is similar to writing a test for an asset. Our input parameter is the value we wish to check and then we can see if the asset did or did not pass validation.
