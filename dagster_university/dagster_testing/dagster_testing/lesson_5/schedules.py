@@ -1,7 +1,4 @@
-from pathlib import Path
-
 import dagster as dg
-import yaml
 
 import dagster_testing.lesson_5.assets as assets
 import dagster_testing.lesson_5.jobs as jobs
