@@ -1,100 +1,110 @@
-from unittest.mock import patch
+from contextlib import contextmanager
 
 import dagster as dg
+import psycopg2
+import pytest
+from dagster_snowflake import SnowflakeResource
 
 import dagster_testing.lesson_5.assets as assets
-import dagster_testing.lesson_5.jobs as jobs
-import dagster_testing.lesson_5.resources as resources
-import dagster_testing.lesson_5.schedules as schedules
-import dagster_testing.lesson_5.sensors as sensors
 from dagster_testing.lesson_5.definitions import defs
 
-
-# Assets
-def test_config_asset():
-    config = assets.AssetConfig(number=5)
-    assert assets.config_asset(config) == 5
+from .fixtures import docker_compose  # noqa: F401
 
 
-def test_resource_asset():
-    resource = resources.ExampleResource(api_key="ABC")
-    assert assets.resource_asset(resource) == 5
+@pytest.fixture
+def query_output():
+    return [
+        ("New York", 8804190),
+        ("Buffalo", 278349),
+    ]
 
 
-def test_combine_asset():
-    assert assets.combine_asset(10, 10) == 20
-
-
-def test_final_asset():
-    assert assets.final_asset(10) == 100
-
-
-def test_partition_asset():
-    context = dg.build_asset_context(partition_key="1")
-    assert assets.partition_asset(context) == 1
-
-
-# Asset Checks
-def test_non_negative():
-    asset_check_pass = assets.non_negative(10)
-    assert asset_check_pass.passed
-    asset_check_fail = assets.non_negative(-10)
-    assert not asset_check_fail.passed
-
-
-# Jobs
-def test_jobs():
-    assert jobs.my_job
-    assert jobs.my_job_configured
-
-
-def test_job_selection():
-    assert jobs.my_job.selection == dg.AssetSelection.all() - dg.AssetSelection.assets(
-        "partition_asset"
+@pytest.fixture
+def postgres_resource():
+    return PostgresResource(
+        host="localhost",
+        user="test_user",
+        password="test_pass",
+        database="test_db",
     )
 
 
-def test_job_config():
-    assert (
-        jobs.my_job_configured.config["ops"]["config_asset"]["config"]["number"] == 10
+# Snowflake not configured
+@pytest.mark.skip
+def test_snowflake_staging():
+    snowflake_staging_resource = SnowflakeResource(
+        account=dg.EnvVar("SNOWFLAKE_ACCOUNT"),
+        user=dg.EnvVar("SNOWFLAKE_USERNAME"),
+        password=dg.EnvVar("SNOWFLAKE_PASSWORD"),
+        database="STAGING",
+        warehouse="STAGING_WAREHOUSE",
     )
 
-
-# Schedules
-def test_schedule():
-    assert schedules.my_schedule
-    assert schedules.my_schedule.cron_schedule == "0 0 5 * *"
-    assert schedules.my_schedule.job == jobs.my_job
+    assets.state_population_database(snowflake_staging_resource)
 
 
-# Sensors
-def test_sensors():
-    assert sensors.my_sensor
+class PostgresResource(dg.ConfigurableResource):
+    user: str
+    password: str
+    host: str
+    database: str
+
+    def _connection(self):
+        return psycopg2.connect(
+            user=self.user,
+            password=self.password,
+            host=self.host,
+            database=self.database,
+        )
+
+    @contextmanager
+    def get_connection(self):
+        yield self._connection()
 
 
-@patch("dagster_testing.lesson_5.sensors.check_for_new_files", return_value=[])
-def test_sensor_skip(mock_check_new_files):
-    instance = dg.DagsterInstance.ephemeral()
-    context = dg.build_sensor_context(instance=instance)
-    assert sensors.my_sensor(context).__next__() == dg.SkipReason("No new files found")
+@pytest.mark.integration
+def test_state_population_database(docker_compose):  # noqa: F811
+    postgres_resource = PostgresResource(
+        host="localhost",
+        user="test_user",
+        password="test_pass",
+        database="test_db",
+    )
+
+    result = assets.state_population_database(postgres_resource)
+    assert result == [
+        ("New York", 8804190),
+        ("Buffalo", 278349),
+    ]
 
 
-@patch(
-    "dagster_testing.lesson_5.sensors.check_for_new_files", return_value=["test_file"]
-)
-def test_sensor_run(mock_check_new_files):
-    instance = dg.DagsterInstance.ephemeral()
-    context = dg.build_sensor_context(instance=instance)
-    assert sensors.my_sensor(context).__next__() == dg.RunRequest(run_key="test_file")
+def test_total_population_database():
+    input = [("City 1", 100), ("City 2", 200)]
+    assert assets.total_population_database(input) == 300
 
 
-# Definitions
+def test_assets_partition(docker_compose, postgres_resource, query_output):  # noqa: F811
+    result = dg.materialize(
+        assets=[
+            assets.state_population_database,
+            assets.total_population_database,
+        ],
+        resources={"database": postgres_resource},
+    )
+    assert result.success
+
+    assert result.output_for_node("state_population_database") == query_output
+    assert result.output_for_node("total_population_database") == 9082539
+
+
+def test_state_population_database_config(docker_compose, postgres_resource):  # noqa: F811
+    config = assets.StateConfig(name="CA")
+    result = assets.state_population_database_config(config, postgres_resource)
+    assert result == [
+        ("Los Angeles", 3898747),
+    ]
+
+
+@pytest.mark.integration
 def test_def():
     assert defs
-
-
-def test_def_objects():
-    assert defs.get_assets_def("combine_asset")
-    assert defs.get_job_def("jobs_config")
-    assert defs.get_schedule_def("my_schedule")
-    assert defs.get_sensor_def("my_sensor")

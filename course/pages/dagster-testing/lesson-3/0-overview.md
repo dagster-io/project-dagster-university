@@ -1,9 +1,9 @@
 ---
 title: 'Lesson 3: Overview'
 module: 'dagster_testing'
-lesson: '3'
+lesson: '2'
 ---
 
 # Overview
 
-As your data platform scales, it will cover an increasing number of systems. With more systems to account for you will start to reach the limits of what you can accomplish with basic unit tests. In this lesson we will discuss how to leverage mocks to replace parts of the system we rely on during testing. This will give us the ability to still have test coverage and ensure the functionality of our Dagster assets while maintaining the feedback loop of unit tests.
+In the previous lesson, you learned that there are many different types of testing. This lesson will focus on unit tests and creating the fundamental tests for your Dagster assets. We will discuss the various aspects of writing tests for your assets before we cover other Dagster concepts in future lessons. If you are familiar with tests in Python, you will find that writing tests in Dagster is very similar. If this is your first time writing tests in Python, most of this lesson will carry over to your general Python knowledge.

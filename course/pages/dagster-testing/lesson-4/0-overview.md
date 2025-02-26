@@ -1,9 +1,12 @@
 ---
 title: 'Lesson 4: Overview'
 module: 'dagster_testing'
-lesson: '4'
+lesson: '3'
 ---
 
 # Overview
 
-By this point you should feel comfortable writing unit tests for your assets, even those that rely on external systems. However while it helpful to know how tests function with expected results, it can still be good to have tests that function by talking to actual systems. These tests usually require more set up and tend to be run less often than unit tests, but they add another level of safety for our code before it reaches production.
+As your data platform scales, it will cover an increasing number of systems. With more systems to account for you will start to reach the limits of what you can accomplish with basic unit tests.
+
+
+In this lesson we will discuss how to write tests when you need to count on systems outside of your control. We will dive into mock and how to replace parts of the pipeline during testing.

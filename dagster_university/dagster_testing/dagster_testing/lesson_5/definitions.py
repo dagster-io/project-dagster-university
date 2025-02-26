@@ -1,20 +1,22 @@
 import dagster as dg
+from dagster_snowflake import SnowflakeResource
 
 import dagster_testing.lesson_5.assets as assets
-import dagster_testing.lesson_5.jobs as jobs
-import dagster_testing.lesson_5.resources as resources
-import dagster_testing.lesson_5.schedules as schedules
-import dagster_testing.lesson_5.sensors as sensors
 
 all_assets = dg.load_assets_from_modules([assets])
 
+
+snowflake_resource = SnowflakeResource(
+    account=dg.EnvVar("SNOWFLAKE_ACCOUNT"),
+    user=dg.EnvVar("SNOWFLAKE_USERNAME"),
+    password=dg.EnvVar("SNOWFLAKE_PASSWORD"),
+    warehouse=dg.EnvVar("SNOWFLAKE_WAREHOUSE"),
+)
+
+
 defs = dg.Definitions(
     assets=all_assets,
-    asset_checks=[assets.non_negative],
-    jobs=[jobs.my_job, jobs.my_job_configured],
     resources={
-        "number": resources.ExampleResource(api_key="ABC123"),
+        "database": snowflake_resource,
     },
-    schedules=[schedules.my_schedule],
-    sensors=[sensors.my_sensor],
 )

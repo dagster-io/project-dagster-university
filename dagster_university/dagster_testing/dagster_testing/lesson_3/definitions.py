@@ -7,7 +7,4 @@ all_assets = dg.load_assets_from_modules([assets])
 
 defs = dg.Definitions(
     assets=all_assets,
-    resources={
-        "author_resource": assets.AuthorResource(),
-    },
 )

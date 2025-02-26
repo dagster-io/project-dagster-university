@@ -2,7 +2,8 @@
 
 services:
   postgresql:
-    image: postgres:latest
+    build:
+      context: ./postgres
     container_name: postgresql
     environment:
       POSTGRES_DB: "test_db"

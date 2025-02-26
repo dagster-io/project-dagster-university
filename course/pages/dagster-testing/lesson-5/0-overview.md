@@ -1,11 +1,9 @@
 ---
 title: 'Lesson 5: Overview'
 module: 'dagster_testing'
-lesson: '5'
+lesson: '4'
 ---
 
 # Overview
 
-So far everything we have learned are not overly specific to Dagster. We have learned how to apply unit testing, mocks and integration testing in the context of Dagster but these apply universally to almost any code you could write.
-
-In this final lesson we will discuss some Dagster specific elements of testing. This will cover Dagster features designed to help you run your data platform in production and some best practices of tests you should add to ensure you project is easily maintainable.
+By this point you should feel comfortable writing unit tests for your assets. Even for tests that rely on external systems. However while it helpful to know how tests function with expected results we manage ourselves, it can still be good to have tests that connect to actual systems. These tests usually require more set up and tend may not be part of our normal developer workflow compared to unit tests, but they add another level of safety for our code before it reaches production.
