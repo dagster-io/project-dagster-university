@@ -97,7 +97,7 @@ def manhattan_stats(database: DuckDBResource):
         output_file.write(trips_by_zone.to_json())
 
 
-@asset(
+@dg.asset(
     deps=[dg.AssetKey(["manhattan", "manhattan_stats"])],
 )
 def manhattan_map():
