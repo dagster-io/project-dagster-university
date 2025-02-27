@@ -78,11 +78,13 @@ def test_state_population_database(docker_compose):  # noqa: F811
     ]
 
 
+@pytest.mark.integration
 def test_total_population_database():
     input = [("City 1", 100), ("City 2", 200)]
     assert assets.total_population_database(input) == 300
 
 
+@pytest.mark.integration
 def test_assets_partition(docker_compose, postgres_resource, query_output):  # noqa: F811
     result = dg.materialize(
         assets=[
@@ -97,6 +99,7 @@ def test_assets_partition(docker_compose, postgres_resource, query_output):  # n
     assert result.output_for_node("total_population_database") == 9082539
 
 
+@pytest.mark.integration
 def test_state_population_database_config(docker_compose, postgres_resource):  # noqa: F811
     config = assets.StateConfig(name="CA")
     result = assets.state_population_database_config(config, postgres_resource)
