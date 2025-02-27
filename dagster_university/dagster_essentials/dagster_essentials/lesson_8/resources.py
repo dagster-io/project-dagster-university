@@ -1,6 +1,6 @@
-from dagster import EnvVar
+import dagster as dg
 from dagster_duckdb import DuckDBResource
 
 database_resource = DuckDBResource(
-    database=EnvVar("DUCKDB_DATABASE"),
+    database=dg.EnvVar("DUCKDB_DATABASE"),
 )

@@ -16,7 +16,7 @@ Modify your root-level `__init__.py` to:
 After making those changes, your root-level `__init__.py` should look like similar to below:
 
 ```python
-from dagster import Definitions, load_assets_from_modules
+import dagster as dg
 
 from .assets import trips, metrics, requests, dbt # Import the dbt assets
 from .resources import database_resource, dbt_resource # import the dbt resource
@@ -27,7 +27,7 @@ dbt_analytics_assets = load_assets_from_modules(modules=[dbt]) # Load the assets
 
 # ... other declarations
 
-defs = Definitions(
+defs = dg.Definitions(
     assets=[*trip_assets, *metric_assets, *requests_assets, *dbt_analytics_assets], # Add the dbt assets to your code location
     resources={
         "database": database_resource,

@@ -13,13 +13,14 @@ Now that you have a query that produces an asset, let’s use Dagster to manage 
    ```python
    import duckdb
    import os
+   import dagster as dg
    from dagster._utils.backoff import backoff
    ```
 
 2. Copy and paste the code below into the bottom of the `trips.py` file. Note how this code looks similar to the asset definition code for the `taxi_trips_file` and the `taxi_zones` assets:
 
    ```python
-   @asset(
+   @dg.asset(
        deps=["taxi_trips_file"]
    )
    def taxi_trips() -> None:
@@ -56,7 +57,7 @@ Now that you have a query that produces an asset, let’s use Dagster to manage 
 
    Let’s walk through what this code does:
 
-   1. Using the `@asset` decorator, an asset named `taxi_trips` is created.
+   1. Using the `@dg.asset` decorator, an asset named `taxi_trips` is created.
 
    2. The `taxi_trips_file` asset is defined as a dependency of `taxi_trips` through the `deps` argument.
 

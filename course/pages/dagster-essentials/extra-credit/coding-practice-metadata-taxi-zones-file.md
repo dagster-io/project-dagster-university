@@ -15,10 +15,10 @@ To practice what you’ve learned, add the record counts to the metadata for `ta
 The metadata you built should look similar to the code contained in the **View answer** toggle. Click to open it.
 
 ```python {% obfuscated="true" %}
-from dagster import MaterializeResult
+import dagster as dg
 
 
-@asset(
+@dg.asset(
     group_name="raw_files",
 )
 def taxi_zones_file() -> None:
@@ -33,9 +33,9 @@ def taxi_zones_file() -> None:
         output_file.write(raw_taxi_zones.content)
     num_rows = len(pd.read_csv(constants.TAXI_ZONES_FILE_PATH))
 
-    return MaterializeResult(
+    return dg.MaterializeResult(
         metadata={
-            'Number of records': MetadataValue.int(num_rows)
+            'Number of records': dg.MetadataValue.int(num_rows)
         }
     )
 ```

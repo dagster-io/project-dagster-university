@@ -1,5 +1,5 @@
 ---
-title: 'Lesson 7: Updating the Definitions object'
+title: 'Lesson 7: Updating the dg.Definitions object'
 module: 'dagster_essentials'
 lesson: '7'
 ---
@@ -24,7 +24,7 @@ The `jobs` argument of the `Definitions` object accepts a list of jobs. To add j
 
    This tells Dagster to import the `trip_update_job` and `weekly_update_job` schedules from `.jobs`, or `jobs/__init__.py`.
 
-2. Beneath `metric_assets = load_assets_from_modules([metrics])`, add the following:
+2. Beneath `metric_assets = dg.load_assets_from_modules([metrics])`, add the following:
 
    ```python
    all_jobs = [trip_update_job, weekly_update_job]
@@ -41,18 +41,18 @@ The `jobs` argument of the `Definitions` object accepts a list of jobs. To add j
 At this point, `__init__.py` should look like this:
 
 ```python
-from dagster import Definitions, load_assets_from_modules
+import dagster as dg
 
 from .assets import trips, metrics
 from .resources import database_resource
 from .jobs import trip_update_job, weekly_update_job
 
-trip_assets = load_assets_from_modules([trips])
-metric_assets = load_assets_from_modules([metrics])
+trip_assets = dg.load_assets_from_modules([trips])
+metric_assets = dg.load_assets_from_modules([metrics])
 
 all_jobs = [trip_update_job, weekly_update_job]
 
-defs = Definitions(
+defs = dg.Definitions(
     assets=[*trip_assets, *metric_assets],
     resources={
         "database": database_resource,
@@ -75,7 +75,7 @@ Now that you’ve added the jobs, let’s add the schedules to the `Definitions`
 
    This tells Dagster to import the `trip_update_schedule` and `weekly_update_schedule` schedules from `.schedules`, or `schedules/__init__.py`.
 
-2. Beneath `metric_assets = load_assets_from_modules([metrics])`, add the following:
+2. Beneath `metric_assets = dg.load_assets_from_modules([metrics])`, add the following:
 
    ```python
    all_schedules = [trip_update_schedule, weekly_update_schedule]
@@ -92,21 +92,21 @@ Now that you’ve added the jobs, let’s add the schedules to the `Definitions`
 At this point, `__init__.py` should look like this:
 
 ```python
-from dagster import Definitions, load_assets_from_modules
+import dagster as dg
 
 from .assets import trips, metrics
 from .resources import database_resource
 from .jobs import trip_update_job, weekly_update_job
 from .schedules import trip_update_schedule, weekly_update_schedule
 
-trip_assets = load_assets_from_modules([trips])
-metric_assets = load_assets_from_modules([metrics])
+trip_assets = dg.load_assets_from_modules([trips])
+metric_assets = dg.load_assets_from_modules([metrics])
 
 all_jobs = [trip_update_job, weekly_update_job]
 all_schedules = [trip_update_schedule, weekly_update_schedule]
 
 
-defs = Definitions(
+defs = dg.Definitions(
     assets=[*trip_assets, *metric_assets],
     resources={
         "database": database_resource,

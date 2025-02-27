@@ -21,7 +21,7 @@ As with your other Dagster definitions, the final step is to add the sensor, its
 2. Beneath `metric_assets`, create a `request_assets` variable that loads the assets from `requests`:
 
    ```python
-   request_assets = load_assets_from_modules([requests])
+   request_assets = dg.load_assets_from_modules([requests])
    ```
 
 3. Add the `adhoc_request_job` to `all_jobs` :
@@ -53,7 +53,7 @@ As with your other Dagster definitions, the final step is to add the sensor, its
 At this point, `__init__.py` should look like this:
 
 ```python
-from dagster import Definitions, load_assets_from_modules
+import dagster as dg
 
 from .assets import trips, metrics, requests
 from .resources import database_resource
@@ -61,15 +61,15 @@ from .jobs import trip_update_job, weekly_update_job, adhoc_request_job
 from .schedules import trip_update_schedule, weekly_update_schedule
 from .sensors import adhoc_request_sensor
 
-trip_assets = load_assets_from_modules([trips])
-metric_assets = load_assets_from_modules([metrics])
-request_assets = load_assets_from_modules([requests])
+trip_assets = dg.load_assets_from_modules([trips])
+metric_assets = dg.load_assets_from_modules([metrics])
+request_assets = dg.load_assets_from_modules([requests])
 
 all_jobs = [trip_update_job, weekly_update_job, adhoc_request_job]
 all_schedules = [trip_update_schedule, weekly_update_schedule]
 all_sensors = [adhoc_request_sensor]
 
-defs = Definitions(
+defs = dg.Definitions(
     assets=[*trip_assets, *metric_assets, *request_assets],
     resources={
         "database": database_resource,

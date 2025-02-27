@@ -44,14 +44,14 @@ When running `dagster dev`, Dagster looks into the top-level `__init__.py` file 
 In your project, open the `dagster_university/__init__.py` file. It should look like the following code:
 
 ```python
-from dagster import Definitions, load_assets_from_modules
+import dagster as dg
 
 from .assets import trips, metrics
 
-trip_assets = load_assets_from_modules([trips])
-metric_assets = load_assets_from_modules([metrics])
+trip_assets = dg.load_assets_from_modules([trips])
+metric_assets = dg.load_assets_from_modules([metrics])
 
-defs = Definitions(
+defs = dg.Definitions(
     assets=[*trip_assets, *metric_assets]
 )
 ```
@@ -65,7 +65,7 @@ Let’s break down this file’s code line-by-line.
 The following line introduces the `Definitions` object we were talking about. It also imports a method called `load_assets_from_modules`, which we’ll use to tell Dagster to retrieve the assets you defined:
 
 ```python
-from dagster import Definitions, load_assets_from_modules
+import dagster as dg
 ```
 
 Following Dagster’s recommended file structure, assets should be stored in a separate Python module. In this example, we used Python’s relative import functionality to import the `trips` and `metrics` sub-modules from the `.assets` module:
@@ -77,8 +77,8 @@ from .assets import trips, metrics
 These lines use the `load_assets_from_modules` function to store the assets into variables called `trip_assets` and `metric_assets`:
 
 ```python
-trip_assets = load_assets_from_modules([trips])
-metric_assets = load_assets_from_modules([metrics])
+trip_assets = dg.load_assets_from_modules([trips])
+metric_assets = dg.load_assets_from_modules([metrics])
 ```
 
 When loading a code location, Dagster looks for a variable that contains a `Definitions` object. This is the most important section of the `__init__.py` file. Here, everything is combined and added into the `Definitions` object.
@@ -86,7 +86,7 @@ When loading a code location, Dagster looks for a variable that contains a `Defi
 The `Definitions` object takes multiple arguments, one for each of the possible Dagster definitions (ex., `assets`, `resources`, `schedules`). In this case, we passed in the assets we loaded into the `assets` argument:
 
 ```python
-defs = Definitions(
+defs = dg.Definitions(
     assets=[*trip_assets, *metric_assets],
 )
 ```

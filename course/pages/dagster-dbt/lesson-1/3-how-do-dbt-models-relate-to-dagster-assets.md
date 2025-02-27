@@ -35,11 +35,11 @@ fivetran_assets = build_fivetran_assets(
 
 
 @dbt_assets(manifest=Path("manifest.json"))
-def dbt_project_assets(context: AssetExecutionContext, dbt: DbtCliResource):
+def dbt_project_assets(context: dg.AssetExecutionContext, dbt: DbtCliResource):
     yield from dbt.cli(["build"], context=context).stream()
 
 
-@asset(
+@dg.asset(
     compute_kind="tensorflow",
     deps=[get_asset_key_for_model([dbt_project_assets], "daily_order_summary")],
 )
@@ -51,4 +51,4 @@ Let's break down what's happening in this example:
 
 - Using `build_fivetran_assets`, we load two tables (`users`, `orders`) from a Fivetran Postgres connector as Dagster assets
 - Using `@dbt_assets`, Dagster reads from a dbt project's `manifest.json` and creates Dagster assets from the dbt models it finds
-- Lastly, we create a Dagster `@asset` named `predicted_orders` that has an upstream dependency on a dbt asset named `daily_order_summary`
+- Lastly, we create a Dagster `@dg.asset` named `predicted_orders` that has an upstream dependency on a dbt asset named `daily_order_summary`

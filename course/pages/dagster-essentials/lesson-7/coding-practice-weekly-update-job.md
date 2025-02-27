@@ -17,11 +17,11 @@ The job you built should look similar to the following code. Click **View answer
 **If there are differences**, compare what you wrote to the job below and change them, as this job will be used as-is in future lessons.
 
 ```python {% obfuscated="true" %}
-from dagster import define_asset_job, AssetSelection
+import dagster as dg
 
-trips_by_week = AssetSelection.assets(["trips_by_week"])
+trips_by_week = dg.AssetSelection.assets(["trips_by_week"])
 
-weekly_update_job = define_asset_job(
+weekly_update_job = dg.define_asset_job(
     name="weekly_update_job",
     selection=trips_by_week,
 )

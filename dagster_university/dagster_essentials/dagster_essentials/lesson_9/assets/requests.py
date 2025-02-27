@@ -1,20 +1,20 @@
 import base64
 
+import dagster as dg
 import matplotlib.pyplot as plt
-from dagster import Config, MaterializeResult, MetadataValue, asset
 from dagster_duckdb import DuckDBResource
 
 from . import constants
 
 
-class AdhocRequestConfig(Config):
+class AdhocRequestConfig(dg.Config):
     filename: str
     borough: str
     start_date: str
     end_date: str
 
 
-@asset(
+@dg.asset(
     deps=["taxi_trips", "taxi_zones"],
     compute_kind="Python",
 )
@@ -87,4 +87,4 @@ def adhoc_request(config: AdhocRequestConfig, database: DuckDBResource):
     base64_data = base64.b64encode(image_data).decode("utf-8")
     md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
 
-    return MaterializeResult(metadata={"preview": MetadataValue.md(md_content)})
+    return dg.MaterializeResult(metadata={"preview": dg.MetadataValue.md(md_content)})

@@ -15,10 +15,10 @@ Check it out in the Dagster UI by clicking **Overview** in the top navigation ba
 Pretty cool, right? Let’s check out the code that made this happen. Open the `dagster_university/jobs/__init__.py` and look at the definition for `trip_update_job`:
 
 ```python
-trip_update_job = define_asset_job(
+trip_update_job = dg.define_asset_job(
     name="trip_update_job",
     partitions_def=monthly_partition,
-    selection=AssetSelection.all() - trips_by_week - adhoc_request
+    selection=dg.AssetSelection.all() - trips_by_week - adhoc_request
 )
 ```
 
@@ -55,10 +55,10 @@ The function will return an `AssetSelection` of the dbt models that match your d
 3. Next, update the `selection` argument in the `trip_update_job` to subtract the `dbt_trips_selection`: 
     
     ```python
-    trip_update_job = define_asset_job(
+    trip_update_job = dg.define_asset_job(
         name="trip_update_job",
         partitions_def=monthly_partition,
-        selection=AssetSelection.all() - trips_by_week - adhoc_request - dbt_trips_selection
+        selection=dg.AssetSelection.all() - trips_by_week - adhoc_request - dbt_trips_selection
     )
     ```
     

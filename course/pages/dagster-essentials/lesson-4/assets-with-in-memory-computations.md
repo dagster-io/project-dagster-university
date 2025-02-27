@@ -17,7 +17,7 @@ Having all of your assets in one file becomes difficult to manage. Let’s separ
 2. At the top of the `assets/metrics.py` file, add the following imports:
 
    ```python
-   from dagster import asset
+   import dagster as dg
 
    import matplotlib.pyplot as plt
    import geopandas as gpd
@@ -33,7 +33,7 @@ Having all of your assets in one file becomes difficult to manage. Let’s separ
 3. Next, define the `manhattan_stats` asset and its dependencies. Copy and paste the following code to the end of `metrics.py` :
 
    ```python
-   @asset(
+   @dg.asset(
        deps=["taxi_trips", "taxi_zones"]
    )
    def manhattan_stats() -> None:
@@ -42,7 +42,7 @@ Having all of your assets in one file becomes difficult to manage. Let’s separ
 4. Now, let’s add the logic to calculate `manhattan_stats`. Update the `manhattan_stats` asset definition to reflect the changes below:
 
    ```python
-   @asset(
+   @dg.asset(
        deps=["taxi_trips", "taxi_zones"]
    )
    def manhattan_stats() -> None:
@@ -92,7 +92,7 @@ In this section, you’ll create an asset that depends on `manhattan_stats`, loa
 1. At the bottom of `metrics.py` file, copy and paste the following:
 
    ```python
-   @asset(
+   @dg.asset(
        deps=["manhattan_stats"],
    )
    def manhattan_map() -> None:

@@ -45,9 +45,9 @@ For more info on asset selection, refer to the [asset selection syntax guide in 
 1. In `jobs/__init__.py`, let’s first define our asset selection. Copy and paste the following snippet into the file:
 
    ```python
-   from dagster import AssetSelection
+   from dagster import dg.AssetSelection
 
-   trips_by_week = AssetSelection.assets("trips_by_week")
+   trips_by_week = dg.AssetSelection.assets("trips_by_week")
    ```
 
    This uses the `AssetSelection` utility to reference a single asset, `trips_by_week`. We’ll isolate this specifically because we won’t want to run it with the rest of our pipeline and it should be run more frequently.
@@ -55,15 +55,15 @@ For more info on asset selection, refer to the [asset selection syntax guide in 
 2. Add `define_asset_job` to your `dagster` import:
 
    ```bash
-   from dagster import AssetSelection, define_asset_job
+   import dagster as dg
    ```
 
 3. Next, create a job named `trip_update_job` that selects all assets using `AssetSelection.all()` and then omit `trips_by_week` by substracting its selection:
 
    ```python
-   trip_update_job = define_asset_job(
+   trip_update_job = dg.define_asset_job(
        name="trip_update_job",
-       selection=AssetSelection.all() - trips_by_week
+       selection=dg.AssetSelection.all() - trips_by_week
    )
    ```
 
@@ -72,13 +72,13 @@ For more info on asset selection, refer to the [asset selection syntax guide in 
 Your final code in `jobs/__init__.py` should look like the following:
 
 ```python
-from dagster import AssetSelection, define_asset_job
+import dagster as dg
 
-trips_by_week = AssetSelection.assets("trips_by_week")
+trips_by_week = dg.AssetSelection.assets("trips_by_week")
 
-trip_update_job = define_asset_job(
+trip_update_job = dg.define_asset_job(
     name="trip_update_job",
-    selection=AssetSelection.all() - trips_by_week
+    selection=dg.AssetSelection.all() - trips_by_week
 )
 ```
 

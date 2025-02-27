@@ -1,21 +1,16 @@
 import base64
 from datetime import datetime, timedelta
 
+import dagster as dg
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import pandas as pd
-from dagster import (
-    AssetKey,
-    MaterializeResult,
-    MetadataValue,
-    asset,
-)
 from dagster_duckdb import DuckDBResource
 
 from . import constants
 
 
-@asset(deps=["taxi_trips"])
+@dg.asset(deps=["taxi_trips"])
 def trips_by_week(database: DuckDBResource) -> None:
     current_date = datetime.strptime("2023-01-01", constants.DATE_FORMAT)
     end_date = datetime.now()
@@ -67,8 +62,8 @@ def trips_by_week(database: DuckDBResource) -> None:
     result.to_csv(constants.TRIPS_BY_WEEK_FILE_PATH, index=False)
 
 
-@asset(
-    deps=[AssetKey(["taxi_trips"]), AssetKey(["taxi_zones"])],
+@dg.asset(
+    deps=[dg.AssetKey(["taxi_trips"]), dg.AssetKey(["taxi_zones"])],
     key_prefix="manhattan",
     compute_kind="DuckDB",
 )
@@ -99,8 +94,8 @@ def manhattan_stats(database: DuckDBResource):
         output_file.write(trips_by_zone.to_json())
 
 
-@asset(
-    deps=[AssetKey(["manhattan", "manhattan_stats"])],
+@dg.asset(
+    deps=[dg.AssetKey(["manhattan", "manhattan_stats"])],
     compute_kind="Python",
 )
 def manhattan_map():
@@ -130,4 +125,4 @@ def manhattan_map():
     base64_data = base64.b64encode(image_data).decode("utf-8")
     md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
 
-    return MaterializeResult(metadata={"preview": MetadataValue.md(md_content)})
+    return dg.MaterializeResult(metadata={"preview": dg.MetadataValue.md(md_content)})

@@ -1,15 +1,15 @@
-from dagster import AssetSelection, define_asset_job
+import dagster as dg
 
 from .partitions import monthly_partition, weekly_partition
 
-trips_by_week = AssetSelection.assets("trips_by_week")
+trips_by_week = dg.AssetSelection.assets("trips_by_week")
 
-trip_update_job = define_asset_job(
+trip_update_job = dg.define_asset_job(
     name="trip_update_job",
     partitions_def=monthly_partition,
-    selection=AssetSelection.all() - trips_by_week,
+    selection=dg.AssetSelection.all() - trips_by_week,
 )
 
-weekly_update_job = define_asset_job(
+weekly_update_job = dg.define_asset_job(
     name="weekly_update_job", partitions_def=weekly_partition, selection=trips_by_week
 )

@@ -62,9 +62,10 @@ from datetime import datetime, timedelta
 from . import constants
 
 import pandas as pd
+import dagster as dg
 from dagster._utils.backoff import backoff
 
-@asset(
+@dg.asset(
     deps=["taxi_trips"]
 )
 def trips_by_week() -> None:
