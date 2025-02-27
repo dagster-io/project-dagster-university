@@ -9,7 +9,10 @@ from ..jobs import adhoc_request_job
 @dg.sensor(job=adhoc_request_job)
 def adhoc_request_sensor(context: dg.SensorEvaluationContext):
     PATH_TO_REQUESTS = os.path.join(
-        os.path.dirname(__file__), "../../", "data/requests"
+        # Additional layer of nesting for lessons than project
+        os.path.dirname(__file__),
+        "../../../",
+        "data/requests",
     )
 
     previous_state = json.loads(context.cursor) if context.cursor else {}

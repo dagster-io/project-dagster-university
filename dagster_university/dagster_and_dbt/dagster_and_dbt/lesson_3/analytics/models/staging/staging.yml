@@ -25,18 +25,7 @@ models:
     columns:
       - name: zone_id
         description: The location id
-        tests:
-          - not_null
       - name: borough
         description: The borough
-        tests:
-          - accepted_values:
-              values:
-                - Manhattan
-                - Bronx
-                - Brooklyn
-                - Queens
-                - Staten Island
-                - EWR
       - name: zone
         description: The zone

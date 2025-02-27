@@ -42,7 +42,7 @@ title: Dagster Essentials
   - [Practice: Refactoring assets to use resources](/dagster-essentials/lesson-6/coding-practice-refactoring-assets)
   - [Analyzing resource usage using the Dagster UI](/dagster-essentials/lesson-6/analyzing-resources-dagster-ui)
   - [Lesson recap](/dagster-essentials/lesson-6/recap)
-- Lesson 7: Resources
+- Lesson 7: Schedules
   - [Overview](/dagster-essentials/lesson-7/overview)
   - [What are schedules?](/dagster-essentials/lesson-7/what-are-schedules)
   - [Practice: Create a weekly_update_job](/dagster-essentials/lesson-7/coding-practice-weekly-update-job)

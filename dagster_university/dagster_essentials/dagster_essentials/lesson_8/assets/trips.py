@@ -8,7 +8,6 @@ from . import constants
 
 
 @dg.asset(
-    group_name="raw_files",
     compute_kind="Python",
 )
 def taxi_zones_file():
@@ -31,7 +30,6 @@ def taxi_zones_file():
 
 @dg.asset(
     deps=["taxi_zones_file"],
-    group_name="ingested",
     compute_kind="DuckDB",
 )
 def taxi_zones(database: DuckDBResource):
@@ -56,7 +54,6 @@ def taxi_zones(database: DuckDBResource):
 
 @dg.asset(
     partitions_def=monthly_partition,
-    group_name="raw_files",
     compute_kind="DuckDB",
 )
 def taxi_trips_file(context: dg.AssetExecutionContext):
@@ -87,7 +84,6 @@ def taxi_trips_file(context: dg.AssetExecutionContext):
 @dg.asset(
     deps=["taxi_trips_file"],
     partitions_def=monthly_partition,
-    group_name="ingested",
     compute_kind="DuckDB",
 )
 def taxi_trips(context: dg.AssetExecutionContext, database: DuckDBResource):
