@@ -45,7 +45,7 @@ For more info on asset selection, refer to the [asset selection syntax guide in 
 1. In `jobs/__init__.py`, let’s first define our asset selection. Copy and paste the following snippet into the file:
 
    ```python
-   from dagster import dg.AssetSelection
+   import dagster as dg
 
    trips_by_week = dg.AssetSelection.assets("trips_by_week")
    ```

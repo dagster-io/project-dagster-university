@@ -82,7 +82,7 @@ By using `EnvVar` instead of `os.getenv`, you can dynamically customize a resour
 
 ---
 
-## Updating the dg.Definitions object
+## Updating the Definitions object
 
 In the previous lesson, you learned about code locations, how they work, and how to collect assets and other Dagster definitions using the `Definitions` object.
 

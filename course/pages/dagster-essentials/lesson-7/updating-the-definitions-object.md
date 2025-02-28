@@ -1,5 +1,5 @@
 ---
-title: 'Lesson 7: Updating the dg.Definitions object'
+title: 'Lesson 7: Updating the Definitions object'
 module: 'dagster_essentials'
 lesson: '7'
 ---

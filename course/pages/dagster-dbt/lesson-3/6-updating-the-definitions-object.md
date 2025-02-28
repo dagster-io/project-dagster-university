@@ -23,7 +23,7 @@ from .resources import database_resource, dbt_resource # import the dbt resource
 # ...other existing imports
 
 # ... existing calls to load_assets_from_modules
-dbt_analytics_assets = load_assets_from_modules(modules=[dbt]) # Load the assets from the file
+dbt_analytics_assets = dg.load_assets_from_modules(modules=[dbt]) # Load the assets from the file
 
 # ... other declarations
 
