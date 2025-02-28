@@ -6,7 +6,9 @@ lesson: '4'
 
 # Integration tests
 
-First we will define an asset that connects to a database via a resource and queries a `data.city_population` table. This table contains all the different cities in all states with the following schema.
+We can begin by defining a new asset similar to `state_population_file` that retrieves city population data from a database.
+
+Assume a table exists in our production data warehouse, `data.city_population`, that contains all the different cities in all states. The table has the following schema.
 
 | Name | Type | Description |
 | --- | --- | --- |
@@ -14,7 +16,7 @@ First we will define an asset that connects to a database via a resource and que
 | city_name | VARCHAR(100) | The name of the city |
 | population | INT | The city population |
 
-To start with we will just hardcode our asset to look for the cities in New York and return the results from Snowflake:
+We will hardcode our asset to look for the cities in New York and return the results from Snowflake using a resource.
 
 ```python
 @dg.asset
@@ -29,11 +31,10 @@ def state_population_database(database: SnowflakeResource) -> list[tuple]:
     with database.get_connection() as conn:
         cur = conn.cursor()
         cur.execute(query)
-
         return cur.fetchall()
 ```
 
-When we run this asset, we need to supply a Snowflake resource. The connection to Snowflake is defined with environmental variables when initializing the Snowflake resource and is set in the definitions:
+When we run this asset, we need to supply a Snowflake resource. The connection to Snowflake is defined with environmental variables when initializing the Snowflake resource and is set in the Definition.
 
 ```python
 all_assets = dg.load_assets_from_modules([assets])

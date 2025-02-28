@@ -4,6 +4,7 @@ import requests
 API_URL = "https://fake.com/population.json"
 
 
+# This asset will fail as the API does not exist
 @dg.asset
 def state_population_api() -> list[dict]:
     output = []

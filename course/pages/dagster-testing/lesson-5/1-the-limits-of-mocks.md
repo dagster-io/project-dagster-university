@@ -6,11 +6,12 @@ lesson: '4'
 
 # The limits of mocks in testing
 
-Mocking can be very helpful to quickly check that your code is working as expected with predetermined results. But in data engineering, you will also want to ensure your code can interact with the systems it will rely on in production.
+Mocking can be very helpful to check that your code is working as expected. But in data engineering, you also need to ensure your code can interact with systems in production.
 
-Now we will update our assets once again and instead of pulling the city population data from an API, we will query it from a database. We can pretend that in production our data warehouse holds all of this information.
+In this lesson we will update our assets once again and now pull the city population data from a database. We could accomplish all of this with mocks but it would be advisable to have some part of our testing use a real database connection.
+Using a real database will catch more issues before we push code to production as it will more closely resemble how the code will actually run.
 
-We could accomplish all of this with mocks but it would be more accurate, and we will catch more issues, if we performed these tests with an actual database. This does. For example mocks would not catch an error with our SQL syntax like:
+Also using a real database will help catch issues that would be arduous to configure ourselves with mocks. Having a SQL parser would help catch syntax issues in our database queries. For example a mock may not catch:
 
 ```sql
 SELECT
@@ -20,12 +21,12 @@ FROM data.city_population
 WHERE state_name = "NY"; -- Incorrect quotation marks
 ```
 
-This is where we can use integration tests to ensure our assets work as expected.
+This is where we can use integration tests to ensure everything work as expected.
 
 ## Integration testing
 
 Integration tests verify that different components of a system work together. It helps identify issues in data flow, communication, and interaction between integrated units in an application.
 
-Usually we do not do integration testing directly against production (we would not want to use our production data warehouse). Instead we want something that seamlessly substitutes different systems when executing our code.
+Usually we do not do integration testing directly against production systems. Instead we want something that substitutes an equivalent of the production system.
 
-Dagster was designed specifically to allow for this type of developer flow.
+Integration testing can be tricky. However Dagster make was design with this type of workflow in mind and you will see how you can easily substitute different dependencies for testing purposes without having to change the core logic of your code.

@@ -10,10 +10,18 @@ If we think about the `state_population_database` asset, we want to make sure it
 
 ```python
 @dg.asset
-def my_sql_table(database: dg.ConfigurableResource):
-    query = "SELECT * FROM information_schema.columns;"
+def state_population_database(database: dg.ConfigurableResource) -> list[tuple]:
+    query = """
+        SELECT
+            city_name,
+            population
+        FROM data.city_population
+        WHERE state_name = 'NY';
+    """
     with database.get_connection() as conn:
-        conn.cursor().execute(query)
+        cur = conn.cursor()
+        cur.execute(query)
+        return cur.fetchall()
 ```
 
 Now in order to execute the asset, we only need to provide a resource that has a `get_connection` context manager with methods for `cursor` and `execute`.  From Dagster's perspective, this does not even need to be a database. As long as it meets those criteria.
@@ -49,40 +57,20 @@ This resource provides everything we need and can be used in place of the Snowfl
 We defined our own Postgres resource to take the place of Snowflake but there are  other options. One popular tool is DuckDB which serves as an OLAP database that can run locally. This can serve as a great substitute for a data warehouse like Snowflake. Just remember that something like:
 
 ```python
-@asset
-def iris_dataset(duckdb: DuckDBResource) -> None:
-    iris_df = pd.read_csv(
-        "https://docs.dagster.io/assets/iris.csv",
-        names=[
-            "sepal_length_cm",
-            "sepal_width_cm",
-            "petal_length_cm",
-            "petal_width_cm",
-            "species",
-        ],
-    )
-
-    with duckdb.get_connection() as conn:
-        conn.execute("CREATE TABLE iris.iris_dataset AS SELECT * FROM iris_df")
+@dg.asset
+def truncate_table(database: dg.ConfigurableResource) -> None:
+    query = "TRUNCATE TABLE data.city_population"
+    with database.get_connection() as conn:
+        conn.execute(query)
 ```
 
 Would not work with Snowflake because Snowflake requires the cursor while DuckDB does not. The code would need to match for both resources:
 
 ```python
-@asset
-def iris_dataset(duckdb: DuckDBResource) -> None:
-    iris_df = pd.read_csv(
-        "https://docs.dagster.io/assets/iris.csv",
-        names=[
-            "sepal_length_cm",
-            "sepal_width_cm",
-            "petal_length_cm",
-            "petal_width_cm",
-            "species",
-        ],
-    )
-
-    with duckdb.get_connection() as conn:
-        # Include cursor
-        conn.cursor().execute("CREATE TABLE iris.iris_dataset AS SELECT * FROM iris_df")
+@dg.asset
+def truncate_table(database: dg.ConfigurableResource) -> None:
+    query = "TRUNCATE TABLE data.city_population"
+    with database.get_connection() as conn:
+        cur = conn.cursor() # Cursor is required
+        cur.execute(query)
 ```

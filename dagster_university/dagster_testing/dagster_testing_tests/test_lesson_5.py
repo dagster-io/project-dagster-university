@@ -12,10 +12,17 @@ from .fixtures import docker_compose  # noqa: F401
 
 
 @pytest.fixture
-def query_output():
+def query_output_ny():
     return [
         ("New York", 8804190),
         ("Buffalo", 278349),
+    ]
+
+
+@pytest.fixture
+def query_output_ca():
+    return [
+        ("Los Angeles", 3898747),
     ]
 
 
@@ -27,20 +34,6 @@ def postgres_resource():
         password="test_pass",
         database="test_db",
     )
-
-
-# Snowflake not configured
-@pytest.mark.skip
-def test_snowflake_staging():
-    snowflake_staging_resource = SnowflakeResource(
-        account=dg.EnvVar("SNOWFLAKE_ACCOUNT"),
-        user=dg.EnvVar("SNOWFLAKE_USERNAME"),
-        password=dg.EnvVar("SNOWFLAKE_PASSWORD"),
-        database="STAGING",
-        warehouse="STAGING_WAREHOUSE",
-    )
-
-    assets.state_population_database(snowflake_staging_resource)
 
 
 class PostgresResource(dg.ConfigurableResource):
@@ -62,8 +55,22 @@ class PostgresResource(dg.ConfigurableResource):
         yield self._connection()
 
 
+# Snowflake not configured
+@pytest.mark.skip
+def test_snowflake_staging():
+    snowflake_staging_resource = SnowflakeResource(
+        account=dg.EnvVar("SNOWFLAKE_ACCOUNT"),
+        user=dg.EnvVar("SNOWFLAKE_USERNAME"),
+        password=dg.EnvVar("SNOWFLAKE_PASSWORD"),
+        database="STAGING",
+        warehouse="STAGING_WAREHOUSE",
+    )
+
+    assets.state_population_database(snowflake_staging_resource)
+
+
 @pytest.mark.integration
-def test_state_population_database(docker_compose):  # noqa: F811
+def test_state_population_database(docker_compose, query_output_ny):  # noqa: F811
     postgres_resource = PostgresResource(
         host="localhost",
         user="test_user",
@@ -72,10 +79,7 @@ def test_state_population_database(docker_compose):  # noqa: F811
     )
 
     result = assets.state_population_database(postgres_resource)
-    assert result == [
-        ("New York", 8804190),
-        ("Buffalo", 278349),
-    ]
+    assert result == query_output_ny
 
 
 @pytest.mark.integration
@@ -85,7 +89,7 @@ def test_total_population_database():
 
 
 @pytest.mark.integration
-def test_assets_partition(docker_compose, postgres_resource, query_output):  # noqa: F811
+def test_assets_partition(docker_compose, postgres_resource, query_output_ny):  # noqa: F811
     result = dg.materialize(
         assets=[
             assets.state_population_database,
@@ -95,17 +99,19 @@ def test_assets_partition(docker_compose, postgres_resource, query_output):  # n
     )
     assert result.success
 
-    assert result.output_for_node("state_population_database") == query_output
+    assert result.output_for_node("state_population_database") == query_output_ny
     assert result.output_for_node("total_population_database") == 9082539
 
 
 @pytest.mark.integration
-def test_state_population_database_config(docker_compose, postgres_resource):  # noqa: F811
+def test_state_population_database_config(
+    docker_compose,  # noqa: F811
+    postgres_resource,
+    query_output_ca,
+):
     config = assets.StateConfig(name="CA")
     result = assets.state_population_database_config(config, postgres_resource)
-    assert result == [
-        ("Los Angeles", 3898747),
-    ]
+    assert result == query_output_ca
 
 
 @pytest.mark.integration

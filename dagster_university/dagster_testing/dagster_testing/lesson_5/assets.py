@@ -13,7 +13,6 @@ def state_population_database(database: dg.ConfigurableResource) -> list[tuple]:
     with database.get_connection() as conn:
         cur = conn.cursor()
         cur.execute(query)
-
         return cur.fetchall()
 
 
@@ -35,7 +34,6 @@ def state_population_database_config(
     with database.get_connection() as conn:
         cur = conn.cursor()
         cur.execute(query)
-
         return cur.fetchall()
 
 

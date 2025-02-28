@@ -21,7 +21,8 @@ title: Testing with Dagster
   - [Overview](/dagster-testing/lesson-4/0-overview)
   - [Testing with mocks](/dagster-testing/lesson-4/1-testing-with-mocks)
   - [Testing with resources](/dagster-testing/lesson-4/2-testing-with-resources)
-  - [Mocking resources for testing](/dagster-testing/lesson-4/3-mocking-resources-for-testing)
+  - [Materializing resource tests](/dagster-testing/lesson-4/3-materializing-resource-tests)
+  - [Mocking resources for testing](/dagster-testing/lesson-4/4-mocking-resources-for-testing)
 - Lesson 5: Integration
   - [Overview](/dagster-testing/lesson-5/0-overview)
   - [The limits of mocks](/dagster-testing/lesson-5/1-the-limits-of-mocks)

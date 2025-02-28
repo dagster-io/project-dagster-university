@@ -1,4 +1,4 @@
-# [WIP] Dagster Testing
+# [WIP] Testing with Dagster
 
 > [!NOTE]  
 > This module is currently a work in progress and is not live as a course yet.
