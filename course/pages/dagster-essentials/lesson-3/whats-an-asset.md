@@ -23,7 +23,7 @@ To create an asset, you write code that describes an asset that you want to exis
 
 Specifically, an asset includes:
 
-- **An `@asset` decorator.** This tells Dagster that the function produces an asset.
+- **An `@dg.asset` decorator.** This tells Dagster that the function produces an asset.
 - **An asset key** that uniquely identifies the asset in Dagster. By default, this is the function name. However, asset keys can have prefixes, much like how files are in folders or database tables are in schemas.
 - **A set of upstream asset dependencies**, referenced using their asset keys. We’ll talk about this more in the next lesson, which focuses on asset dependencies.
 - **A Python function** that defines how the asset is computed.
@@ -31,7 +31,7 @@ Specifically, an asset includes:
 **Let’s look at our cookie example to demonstrate**. The following code creates a `cookie_dough` asset, which depends on the upstream `dry_ingredients` and `wet_ingredients` assets:
 
 ```python
-@asset
+@dg.asset
 def cookie_dough(dry_ingredients, wet_ingredients):
     return dry_ingredients + wet_ingredients
 ```

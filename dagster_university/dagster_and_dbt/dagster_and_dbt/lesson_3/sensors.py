@@ -1,13 +1,13 @@
 import json
 import os
 
-from dagster import RunRequest, SensorEvaluationContext, SensorResult, sensor
+import dagster as dg
 
 from .jobs import adhoc_request_job
 
 
-@sensor(job=adhoc_request_job)
-def adhoc_request_sensor(context: SensorEvaluationContext):
+@dg.sensor(job=adhoc_request_job)
+def adhoc_request_sensor(context: dg.SensorEvaluationContext):
     PATH_TO_REQUESTS = os.path.join(
         # Additional layer of nesting for lessons than project
         os.path.dirname(__file__),
@@ -35,7 +35,7 @@ def adhoc_request_sensor(context: SensorEvaluationContext):
                     request_config = json.load(f)
 
                 runs_to_request.append(
-                    RunRequest(
+                    dg.RunRequest(
                         run_key=f"adhoc_request_{filename}_{last_modified}",
                         run_config={
                             "ops": {
@@ -47,4 +47,6 @@ def adhoc_request_sensor(context: SensorEvaluationContext):
                     )
                 )
 
-    return SensorResult(run_requests=runs_to_request, cursor=json.dumps(current_state))
+    return dg.SensorResult(
+        run_requests=runs_to_request, cursor=json.dumps(current_state)
+    )

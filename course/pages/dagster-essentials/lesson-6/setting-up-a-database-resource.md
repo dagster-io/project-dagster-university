@@ -9,7 +9,7 @@ lesson: '6'
 Throughout this module, you’ve used DuckDB to store and transform your data. Each time you’ve used DuckDB in an asset, you’ve needed to make a connection to it. For example:
 
 ```python
-@asset(
+@dg.asset(
     deps=["taxi_trips_file"],
 )
 def taxi_trips() -> None:
@@ -66,10 +66,10 @@ In `resources/__init__.py`, replace the value of the `database` with an `EnvVar
 
 ```python
 from dagster_duckdb import DuckDBResource
-from dagster import EnvVar
+import dagster as dg
 
 database_resource = DuckDBResource(
-    database=EnvVar("DUCKDB_DATABASE")      # replaced with environment variable
+    database=dg.EnvVar("DUCKDB_DATABASE")      # replaced with environment variable
 )
 ```
 
@@ -99,7 +99,7 @@ Update `dagster_university/__init__.py` with the following changes:
 2. Add the imported `database_resource` to your `Definitions` object through the `resources` argument. We’ll give it the identifier `database`. This is the key that we’ll use to tell Dagster that we want the DuckDB resource.
 
    ```python
-   defs = Definitions(
+   defs = dg.Definitions(
        assets=[*trip_assets, *metric_assets],
        resources={
            "database": database_resource,

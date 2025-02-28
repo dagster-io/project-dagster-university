@@ -35,7 +35,7 @@ The `requests.py` file should look like the code snippet below:
 ```python
 from dagster import Config
 
-class AdhocRequestConfig(Config):
+class AdhocRequestConfig(dg.Config):
     filename: str
     borough: str
     start_date: str

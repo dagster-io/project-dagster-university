@@ -1,14 +1,14 @@
 import os
 
+import dagster as dg
 import duckdb
 import requests
-from dagster import asset
 from dagster._utils.backoff import backoff
 
 from . import constants
 
 
-@asset
+@dg.asset
 def taxi_trips_file() -> None:
     """
     The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal.
@@ -24,7 +24,7 @@ def taxi_trips_file() -> None:
         output_file.write(raw_trips.content)
 
 
-@asset
+@dg.asset
 def taxi_zones_file() -> None:
     """
     The raw CSV file for the taxi zones dataset. Sourced from the NYC Open Data portal.
@@ -37,7 +37,7 @@ def taxi_zones_file() -> None:
         output_file.write(raw_taxi_zones.content)
 
 
-@asset(deps=["taxi_trips_file"])
+@dg.asset(deps=["taxi_trips_file"])
 def taxi_trips() -> None:
     """
     The raw taxi trips dataset, loaded into a DuckDB database
@@ -70,7 +70,7 @@ def taxi_trips() -> None:
     conn.execute(query)
 
 
-@asset(deps=["taxi_zones_file"])
+@dg.asset(deps=["taxi_zones_file"])
 def taxi_zones() -> None:
     query = f"""
         create or replace table zones as (

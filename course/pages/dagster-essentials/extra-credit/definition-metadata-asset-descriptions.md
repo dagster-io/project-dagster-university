@@ -20,9 +20,9 @@ As you went through this course, you might have noticed that the assets all cont
 Docstrings are defined by including a string, surrounded by triple quotes (`”””`) as the first statement in an object’s definition. For example:
 
 ```python
-from dagster import asset
+import dagster as dg
 
-@asset
+@dg.asset
 def taxi_zones_file() -> None:
     """
       The raw CSV file for the taxi zones dataset. Sourced from the NYC Open Data portal.
@@ -44,9 +44,9 @@ Another way to add a description to an asset is to use the asset decorator with 
 For example:
 
 ```python
-from dagster import asset
+import dagster as dg
 
-@asset(
+@dg.asset(
     description="The raw CSV file for the taxi zones dataset. Sourced from the NYC Open Data portal."
 )
 def taxi_zones_file() -> None:

@@ -23,11 +23,11 @@ import requests
 import duckdb
 import os
 from . import constants
-from dagster import asset
+import dagster as dg
 
 ... # other assets
 
-@asset(
+@dg.asset(
     deps=["taxi_trips_file"],
 )
 def taxi_trips() -> None:
@@ -71,11 +71,11 @@ And now, after adding a resource, the `taxi_trips` asset looks like the followin
 import requests
 from dagster_duckdb import DuckDBResource
 from . import constants
-from dagster import asset
+import dagster as dg
 
 ... # other assets
 
-@asset(
+@dg.asset(
     deps=["taxi_trips_file"],
 )
 def taxi_trips(database: DuckDBResource) -> None:

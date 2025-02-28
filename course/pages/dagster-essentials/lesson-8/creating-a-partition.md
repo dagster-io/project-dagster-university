@@ -21,13 +21,13 @@ Additionally, your Dagster project contains an `assets/constants.py` file. This 
 Now that you have all the info you need to start building partitions, let’s take a look at an example:
 
 ```python
-from dagster import MonthlyPartitionsDefinition
+import dagster as dg
 from ..assets import constants
 
 start_date = constants.START_DATE
 end_date = constants.END_DATE
 
-monthly_partition = MonthlyPartitionsDefinition(
+monthly_partition = dg.MonthlyPartitionsDefinition(
     start_date=start_date,
     end_date=end_date
 )

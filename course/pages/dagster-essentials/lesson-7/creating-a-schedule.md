@@ -11,10 +11,10 @@ Now that you know what makes up a schedule, letâ€™s create one. To do this, weâ€
 Copy and paste the following snippet into `schedules/__init__.py`:
 
 ```python
-from dagster import ScheduleDefinition
+import dagster as dg
 from ..jobs import trip_update_job
 
-trip_update_schedule = ScheduleDefinition(
+trip_update_schedule = dg.ScheduleDefinition(
     job=trip_update_job,
     cron_schedule="0 0 5 * *", # every 5th of the month at midnight
 )

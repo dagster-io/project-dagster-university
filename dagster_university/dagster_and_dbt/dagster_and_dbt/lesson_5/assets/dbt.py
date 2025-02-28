@@ -1,4 +1,4 @@
-from dagster import AssetExecutionContext, AssetKey
+import dagster as dg
 from dagster_dbt import DagsterDbtTranslator, DbtCliResource, dbt_assets
 
 from ..project import dbt_project
@@ -13,7 +13,7 @@ class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
         resource_type = dbt_resource_props["resource_type"]
         name = dbt_resource_props["name"]
         if resource_type == "source":
-            return AssetKey(f"taxi_{name}")
+            return dg.AssetKey(f"taxi_{name}")
         else:
             return super().get_asset_key(dbt_resource_props)
 
@@ -22,5 +22,5 @@ class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
     manifest=dbt_project.manifest_path,
     dagster_dbt_translator=CustomizedDagsterDbtTranslator(),
 )
-def dbt_analytics(context: AssetExecutionContext, dbt: DbtCliResource):
+def dbt_analytics(context: dg.AssetExecutionContext, dbt: DbtCliResource):
     yield from dbt.cli(["run"], context=context).stream()

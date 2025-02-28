@@ -33,10 +33,10 @@ Asset groups can be defined in the `__init__.py`, where the `Definitions` object
 For example:
 
 ```python
-from dagster import load_assets_from_modules
+import dagster as dg
 from .assets import metrics
 
-metric_assets = load_assets_from_modules(
+metric_assets = dg.load_assets_from_modules(
     modules=[metrics],
     group_name="metrics",
 )
@@ -51,9 +51,9 @@ In this example, all assets in the `metrics` module (`metric_assets`) will be in
 You can also specify groups on individual assets by using the `group_name` parameter in the asset decorator. For example:
 
 ```python
-from dagster import asset
+import dagster as dg
 
-@asset(
+@dg.asset(
     group_name="raw_files",
 )
 def taxi_zones_file() -> None:

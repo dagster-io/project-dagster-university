@@ -11,7 +11,7 @@ In this section, you’ll update the assets in `assets/trips.py` to use the part
 Starting with `taxi_trips_file`, the asset code should currently look like this:
 
 ```python
-@asset
+@dg.asset
 def taxi_trips_file() -> None:
     """
       The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal.
@@ -35,10 +35,10 @@ To add the partition to the asset:
    from ..partitions import monthly_partition
    ```
 
-2. In the asset decorator (`@asset`), add a `partitions_def` parameter equal to `monthly_partition`:
+2. In the asset decorator (`@dg.asset`), add a `partitions_def` parameter equal to `monthly_partition`:
 
    ```python
-   @asset(
+   @dg.asset(
        partitions_def=monthly_partition
    )
    ```
@@ -49,10 +49,10 @@ To add the partition to the asset:
    from dagster import asset, AssetExecutionContext
 
 
-   @asset(
+   @dg.asset(
        partitions_def=monthly_partition
    )
-   def taxi_trips_file(context: AssetExecutionContext) -> None:
+   def taxi_trips_file(context: dg.AssetExecutionContext) -> None:
    ```
 
    **Note**: The `context` argument isn’t specific to partitions. However, this is the first time you've used it in Dagster University. The `context` argument provides information about how Dagster is running and materializing your asset. For example, you can use it to find out which partition Dagster is materializing, which job triggered the materialization, or what metadata was attached to its previous materializations.
@@ -60,20 +60,20 @@ To add the partition to the asset:
 4. In the original asset code, the logic was hard-coded to specifically fetch data for March 2023 (`'2023-03'`). Use the `context` argument’s `partition_key` property to dynamically fetch a specific partition’s month of data:
 
    ```python
-   @asset(
+   @dg.asset(
        partitions_def=monthly_partition
    )
-   def taxi_trips_file(context: AssetExecutionContext) -> None:
+   def taxi_trips_file(context: dg.AssetExecutionContext) -> None:
        partition_date_str = context.partition_key
    ```
 
 5. In the NYC OpenData source system, the taxi trip files are structured in a `YYYY-MM` format. However, `context.partition_key` supplies the materializing partition’s date as a string in the `YYYY-MM-DD` format. Slice the string to make it match the format expected by our source system and replace our existing declaration of the `month_to_fetch` variable:
 
    ```python
-   @asset(
+   @dg.asset(
        partitions_def=monthly_partition
    )
-   def taxi_trips_file(context: AssetExecutionContext) -> None:
+   def taxi_trips_file(context: dg.AssetExecutionContext) -> None:
        partition_date_str = context.partition_key
        month_to_fetch = partition_date_str[:-3]
    ```
@@ -83,10 +83,10 @@ After following the steps above, the `taxi_trips_file` asset should look similar
 ```python
 from ..partitions import monthly_partition
 
-@asset(
+@dg.asset(
     partitions_def=monthly_partition
 )
-def taxi_trips_file(context: AssetExecutionContext) -> None:
+def taxi_trips_file(context: dg.AssetExecutionContext) -> None:
   """
       The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal.
   """

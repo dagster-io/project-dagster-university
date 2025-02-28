@@ -24,13 +24,13 @@ In Lesson 9, you created the `adhoc_request` asset. During materialization, the 
 
    from . import constants
 
-   class AdhocRequestConfig(Config):
+   class AdhocRequestConfig(dg.Config):
      filename: str
      borough: str
      start_date: str
      end_date: str
 
-   @asset
+   @dg.asset
    def adhoc_request(config: AdhocRequestConfig, taxi_zones, taxi_trips, database: DuckDBResource) -> None:
        """
          The response to an request made in the `requests` directory.
@@ -93,7 +93,7 @@ In Lesson 9, you created the `adhoc_request` asset. During materialization, the 
 
    ```python
    import base64
-   from dagster import MaterializeResult
+   import dagster as dg
    ```
 
 4. After the last line in the asset, add the following code:
@@ -113,9 +113,9 @@ In Lesson 9, you created the `adhoc_request` asset. During materialization, the 
 6. Finally, we'll return a `MaterializeResult` object with the metadata specified as a parameter:
 
    ```python
-   return MaterializeResult(
+   return dg.MaterializeResult(
        metadata={
-           "preview": MetadataValue.md(md_content)
+           "preview": dg.MetadataValue.md(md_content)
        }
    )
    ```
@@ -132,7 +132,7 @@ In Lesson 9, you created the `adhoc_request` asset. During materialization, the 
 At this point, the code for the `adhoc_request` asset should look like this:
 
 ```python
-from dagster import Config, asset, MaterializeResult, MetadataValue
+import dagster as dg
 from dagster_duckdb import DuckDBResource
 
 import matplotlib.pyplot as plt
@@ -140,13 +140,13 @@ import base64
 
 from . import constants
 
-class AdhocRequestConfig(Config):
+class AdhocRequestConfig(dg.Config):
     filename: str
     borough: str
     start_date: str
     end_date: str
 
-@asset
+@dg.asset
 def adhoc_request(config: AdhocRequestConfig, taxi_zones, taxi_trips, database: DuckDBResource) -> None:
     """
       The response to an request made in the `requests` directory.
@@ -207,9 +207,9 @@ def adhoc_request(config: AdhocRequestConfig, taxi_zones, taxi_trips, database: 
     base64_data = base64.b64encode(image_data).decode('utf-8')
     md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
 
-    return MaterializeResult(
+    return dg.MaterializeResult(
         metadata={
-            "preview": MetadataValue.md(md_content)
+            "preview": dg.MetadataValue.md(md_content)
         }
     )
 ```

@@ -49,7 +49,7 @@ Previously, we used the `@dbt_assets` decorator to say _“this function produce
        dagster_dbt_translator=CustomizedDagsterDbtTranslator()
    )
    def incremental_dbt_models(
-       context: AssetExecutionContext,
+       context: dg.AssetExecutionContext,
        dbt: DbtCliResource
    ):
        yield from dbt.cli(["build"], context=context).stream()
@@ -65,7 +65,7 @@ Previously, we used the `@dbt_assets` decorator to say _“this function produce
        partitions_def=daily_partition   # partition those models using daily_partition
    )
    def incremental_dbt_models(
-       context: AssetExecutionContext,
+       context: dg.AssetExecutionContext,
        dbt: DbtCliResource
    ):
      yield from dbt.cli(["build"], context=context).stream()
@@ -114,7 +114,7 @@ Modify the `dbt_analytics` definition to exclude the `INCREMENTAL_SELECTOR`:
     dagster_dbt_translator=CustomizedDagsterDbtTranslator(),
     exclude=INCREMENTAL_SELECTOR, # Add this here
 )
-def dbt_analytics(context: AssetExecutionContext, dbt: DbtCliResource):
+def dbt_analytics(context: dg.AssetExecutionContext, dbt: DbtCliResource):
     yield from dbt.cli(["build"], context=context).stream()
 ```
 
@@ -123,7 +123,7 @@ At this point, the `dagster_university/assets/dbt.py` file should look like this
 ```python
 import json
 
-from dagster import AssetExecutionContext, AssetKey
+import dagster as dg
 from dagster_dbt import DagsterDbtTranslator, DbtCliResource, dbt_assets
 
 from ..partitions import daily_partition
@@ -137,7 +137,7 @@ class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
         resource_type = dbt_resource_props["resource_type"]
         name = dbt_resource_props["name"]
         if resource_type == "source":
-            return AssetKey(f"taxi_{name}")
+            return dg.AssetKey(f"taxi_{name}")
         else:
             return super().get_asset_key(dbt_resource_props)
 
@@ -147,7 +147,7 @@ class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
     dagster_dbt_translator=CustomizedDagsterDbtTranslator(),
     exclude=INCREMENTAL_SELECTOR,
 )
-def dbt_analytics(context: AssetExecutionContext, dbt: DbtCliResource):
+def dbt_analytics(context: dg.AssetExecutionContext, dbt: DbtCliResource):
     yield from dbt.cli(["build"], context=context).stream()
 
 
@@ -157,7 +157,7 @@ def dbt_analytics(context: AssetExecutionContext, dbt: DbtCliResource):
     select=INCREMENTAL_SELECTOR,
     partitions_def=daily_partition,
 )
-def incremental_dbt_models(context: AssetExecutionContext, dbt: DbtCliResource):
+def incremental_dbt_models(context: dg.AssetExecutionContext, dbt: DbtCliResource):
     time_window = context.partition_time_window
     dbt_vars = {
         "min_date": time_window.start.strftime('%Y-%m-%d'),

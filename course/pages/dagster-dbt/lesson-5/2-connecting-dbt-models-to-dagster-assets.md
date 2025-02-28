@@ -66,7 +66,7 @@ Open the `assets/dbt.py` file and do the following:
           resource_type = dbt_resource_props["resource_type"]
           name = dbt_resource_props["name"]
       
-          return AssetKey(f"taxi_{name}")
+          return dg.AssetKey(f"taxi_{name}")
       ```
         
    3. You have full control over how each asset can be named, as you can define how asset keys are created. In our case we only want to rename the dbt sources, but we can keep the asset keys of the models the same. 
@@ -78,7 +78,7 @@ Open the `assets/dbt.py` file and do the following:
           resource_type = dbt_resource_props["resource_type"]
           name = dbt_resource_props["name"]
           if resource_type == "source":
-              return AssetKey(f"taxi_{name}")
+              return dg.AssetKey(f"taxi_{name}")
           else:
               return super().get_asset_key(dbt_resource_props)
       ```
@@ -98,14 +98,14 @@ Open the `assets/dbt.py` file and do the following:
        manifest=dbt_project.manifest_path,
        dagster_dbt_translator=CustomizedDagsterDbtTranslator()
    )
-   def dbt_analytics(context: AssetExecutionContext, dbt: DbtCliResource):
+   def dbt_analytics(context: dg.AssetExecutionContext, dbt: DbtCliResource):
        yield from dbt.cli(["build"], context=context).stream()
    ```
 
 At this point, your `dbt.py` file should match the following:
 
 ```python
-from dagster import AssetExecutionContext, AssetKey
+import dagster as dg
 from dagster_dbt import DagsterDbtTranslator, DbtCliResource, dbt_assets
 
 from ..project import dbt_project
@@ -116,7 +116,7 @@ class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
         resource_type = dbt_resource_props["resource_type"]
         name = dbt_resource_props["name"]
         if resource_type == "source":
-            return AssetKey(f"taxi_{name}")
+            return dg.AssetKey(f"taxi_{name}")
         else:
             return super().get_asset_key(dbt_resource_props)
 
@@ -125,6 +125,6 @@ class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
     manifest=dbt_project.manifest_path, 
     dagster_dbt_translator=CustomizedDagsterDbtTranslator(),
 )
-def dbt_analytics(context: AssetExecutionContext, dbt: DbtCliResource):
+def dbt_analytics(context: dg.AssetExecutionContext, dbt: DbtCliResource):
     yield from dbt.cli(["build"], context=context).stream()
 ```

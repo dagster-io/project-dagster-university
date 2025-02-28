@@ -13,9 +13,9 @@ In the `assets/trips.py` file, comment out the `from . import constants` line so
 ```python
 import requests
 # from . import constants # <---- Import commented out here
-from dagster import asset
+import dagster as dg
 
-@asset
+@dg.asset
 def taxi_trips_file() -> None:
     """
       The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal.

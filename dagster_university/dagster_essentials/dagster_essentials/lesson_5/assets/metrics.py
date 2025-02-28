@@ -1,17 +1,17 @@
 import os
 from datetime import datetime, timedelta
 
+import dagster as dg
 import duckdb
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import pandas as pd
-from dagster import asset
 from dagster._utils.backoff import backoff
 
 from . import constants
 
 
-@asset(deps=["taxi_trips"])
+@dg.asset(deps=["taxi_trips"])
 def trips_by_week() -> None:
     conn = backoff(
         fn=duckdb.connect,
@@ -71,7 +71,7 @@ def trips_by_week() -> None:
     result.to_csv(constants.TRIPS_BY_WEEK_FILE_PATH, index=False)
 
 
-@asset(deps=["taxi_trips", "taxi_zones"])
+@dg.asset(deps=["taxi_trips", "taxi_zones"])
 def manhattan_stats() -> None:
     query = """
         select
@@ -95,7 +95,7 @@ def manhattan_stats() -> None:
         output_file.write(trips_by_zone.to_json())
 
 
-@asset(
+@dg.asset(
     deps=["manhattan_stats"],
 )
 def manhattan_map() -> None:

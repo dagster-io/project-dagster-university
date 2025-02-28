@@ -88,16 +88,16 @@ Now we’re ready to create the asset!
 2. At the end of the file, define a new asset called `airport_trips` with the existing `DuckDBResource` named `database` and it will return a `MaterializeResult`, indicating that we'll be returning some metadata:
     
     ```python
-    def airport_trips(database: DuckDBResource) -> MaterializeResult:
+    def airport_trips(database: DuckDBResource) -> dg.MaterializeResult:
     ```
     
 3. Add the asset decorator to the `airport_trips` function and specify the `location_metrics` model as a dependency:
     
     ```python
-    @asset(
+    @dg.asset(
         deps=["location_metrics"],
     )
-    def airport_trips(database: DuckDBResource) -> MaterializeResult:
+    def airport_trips(database: DuckDBResource) -> dg.MaterializeResult:
     ```
     
     **Note:** Because Dagster doesn’t discriminate and treats all dbt models as assets, you’ll add this dependency just like you would with any other asset.
@@ -107,10 +107,10 @@ Now we’re ready to create the asset!
    At this point, the `airport_trips` asset should look like this:
     
    ```python
-   @asset(
+   @dg.asset(
        deps=["location_metrics"],
    )
-   def airport_trips(database: DuckDBResource) -> MaterializeResult:
+   def airport_trips(database: DuckDBResource) -> dg.MaterializeResult:
        """
            A chart of where trips from the airport go
        """
@@ -152,9 +152,9 @@ Now we’re ready to create the asset!
        base64_data = base64.b64encode(image_data).decode('utf-8')
        md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
 
-       return MaterializeResult(
+       return dg.MaterializeResult(
            metadata={
-               "preview": MetadataValue.md(md_content)
+               "preview": dg.MetadataValue.md(md_content)
            }
        )
    ```

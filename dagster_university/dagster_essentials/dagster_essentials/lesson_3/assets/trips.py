@@ -1,10 +1,10 @@
+import dagster as dg
 import requests
-from dagster import asset
 
 from . import constants
 
 
-@asset
+@dg.asset
 def taxi_trips_file() -> None:
     """
     The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal.
@@ -20,7 +20,7 @@ def taxi_trips_file() -> None:
         output_file.write(raw_trips.content)
 
 
-@asset
+@dg.asset
 def taxi_zones_file() -> None:
     """
     The raw CSV file for the taxi zones dataset. Sourced from the NYC Open Data portal.

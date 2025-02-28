@@ -24,12 +24,12 @@ Let’s add metadata to the `taxi_trips_file` asset to demonstrate further. This
 2. Locate the `taxi_trips_file` asset. At this point in the course, the asset should look like this:
 
    ```python
-   from dagster import asset
+   import dagster as dg
    import requests
    from . import constants
    from ..partitions import monthly_partition
 
-   @asset(
+   @dg.asset(
        partitions_def=monthly_partition,
        group_name="raw_files",
    )
@@ -58,9 +58,9 @@ Let’s add metadata to the `taxi_trips_file` asset to demonstrate further. This
 4. Next, we’ll add the metadata with the specified type:
 
    ```python
-   return MaterializeResult(
+   return dg.MaterializeResult(
        metadata={
-           'Number of records': MetadataValue.int(num_rows)
+           'Number of records': dg.MetadataValue.int(num_rows)
        }
    )
    ```
@@ -68,13 +68,13 @@ Let’s add metadata to the `taxi_trips_file` asset to demonstrate further. This
 5. Then, since we're now returning something, let's update the return type of the asset to `MaterializeResult`:
 
    ```python
-   from dagster import asset, MaterializeResult
+   import dagster as dg
 
-   @asset(
+   @dg.asset(
        partitions_def=monthly_partition,
        group_name="raw_files",
    )
-   def taxi_trips_file(context) -> MaterializeResult:
+   def taxi_trips_file(context) -> dg.MaterializeResult:
    ```
 
 
@@ -88,13 +88,13 @@ Let’s add metadata to the `taxi_trips_file` asset to demonstrate further. This
 
    ```python
    import pandas as pd
-   from dagster import asset, MetadataValue, MaterializeResult
+   import dagster as dg
 
-   @asset(
+   @dg.asset(
        partitions_def=monthly_partition,
        group_name="raw_files",
    )
-   def taxi_trips_file(context) -> MaterializeResult:
+   def taxi_trips_file(context) -> dg.MaterializeResult:
        """
          The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal.
        """
@@ -111,9 +111,9 @@ Let’s add metadata to the `taxi_trips_file` asset to demonstrate further. This
 
        num_rows = len(pd.read_parquet(constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch)))
 
-       return MaterializeResult(
+       return dg.MaterializeResult(
            metadata={
-               'Number of records': MetadataValue.int(num_rows)
+               'Number of records': dg.MetadataValue.int(num_rows)
            }
        )
    ```

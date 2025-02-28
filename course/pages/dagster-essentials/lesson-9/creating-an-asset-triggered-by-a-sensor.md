@@ -11,7 +11,7 @@ Now that you’ve defined how the asset can be materialized, let’s create the 
 1. Add the following imports to `requests.py`:
 
    ```python
-   from dagster import asset, Config
+   import dagster as dg
    from dagster_duckdb import DuckDBResource
 
    import matplotlib.pyplot as plt
@@ -28,7 +28,7 @@ Now that you’ve defined how the asset can be materialized, let’s create the 
    The asset should look like this at this point:
 
    ```python
-   @asset(
+   @dg.asset(
        deps=["taxi_zones", "taxi_trips"]
    )
    def adhoc_request(config: AdhocRequestConfig, database: DuckDBResource) -> None:
@@ -120,13 +120,13 @@ import matplotlib.pyplot as plt
 
 from . import constants
 
-class AdhocRequestConfig(Config):
+class AdhocRequestConfig(dg.Config):
     filename: str
     borough: str
     start_date: str
     end_date: str
 
-@asset(
+@dg.asset(
     deps=["taxi_zones", "taxi_trips"]
 )
 def adhoc_request(config: AdhocRequestConfig, database: DuckDBResource) -> None:
