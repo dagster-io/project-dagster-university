@@ -1,7 +1,7 @@
 ---
 title: 'Lesson 3: Testing assets with execution context'
 module: 'dagster_testing'
-lesson: '2'
+lesson: '3'
 ---
 
 # Testing assets with execution context

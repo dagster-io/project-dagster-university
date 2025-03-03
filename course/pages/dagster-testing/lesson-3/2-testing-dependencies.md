@@ -1,7 +1,7 @@
 ---
 title: 'Lesson 3: Testing dependencies'
 module: 'dagster_testing'
-lesson: '2'
+lesson: '3'
 ---
 
 # Testing dependencies
@@ -111,9 +111,9 @@ Using `output_for_node()` we access the individual assets and ensure that their 
 Since we are using Dagster to execute the assets, when we run `materialize()`, the default Dagster event execution will be logged. If you rerun `pytest` with the `-s` flag set to view the logs, all of the Dagster logs will be included as well as the test output:
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_2.py::test_assets -s
+> pytest dagster_testing_tests/test_lesson_3.py::test_assets -s
 ...
-dagster_testing_tests/test_lesson_2.py 2025-02-14 09:30:11 -0600 - dagster - DEBUG - __ephemeral_asset_job__ - 7924f6b8-72c6-4789-b34a-d25b144f7f66 - 62349 - RUN_START - Started execution of run for "__ephemeral_asset_job__".
+dagster_testing_tests/test_lesson_3.py 2025-02-14 09:30:11 -0600 - dagster - DEBUG - __ephemeral_asset_job__ - 7924f6b8-72c6-4789-b34a-d25b144f7f66 - 62349 - RUN_START - Started execution of run for "__ephemeral_asset_job__".
 2025-02-14 09:30:11 -0600 - dagster - DEBUG - __ephemeral_asset_job__ - 7924f6b8-72c6-4789-b34a-d25b144f7f66 - 62349 - ENGINE_EVENT - Executing steps in process (pid: 62349)
 2025-02-14 09:30:11 -0600 - dagster - DEBUG - __ephemeral_asset_job__ - 7924f6b8-72c6-4789-b34a-d25b144f7f66 - 62349 - RESOURCE_INIT_STARTED - Starting initialization of resources [io_manager].
 ...

@@ -1,12 +1,12 @@
 ---
 title: 'Lesson 5: Integration fixtures'
 module: 'dagster_testing'
-lesson: '4'
+lesson: '5'
 ---
 
 # Integration fixtures
 
-Because we will always need Docker to run Postgres for this test, we can create a pytest fixture to ensure the test handles the management of Docker. We will take the CLI command we used before and write a fixture around them:
+Because we always need Docker to run the Postgres integration test, we can create a pytest fixture to handle the management of Docker. We will take the CLI command we used before and write a fixture around them.
 
 ```python
 @pytest.fixture(scope="session", autouse=True)
@@ -61,6 +61,6 @@ def test_state_population_database(docker_compose):  # noqa: F811
     ]
 ```
 
-Also because our pytest fixture is scoped to the session, it will remain active for all the tests run. This can be very helpful because you may notice these tests take longer than the unit tests. Most of this is the set up time to spin up the necessary services (the tests themselves are relatively quick).
+Because this pytest fixture is scoped to the session, it will remain active for all the tests run. This can be very helpful because you may notice these tests take longer than the unit tests. Most of this is the set up time to spin up the necessary services (the tests themselves are relatively quick).
 
 Scoping everything to the session ensures that we do not have to needlessly spin the services up and down for each test.

@@ -1,7 +1,7 @@
 ---
 title: 'Lesson 3: Unit tests'
 module: 'dagster_testing'
-lesson: '2'
+lesson: '3'
 ---
 
 # Unit tests
@@ -94,7 +94,7 @@ If you are familiar with Python testing, writing a test for an asset should look
 To run this test, use the pytest CLI from the virtual environment:
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_2.py::test_state_population_file
+> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file
 ...
-dagster_testing_tests/test_lesson_2.py .                                                          [100%]
+dagster_testing_tests/test_lesson_3.py .                                                          [100%]
 ```

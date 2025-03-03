@@ -1,7 +1,7 @@
 ---
 title: 'Lesson 4: Testing with resources'
 module: 'dagster_testing'
-lesson: '3'
+lesson: '4'
 ---
 
 # Testing with resources

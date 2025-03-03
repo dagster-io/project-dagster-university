@@ -1,12 +1,14 @@
 ---
 title: 'Lesson 6: Definitions'
 module: 'dagster_testing'
-lesson: '5'
+lesson: '6'
 ---
 
 # Definitions
 
-We discussed some of the tests for the different objects in Dagster. But there is one object that all Dagster projects should have a test for. You will want to make sure that each code location can properly load the definitions:
+Within your Dagster project the most important object is the definition. This defines all the objects that will deployed into your code location. Because of its importance we will want to write a test for it.
+
+Luckily this is a very easy test to write.
 
 ```python
 from dagster_testing.lesson_5.definitions import defs
@@ -15,28 +17,19 @@ def test_def():
     assert defs
 ```
 
-This test will find most issues with any of the Dagster objects in our project. Which in this case covers assets, asset checks, jobs, resources, schedules and sensors:
+As simple as it may seem, this test will find many issues associated with your Dagster project. This ensures that all the Dagster objects can load successfully and that certain dependencies between objects are satisfied (such a given resource being present if it is required for an asset). So if there is an issue loading any of your assets, asset checks, jobs, resources, schedules and sensors into the definition this test will trigger.
 
-```python
-defs = dg.Definitions(
-    assets=all_assets,
-    asset_checks=[assets.non_negative],
-    jobs=[jobs.my_job, jobs.my_job_configured],
-    resources={
-        "state_population_resource": resources.StatePopulation(),
-    },
-    schedules=[schedules.my_schedule],
-    sensors=[sensors.my_sensor],
-)
-```
+{% callout %}
 
-We will still want individual tests to ensure that the assets defined in the definitions are behaving as intended. But this one test can catch a good deal of issues.
+> 💡 **Unit tests:** While this test will catch many issues, we still need individual tests to ensure that the assets and other Dagster objects __execute__ as expected. The definition test only ensures proper __loading__ of the objects.
+
+> {% /callout %}
 
 ## Definition objects
 
-As well as ensuring that the definition can load properly. You can also ensure that it contains the expected objects. Remember that only objects set within the definition will be deployed.
+As well as ensuring that the definition can load properly. You can include definition tests to ensure that the definition contains expected Dagster objects. Remember that only objects set within the definition will be deployed in the code location.
 
-The `Definitions` object has get methods to ensure that various object types are present within the definitions. So we can check if certain objects are loaded:
+The `Definitions` object includes get methods for various object types. So we can check if certain objects are loaded.
 
 ```python
 def test_def_objects():
@@ -45,3 +38,5 @@ def test_def_objects():
     assert defs.get_schedule_def("my_schedule")
     assert defs.get_sensor_def("my_sensor")
 ```
+
+These tests can be helpful if you want to make sure that certain objects are present such as a critical asset or schedule.

@@ -1,7 +1,7 @@
 ---
 title: 'Lesson 4: Testing with mocks'
 module: 'dagster_testing'
-lesson: '3'
+lesson: '4'
 ---
 
 # Testing with mocks
@@ -138,9 +138,9 @@ The code above:
 We can still use pytest to run the test.
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_api
+> pytest dagster_testing_tests/test_lesson_4.py::test_state_population_api
 ...
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+dagster_testing_tests/test_lesson_4.py .                                                          [100%]
 ```
 
 The test completely bypasses the API and returns our mocked data.

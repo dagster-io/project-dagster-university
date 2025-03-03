@@ -1,7 +1,7 @@
 ---
 title: "Lesson 2: Set up the Dagster project"
 module: 'dagster_testing'
-lesson: ''
+lesson: '2'
 ---
 
 # Set up the Dagster project

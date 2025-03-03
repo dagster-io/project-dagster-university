@@ -1,7 +1,7 @@
 ---
 title: 'Lesson 5: Integration tests'
 module: 'dagster_testing'
-lesson: '4'
+lesson: '5'
 ---
 
 # Integration tests
@@ -73,6 +73,8 @@ def test_snowflake_staging():
     assets.state_population_database(snowflake_staging_resource)
 ```
 
-This is an integration test. We are ensuring our asset works by connecting to a database. This is a good step but may not be what we always want to do for testing. In some cases you may not have an equivalent staging environment. Or you may not want to use an expensive system to execute against. 
+This is an integration test. We are executing our asset and ensuring it works with an actual connection to Snowflake. This is a good step but may not be what we always want for testing.
 
-We may want to use a live service for testing but not necessarily the system we are using in production. This is where Dagster can help and allows us to do some very interesting integration testing.
+There are a few problems with doing integration tests like the one above. Because Snowflake is consumption based, it means we will have to pay a small amount every time we execute a test. Also since we are querying a cloud OLAP system there is no guarantee on the time the test might take. It might take only a second or two but it could take a minute depending on warehouse allocation. Finally this assumes there is an equivalent staging environment in Snowflake. Perhaps we do not have an staging database with similar data for testing.
+
+One way to avoid these concerns is to maintain a separate environment just for integration tests. We will then need to substitute that connection into our asset. This is where Dagster can help and allow us to do some very interesting things with integration testing.

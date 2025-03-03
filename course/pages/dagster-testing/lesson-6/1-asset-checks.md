@@ -1,24 +1,26 @@
 ---
 title: 'Lesson 6: Asset checks'
 module: 'dagster_testing'
-lesson: '5'
+lesson: '6'
 ---
 
 # Asset checks
 
-One key aspect of testing data is validation. Tests like this are special and have a different work flow than our unit and integration tests. Instead of being run outside of the main application before the code is live, these data validation checks exist in the production environment and are run as our assets are executing.
+One key aspect of testing data is validation and data quality. Tests like this are special and have a different work flow than our unit and integration tests. Instead of being run outside of the main application before the code is live, these data validation checks exist in the production environment alongside the assets.
 
-Generally we want this code to exist separately from the core logic of our assets to keep things more maintainable. To solve this problem, Dagster offers asset checks which validate assets when they execute. Asset checks are part of your Dagster project and are set in the definitions like any other Dagster object. When looking in the asset graph you will not see them directly but will see them associated with their asset.
+When designing data validation steps, it is best to keep that code separate from the core logic of our assets. This gives us more flexibility on how to handle issues around validation and can help us reuse certain elements.
 
-![Asset checks](/images/dagster-testing/lesson-5/asset-check.png)
+In order to solve the problem of data quality, Dagster offers asset checks which validate assets when they execute. Asset checks are part of your Dagster project and are set in the definitions like any other Dagster object. When looking in the asset graph you will not see them directly but will see them associated with the asset.
 
-When the asset runs, we can see that its asset check also validates.
+![Asset checks](/images/dagster-testing/lesson-6/asset-check.png)
 
-![Asset checks success](/images/dagster-testing/lesson-5/asset-check-success.png)
+When the asset runs, we can see that its associated asset checks also run and validate.
+
+![Asset checks success](/images/dagster-testing/lesson-6/asset-check-success.png)
 
 # Defining asset checks
 
-To define an asset check we first need an asset. `total_population` takes in the output of several other assets and sums the populations:
+To define an asset check we first need an asset. `total_population` is a slightly modified version of the asset we have used throughout the course. Now it will take in the output of several assets and sums their populations.
 
 ```python
 @dg.asset
@@ -30,7 +32,13 @@ def total_population(
     return sum([int(x["Population"]) for x in all_assets])
 ```
 
-Say we wanted to write a test for this asset to ensure that number returned is positive. What would that look like?
+Say we wanted to write a test to ensure that the number returned by `total_population` is always positive. We would define an asset check using the `dg.asset _check` decorator. Within the decorator we link it to the `total_population`.
+
+```python
+@dg.asset_check(asset=total_population)
+```
+
+Now `total_population` can be used an input parameter for the function itself. This is what the asset check might look like. Click **View answer** to view it.
 
 ```python {% obfuscated="true" %}
 @dg.asset_check(asset=total_population)
@@ -40,11 +48,13 @@ def non_negative(total_population):
     )
 ```
 
-The `asset_check` decorator associates the function with the `total_population` asset. We will also provide that asset as a parameter in the asset check function because we want to test the output. The function itself checks if the result of combine_asset is above 0 and sets that result to the `AssetCheckResult`.
+The function itself checks if the result of `total_population` is above 0 and sets that result to `AssetCheckResult` which will be stored within the Dagster metadata history.
 
 # Tests for asset checks
 
-You can also write unit tests for your asset checks. Depending on the level of complexity contained within your asset checks it can be helpful to have tests to ensure assets are properly validated:
+You can also write unit tests for your asset check code. Depending on the level of complexity contained within your asset checks it can be helpful to have tests to ensure assets are properly validated.
+
+Writing a test for our asset check is similar to writing a test for an asset. Our input parameter is the value we wish to check and then we can see if the asset did or did not pass validation.
 
 ```python
 def test_non_negative():
@@ -53,5 +63,3 @@ def test_non_negative():
     asset_check_fail = assets.non_negative(-10)
     assert not asset_check_fail.passed
 ```
-
-Writing a test for our asset check is similar to writing a test for an asset. Our input parameter is the value we wish to check and then we can see if the asset did or did not pass validation.

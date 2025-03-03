@@ -1,7 +1,7 @@
 ---
 title: 'Lesson 5: The limits of mocks'
 module: 'dagster_testing'
-lesson: '4'
+lesson: '5'
 ---
 
 # The limits of mocks in testing

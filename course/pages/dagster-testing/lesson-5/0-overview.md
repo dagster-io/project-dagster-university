@@ -1,7 +1,7 @@
 ---
 title: 'Lesson 5: Overview'
 module: 'dagster_testing'
-lesson: '4'
+lesson: '5'
 ---
 
 # Overview
