@@ -6,6 +6,14 @@ on:
       working_directory:
         required: true
         type: string
+      ubuntu_pytest_cmd:
+        required: false
+        type: string
+        default: uv run pytest -v
+      windows_pytest_cmd:
+        required: false
+        type: string
+        default: uv run pytest -v
 
 jobs:
   check:
@@ -41,6 +49,12 @@ jobs:
         working-directory: ${{ inputs.working_directory }}
         run: uv run ruff check
 
-      - name: Pytest
+      - name: Pytest (Ubuntu)
+        if: "${{ matrix.os == 'ubuntu-latest' }}"
         working-directory: ${{ inputs.working_directory }}
-        run: uv run pytest -v
+        run: ${{ inputs.ubuntu_pytest_cmd }}
+
+      - name: Pytest (Windows)
+        if: "${{ matrix.os == 'windows-latest' }}"
+        working-directory: ${{ inputs.working_directory }}
+        run: ${{ inputs.windows_pytest_cmd }}

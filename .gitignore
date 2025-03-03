@@ -185,3 +185,5 @@ tmp*/
 
 # dbt
 .user.yml
+
+postgres_data/
