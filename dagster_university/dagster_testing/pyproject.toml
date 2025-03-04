@@ -5,10 +5,9 @@ description = "Dagster Testing"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "dagster==1.9.*",
+    "dagster==1.10.*",
     "dagster-webserver",
     "dagster-snowflake",
-    "pytest",
     "psycopg2-binary",
 ]
 
