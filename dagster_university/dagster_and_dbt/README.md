@@ -22,7 +22,7 @@ Open http://localhost:3000 with your browser to see the project.
 
 > [!NOTE]
 > Running `dagster dev` will put you in the finished Dagster project (at the final lesson). To see any of the other lessons run:
-> `dagster dev -m dagster_essentials.lesson_{LESSON NUMBER}.definitions`
+> `dagster dev -m dagster_and_dbt.lesson_{LESSON NUMBER}.definitions`
 
 ## Development
 
