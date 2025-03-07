@@ -61,6 +61,12 @@ def test_state_population_database(docker_compose):  # noqa: F811
     ]
 ```
 
+```bash
+> pytest dagster_testing_tests/test_lesson_5.py::test_state_population_database
+...
+dagster_testing_tests/test_lesson_5.py .                                                          [100%]
+```
+
 Because this pytest fixture is scoped to the session, it will remain active for all the tests run. This can be very helpful because you may notice these tests take longer than the unit tests. Most of this is the set up time to spin up the necessary services (the tests themselves are relatively quick).
 
 Scoping everything to the session ensures that we do not have to needlessly spin the services up and down for each test.

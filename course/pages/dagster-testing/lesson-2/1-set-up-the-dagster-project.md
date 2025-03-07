@@ -15,7 +15,7 @@ After downloading the Dagster University project, you’ll want to navigate to t
 Then, run the following in the command line to rename the `.env.example`  file and install the dependencies:
 
 ```bash
-cd dagster-and-dbt
+cd dagster_testing
 cp .env.example .env
 pip install -e ".[dev]"
 ```

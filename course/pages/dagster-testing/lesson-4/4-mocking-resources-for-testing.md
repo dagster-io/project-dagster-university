@@ -33,7 +33,7 @@ mocked_resource = Mock()
 mocked_resource.get_cities.return_value = [fake_city]
 ```
 
-This is everything we need to write a new test for the `state_population_api_resource` asset. Remember there is no need for the patch decorator anymore because `requests` is not needed. What would the test look like Click **View answer** to view it.
+This is everything we need to write a new test for the `state_population_api_resource` asset. Remember there is no need for the patch decorator anymore because `requests` is not needed. What would the test look like? Click **View answer** to view it.
 
 ```python {% obfuscated="true" %}
 def test_state_population_api_mocked_resource(fake_city):
@@ -69,6 +69,12 @@ def test_state_population_api_assets_mocked_resource(fake_city):
 
     assert result.output_for_node("state_population_api_resource_config") == [fake_city]
     assert result.output_for_node("total_population_resource_config") == 42
+```
+
+```bash
+> pytest dagster_testing_tests/test_lesson_4.py::test_state_population_api_assets_mocked_resource
+...
+dagster_testing_tests/test_lesson_4.py .                                                          [100%]
 ```
 
 ## When to mock a resource

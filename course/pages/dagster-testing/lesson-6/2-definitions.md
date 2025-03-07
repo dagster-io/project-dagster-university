@@ -11,10 +11,16 @@ Within your Dagster project the most important object is the definition. This de
 Luckily this is a very easy test to write.
 
 ```python
-from dagster_testing.lesson_5.definitions import defs
+from dagster_testing.lesson_6.definitions import defs
 
 def test_def():
     assert defs
+```
+
+```bash
+> pytest dagster_testing_tests/test_lesson_6.py::test_def
+...
+dagster_testing_tests/test_lesson_6.py .                                                          [100%]
 ```
 
 As simple as it may seem, this test will find many issues associated with your Dagster project. This ensures that all the Dagster objects can load successfully and that certain dependencies between objects are satisfied (such a given resource being present if it is required for an asset). So if there is an issue loading any of your assets, asset checks, jobs, resources, schedules and sensors into the definition this test will trigger.
@@ -37,6 +43,12 @@ def test_def_objects():
     assert defs.get_job_def("jobs_config")
     assert defs.get_schedule_def("my_schedule")
     assert defs.get_sensor_def("my_sensor")
+```
+
+```bash
+> pytest dagster_testing_tests/test_lesson_6.py::test_non_negative
+...
+dagster_testing_tests/test_lesson_6.py .                                                          [100%]
 ```
 
 These tests can be helpful if you want to make sure that certain objects are present such as a critical asset or schedule.

@@ -48,9 +48,9 @@ Because we are setting the input parameter for `total_population` we can ensure 
 Like the other asset test, this test looks like standard Python. Again, we can run this test with `pytest`:
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_2.py::test_processed_file
+> pytest dagster_testing_tests/test_lesson_3.py::test_processed_file
 ...
-dagster_testing_tests/test_lesson_2.py .                                                          [100%]
+dagster_testing_tests/test_lesson_3.py .                                                          [100%]
 ```
 
 ## Testing materializations
@@ -70,9 +70,9 @@ def test_assets():
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_2.py::test_assets
+> pytest dagster_testing_tests/test_lesson_3.py::test_assets
 ...
-dagster_testing_tests/test_lesson_2.py .                                                          [100%]
+dagster_testing_tests/test_lesson_3.py .                                                          [100%]
 ```
 
 Confirming that the assets materialize without issue is a great start, but we still want to check the return values of each asset. Luckily `materialize()` allows us to access the output value with the `output_for_node()` method for each asset from the materialization:

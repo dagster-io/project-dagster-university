@@ -63,3 +63,9 @@ def test_non_negative():
     asset_check_fail = assets.non_negative(-10)
     assert not asset_check_fail.passed
 ```
+
+```bash
+> pytest dagster_testing_tests/test_lesson_6.py::test_non_negative
+...
+dagster_testing_tests/test_lesson_6.py .                                                          [100%]
+```

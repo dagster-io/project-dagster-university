@@ -54,6 +54,12 @@ def test_job_config():
     )
 ```
 
+```bash
+> pytest dagster_testing_tests/test_lesson_6.py::test_job_config
+...
+dagster_testing_tests/test_lesson_6.py .                                                          [100%]
+```
+
 Tests like this may not always be necessary but you may have Dagster projects where you need to ensure all aspects.
 
 ## Schedules
@@ -82,6 +88,12 @@ def test_schedule():
     assert schedules.my_schedule
     assert schedules.my_schedule.cron_schedule == "0 0 5 * *"
     assert schedules.my_schedule.job == jobs.my_job
+```
+
+```bash
+> pytest dagster_testing_tests/test_lesson_6.py::test_schedule
+...
+dagster_testing_tests/test_lesson_6.py .                                                          [100%]
 ```
 
 ## Sensors
@@ -120,11 +132,17 @@ In order to write a reliable test for this sensor, we will go back to our lesson
 First we can set a test where our sensor will skip.
 
 ```python
-@patch("dagster_testing.lesson_5.sensors.check_for_new_files", return_value=[])
+@patch("dagster_testing.lesson_6.sensors.check_for_new_files", return_value=[])
 def test_sensor_skip(mock_check_new_files):
     instance = dg.DagsterInstance.ephemeral()
     context = dg.build_sensor_context(instance=instance)
     assert sensors.my_sensor(context).__next__() == dg.SkipReason("No new files found")
+```
+
+```bash
+> pytest dagster_testing_tests/test_lesson_6.py::test_sensor_skip
+...
+dagster_testing_tests/test_lesson_6.py .                                                          [100%]
 ```
 
 The code above:
@@ -138,7 +156,7 @@ What would it look like to write a test to ensure the sensor picks up a new file
 
 ```python {% obfuscated="true" %}
 @patch(
-    "dagster_testing.lesson_5.sensors.check_for_new_files", return_value=["test_file"]
+    "dagster_testing.lesson_6.sensors.check_for_new_files", return_value=["test_file"]
 )
 def test_sensor_run(mock_check_new_files):
     instance = dg.DagsterInstance.ephemeral()

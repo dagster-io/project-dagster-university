@@ -55,6 +55,12 @@ def test_state_population_file_config():
     ]
 ```
 
+```bash
+> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file_config
+...
+dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+```
+
 ## pytest fixtures
 
 When testing with Dagster and `pytest` together, we can take advantage of some `pytest` functionality to make the testing code easier to reuse. If the `FilepathConfig` was used by multiple tests, we might benefit from creating a `pytest` fixture:
@@ -67,7 +73,7 @@ def config_file():
     return assets.FilepathConfig(path=file_path)
 
 
-def test_state_population_file_config_fixture(config_file):
+def test_state_population_file_config_fixture_1(config_file):
     assert assets.state_population_file_config(config_file) == [
         {
             "City": "Example 1",
@@ -84,7 +90,15 @@ def test_state_population_file_config_fixture(config_file):
     ]
 ```
 
-This makes the code much easier to read and helps consolidate testing aspects that may be used by multiple tests. Tests can also use multiple fixtures. If we wanted to include an additional fixture for the output of the function.
+```bash
+> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file_config_fixture_1
+...
+dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+```
+
+## Multiple pytext fixtures
+
+Fixtures make testing code much easier to read and helps consolidate aspects that may be used by multiple tests. Tests can also use multiple fixtures. If we wanted to include an additional fixture for the output of the function.
 
 ```python
 @pytest.fixture()
@@ -116,6 +130,12 @@ def test_state_population_file_config_fixture_2(config_file, file_example_output
     assert assets.state_population_file_config(config_file) == file_example_output
 ```
 
+```bash
+> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file_config_fixture_2
+...
+dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+```
+
 ## Passing run configuration to the materialization run
 
 In order to provide the run configuration to the materialization run, we will need to specify an additional parameter called `run_config` within the call to `materialize()`. This parameter takes a `RunConfig` object that maps the specific run configuration to the asset that requires it:
@@ -134,6 +154,12 @@ def test_assets_config(config_file, file_example_output):
 
     assert result.output_for_node("state_population_file_config") == file_example_output
     assert result.output_for_node("total_population_config") == 8500000
+```
+
+```bash
+> pytest dagster_testing_tests/test_lesson_3.py::test_assets_config
+...
+dagster_testing_tests/test_lesson_3.py .                                                          [100%]
 ```
 
 You can also pass in this configuration information with YAML in a format similar to the Dagster UI. Here is the same run configuration as YAML:
@@ -163,6 +189,12 @@ def test_assets_config_yaml(file_example_output):
 
     assert result.output_for_node("state_population_file_config") == file_example_output
     assert result.output_for_node("total_population_config") == 8500000
+```
+
+```bash
+> pytest dagster_testing_tests/test_lesson_3.py::test_assets_config_yaml
+...
+dagster_testing_tests/test_lesson_3.py .                                                          [100%]
 ```
 
 There is no difference between using `dg.RunConfig` or a YAML when running tests. You may find YAML easier to manage in more complex configurations for readability or to keep as examples for users who will run executions in the Dagster UI.

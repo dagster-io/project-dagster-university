@@ -74,4 +74,10 @@ def test_state_population_api_resource_mock(mock_get, example_response):
     mock_get.assert_called_once_with(assets.API_URL, params={"state": "ny"})
 ```
 
+```bash
+> pytest dagster_testing_tests/test_lesson_4.py::test_state_population_api_resource_mock
+...
+dagster_testing_tests/test_lesson_4.py .                                                          [100%]
+```
+
 Surprisingly not much. We still will want to patch the `requests.get` method so all of our set up with mocks remains the same. The main difference is that the `request` method is invoked by the resource instead of the asset itself. From a testing perspective this does not make a difference so almost everything about our test remains.
