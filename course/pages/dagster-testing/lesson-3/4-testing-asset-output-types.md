@@ -64,3 +64,9 @@ def test_wrong_type_annotation_error():
     with pytest.raises(DagsterTypeCheckDidNotPass):
         wrong_type_annotation()
 ```
+
+```bash
+> pytest dagster_testing_tests/test_lesson_3.py::test_wrong_type_annotation_error
+...
+dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+```

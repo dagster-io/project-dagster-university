@@ -44,6 +44,12 @@ def test_state_population_file_logging(file_output):
 
 The test above should now pass.
 
+```bash
+> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file_logging
+...
+dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+```
+
 ## Handling context with materialize()
 
 You can also handle context with `materialize()`. We already saw that this executes the assets directly and supplies the necessary run information:
@@ -80,9 +86,15 @@ def state_population_file_partition(context: dg.AssetExecutionContext) -> list[d
 Now in order to execute this asset we need to provide one of the three partitions. We can use `build_asset_context()` to create the context object and set a partition key for testing:
 
 ```python
-def test_partition_asset_number(file_output):
+def test_state_population_file_partition(file_output):
     context = dg.build_asset_context(partition_key="ny.csv")
     assert assets.state_population_file_partition(context) == file_output
+```
+
+```bash
+> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file_partition
+...
+dagster_testing_tests/test_lesson_3.py .                                                          [100%]
 ```
 
 We can still use `materialize()` to execute our assets that use context, though we will need to set the specific partition:
@@ -98,6 +110,12 @@ def test_assets_partition(file_output):
     assert result.success
 
     assert result.output_for_node("state_population_file_partition") == file_output
+```
+
+```bash
+> pytest dagster_testing_tests/test_lesson_3.py::test_assets_partition
+...
+dagster_testing_tests/test_lesson_3.py .                                                          [100%]
 ```
 
 It's important to remember that when materializing multiple partitioned assets, just like when launching a run in the Dagster UI, you cannot use `materialize()` to execute multiple partitioned assets if they do not share the same partition. For example, if we try to run the following materialization with an additional asset, the test will fail:

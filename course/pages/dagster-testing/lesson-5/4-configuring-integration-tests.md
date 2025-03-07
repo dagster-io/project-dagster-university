@@ -117,8 +117,7 @@ You can see all the parts of the testing code working together.
 We can confirm everything is working with pytest.
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_5.py::
-test_state_population_database
+> pytest dagster_testing_tests/test_lesson_5.py::test_state_population_database
 ...
 dagster_testing_tests/test_lesson_5.py .                                                          [100%]
 ```
