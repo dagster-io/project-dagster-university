@@ -1,9 +1,9 @@
 import pytest
 
-import dagster_testing.starter.lesson_6.jobs as jobs  # noqa: F401
-import dagster_testing.starter.lesson_6.schedules as schedules  # noqa: F401
-import dagster_testing.starter.lesson_6.sensors as sensors  # noqa: F401
-from dagster_testing.starter.lesson_6.definitions import defs
+import dagster_testing.jobs as jobs  # noqa: F401
+import dagster_testing.schedules as schedules  # noqa: F401
+import dagster_testing.sensors as sensors  # noqa: F401
+from dagster_testing.definitions import defs
 
 
 @pytest.fixture()

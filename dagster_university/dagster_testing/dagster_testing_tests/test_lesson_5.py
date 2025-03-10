@@ -5,10 +5,9 @@ import psycopg2
 import pytest
 from dagster_snowflake import SnowflakeResource
 
-import dagster_testing.starter.lesson_5.assets as assets
-from dagster_testing.starter.lesson_5.definitions import defs
+import dagster_testing.assets.integration_assets as integration_assets
 
-from ..fixtures import docker_compose  # noqa: F401
+from .fixtures import docker_compose  # noqa: F401
 
 
 @pytest.fixture
@@ -66,7 +65,7 @@ def test_snowflake_staging():
         warehouse="STAGING_WAREHOUSE",
     )
 
-    assets.state_population_database(snowflake_staging_resource)
+    integration_assets.state_population_database(snowflake_staging_resource)
 
 
 def test_state_population_database():
@@ -83,7 +82,3 @@ def test_assets_partition():
 
 def test_state_population_database_config():
     pass
-
-
-def test_def():
-    assert defs

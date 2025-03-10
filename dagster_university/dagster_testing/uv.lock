@@ -388,11 +388,11 @@ dependencies = [
     { name = "dagster-snowflake" },
     { name = "dagster-webserver" },
     { name = "psycopg2-binary" },
+    { name = "pytest" },
 ]
 
 [package.dev-dependencies]
 dev = [
-    { name = "pytest" },
     { name = "ruff" },
 ]
 
@@ -402,13 +402,11 @@ requires-dist = [
     { name = "dagster-snowflake" },
     { name = "dagster-webserver" },
     { name = "psycopg2-binary" },
+    { name = "pytest" },
 ]
 
 [package.metadata.requires-dev]
-dev = [
-    { name = "pytest" },
-    { name = "ruff" },
-]
+dev = [{ name = "ruff" }]
 
 [[package]]
 name = "dagster-webserver"

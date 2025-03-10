@@ -4,14 +4,13 @@ import pytest
 import yaml  # noqa: F401
 from dagster._core.errors import DagsterTypeCheckDidNotPass  # noqa: F401
 
-import dagster_testing.starter.lesson_3.assets as assets
-from dagster_testing.starter.lesson_3.definitions import defs
+import dagster_testing.assets.unit_assets as unit_assets
 
 
 @pytest.fixture()
 def config_file():
-    file_path = Path(__file__).absolute().parent / "../data/test.csv"
-    return assets.FilepathConfig(path=file_path.as_posix())
+    file_path = Path(__file__).absolute().parent / "data/test.csv"
+    return unit_assets.FilepathConfig(path=file_path.as_posix())
 
 
 @pytest.fixture()
@@ -56,7 +55,7 @@ def file_population():
 
 
 def test_state_population_file():
-    assert assets.state_population_file() == [
+    assert unit_assets.state_population_file() == [
         {
             "City": "New York",
             "Population": "8804190",
@@ -77,7 +76,7 @@ def test_processed_file():
 
 
 def test_func_wrong_type():
-    assert assets.func_wrong_type() == 2
+    assert unit_assets.func_wrong_type() == 2
 
 
 def test_wrong_type_annotation_error():
@@ -122,7 +121,3 @@ def test_partition_asset_number():
 
 def test_assets_partition():
     pass
-
-
-def test_def():
-    assert defs

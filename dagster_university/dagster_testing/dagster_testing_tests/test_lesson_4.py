@@ -3,8 +3,7 @@ from unittest.mock import Mock, patch  # noqa: F401
 import dagster as dg  # noqa: F401
 import pytest
 
-import dagster_testing.starter.lesson_4.assets as assets  # noqa: F401
-from dagster_testing.starter.lesson_4.definitions import defs
+import dagster_testing.assets.mock_assets as mock_assets  # noqa: F401
 
 
 @pytest.fixture
@@ -67,7 +66,3 @@ def test_state_population_api_mocked_resource():
 
 def test_state_population_api_assets_mocked_resource():
     pass
-
-
-def test_def():
-    assert defs

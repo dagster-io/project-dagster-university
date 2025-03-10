@@ -4,12 +4,12 @@ from unittest.mock import patch
 import dagster as dg
 import pytest
 
-import dagster_testing.completed.lesson_6.assets as assets
-import dagster_testing.completed.lesson_6.jobs as jobs
-import dagster_testing.completed.lesson_6.resources as resources
-import dagster_testing.completed.lesson_6.schedules as schedules
-import dagster_testing.completed.lesson_6.sensors as sensors
-from dagster_testing.completed.lesson_6.definitions import defs
+import dagster_testing.assets.dagster_assets as dagster_assets
+import dagster_testing.jobs as jobs
+import dagster_testing.resources as resources
+import dagster_testing.schedules as schedules
+import dagster_testing.sensors as sensors
+from dagster_testing.definitions import defs
 
 
 @pytest.fixture()
@@ -31,11 +31,11 @@ def file_output():
 
 
 # Assets
-def test_state_population_file_config():
+def test_population_file_config():
     file_path = Path(__file__).absolute().parent / "../data/test.csv"
 
-    config = assets.FilepathConfig(path=file_path.as_posix())
-    assert assets.state_population_file_config(config) == [
+    config = dagster_assets.FilepathConfig(path=file_path.as_posix())
+    assert dagster_assets.population_file_config(config) == [
         {
             "City": "Example 1",
             "Population": "4500000",
@@ -51,8 +51,8 @@ def test_state_population_file_config():
     ]
 
 
-def test_state_population_api_resource():
-    result = assets.state_population_api_resource(resources.StatePopulation())
+def test_population_api_resource():
+    result = dagster_assets.population_api_resource(resources.StatePopulation())
     assert result == [
         {
             "City": "Milwaukee",
@@ -65,34 +65,34 @@ def test_state_population_api_resource():
     ]
 
 
-def test_total_population():
-    state_population_file_config = [{"Population": 10}]
-    state_population_api_resource = [
+def test_population_combined():
+    population_file_config = [{"Population": 10}]
+    population_api_resource = [
         {"Population": 20},
         {"Population": 40},
     ]
     assert (
-        assets.total_population(
-            state_population_file_config, state_population_api_resource
+        dagster_assets.population_combined(
+            population_file_config, population_api_resource
         )
         == 70
     )
 
 
-def test_state_population_file_partition(file_output):
+def test_population_file_partition(file_output):
     context = dg.build_asset_context(partition_key="ny.csv")
-    assert assets.state_population_file_partition(context) == file_output
+    assert dagster_assets.population_file_partition(context) == file_output
 
 
 def test_total_population_partition(file_output):
-    assert assets.total_population_partition(file_output) == 9294108
+    assert dagster_assets.total_population_partition(file_output) == 9294108
 
 
 # Asset Checks
 def test_non_negative():
-    asset_check_pass = assets.non_negative(10)
+    asset_check_pass = dagster_assets.non_negative(10)
     assert asset_check_pass.passed
-    asset_check_fail = assets.non_negative(-10)
+    asset_check_fail = dagster_assets.non_negative(-10)
     assert not asset_check_fail.passed
 
 
@@ -103,16 +103,17 @@ def test_jobs():
 
 
 def test_job_selection():
-    assert jobs.my_job.selection == dg.AssetSelection.all() - dg.AssetSelection.assets(
-        "state_population_file_partition"
-    ) - dg.AssetSelection.assets("total_population_partition")
+    _assets = [
+        dagster_assets.population_file_config,
+        dagster_assets.population_api_resource,
+        dagster_assets.population_combined,
+    ]
+    assert jobs.my_job.selection == dg.AssetSelection.assets(*_assets)
 
 
 def test_job_config():
     assert (
-        jobs.my_job_configured.config["ops"]["state_population_file_config"]["config"][
-            "path"
-        ]
+        jobs.my_job_configured.config["ops"]["population_file_config"]["config"]["path"]
         == "dagster_testing_tests/data/test.csv"
     )
 
@@ -129,9 +130,7 @@ def test_sensors():
     assert sensors.my_sensor
 
 
-@patch(
-    "dagster_testing.completed.lesson_6.sensors.check_for_new_files", return_value=[]
-)
+@patch("dagster_testing.sensors.check_for_new_files", return_value=[])
 def test_sensor_skip(mock_check_new_files):
     instance = dg.DagsterInstance.ephemeral()
     context = dg.build_sensor_context(instance=instance)
@@ -139,7 +138,7 @@ def test_sensor_skip(mock_check_new_files):
 
 
 @patch(
-    "dagster_testing.completed.lesson_6.sensors.check_for_new_files",
+    "dagster_testing.sensors.check_for_new_files",
     return_value=["test_file"],
 )
 def test_sensor_run(mock_check_new_files):

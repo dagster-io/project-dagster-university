@@ -67,11 +67,6 @@ def state_population_api_resource_config(
 
 # Downstream assets
 @dg.asset
-def total_population(state_population_api: list[dict]) -> int:
-    return sum([x["population"] for x in state_population_api])
-
-
-@dg.asset
 def total_population_resource(state_population_api_resource: list[dict]) -> int:
     return sum([x["population"] for x in state_population_api_resource])
 
