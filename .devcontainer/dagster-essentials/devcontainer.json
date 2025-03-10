@@ -2,7 +2,7 @@
 	"name": "Dagster Essentials",
 	"build": {
 		"dockerfile": "Dockerfile",
-		"context": ".."
+		"context": "../.."
 	},
 	"forwardPorts": [
 		3000

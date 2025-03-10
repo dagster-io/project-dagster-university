@@ -2,7 +2,7 @@
 	"name": "Testing with Dagster",
 	"build": {
 		"dockerfile": "Dockerfile",
-		"context": ".."
+		"context": "../.."
 	},
 	"forwardPorts": [
 		3000
