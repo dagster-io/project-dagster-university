@@ -1,4 +1,5 @@
 {
+	"name": "Dagster & dbt",
 	"build": {
 		"dockerfile": "Dockerfile",
 		"context": ".."
