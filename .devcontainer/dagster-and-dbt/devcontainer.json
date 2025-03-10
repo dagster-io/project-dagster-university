@@ -8,7 +8,7 @@
 	],
     "portsAttributes": {
         "3000": {
-            "label": "dagster"
+            "label": "Dagster"
         }
     }
 }

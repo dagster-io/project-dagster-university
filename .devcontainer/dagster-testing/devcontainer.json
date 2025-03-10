@@ -1,0 +1,14 @@
+{
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".."
+	},
+	"forwardPorts": [
+		3000
+	],
+    "portsAttributes": {
+        "3000": {
+            "label": "Dagster"
+        }
+    }
+}
