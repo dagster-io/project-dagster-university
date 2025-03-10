@@ -80,10 +80,7 @@ file_partitions = dg.StaticPartitionsDefinition(["ca.csv", "mn.csv", "ny.csv"])
 
 @dg.asset(partitions_def=file_partitions)
 def state_population_file_partition(context: dg.AssetExecutionContext) -> list[dict]:
-    file_path = (
-        Path(__file__).absolute().parent / f"../../data/{context.partition_key}.csv"
-    )
-
+    file_path = Path(__file__).absolute().parent / "../../data/ny.csv"
     with open(file_path) as file:
         reader = csv.DictReader(file)
         return [row for row in reader]

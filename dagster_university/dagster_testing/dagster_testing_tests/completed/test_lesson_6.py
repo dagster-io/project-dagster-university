@@ -129,7 +129,9 @@ def test_sensors():
     assert sensors.my_sensor
 
 
-@patch("dagster_testing.completed.lesson_6.sensors.check_for_new_files", return_value=[])
+@patch(
+    "dagster_testing.completed.lesson_6.sensors.check_for_new_files", return_value=[]
+)
 def test_sensor_skip(mock_check_new_files):
     instance = dg.DagsterInstance.ephemeral()
     context = dg.build_sensor_context(instance=instance)
@@ -137,7 +139,8 @@ def test_sensor_skip(mock_check_new_files):
 
 
 @patch(
-    "dagster_testing.completed.lesson_6.sensors.check_for_new_files", return_value=["test_file"]
+    "dagster_testing.completed.lesson_6.sensors.check_for_new_files",
+    return_value=["test_file"],
 )
 def test_sensor_run(mock_check_new_files):
     instance = dg.DagsterInstance.ephemeral()
