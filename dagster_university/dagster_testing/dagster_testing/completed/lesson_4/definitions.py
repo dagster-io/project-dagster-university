@@ -1,6 +1,6 @@
 import dagster as dg
 
-import dagster_testing.lesson_4.assets as assets
+import dagster_testing.completed.lesson_4.assets as assets
 
 all_assets = dg.load_assets_from_modules([assets])
 

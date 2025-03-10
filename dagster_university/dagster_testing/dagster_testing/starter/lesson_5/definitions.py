@@ -1,7 +1,7 @@
 import dagster as dg
 from dagster_snowflake import SnowflakeResource
 
-import dagster_testing.lesson_5.assets as assets
+import dagster_testing.starter.lesson_5.assets as assets
 
 all_assets = dg.load_assets_from_modules([assets])
 

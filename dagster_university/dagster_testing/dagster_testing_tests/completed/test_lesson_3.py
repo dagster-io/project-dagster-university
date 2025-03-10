@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 import dagster as dg
@@ -6,15 +5,14 @@ import pytest
 import yaml
 from dagster._core.errors import DagsterTypeCheckDidNotPass
 
-import dagster_testing.lesson_3.assets as assets
-from dagster_testing.lesson_3.definitions import defs
+import dagster_testing.completed.lesson_3.assets as assets
+from dagster_testing.completed.lesson_3.definitions import defs
 
 
 @pytest.fixture()
 def config_file():
-    current_file_dir = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(current_file_dir, "data/test.csv")
-    return assets.FilepathConfig(path=file_path)
+    file_path = Path(__file__).absolute().parent / "../data/test.csv"
+    return assets.FilepathConfig(path=file_path.as_posix())
 
 
 @pytest.fixture()
@@ -121,10 +119,9 @@ def test_assets(file_output, file_population):
 
 
 def test_state_population_file_config():
-    current_file_dir = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(current_file_dir, "data/test.csv")
+    file_path = Path(__file__).absolute().parent / "../data/test.csv"
 
-    config = assets.FilepathConfig(path=file_path)
+    config = assets.FilepathConfig(path=file_path.as_posix())
     assert assets.state_population_file_config(config) == [
         {
             "City": "Example 1",
@@ -185,7 +182,7 @@ def test_assets_config_yaml(file_example_output):
     result = dg.materialize(
         assets=_assets,
         run_config=yaml.safe_load(
-            (Path(__file__).absolute().parent / "configs/lesson_3.yaml").open()
+            (Path(__file__).absolute().parent / "../configs/lesson_3.yaml").open()
         ),
     )
     assert result.success

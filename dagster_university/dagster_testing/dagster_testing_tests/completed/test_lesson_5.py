@@ -5,10 +5,10 @@ import psycopg2
 import pytest
 from dagster_snowflake import SnowflakeResource
 
-import dagster_testing.lesson_5.assets as assets
-from dagster_testing.lesson_5.definitions import defs
+import dagster_testing.completed.lesson_5.assets as assets
+from dagster_testing.completed.lesson_5.definitions import defs
 
-from .fixtures import docker_compose  # noqa: F401
+from ..fixtures import docker_compose  # noqa: F401
 
 
 @pytest.fixture

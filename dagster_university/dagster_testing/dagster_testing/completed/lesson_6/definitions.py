@@ -1,10 +1,10 @@
 import dagster as dg
 
-import dagster_testing.lesson_6.assets as assets
-import dagster_testing.lesson_6.jobs as jobs
-import dagster_testing.lesson_6.resources as resources
-import dagster_testing.lesson_6.schedules as schedules
-import dagster_testing.lesson_6.sensors as sensors
+import dagster_testing.completed.lesson_6.assets as assets
+import dagster_testing.completed.lesson_6.jobs as jobs
+import dagster_testing.completed.lesson_6.resources as resources
+import dagster_testing.completed.lesson_6.schedules as schedules
+import dagster_testing.completed.lesson_6.sensors as sensors
 
 all_assets = dg.load_assets_from_modules([assets])
 

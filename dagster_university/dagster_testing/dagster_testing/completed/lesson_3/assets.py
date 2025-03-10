@@ -1,5 +1,5 @@
 import csv
-import os
+from pathlib import Path
 from typing import Iterator
 
 import dagster as dg
@@ -7,8 +7,7 @@ import dagster as dg
 
 @dg.asset
 def state_population_file() -> list[dict]:
-    current_file_dir = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(current_file_dir, "../data/ny.csv")
+    file_path = Path(__file__).absolute().parent / "../../data/ny.csv"
     with open(file_path) as file:
         reader = csv.DictReader(file)
         return [row for row in reader]
@@ -67,8 +66,7 @@ def total_population_config(state_population_file_config: list[dict]) -> int:
 
 @dg.asset()
 def state_population_file_logging(context: dg.AssetExecutionContext) -> list[dict]:
-    current_file_dir = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(current_file_dir, "../data/ny.csv")
+    file_path = Path(__file__).absolute().parent / "../../data/ny.csv"
 
     context.log.info(f"Reading file {file_path}")
 
@@ -82,8 +80,7 @@ file_partitions = dg.StaticPartitionsDefinition(["ca.csv", "mn.csv", "ny.csv"])
 
 @dg.asset(partitions_def=file_partitions)
 def state_population_file_partition(context: dg.AssetExecutionContext) -> list[dict]:
-    current_file_dir = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(current_file_dir, f"../data/{context.partition_key}")
+    file_path = Path(__file__).absolute().parent / "../../data/ny.csv"
     with open(file_path) as file:
         reader = csv.DictReader(file)
         return [row for row in reader]

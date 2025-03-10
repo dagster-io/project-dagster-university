@@ -1,15 +1,15 @@
-import os
+from pathlib import Path
 from unittest.mock import patch
 
 import dagster as dg
 import pytest
 
-import dagster_testing.lesson_6.assets as assets
-import dagster_testing.lesson_6.jobs as jobs
-import dagster_testing.lesson_6.resources as resources
-import dagster_testing.lesson_6.schedules as schedules
-import dagster_testing.lesson_6.sensors as sensors
-from dagster_testing.lesson_6.definitions import defs
+import dagster_testing.completed.lesson_6.assets as assets
+import dagster_testing.completed.lesson_6.jobs as jobs
+import dagster_testing.completed.lesson_6.resources as resources
+import dagster_testing.completed.lesson_6.schedules as schedules
+import dagster_testing.completed.lesson_6.sensors as sensors
+from dagster_testing.completed.lesson_6.definitions import defs
 
 
 @pytest.fixture()
@@ -32,10 +32,9 @@ def file_output():
 
 # Assets
 def test_state_population_file_config():
-    current_file_dir = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(current_file_dir, "data/test.csv")
+    file_path = Path(__file__).absolute().parent / "../data/test.csv"
 
-    config = assets.FilepathConfig(path=file_path)
+    config = assets.FilepathConfig(path=file_path.as_posix())
     assert assets.state_population_file_config(config) == [
         {
             "City": "Example 1",
@@ -130,7 +129,7 @@ def test_sensors():
     assert sensors.my_sensor
 
 
-@patch("dagster_testing.lesson_6.sensors.check_for_new_files", return_value=[])
+@patch("dagster_testing.completed.lesson_6.sensors.check_for_new_files", return_value=[])
 def test_sensor_skip(mock_check_new_files):
     instance = dg.DagsterInstance.ephemeral()
     context = dg.build_sensor_context(instance=instance)
@@ -138,7 +137,7 @@ def test_sensor_skip(mock_check_new_files):
 
 
 @patch(
-    "dagster_testing.lesson_6.sensors.check_for_new_files", return_value=["test_file"]
+    "dagster_testing.completed.lesson_6.sensors.check_for_new_files", return_value=["test_file"]
 )
 def test_sensor_run(mock_check_new_files):
     instance = dg.DagsterInstance.ephemeral()
