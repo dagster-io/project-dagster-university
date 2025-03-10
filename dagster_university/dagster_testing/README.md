@@ -18,7 +18,7 @@ Most of this module is based around running pytest
 Then, start the Dagster UI web server:
 
 ```bash
-dagster dev -m dagster_testing.lesson_{LESSON NUMBER}.definitions
+dagster dev -m dagster_testing.completed.lesson_{LESSON NUMBER}.definitions
 ```
 
 Open http://localhost:3000 with your browser to see the project.

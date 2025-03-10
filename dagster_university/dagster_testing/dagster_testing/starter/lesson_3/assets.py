@@ -32,9 +32,9 @@ def total_population_meta_yield(state_population_file: list[dict]) -> Iterator:
 
 @dg.asset
 def processed_file_meta_context(
-    context: dg.AssetExecutionContext, city_population: list[dict]
+    context: dg.AssetExecutionContext, state_population_file: list[dict]
 ) -> str:
-    result = sum([int(x["Population"]) for x in city_population])
+    result = sum([int(x["Population"]) for x in state_population_file])
     context.log(f"File contents {result}")
     return result
 

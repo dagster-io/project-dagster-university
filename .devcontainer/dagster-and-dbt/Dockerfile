@@ -3,4 +3,5 @@ ENV PYTHONUNBUFFERED 1
 
 COPY --from=ghcr.io/astral-sh/uv:0.4.7 /uv /bin/uv
 
-RUN uv pip install -r dagster_university/dagster_testing/pyproject.toml --system
+COPY dagster_university/dagster_and_dbt/pyproject.toml .
+RUN uv pip install -r pyproject.toml --system
