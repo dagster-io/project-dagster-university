@@ -1,15 +1,18 @@
 {
-	"name": "Testing with Dagster",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"context": "../.."
-	},
-	"forwardPorts": [
-		3000
-	],
+    "name": "Testing with Dagster",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "../.."
+    },
+    "forwardPorts": [
+        3000
+    ],
     "portsAttributes": {
         "3000": {
             "label": "Dagster"
         }
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     }
 }
