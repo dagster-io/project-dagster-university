@@ -2,7 +2,7 @@ import random
 
 import dagster as dg
 
-import dagster_testing.lesson_6.jobs as jobs
+import dagster_testing.jobs as jobs
 
 
 def check_for_new_files() -> list[str]:
