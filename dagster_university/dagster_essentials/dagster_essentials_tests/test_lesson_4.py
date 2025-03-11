@@ -1,6 +1,6 @@
 import dagster as dg
 
-from dagster_essentials.lesson_4.assets import metrics, trips
+from dagster_essentials.completed.lesson_4.assets import metrics, trips
 
 
 def test_assets():
