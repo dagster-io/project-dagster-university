@@ -7,7 +7,7 @@ import pytest
 def _dbt_command(cmd: str, lesson: str):
     """Run a dbt command within a specific project lesson dbt project"""
     dir = os.path.join(
-        os.path.dirname(__file__), f"../dagster_and_dbt/{lesson}/analytics"
+        os.path.dirname(__file__), f"../dagster_and_dbt/completed/{lesson}/analytics"
     )
 
     cmd = ["dbt", cmd, "--project-dir", dir, "--profiles-dir", dir]
