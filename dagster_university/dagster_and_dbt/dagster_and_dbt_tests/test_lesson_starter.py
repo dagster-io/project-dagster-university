@@ -1,9 +1,9 @@
 import dagster as dg
 
-from dagster_and_dbt.completed.lesson_2.assets import metrics, trips
-from dagster_and_dbt.completed.lesson_2.definitions import defs
-from dagster_and_dbt.completed.lesson_2.jobs import trip_update_job
-from dagster_and_dbt.completed.lesson_2.resources import database_resource
+from dagster_and_dbt.assets import metrics, trips
+from dagster_and_dbt.definitions import defs
+from dagster_and_dbt.jobs import trip_update_job
+from dagster_and_dbt.resources import database_resource
 
 
 def test_trips_partitioned_assets():
