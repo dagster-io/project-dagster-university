@@ -39,8 +39,21 @@ body:
       label: Which lesson number are you having an issue?
       placeholder: |
         Example: "Lesson 5"
-  - type: textarea
+  - type: dropdown
     attributes:
-      label: How are you running the course?
-      placeholder: |
-        Example: "Locally on MAC using uv" or "Codespaces"
+      label: Operation system
+      description: How are you running the Dagster course?
+      multiple: false
+      options:
+        - "Windows"
+        - "MacOS"
+        - "Linux"
+        - "Github Codespaces"
+  - type: input
+    attributes:
+      label: What Python version are you using?
+      placeholder: "Copy and paste the output from `python --version`."
+  - type: input
+    attributes:
+      label: What Dagster version are you using?
+      placeholder: "Copy and paste the output from `dagster --version`."
