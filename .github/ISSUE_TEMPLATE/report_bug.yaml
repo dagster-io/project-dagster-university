@@ -1,0 +1,46 @@
+name: 🪲 Report a bug
+description: Report problems and issues with Dagster University.
+labels: ["type: bug"]
+assignees:
+  - dehume
+body:
+  - type: markdown
+    attributes:
+      value: >
+        <p align="center">
+          <a target="_blank" href="https://dagster.io">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/dagster-io/dagster/master/.github/dagster-logo-dark.svg">
+              <img alt="dagster logo" src="https://raw.githubusercontent.com/dagster-io/dagster/master/.github/dagster-logo-light.svg" width="auto" height="80">
+            </picture>
+          </a>
+        </p>
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    attributes:
+      label: What's the issue?
+      description: Provide a brief description of the issue.
+      placeholder: |
+        Please provide a brief description of the issue and the context in which it happened.
+        
+        When possible, add error logs, screenshots or video links that display the issue.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: What course is this related to?
+      placeholder: |
+        Example: "Dagster Essentials"
+  - type: textarea
+    attributes:
+      label: Which lesson number are you having an issue?
+      placeholder: |
+        Example: "Lesson 5"
+  - type: textarea
+    attributes:
+      label: How are you running the course?
+      placeholder: |
+        Example: "Locally on MAC using uv" or "Codespaces"
