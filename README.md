@@ -1,8 +1,9 @@
 # Dagster University
 
-This is a [Dagster](https://dagster.io/) project made to accompany [Dagster University](https://courses.dagster.io/) coursework. Each course is located within the `dagster_university` directory:
+Welcome to [Dagster University](https://courses.dagster.io/). This contains all the courses offered by Dagster. Within each project you will find the starting point for each project as alongside the completed code for each lesson. Refer to the `README.md` of the particular course for more details.
 
-| Course Name | Description |
+| Course Directory | Course Page |
 |-------------|-------------|
-| `Dagster Essentials` | [Dagster Essentials](https://courses.dagster.io/courses/dagster-essentials) finished project |
-| `Dagster & dbt` | [Dagster + dbt](https://courses.dagster.io/courses/dagster-dbt) finished project |
+| [`Dagster Essentials`](dagster_university/dagster_essentials/README.md) | [Dagster Essentials Course](https://courses.dagster.io/courses/dagster-essentials) |
+| [`Dagster & dbt`](dagster_university/dagster_and_dbt/README.md) | [Dagster + dbt Course](https://courses.dagster.io/courses/dagster-dbt) |
+| [`Testing with Dagster`](dagster_university/dagster_testing/README.md) | |

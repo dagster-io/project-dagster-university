@@ -9,7 +9,8 @@ title: Testing with Dagster
   - [Testing data applications](/dagster-testing/lesson-1/3-testing-data-applications)
 - Lesson 2: Requirements & installation
   - [Requirements](/dagster-testing/lesson-2/0-requirements)
-  - [Set up the Dagster project](/dagster-testing/lesson-2/1-set-up-the-dagster-project)
+  - [Set up local](/dagster-testing/lesson-2/1-set-up-local)
+  - [Set up Codespace](/dagster-testing/lesson-2/2-set-up-codespace)
 - Lesson 3: Testing fundamentals
   - [Overview](/dagster-testing/lesson-3/0-overview)
   - [Unit tests](/dagster-testing/lesson-3/1-unit-tests)

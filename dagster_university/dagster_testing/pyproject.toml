@@ -20,10 +20,3 @@ dev-dependencies = [
 [tool.dagster]
 module_name = "dagster_testing.definitions"
 code_location_name = "dagster_testing"
-
-[build-system]
-requires = ["setuptools>=42"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools]
-packages = ["dagster_testing"]

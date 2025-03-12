@@ -1,50 +1,37 @@
 # [WIP] Testing with Dagster
 
 > [!NOTE]  
-> This module is currently a work in progress and is not live as a course yet.
+> This module is currently a work in progress.
 
-Code for all lessons for all the [Dagster Testing]() course.
+## Completed code
 
-## Getting started
+Most of this module involves running tests with [`pytest`](https://docs.pytest.org/en/stable/). The code you will be testing is located within `dagster_testing`. The tests are in `dagster_testing_tests`. Each lesson has its own file for tests.
 
-Use `uv` to install the necessary Python dependencies.
-
-```bash
-uv sync
+```
+dagster_testing_tests
+├── test_lesson_3.py
+├── test_lesson_4.py
+├── test_lesson_5.py
+└── test_lesson_6.py
 ```
 
-Most of this module is based around running pytest
+The completed tests are located within a subdirectory `completed`.
 
-Then, start the Dagster UI web server:
+```
+dagster_testing_tests
+├── completed
+│   ├── test_lesson_3.py
+│   ├── test_lesson_4.py
+│   ├── test_lesson_5.py
+│   └── test_lesson_6.py
+```
+
+## Dagster UI
+
+You should not need to use the UI for this module but if you want to see Dagster objects you can execute.
 
 ```bash
-dagster dev -m dagster_testing.completed.lesson_{LESSON NUMBER}.definitions
+dagster dev
 ```
 
 Open http://localhost:3000 with your browser to see the project.
-
-## Development
-
-### Tests
-To run tests, use `pytest`. To run all the tests for all lesson run:
-
-```bash
-pytest dagster_testing_tests
-```
-
-This will include (lesson 4 integration tests) which requires Docker. To not run the integration tests:
-
-```bash
-pytest -m "not integration"
-```
-
-The Github Action will execute all tests for this module using all supported Python versions and OS.
-
-### Linting
-To run linting, use `ruff`.
-
-```bash
-ruff check . --select I --fix
-```
-
-The Github Action will check for errors with ruff.
