@@ -34,10 +34,10 @@ Dagster assets are good candidates for unit tests. Since an asset is responsible
 We will begin with the following asset:
 
 ```python
+# /dagster_testing/assets/unit_assets.py
 @dg.asset
 def state_population_file() -> list[dict]:
-    current_file_dir = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(current_file_dir, "../data/ny.csv")
+    file_path = Path(__file__).absolute().parent / "../data/ny.csv"
     with open(file_path) as file:
         reader = csv.DictReader(file)
         return [row for row in reader]
@@ -72,8 +72,8 @@ The `ny.csv` file contains the population for three cities in New York. So what 
 So what would a good test look like? Click **View answer** to view it.
 
 ```python {% obfuscated="true" %}
-def test_state_population_file():
-    assert assets.state_population_file() == [
+def test_total_population():
+    assert unit_assets.state_population_file() == [
         {
             "City": "New York",
             "Population": "8804190",
@@ -94,7 +94,7 @@ If you are familiar with Python testing, writing a test for an asset should look
 To run this test, use the pytest CLI from the virtual environment:
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file
+> pytest dagster_testing_tests/test_lesson_3.py::test_total_population
 ...
 dagster_testing_tests/test_lesson_3.py .                                                          [100%]
 ```

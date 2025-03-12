@@ -15,27 +15,25 @@ Jobs are a collection of assets grouped together in a specific way. Generally th
 Here are two jobs, both using the same subset of the asset graph though `my_job_configured` also supplies a run configuration.
 
 ```python
-state_population_file_partition = dg.AssetSelection.assets(
-    "state_population_file_partition"
-)
-total_population_partition = dg.AssetSelection.assets("total_population_partition")
-
-
 my_job = dg.define_asset_job(
     name="jobs",
-    selection=dg.AssetSelection.all()
-    - state_population_file_partition
-    - total_population_partition,
+    selection=[
+        dagster_assets.population_file_config,
+        dagster_assets.population_api_resource,
+        dagster_assets.population_combined,
+    ],
 )
 
 
 my_job_configured = dg.define_asset_job(
     name="jobs_config",
-    selection=dg.AssetSelection.all()
-    - state_population_file_partition
-    - total_population_partition,
+    selection=[
+        dagster_assets.population_file_config,
+        dagster_assets.population_api_resource,
+        dagster_assets.population_combined,
+    ],
     config=yaml.safe_load(
-        (Path(__file__).absolute().parent / "run_config.yaml").open()
+        (Path(__file__).absolute().parent / "configs/run_config.yaml").open()
     ),
 )
 ```
@@ -47,9 +45,7 @@ To test our jobs, we can write tests around their configurations by accessing el
 ```python
 def test_job_config():
     assert (
-        jobs.my_job_configured.config["ops"]["state_population_file_config"]["config"][
-            "path"
-        ]
+        jobs.my_job_configured.config["ops"]["population_file_config"]["config"]["path"]
         == "dagster_testing_tests/data/test.csv"
     )
 ```
@@ -132,7 +128,7 @@ In order to write a reliable test for this sensor, we will go back to our lesson
 First we can set a test where our sensor will skip.
 
 ```python
-@patch("dagster_testing.lesson_6.sensors.check_for_new_files", return_value=[])
+@patch("dagster_testing.sensors.check_for_new_files", return_value=[])
 def test_sensor_skip(mock_check_new_files):
     instance = dg.DagsterInstance.ephemeral()
     context = dg.build_sensor_context(instance=instance)
@@ -156,7 +152,8 @@ What would it look like to write a test to ensure the sensor picks up a new file
 
 ```python {% obfuscated="true" %}
 @patch(
-    "dagster_testing.lesson_6.sensors.check_for_new_files", return_value=["test_file"]
+    "dagster_testing.sensors.check_for_new_files",
+    return_value=["test_file"],
 )
 def test_sensor_run(mock_check_new_files):
     instance = dg.DagsterInstance.ephemeral()

@@ -11,7 +11,7 @@ Within your Dagster project the most important object is the definition. This de
 Luckily this is a very easy test to write.
 
 ```python
-from dagster_testing.lesson_6.definitions import defs
+from dagster_testing.definitions import defs
 
 def test_def():
     assert defs

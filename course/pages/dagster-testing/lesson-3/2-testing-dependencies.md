@@ -11,6 +11,7 @@ Most Dagster asset graphs contain multiple assets that depend on the output of o
 We will add an additional asset downstream of `state_population_file` that takes in its output:
 
 ```python
+# /dagster_testing/assets/unit_assets.py
 @dg.asset
 def total_population(state_population_file: list[dict]) -> int:
     return sum([int(x["Population"]) for x in state_population_file])
@@ -24,7 +25,7 @@ The code above defines an asset called `total_population`:
 The relationship of `state_population_file` and `total_population` is defined by the input parameter on `total_population`. What would a test look like for this asset? Click **View answer** to view it.
 
 ```python {% obfuscated="true" %}
-def test_processed_file():
+def test_total_population():
     state_populations = [
         {
             "City": "New York",
@@ -40,7 +41,7 @@ def test_processed_file():
         },
     ]
 
-    assert assets.total_population(state_populations) == 9294108
+    assert unit_assets.total_population(state_populations) == 9294108
 ```
 
 Because we are setting the input parameter for `total_population` we can ensure what the expected outcome will be. In this case the sum of the three cities is 9,294,108.
@@ -48,7 +49,7 @@ Because we are setting the input parameter for `total_population` we can ensure 
 Like the other asset test, this test looks like standard Python. Again, we can run this test with `pytest`:
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_processed_file
+> pytest dagster_testing_tests/test_lesson_3.py::test_total_population
 ...
 dagster_testing_tests/test_lesson_3.py .                                                          [100%]
 ```
@@ -62,8 +63,8 @@ Since the `processed_file` asset only relies on the output of  the `loaded_file`
 ```python
 def test_assets():
     _assets = [
-        assets.state_population_file,
-        assets.total_population,
+        unit_assets.state_population_file,
+        unit_assets.total_population,
     ]
     result = dg.materialize(_assets)
     assert result.success
@@ -80,8 +81,8 @@ Confirming that the assets materialize without issue is a great start, but we st
 ```python
 def test_assets():
     _assets = [
-        assets.state_population_file,
-        assets.total_population,
+        unit_assets.state_population_file,
+        unit_assets.total_population,
     ]
     result = dg.materialize(_assets)
     assert result.success

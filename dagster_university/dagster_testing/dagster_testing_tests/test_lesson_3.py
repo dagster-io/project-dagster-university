@@ -9,7 +9,7 @@ import dagster_testing.assets.unit_assets as unit_assets
 
 @pytest.fixture()
 def config_file():
-    file_path = Path(__file__).absolute().parent / "data/test.csv"
+    file_path = Path(__file__).absolute().parent / "../data/test.csv"
     return unit_assets.FilepathConfig(path=file_path.as_posix())
 
 
@@ -55,23 +55,10 @@ def file_population():
 
 
 def test_state_population_file():
-    assert unit_assets.state_population_file() == [
-        {
-            "City": "New York",
-            "Population": "8804190",
-        },
-        {
-            "City": "Buffalo",
-            "Population": "278349",
-        },
-        {
-            "City": "Yonkers",
-            "Population": "211569",
-        },
-    ]
+    pass
 
 
-def test_processed_file():
+def test_total_population():
     pass
 
 

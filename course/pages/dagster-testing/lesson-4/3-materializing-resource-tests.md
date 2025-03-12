@@ -9,6 +9,7 @@ lesson: '4'
 When we discussed unit tests we showed how you can execute one or more assets together using `dg.materialize()`. We can still materialize our assets this way using mocks.
 
 ```python
+# /dagster_testing/assets/mock_assets.py
 @patch("requests.get")
 def test_state_population_api_assets(mock_get, example_response, api_output):
     mock_response = Mock()
@@ -18,15 +19,16 @@ def test_state_population_api_assets(mock_get, example_response, api_output):
 
     result = dg.materialize(
         assets=[
-            assets.state_population_api_resource,
-            assets.total_population_resource,
+            mock_assets.state_population_api_resource,
+            mock_assets.total_population_resource,
         ],
-        resources={"state_population_resource": assets.StatePopulation()},
+        resources={"state_population_resource": mock_assets.StatePopulation()},
     )
     assert result.success
 
     assert result.output_for_node("state_population_api_resource") == api_output
     assert result.output_for_node("total_population_resource") == 9082539
+
 ```
 
 ```bash
@@ -67,12 +69,12 @@ def test_state_population_api_assets_config(mock_get, example_response, api_outp
 
     result = dg.materialize(
         assets=[
-            assets.state_population_api_resource_config,
-            assets.total_population_resource_config,
+            mock_assets.state_population_api_resource_config,
+            mock_assets.total_population_resource_config,
         ],
-        resources={"state_population_resource": assets.StatePopulation()},
+        resources={"state_population_resource": mock_assets.StatePopulation()},
         run_config=dg.RunConfig(
-            {"state_population_api_resource_config": assets.StateConfig(name="ny")}
+            {"state_population_api_resource_config": mock_assets.StateConfig(name="ny")}
         ),
     )
     assert result.success
