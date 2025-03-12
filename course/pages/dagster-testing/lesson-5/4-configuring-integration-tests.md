@@ -100,7 +100,7 @@ def test_state_population_database():
         database="test_db",
     )
 
-    result = assets.state_population_database(postgres_resource)
+    result = integration_assets.state_population_database(postgres_resource)
     assert result == [
         ("New York", 8804190),
         ("Buffalo", 278349),

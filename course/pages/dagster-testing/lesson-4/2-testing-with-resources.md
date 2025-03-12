@@ -13,6 +13,7 @@ Resources are objects that provide access to external systems, databases, or ser
 We can refactor the API asset code into a resource. A resource is just a class that inherits from `dg.ConfigurableResource`. It can have any number of methods which assets can use. This resource will only include a single method for `get_cities`.
 
 ```python
+# /dagster_testing/assets/mock_assets.py
 class StatePopulation(dg.ConfigurableResource):
     def get_cities(self, state: str) -> list[dict]:
         output = []
@@ -64,14 +65,15 @@ def test_state_population_api_resource_mock(mock_get, example_response):
     mock_response.raise_for_status.return_value = None
     mock_get.return_value = mock_response
 
-    result = assets.state_population_api_resource(assets.StatePopulation())
+    result = mock_assets.state_population_api_resource(mock_assets.StatePopulation())
 
     assert len(result) == 2
     assert result[0] == {
         "city": "New York",
         "population": 8804190,
     }
-    mock_get.assert_called_once_with(assets.API_URL, params={"state": "ny"})
+    mock_get.assert_called_once_with(mock_assets.API_URL, params={"state": "ny"})
+
 ```
 
 ```bash

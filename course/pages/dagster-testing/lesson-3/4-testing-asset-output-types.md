@@ -9,12 +9,14 @@ lesson: '3'
 In standard Python, a function does not need to match its type annotation in order to execute properly. For example:
 
 ```python
+# /dagster_testing/assets/unit_assets.py
 def func_wrong_type() -> str:
     return 2
+```
 
-
+```python
 def test_func_wrong_type():
-    assert func_wrong_type() == 2
+    assert unit_assets.func_wrong_type() == 2
 ```
 
 The test above will pass even though the function is marked as producing a `str` while an `int` is returned.
@@ -28,10 +30,11 @@ Let's try the same example with Dagster:
 @dg.asset
 def wrong_type_annotation() -> str:
     return 2
+```
 
-
+```python
 def test_wrong_type_annotation():
-    assert wrong_type_annotation() == 2
+    assert unit_assets.wrong_type_annotation() == 2
 ```
 
 Will this pass? Click **View answer** to view it.
@@ -58,11 +61,12 @@ With `pytest`, handling exceptions within Dagster is the same as exception handl
 @dg.asset
 def wrong_type_annotation() -> str:
     return 2
+```
 
-
+```python
 def test_wrong_type_annotation_error():
     with pytest.raises(DagsterTypeCheckDidNotPass):
-        wrong_type_annotation()
+        unit_assets.wrong_type_annotation()
 ```
 
 ```bash

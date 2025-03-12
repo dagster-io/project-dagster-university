@@ -10,6 +10,7 @@ import dagster_testing.assets.unit_assets as unit_assets
 
 @pytest.fixture()
 def config_file():
+    # Move up one directory to account for nesting of completed files
     file_path = Path(__file__).absolute().parent / "../data/test.csv"
     return unit_assets.FilepathConfig(path=file_path.as_posix())
 
@@ -72,18 +73,18 @@ def test_state_population_file():
     ]
 
 
-def test_processed_file(file_output, file_population):
+def test_total_population(file_output, file_population):
     assert unit_assets.total_population(file_output) == file_population
 
 
-def test_processed_file_meta(file_output, file_population):
+def test_total_population_meta(file_output, file_population):
     result = unit_assets.total_population_meta(file_output)
     assert result == dg.MaterializeResult(
         asset_key=None, metadata={"total_population": file_population}
     )
 
 
-def test_processed_file_meta_yield(file_output, file_population):
+def test_total_population_meta_yield(file_output, file_population):
     result = unit_assets.total_population_meta_yield(file_output)
     assert result.__next__() == dg.MaterializeResult(
         asset_key=None, metadata={"total_population": file_population}
