@@ -3,6 +3,10 @@
 > [!NOTE]  
 > This module is currently a work in progress.
 
+## Overview
+
+Learn how to write tests in Python and apply them to Dagster. In this course, you'll learn how to write unit, mock and integration tests in the context of Dagster and the best practices to ensure high quality for your Dagster project.
+
 ## Completed code
 
 Most of this module involves running tests with [`pytest`](https://docs.pytest.org/en/stable/). The code you will be testing is located within `dagster_testing`. The tests are in `dagster_testing_tests`. Each lesson has its own file for tests.
