@@ -382,7 +382,7 @@ wheels = [
 [[package]]
 name = "dagster-testing"
 version = "0.0.1"
-source = { editable = "." }
+source = { virtual = "." }
 dependencies = [
     { name = "dagster" },
     { name = "dagster-snowflake" },
