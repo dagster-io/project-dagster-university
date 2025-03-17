@@ -45,7 +45,7 @@ With the basics of materialization out of the way, let’s move on to actually m
 
 ## Materializing assets using the Dagster UI
 
-If you don’t still have the Dagster UI running from Lesson 2, use the command line to run the following command in the root of your Dagster project (the top-level `dagster-university` directory):
+If you don’t still have the Dagster UI running from Lesson 2, use the command line to run the following command in the root of your Dagster project (the top-level `dagster-university/dagster_essentials` directory):
 
 ```bash
 dagster dev

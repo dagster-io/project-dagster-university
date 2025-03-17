@@ -14,7 +14,7 @@ Luckily for us, the trip data is stored in parquet files that are separated by m
 
 ## Constructing a partition definition
 
-The first step in partitioning an asset is setting up a `PartitionDefinition`. Dagster has prebuilt hourly, daily, weekly, and monthly partitions for date-partitioned data. Following Dagster’s best practices for project structure, all partitions should be located in the `partitions` folder. In this project, all partitions will be in the `partitions/__init__.py` file.
+The first step in partitioning an asset is setting up a `PartitionDefinition`. Dagster has prebuilt hourly, daily, weekly, and monthly partitions for date-partitioned data. Following Dagster’s best practices for project structure, all partitions should be located in the `partitions` folder. In this project, all partitions will be in the `partitions.py` file.
 
 Additionally, your Dagster project contains an `assets/constants.py` file. This file contains `START_DATE` and `END_DATE` variables that, when used together, define the date range of the trip data to bring into the data pipeline.
 

@@ -12,7 +12,7 @@ Before the jobs and schedules can be used, you’ll need to add them to the `Def
 
 ## Adding jobs to Definitions
 
-Revisiting the definitions in the top level `__init__.py` file, the first step to adding the schedule to the code location is adding the jobs for the schedules to use.
+Revisiting the definitions in the `definitions.py` file, the first step to adding the schedule to the code location is adding the jobs for the schedules to use.
 
 The `jobs` argument of the `Definitions` object accepts a list of jobs. To add jobs to the code location:
 
@@ -22,7 +22,7 @@ The `jobs` argument of the `Definitions` object accepts a list of jobs. To add j
    from .jobs import trip_update_job, weekly_update_job
    ```
 
-   This tells Dagster to import the `trip_update_job` and `weekly_update_job` schedules from `.jobs`, or `jobs/__init__.py`.
+   This tells Dagster to import the `trip_update_job` and `weekly_update_job` schedules from `.jobs`, or `jobs.py`.
 
 2. Beneath `metric_assets = dg.load_assets_from_modules([metrics])`, add the following:
 
@@ -38,7 +38,7 @@ The `jobs` argument of the `Definitions` object accepts a list of jobs. To add j
    jobs=all_jobs,
    ```
 
-At this point, `__init__.py` should look like this:
+At this point, `definitions.py` should look like this:
 
 ```python
 import dagster as dg
@@ -73,7 +73,7 @@ Now that you’ve added the jobs, let’s add the schedules to the `Definitions`
    from .schedules import trip_update_schedule, weekly_update_schedule
    ```
 
-   This tells Dagster to import the `trip_update_schedule` and `weekly_update_schedule` schedules from `.schedules`, or `schedules/__init__.py`.
+   This tells Dagster to import the `trip_update_schedule` and `weekly_update_schedule` schedules from `.schedules`, or `schedules.py`.
 
 2. Beneath `metric_assets = dg.load_assets_from_modules([metrics])`, add the following:
 
@@ -89,7 +89,7 @@ Now that you’ve added the jobs, let’s add the schedules to the `Definitions`
    schedules=all_schedules,
    ```
 
-At this point, `__init__.py` should look like this:
+At this point, `definitions.py` should look like this:
 
 ```python
 import dagster as dg

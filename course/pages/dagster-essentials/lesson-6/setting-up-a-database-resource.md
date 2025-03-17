@@ -38,9 +38,7 @@ Let’s use a Dagster resource to manage this connection and share it across all
 
 ## Defining a resource
 
-When you created the project from the template in Lesson 2, you also made a `resources` folder that contains another `__init__.py` file. In this file, you’ll define a resource that’ll be shared throughout your Dagster project.
-
-Copy and paste the following code into `resources/__init__.py:`
+Copy and paste the following code into `resources.py:`
 
 ```python
 from dagster_duckdb import DuckDBResource
@@ -62,7 +60,7 @@ When configuring resources, it’s best practice to load your configurations and
 
 However, in this project, our `.env` file only contains one environment variable: `DUCKDB_DATABASE`. This variable contains the hard-coded path to the DuckDB database file, which is `data/staging/data.duckdb`. Let’s clean up this code by using Dagster’s `EnvVar` utility.
 
-In `resources/__init__.py`, replace the value of the `database` with an `EnvVar` as shown below:
+In `resources.py`, replace the value of the `database` with an `EnvVar` as shown below:
 
 ```python
 from dagster_duckdb import DuckDBResource
@@ -88,7 +86,7 @@ In the previous lesson, you learned about code locations, how they work, and how
 
 As resources are a type of Dagster definition, you’ll need to add them to the `Definitions` object before you can use them.
 
-Update `dagster_university/__init__.py` with the following changes:
+Update `definitions.py` with the following changes:
 
 1. Import the `database_resource` you made from the `resources` sub-module:
 

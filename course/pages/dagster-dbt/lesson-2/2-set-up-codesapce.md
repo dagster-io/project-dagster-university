@@ -48,6 +48,14 @@ After Dagster starts running you will be prompted to open the Dagster UI within 
 
 ![Codespace Launch](/images/shared/codespaces/codespaces-launch.png)
 
+## Create .env file
+
+You will want to copy make a copy of the example file `.env.example` which will be used later on.
+
+```bash
+cp .env.example .env
+```
+
 ## Stopping your Github Codespace
 
 Be sure to stop your Codespace when you are not using it. Github provides personal accounts [120 cores hours per month](https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-github-codespaces/about-billing-for-github-codespaces#monthly-included-storage-and-core-hours-for-personal-accounts).
