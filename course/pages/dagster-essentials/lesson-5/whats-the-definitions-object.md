@@ -62,7 +62,7 @@ defs = dg.Definitions(
 
 ---
 
-## Anatomy of the `__init__.py` file
+## Anatomy of the `definitions.py` file
 
 Let’s break down this file’s code line-by-line.
 
@@ -85,7 +85,7 @@ trip_assets = dg.load_assets_from_modules([trips])
 metric_assets = dg.load_assets_from_modules([metrics])
 ```
 
-When loading a code location, Dagster looks for a variable that contains a `Definitions` object. This is the most important section of the `__init__.py` file. Here, everything is combined and added into the `Definitions` object.
+When loading a code location, Dagster looks for a variable that contains a `Definitions` object. This is the most important section of the `definitions.py` file. Here, everything is combined and added into the `Definitions` object.
 
 The `Definitions` object takes multiple arguments, one for each of the possible Dagster definitions (ex., `assets`, `resources`, `schedules`). In this case, we passed in the assets we loaded into the `assets` argument:
 

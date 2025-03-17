@@ -35,6 +35,7 @@ dagster_university/dagster_essentials
 │   ├── raw
 │   ├── requests
 │   └── staging
+├── env.example
 ├── pyproject.toml
 ├── pytest.ini
 └── uv.lock
@@ -65,20 +66,6 @@ The columns in the following table are as follows:
 
 ---
 
-- `dagster_university/`
-- Dagster
-- A Python module that will contain your Dagster code. This directory also contains the following:
-  - `__init__.py` - This file includes a `Definitions` object that defines that is loaded in your project, such as assets and sensors. This allows Dagster to load the definitions in a module. We’ll discuss this topic, and this file, later in this course.
-  - Several directories, for example: `/assets`. These directories follow our recommended best practices and will be used to contain the definitions - like assets - you create in the following lessons. We’ll discuss the files they contain later, too.
-
----
-
-- `dagster_essentials/__init__.py`
-- Dagster
-- Each Python module has an `__init__.py`. This root-level `__init__.py` is specifically used to import and combine the different aspects of your Dagster project. This is called defining your Code Location. You’ll learn more about this in a future lesson.
-
----
-
 - `dagster_essentials/`
 - Dagster U
 - Contains the files we will be working with during the course.
@@ -103,7 +90,7 @@ The columns in the following table are as follows:
 
 ---
 
-- `.env`
+- `.env.example`
 - Python
 - A text file containing pre-configured environment variables. We’ll talk more about this file in Lesson 6, when we cover connecting to external services.
 
