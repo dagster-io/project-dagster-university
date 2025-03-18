@@ -22,7 +22,7 @@ If you’re familiar with New York City, you might know that there are three maj
 
 To answer these questions, let’s define a new dbt model that builds a series of metrics from the staging models you wrote earlier. 
 
-In the `analytics/models` directory:
+In the `dagster_university/dagster_and_dbt/dagster_and_dbt/analytics/models` directory:
 
 1. Create a new directory called `marts`.
 2. In the `marts` directory, create a new file called `location_metrics.sql`. 

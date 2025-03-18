@@ -27,7 +27,7 @@ The next file we’ll cover is the `profiles.yml` file. This file contains conne
 Before we start working, you should know:
 
 - **Don’t put credentials in this file!** We’ll be pushing `profiles.yml` to git, which will compromise them. When we set up the file, we’ll show you how to use environment variables to store connection details securely.
-- **We’ll create the file in the `analytics`  directory, instead of in dbt’s recommended `.dbt`.**  We’re doing this for a few reasons:
+- **We’ll create the file in the `dagster_university/dagster_and_dbt/dagster_and_dbt/analytics`  directory, instead of in dbt’s recommended `.dbt`.**  We’re doing this for a few reasons:
     - It allows dbt to use the same environment variables as Dagster
     - It standardizes the way connections are created as more people contribute to the project
 
@@ -35,7 +35,7 @@ Before we start working, you should know:
 
 Now you’re ready - let’s go!
 
-1. Navigate to the `analytics` directory.
+1. Navigate to the `dagster_university/dagster_and_dbt/dagster_and_dbt/analytics` directory.
 2. In this folder, create a `profiles.yml` file.
 3. Copy the following code into the file:
     

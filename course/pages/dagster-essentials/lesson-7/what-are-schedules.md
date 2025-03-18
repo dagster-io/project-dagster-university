@@ -58,7 +58,7 @@ For more info on asset selection, refer to the [asset selection syntax guide in 
    import dagster as dg
    ```
 
-3. Next, create a job named `trip_update_job` that selects all assets using `AssetSelection.all()` and then omit `trips_by_week` by substracting its selection:
+3. Next, create a job named `trip_update_job` that selects all assets using `AssetSelection.all()` and then omit `trips_by_week` by subtracting its selection:
 
    ```python
    trip_update_job = dg.define_asset_job(
