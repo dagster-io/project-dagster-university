@@ -42,6 +42,26 @@ This will create a virtual environment that you can now use.
 source .venv/bin/activate
 ```
 
+**pip**
+
+Create the virtual environment.
+
+```bash
+python3 -m venv .venv
+```
+
+Enter the virtual environment.
+
+```bash
+source .venv/bin/activate
+```
+
+Install the packages.
+
+```bash
+pip install -e ".[dev]"
+```
+
 ## Create .env file
 
 You will want to copy make a copy of the example file `.env.example` which will be used later on.

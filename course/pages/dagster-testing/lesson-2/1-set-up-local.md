@@ -41,3 +41,23 @@ This will create a virtual environment that you can now use.
 ```bash
 source .venv/bin/activate
 ```
+
+**pip**
+
+Create the virtual environment.
+
+```bash
+python3 -m venv .venv
+```
+
+Enter the virtual environment.
+
+```bash
+source .venv/bin/activate
+```
+
+Install the packages.
+
+```bash
+pip install -e ".[dev]"
+```

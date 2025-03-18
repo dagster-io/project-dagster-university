@@ -32,7 +32,7 @@ Open http://localhost:3000 with your browser to see the project.
 
 > [!NOTE]
 > Running `dagster dev` will put you in the starter Dagster project. To see any of the completed lessons execute.
-> `dagster dev -m dagster_essentials.lesson_{LESSON NUMBER}.definitions`
+> `dagster dev -m dagster_essentials.completed.lesson_{LESSON NUMBER}.definitions`
 
 ## Deploy on Dagster Cloud
 
