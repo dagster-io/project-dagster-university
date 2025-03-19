@@ -6,4 +6,4 @@ Welcome to [Dagster University](https://courses.dagster.io/). This contains all 
 |-------------|-------------|
 | [`Dagster Essentials`](dagster_university/dagster_essentials/README.md) | [Dagster Essentials Course](https://courses.dagster.io/courses/dagster-essentials) |
 | [`Dagster & dbt`](dagster_university/dagster_and_dbt/README.md) | [Dagster + dbt Course](https://courses.dagster.io/courses/dagster-dbt) |
-| [`Testing with Dagster`](dagster_university/dagster_testing/README.md) | |
+| [`Testing with Dagster`](dagster_university/dagster_testing/README.md) | [Testing with Dagster Course](https://courses.dagster.io/courses/dagster-testing) |
