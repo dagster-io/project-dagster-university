@@ -21,7 +21,7 @@ import dagster as dg
 @dg.asset(
     group_name="raw_files",
 )
-def taxi_zones_file() -> None:
+def taxi_zones_file() -> dg.MaterializeResult:
     """
       The raw CSV file for the taxi zones dataset. Sourced from the NYC Open Data portal.
     """
