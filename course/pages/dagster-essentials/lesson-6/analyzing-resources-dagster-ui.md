@@ -16,7 +16,7 @@ We briefly mentioned earlier the **Resources** tab on the **Overview** page. We 
 
 - {% width="60%" %}
 
-  1. In the Dagster UI, click **Deployment**, then the `dagster_university` code location.
+  1. In the Dagster UI, click **Deployment**, then the `dagster_essentials` code location.
   2. Next, click the **Resources** tab. Now that the assets have been updated to use the `database` resource, the **Uses** column now displays **4.**
   3. In the **Name** column, click `database`.
 

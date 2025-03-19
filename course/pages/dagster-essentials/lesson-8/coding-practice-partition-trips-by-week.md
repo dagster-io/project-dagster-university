@@ -69,10 +69,9 @@ def trips_by_week(context: dg.AssetExecutionContext, database: DuckDBResource) -
         aggregate.to_csv(constants.TRIPS_BY_WEEK_FILE_PATH, index=False)
 ```
 
-### In `jobs/__init__.py`:
+### In `jobs.py`:
 
 ```python {% obfuscated="true" %}
-# jobs/__init__.py
 import dagster as dg
 from ..partitions import weekly_partition
 

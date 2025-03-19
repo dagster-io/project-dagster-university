@@ -1,18 +1,28 @@
 # Dagster Essentials
 
-Code for all lessons for all the [Dagster Essentials](https://courses.dagster.io/courses/dagster-essentials) course.
+## Overview
 
-## Getting started
+Learn the basics of Dagster, a Python-based platform that enables you to build robust, production-ready data pipelines. In this course, you’ll learn how to represent a data pipeline as the data assets it produces and orchestrate a pipeline you’ll make with Dagster.
 
-Use `uv` to install the necessary Python dependencies.
+## Completed code
 
-```bash
-uv sync
+If you are stuck you can reference the completed code for each lesson.
+
+```
+dagster_essentials
+├── completed
+│   ├── lesson_3
+│   ├── lesson_4
+│   ├── lesson_5
+│   ├── lesson_6
+│   ├── lesson_7
+│   ├── lesson_8
+│   └── lesson_9
 ```
 
-Duplicate the `.env.example` file and rename it to `.env`. Then, fill in the values for the environment variables in the file.
+## Dagster UI
 
-Then, start the Dagster UI web server:
+To launch the UI for your project you can execute.
 
 ```bash
 dagster dev
@@ -21,30 +31,8 @@ dagster dev
 Open http://localhost:3000 with your browser to see the project.
 
 > [!NOTE]
-> Running `dagster dev` will put you in the finished Dagster project (at the final lesson). To see any of the other lessons run:
-> `dagster dev -m dagster_essentials.lesson_{LESSON NUMBER}.definitions`
->
-> Lessons 3 and 4 do not use a `definition` in the content.
-
-## Development
-
-### Tests
-To run tests, use `pytest`.
-
-```bash
-pytest dagster_essentials_tests
-```
-
-The Github Action will execute all tests for this module using all supported Python versions and OS.
-
-### Linting
-To run linting, use `ruff`.
-
-```bash
-ruff check . --select I --fix
-```
-
-The Github Action will check for errors with ruff.
+> Running `dagster dev` will put you in the starter Dagster project. To see any of the completed lessons execute.
+> `dagster dev -m dagster_essentials.completed.lesson_{LESSON NUMBER}.definitions`
 
 ## Deploy on Dagster Cloud
 

@@ -8,7 +8,7 @@ lesson: '7'
 
 Now that you know what makes up a schedule, let’s create one. To do this, we’ll use the `ScheduleDefinition` class.
 
-Copy and paste the following snippet into `schedules/__init__.py`:
+Copy and paste the following snippet into `schedules.py`:
 
 ```python
 import dagster as dg

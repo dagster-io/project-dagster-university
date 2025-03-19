@@ -6,9 +6,9 @@ lesson: '9'
 
 # Updating the Definitions object
 
-As with your other Dagster definitions, the final step is to add the sensor, its related asset, and job into the `Definitions` object. This will be done in the top-level `__init__.py` file.
+As with your other Dagster definitions, the final step is to add the sensor, its related asset, and job into the `Definitions` object. This will be done in the `definitions.py` file.
 
-1. Import the new asset, job, and sensor into the `__init__.py` file by updating the following imports:
+1. Import the new asset, job, and sensor into the `definitions.py` file by updating the following imports:
 
    ```python
    from .assets import trips, metrics, requests
@@ -50,7 +50,7 @@ As with your other Dagster definitions, the final step is to add the sensor, its
       sensors=all_sensors,
       ```
 
-At this point, `__init__.py` should look like this:
+At this point, `definitions.py` should look like this:
 
 ```python
 import dagster as dg

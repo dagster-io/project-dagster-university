@@ -8,7 +8,7 @@ lesson: '4'
 
 Now that you have a query that produces an asset, let’s use Dagster to manage the materialization. By having Dagster manage the definition and materialization of data assets, you can easily determine when the table is changed and how long it takes.
 
-1. At the top of the `trips.py` file, import `duckdb` and `os` to help you manage where the DuckDB database file is stored:
+1. At the top of the `trips.py` file, import `duckdb` and `os` to help you manage where the DuckDB database file is stored as well as `backoff` from the `dagster._utils` which will help use DuckDB more effectively:
 
    ```python
    import duckdb

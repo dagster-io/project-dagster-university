@@ -10,7 +10,7 @@ In the previous lesson, you created the `trip_update_job` job that updates most 
 
 Now that you’ve partitioned the relevant assets, the schedule can be changed to only get the latest month’s data and not refresh the entirety of the asset. This is best practice and saves time on compute to limit intake of only new data.
 
-Currently, `trip_update_job` in `jobs/__init__.py` should look like this:
+Currently, `trip_update_job` in `jobs.py` should look like this:
 
 ```python
 trip_update_job = dg.define_asset_job(

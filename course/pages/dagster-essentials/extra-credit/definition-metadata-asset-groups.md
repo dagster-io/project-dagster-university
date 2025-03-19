@@ -28,7 +28,7 @@ When adding assets to groups, keep the following in mind:
 
 ## Grouping all assets in a submodule
 
-Asset groups can be defined in the `__init__.py`, where the `Definitions` object is defined. Within the `load_assets_from_modules`, a group name can be passed to load all the assets into that asset group. This is the recommended method for adding assets to groups in Dagster.
+Asset groups can be defined in the `definitions.py`, where the `Definitions` object is defined. Within the `load_assets_from_modules`, a group name can be passed to load all the assets into that asset group. This is the recommended method for adding assets to groups in Dagster.
 
 For example:
 

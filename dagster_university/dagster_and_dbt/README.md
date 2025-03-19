@@ -1,18 +1,25 @@
 # Dagster and dbt
 
-Code for all lessons for all the [Dagster and dbt](https://courses.dagster.io/courses/dagster-dbt) course.
+## Overview
 
-## Getting started
+In this course, you'll learn how to integrate and orchestrate dbt projects with Dagster. You'll load dbt models into Dagster as assets, build dependencies, and ready your project for production deployment.
 
-Use `uv` to install the necessary Python dependencies.
+## Completed code
 
-```bash
-uv sync
+If you are stuck you can reference the completed code for each lesson.
+
+```
+dagster_and_dbt
+├── completed
+│   ├── lesson_3
+│   ├── lesson_4
+│   ├── lesson_5
+│   └── lesson_6
 ```
 
-Duplicate the `.env.example` file and rename it to `.env`. Then, fill in the values for the environment variables in the file.
+## Dagster UI
 
-Then, start the Dagster UI web server:
+To launch the UI for your project you can execute.
 
 ```bash
 dagster dev
@@ -21,32 +28,8 @@ dagster dev
 Open http://localhost:3000 with your browser to see the project.
 
 > [!NOTE]
-> Running `dagster dev` will put you in the finished Dagster project (at the final lesson). To see any of the other lessons run:
-> `dagster dev -m dagster_and_dbt.lesson_{LESSON NUMBER}.definitions`
-
-## Development
-
-### dbt Project
-
-Each lesson contains a specific dbt project. This is because the dbt project changes slightly over the course.
-
-### Tests
-To run tests, use `pytest`.
-
-```bash
-pytest dagster_and_dbt_tests
-```
-
-The Github Action will execute all tests for this module using all supported Python versions and OS.
-
-### Linting
-To run linting, use `ruff`.
-
-```bash
-ruff check . --select I --fix
-```
-
-The Github Action will check for errors with ruff.
+> Running `dagster dev` will put you in the starter Dagster project. To see any of the completed lessons execute.
+> `dagster dev -m dagster_and_dbt.completed.lesson_{LESSON NUMBER}.definitions`
 
 ## Deploy on Dagster Cloud
 

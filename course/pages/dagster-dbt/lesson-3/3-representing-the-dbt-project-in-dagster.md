@@ -8,7 +8,7 @@ lesson: '3'
 
 As you’ll frequently point your Dagster code to the `target/manifest.json` file and your dbt project in this course, it’ll be helpful to keep a reusable representation of the dbt project. This can be easily done using the `DbtProject` class.
 
-In the `dagster_university` directory, create a new `project.py` file and add the following imports:
+In the `dagster_university/dagster_and_dbt/dagster_and_dbt/project.py` file add the following imports:
 
 ```python
 from pathlib import Path
@@ -22,7 +22,7 @@ After the import, add the following code:
 
 ```python
 dbt_project = DbtProject(
-  project_dir=Path(__file__).joinpath("..", "..", "analytics").resolve(),
+  project_dir=Path(__file__).joinpath("..", "analytics").resolve(),
 )
 ```
 
@@ -30,7 +30,7 @@ This code creates a representation of the dbt project called `dbt_project`. The 
 
 - The location of the `project.py` file (via `__file__`) is used as a point of reference for finding the dbt project
 - The arguments in `joinpath` point us towards our dbt project by appending the following to the current path:
-   - Three directory levels up (`"..", "..", ".."`)
+   - One directory level up (`".."`)
    - A directory named `analytics`, which is the directory containing our dbt project
 - The `resolve` method turns that path into an absolute file path that points to the dbt project correctly from any file we’re working in
 

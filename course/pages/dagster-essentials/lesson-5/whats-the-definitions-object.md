@@ -12,11 +12,9 @@ Let’s use our cookie example to demonstrate. In this case, our cookie assets -
 
 ![In this example, our cookie assets, like our dry and wet ingredients, can be likened to Dagster definitions](/images/dagster-essentials/lesson-5/cookie-definitions.png)
 
-In Dagster, the `Definitions` object is located in the project’s top-level `__init__.py` file. If we wanted to create a `Definitions` object for the cookie definitions we have so far, it would look something like this:
+In Dagster, the `Definitions` object is located in the `definitions.py` file. If we wanted to create a `Definitions` object for the cookie definitions we have so far, it would look something like this:
 
 ```python
-# __init__.py
-
 defs = Definitions(
     assets=[
         dry_ingredients,
@@ -39,9 +37,15 @@ You’ll only have one code location (and therefore one `Definitions` object) in
 
 Now that we’ve discussed what the `Definitions` object is, let’s go into how Dagster uses it.
 
-When running `dagster dev`, Dagster looks into the top-level `__init__.py` file for the `Definitions` object and uses it to retrieve the definitions in the project. You created the `__init__.py` file in Lesson 2 when you generated your Dagster project.
+When running `dagster dev`, Dagster looks to the `pyproject.toml` file. This file contains all of the Python dependencies necessary to run Dagster as well as Dagster specific settings on where the `Definitions` object should be loaded.
 
-In your project, open the `dagster_university/__init__.py` file. It should look like the following code:
+```yaml
+[tool.dagster]
+module_name = "dagster_essentials.definitions"
+code_location_name = "dagster_essentials"
+```
+
+In your project, open the `dagster_university/definitions.py` file. It should look like the following code:
 
 ```python
 import dagster as dg
@@ -58,7 +62,7 @@ defs = dg.Definitions(
 
 ---
 
-## Anatomy of the `__init__.py` file
+## Anatomy of the `definitions.py` file
 
 Let’s break down this file’s code line-by-line.
 
@@ -81,7 +85,7 @@ trip_assets = dg.load_assets_from_modules([trips])
 metric_assets = dg.load_assets_from_modules([metrics])
 ```
 
-When loading a code location, Dagster looks for a variable that contains a `Definitions` object. This is the most important section of the `__init__.py` file. Here, everything is combined and added into the `Definitions` object.
+When loading a code location, Dagster looks for a variable that contains a `Definitions` object. This is the most important section of the `definitions.py` file. Here, everything is combined and added into the `Definitions` object.
 
 The `Definitions` object takes multiple arguments, one for each of the possible Dagster definitions (ex., `assets`, `resources`, `schedules`). In this case, we passed in the assets we loaded into the `assets` argument:
 

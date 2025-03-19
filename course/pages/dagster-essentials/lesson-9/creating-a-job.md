@@ -8,7 +8,7 @@ lesson: '9'
 
 Next, you’ll create a job that materializes the new `adhoc_request` asset. This job will be nearly identical to the jobs from Lesson 7.
 
-Navigate to the `jobs/__init__.py` file and add the following lines to create a job for your ad-hoc requests
+Navigate to the `jobs.py` file and add the following lines to create a job for your ad-hoc requests
 
 ```python
 adhoc_request = dg.AssetSelection.assets(["adhoc_request"])

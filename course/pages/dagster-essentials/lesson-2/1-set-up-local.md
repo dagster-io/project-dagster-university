@@ -1,6 +1,6 @@
 ---
 title: "Lesson 2: Set up local"
-module: 'dagster_testing'
+module: 'dagster_essentials'
 lesson: '2'
 ---
 
@@ -23,7 +23,7 @@ git clone git@github.com:dagster-io/project-dagster-university.git
 After cloning the Dagster University project, you’ll want to navigate to specific course within the repository.
 
 ```
-cd dagster_university/dagster_testing
+cd dagster_university/dagser_essentials
 ```
 
 ## Install the dependencies
@@ -60,4 +60,12 @@ Install the packages.
 
 ```bash
 pip install -e ".[dev]"
+```
+
+## Create .env file
+
+You will want to copy make a copy of the example file `.env.example` which will be used later on.
+
+```bash
+cp .env.example .env
 ```

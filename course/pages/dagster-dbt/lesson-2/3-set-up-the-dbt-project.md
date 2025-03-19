@@ -11,7 +11,7 @@ Next, you’ll notice that there is a dbt project called `analytics` in the repo
 1. Navigate into the directory by running:
     
     ```bash
-    cd analytics
+    cd dagster_university/dagster_and_dbt/dagster_and_dbt/analytics
     ```
     
 2. Next, install dbt package dependencies by running:

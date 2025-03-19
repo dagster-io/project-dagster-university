@@ -8,12 +8,12 @@ lesson: '3'
 
 The last step in setting up your dbt project in Dagster is adding the definitions you made (ex. your `dbt_resource` and `dbt_analytics` asset) to your code location’s `Definitions` object.
 
-Modify your root-level `__init__.py` to:
+Modify your `definitions.py` to:
 
 - Load assets from `dbt.py` file, and
 - Register the `dbt_resource` from `.resources` under the resource key `dbt`
 
-After making those changes, your root-level `__init__.py` should look like similar to below:
+After making those changes, your `definitions.py` should look like similar to below:
 
 ```python
 import dagster as dg
