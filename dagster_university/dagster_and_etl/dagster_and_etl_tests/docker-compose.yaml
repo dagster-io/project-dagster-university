@@ -1,0 +1,15 @@
+---
+
+services:
+  postgresql:
+    build:
+      context: ./postgres
+    container_name: postgresql
+    environment:
+      POSTGRES_DB: "test_db"
+      POSTGRES_USER: "test_user"
+      POSTGRES_PASSWORD: "test_pass"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
