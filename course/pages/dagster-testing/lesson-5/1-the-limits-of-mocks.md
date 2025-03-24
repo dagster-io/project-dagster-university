@@ -29,4 +29,4 @@ Integration tests verify that different components of a system work together. It
 
 Usually we do not do integration testing directly against production systems. Instead we want something that substitutes an equivalent of the production system.
 
-Integration testing can be tricky. However Dagster make was design with this type of workflow in mind and you will see how you can easily substitute different dependencies for testing purposes without having to change the core logic of your code.
+Integration testing can be tricky. However Dagster was designed with this type of workflow in mind. You will how easily you can substitute different dependencies for testing purposes without having to change the core logic of your code.

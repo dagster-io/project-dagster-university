@@ -38,7 +38,7 @@ To test an asset with a run configuration, you will set the specific run configu
 def test_state_population_file_config():
     file_path = Path(__file__).absolute().parent / "data/test.csv"
 
-    config = assets.FilepathConfig(path=file_path)
+    config_file = assets.FilepathConfig(path=file_path.as_posix())
     assert unit_assets.state_population_file_config(config_file) == [
         {
             "City": "Example 1",
@@ -91,7 +91,6 @@ def test_state_population_file_config_fixture_1(config_file):
 
 ```bash
 > pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file_config_fixture_1
-...
 dagster_testing_tests/test_lesson_3.py .                                                          [100%]
 ```
 

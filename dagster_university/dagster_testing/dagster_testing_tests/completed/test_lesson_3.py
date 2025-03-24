@@ -121,8 +121,8 @@ def test_assets(file_output, file_population):
 def test_state_population_file_config():
     file_path = Path(__file__).absolute().parent / "../data/test.csv"
 
-    config = unit_assets.FilepathConfig(path=file_path.as_posix())
-    assert unit_assets.state_population_file_config(config) == [
+    config_file = unit_assets.FilepathConfig(path=file_path.as_posix())
+    assert unit_assets.state_population_file_config(config_file) == [
         {
             "City": "Example 1",
             "Population": "4500000",
