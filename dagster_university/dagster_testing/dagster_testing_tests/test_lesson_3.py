@@ -9,7 +9,7 @@ import dagster_testing.assets.unit_assets as unit_assets
 
 @pytest.fixture()
 def config_file():
-    file_path = Path(__file__).absolute().parent / "../data/test.csv"
+    file_path = Path(__file__).absolute().parent / "data/test.csv"
     return unit_assets.FilepathConfig(path=file_path.as_posix())
 
 

@@ -8,7 +8,7 @@ lesson: '1'
 
 Dagster believes that data engineering should feel like software engineering. And anyone who has been involved in software engineering knows the importance of testing.
 
-With proper testing, you can discover issues much earlier in the development process. This helps to minimize risk as you are building out your platform and gives developers more confidence iterating. For those primarily responsible for building pipelines you can spend less time on maintenance and more time on new features. This will also encourage engineers outside of the data team to contribute with feeling like must know every aspect of the data stack in order to contribute.
+With proper testing, you can discover issues much earlier in the development process. This helps to minimize risk as you are building out your platform and gives developers more confidence iterating. For those primarily responsible for building pipelines you can spend less time on maintenance and more time on new features. Tests enable easier changes for both team members who have forgotten parts of the codebase and people new to the team and still learning about the edge cases and business logic.
 
 ## Types of testing
 
