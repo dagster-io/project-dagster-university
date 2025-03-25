@@ -17,7 +17,7 @@ lesson: '2'
 Run the following to clone the project.
 
 ```bash
-git clone git@github.com:dagster-io/project-dagster-university.git
+git clone https://github.com/dagster-io/project-dagster-university.git
 ```
 
 After cloning the Dagster University project, you’ll want to navigate to specific course within the repository.
