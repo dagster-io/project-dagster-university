@@ -14,7 +14,15 @@ lesson: '2'
 
 ## Clone the Dagster University project
 
-Run the following to clone the project.
+[Clone the Github repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository). The command will depend on if you choose to clone with [ssh or https](https://graphite.dev/guides/git-clone-ssh-vs-https).
+
+**ssh**
+
+```bash
+git clone git@github.com:dagster-io/project-dagster-university.git
+```
+
+**https**
 
 ```bash
 git clone https://github.com/dagster-io/project-dagster-university.git
