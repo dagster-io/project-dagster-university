@@ -6,7 +6,7 @@ lesson: '5'
 
 # What's the Definitions object?
 
-A `Definitions` object is a set of Dagster definitions available and loadable by Dagster tools. The `Definitions` object is used to assign definitions to a code location, and each code location can only have a single `Definitions` object. This object maps to one code location. With code locations, users isolate multiple Dagster projects from each other without requiring multiple deployments. You’ll learn more about code locations a bit later in this lesson.
+Whenever you define an asset, resource, or schedule in your Dagster deployment, it needs to be part of a `Definitions` object for the code location you’re working in. Each code location can only have a single Definitions object. This object maps to one code location. With code locations, users isolate multiple Dagster projects from each other without requiring multiple deployments. You’ll learn more about code locations a bit later in this lesson.
 
 Let’s use our cookie example to demonstrate. In this case, our cookie assets - like our dry and wet ingredients, cookie dough, chocolate chip cookie dough, and eventually, chocolate chip cookies - can all be thought of as (cookie) **definitions:**
 

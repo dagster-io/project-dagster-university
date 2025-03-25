@@ -19,7 +19,7 @@ trip_update_job = dg.define_asset_job(
 )
 ```
 
-To add partition to the job, make the following changes:
+To add a partition to the job, make the following changes:
 
 1. Import the `monthly_partition` from `partitions`:
 
