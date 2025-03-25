@@ -32,7 +32,7 @@ To add the partition to the asset:
 1. Import the `monthly_partition` from the `partitions` folder by adding the following to the top of `assets/trips.py`:
 
    ```python
-   from ..partitions import monthly_partition
+   from dagster_essentials.partitions import monthly_partition
    ```
 
 2. In the asset decorator (`@dg.asset`), add a `partitions_def` parameter equal to `monthly_partition`:
@@ -81,7 +81,7 @@ To add the partition to the asset:
 After following the steps above, the `taxi_trips_file` asset should look similar to the code snippet below:
 
 ```python
-from ..partitions import monthly_partition
+from dagster_essentials.partitions import monthly_partition
 
 @dg.asset(
     partitions_def=monthly_partition

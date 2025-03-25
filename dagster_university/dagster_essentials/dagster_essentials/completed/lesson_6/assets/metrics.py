@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from dagster_duckdb import DuckDBResource
 
-from . import constants
+from dagster_essentials.completed.lesson_6.assets import constants
 
 
 @dg.asset(deps=["taxi_trips"])

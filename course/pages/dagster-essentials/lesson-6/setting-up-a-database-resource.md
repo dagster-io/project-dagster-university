@@ -91,7 +91,7 @@ Update `definitions.py` with the following changes:
 1. Import the `database_resource` you made from the `resources` sub-module:
 
    ```python
-   from .resources import database_resource
+   from dagster_essentials.resources import database_resource
    ```
 
 2. Add the imported `database_resource` to your `Definitions` object through the `resources` argument. We’ll give it the identifier `database`. This is the key that we’ll use to tell Dagster that we want the DuckDB resource.

@@ -1,6 +1,9 @@
 import dagster as dg
 
-from .partitions import monthly_partition, weekly_partition
+from dagster_and_dbt.completed.lesson_4.partitions import (
+    monthly_partition,
+    weekly_partition,
+)
 
 trips_by_week = dg.AssetSelection.assets("trips_by_week")
 adhoc_request = dg.AssetSelection.assets("adhoc_request")
