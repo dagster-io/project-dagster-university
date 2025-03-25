@@ -30,7 +30,7 @@ git clone https://github.com/dagster-io/project-dagster-university.git
 
 After cloning the Dagster University project, you’ll want to navigate to specific course within the repository.
 
-```
+```bash
 cd dagster_university/dagser_and_dbt
 ```
 
