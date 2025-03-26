@@ -5,7 +5,7 @@ import psycopg2
 import pytest
 from dagster_snowflake import SnowflakeResource
 
-import dagster_testing.assets.integration_assets as integration_assets
+from dagster_testing.assets import lesson_5
 
 from ..fixtures import docker_compose  # noqa: F401
 
@@ -65,7 +65,7 @@ def test_snowflake_staging():
         warehouse="STAGING_WAREHOUSE",
     )
 
-    integration_assets.state_population_database(snowflake_staging_resource)
+    lesson_5.state_population_database(snowflake_staging_resource)
 
 
 @pytest.mark.integration
@@ -77,22 +77,22 @@ def test_state_population_database(docker_compose, query_output_ny):  # noqa: F8
         database="test_db",
     )
 
-    result = integration_assets.state_population_database(postgres_resource)
+    result = lesson_5.state_population_database(postgres_resource)
     assert result == query_output_ny
 
 
 @pytest.mark.integration
 def test_total_population_database():
     input = [("City 1", 100), ("City 2", 200)]
-    assert integration_assets.total_population_database(input) == 300
+    assert lesson_5.total_population_database(input) == 300
 
 
 @pytest.mark.integration
-def test_assets_partition(docker_compose, postgres_resource, query_output_ny):  # noqa: F811
+def test_assets(docker_compose, postgres_resource, query_output_ny):  # noqa: F811
     result = dg.materialize(
         assets=[
-            integration_assets.state_population_database,
-            integration_assets.total_population_database,
+            lesson_5.state_population_database,
+            lesson_5.total_population_database,
         ],
         resources={"database": postgres_resource},
     )
@@ -100,16 +100,3 @@ def test_assets_partition(docker_compose, postgres_resource, query_output_ny):  
 
     assert result.output_for_node("state_population_database") == query_output_ny
     assert result.output_for_node("total_population_database") == 9082539
-
-
-@pytest.mark.integration
-def test_state_population_database_config(
-    docker_compose,  # noqa: F811
-    postgres_resource,
-    query_output_ca,
-):
-    config = integration_assets.StateConfig(name="CA")
-    result = integration_assets.state_population_database_config(
-        config, postgres_resource
-    )
-    assert result == query_output_ca

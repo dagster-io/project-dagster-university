@@ -3,7 +3,7 @@ from unittest.mock import Mock, patch  # noqa: F401
 import dagster as dg  # noqa: F401
 import pytest
 
-import dagster_testing.assets.mock_assets as mock_assets  # noqa: F401
+from dagster_testing.assets import lesson_4  # noqa: F401
 
 
 @pytest.fixture

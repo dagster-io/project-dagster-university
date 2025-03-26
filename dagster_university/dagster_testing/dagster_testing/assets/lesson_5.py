@@ -21,22 +21,5 @@ class StateConfig(dg.Config):
 
 
 @dg.asset
-def state_population_database_config(
-    config: StateConfig, database: dg.ConfigurableResource
-) -> list[tuple]:
-    query = f"""
-        SELECT
-            city_name,
-            population
-        FROM data.city_population
-        WHERE state_name = '{config.name}';
-    """
-    with database.get_connection() as conn:
-        cur = conn.cursor()
-        cur.execute(query)
-        return cur.fetchall()
-
-
-@dg.asset
 def total_population_database(state_population_database: list[tuple]) -> int:
     return sum(value for _, value in state_population_database)

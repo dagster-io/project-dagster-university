@@ -9,14 +9,14 @@ lesson: '3'
 In standard Python, a function does not need to match its type annotation in order to execute properly. For example:
 
 ```python
-# /dagster_testing/assets/unit_assets.py
+# /dagster_testing/assets/lesson_3.py
 def func_wrong_type() -> str:
     return 2
 ```
 
 ```python
 def test_func_wrong_type():
-    assert unit_assets.func_wrong_type() == 2
+    assert lesson_3.func_wrong_type() == 2
 ```
 
 The test above will pass even though the function is marked as producing a `str` while an `int` is returned.
@@ -34,7 +34,7 @@ def wrong_type_annotation() -> str:
 
 ```python
 def test_wrong_type_annotation():
-    assert unit_assets.wrong_type_annotation() == 2
+    assert lesson_3.wrong_type_annotation() == 2
 ```
 
 Will this pass? Click **View answer** to view it.
@@ -66,7 +66,7 @@ def wrong_type_annotation() -> str:
 ```python
 def test_wrong_type_annotation_error():
     with pytest.raises(DagsterTypeCheckDidNotPass):
-        unit_assets.wrong_type_annotation()
+        lesson_3.wrong_type_annotation()
 ```
 
 ```bash

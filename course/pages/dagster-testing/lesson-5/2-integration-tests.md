@@ -19,7 +19,7 @@ Assume a table exists in our production data warehouse, `data.city_population`, 
 We will hardcode our asset to look for the cities in New York and return the results from Snowflake using a resource.
 
 ```python
-# /dagster_testing/assets/integration_assets.py
+# /dagster_testing/assets/lesson_5.py
 @dg.asset
 def state_population_database(database: SnowflakeResource) -> list[tuple]:
     query = """
@@ -38,9 +38,9 @@ def state_population_database(database: SnowflakeResource) -> list[tuple]:
 When we run this asset, we need to supply a Snowflake resource. The connection to Snowflake is defined with environmental variables when initializing the Snowflake resource and is set in the Definition.
 
 ```python
-import dagster_testing.assets.integration_assets as integration_assets
+import dagster_testing.assets.lesson_5 as lesson_5
 
-all_assets = dg.load_assets_from_modules([integration_assets])
+all_assets = dg.load_assets_from_modules([lesson_5])
 
 
 snowflake_resource = SnowflakeResource(
@@ -73,7 +73,7 @@ def test_snowflake_staging():
         warehouse="STAGING_WAREHOUSE",
     )
 
-    integration_assets.state_population_database(snowflake_staging_resource)
+    lesson_5.state_population_database(snowflake_staging_resource)
 ```
 
 This is an integration test. We are executing our asset and ensuring it works with an actual connection to Snowflake. This is a good step but may not be what we always want for testing.
