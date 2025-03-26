@@ -3,14 +3,14 @@ from pathlib import Path
 import dagster as dg
 import yaml
 
-import dagster_testing.assets.dagster_assets as dagster_assets
+from dagster_testing.assets import lesson_6
 
 my_job = dg.define_asset_job(
     name="jobs",
     selection=[
-        dagster_assets.population_file_config,
-        dagster_assets.population_api_resource,
-        dagster_assets.population_combined,
+        lesson_6.population_file_config,
+        lesson_6.population_api_resource,
+        lesson_6.population_combined,
     ],
 )
 
@@ -18,9 +18,9 @@ my_job = dg.define_asset_job(
 my_job_configured = dg.define_asset_job(
     name="jobs_config",
     selection=[
-        dagster_assets.population_file_config,
-        dagster_assets.population_api_resource,
-        dagster_assets.population_combined,
+        lesson_6.population_file_config,
+        lesson_6.population_api_resource,
+        lesson_6.population_combined,
     ],
     config=yaml.safe_load(
         (Path(__file__).absolute().parent / "configs/run_config.yaml").open()

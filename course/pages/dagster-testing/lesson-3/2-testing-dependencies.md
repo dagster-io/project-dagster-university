@@ -11,7 +11,7 @@ Most Dagster asset graphs contain multiple assets that depend on the output of o
 We will add an additional asset downstream of `state_population_file` that takes in its output:
 
 ```python
-# /dagster_testing/assets/unit_assets.py
+# /dagster_testing/assets/lesson_3.py
 @dg.asset
 def total_population(state_population_file: list[dict]) -> int:
     return sum([int(x["Population"]) for x in state_population_file])
@@ -41,7 +41,7 @@ def test_total_population():
         },
     ]
 
-    assert unit_assets.total_population(state_populations) == 9294108
+    assert lesson_3.total_population(state_populations) == 9294108
 ```
 
 Because we are setting the input parameter for `total_population` we can ensure what the expected outcome will be. In this case the sum of the three cities is 9,294,108.
@@ -63,8 +63,8 @@ Since the `processed_file` asset only relies on the output of  the `loaded_file`
 ```python
 def test_assets():
     _assets = [
-        unit_assets.state_population_file,
-        unit_assets.total_population,
+        lesson_3.state_population_file,
+        lesson_3.total_population,
     ]
     result = dg.materialize(_assets)
     assert result.success
@@ -81,8 +81,8 @@ Confirming that the assets materialize without issue is a great start, but we st
 ```python
 def test_assets():
     _assets = [
-        unit_assets.state_population_file,
-        unit_assets.total_population,
+        lesson_3.state_population_file,
+        lesson_3.total_population,
     ]
     result = dg.materialize(_assets)
     assert result.success

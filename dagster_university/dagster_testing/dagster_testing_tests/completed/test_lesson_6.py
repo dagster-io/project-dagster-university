@@ -4,11 +4,11 @@ from unittest.mock import patch
 import dagster as dg
 import pytest
 
-import dagster_testing.assets.dagster_assets as dagster_assets
 import dagster_testing.jobs as jobs
 import dagster_testing.resources as resources
 import dagster_testing.schedules as schedules
 import dagster_testing.sensors as sensors
+from dagster_testing.assets import lesson_6
 from dagster_testing.definitions import defs
 
 
@@ -34,8 +34,8 @@ def file_output():
 def test_population_file_config():
     file_path = Path(__file__).absolute().parent / "../data/test.csv"
 
-    config = dagster_assets.FilepathConfig(path=file_path.as_posix())
-    assert dagster_assets.population_file_config(config) == [
+    config = lesson_6.FilepathConfig(path=file_path.as_posix())
+    assert lesson_6.population_file_config(config) == [
         {
             "City": "Example 1",
             "Population": "4500000",
@@ -52,7 +52,7 @@ def test_population_file_config():
 
 
 def test_population_api_resource():
-    result = dagster_assets.population_api_resource(resources.StatePopulation())
+    result = lesson_6.population_api_resource(resources.StatePopulation())
     assert result == [
         {
             "City": "Milwaukee",
@@ -72,27 +72,25 @@ def test_population_combined():
         {"Population": 40},
     ]
     assert (
-        dagster_assets.population_combined(
-            population_file_config, population_api_resource
-        )
+        lesson_6.population_combined(population_file_config, population_api_resource)
         == 70
     )
 
 
 def test_population_file_partition(file_output):
     context = dg.build_asset_context(partition_key="ny.csv")
-    assert dagster_assets.population_file_partition(context) == file_output
+    assert lesson_6.population_file_partition(context) == file_output
 
 
 def test_total_population_partition(file_output):
-    assert dagster_assets.total_population_partition(file_output) == 9294108
+    assert lesson_6.total_population_partition(file_output) == 9294108
 
 
 # Asset Checks
 def test_non_negative():
-    asset_check_pass = dagster_assets.non_negative(10)
+    asset_check_pass = lesson_6.non_negative(10)
     assert asset_check_pass.passed
-    asset_check_fail = dagster_assets.non_negative(-10)
+    asset_check_fail = lesson_6.non_negative(-10)
     assert not asset_check_fail.passed
 
 
@@ -104,9 +102,9 @@ def test_jobs():
 
 def test_job_selection():
     _assets = [
-        dagster_assets.population_file_config,
-        dagster_assets.population_api_resource,
-        dagster_assets.population_combined,
+        lesson_6.population_file_config,
+        lesson_6.population_api_resource,
+        lesson_6.population_combined,
     ]
     assert jobs.my_job.selection == dg.AssetSelection.assets(*_assets)
 

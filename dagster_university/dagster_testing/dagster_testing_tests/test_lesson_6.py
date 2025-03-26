@@ -3,6 +3,7 @@ import pytest
 import dagster_testing.jobs as jobs  # noqa: F401
 import dagster_testing.schedules as schedules  # noqa: F401
 import dagster_testing.sensors as sensors  # noqa: F401
+from dagster_testing.assets import lesson_6  # noqa: F401
 from dagster_testing.definitions import defs
 
 

@@ -13,7 +13,7 @@ If your assets do not access any of the context APIs, you will not need to worry
 However if we rewrite the `state_population_file` asset to include context logging, we will need to update our tests:
 
 ```python
-# /dagster_testing/assets/unit_assets.py
+# /dagster_testing/assets/lesson_3.py
 @dg.asset()
 def state_population_file_logging(context: dg.AssetExecutionContext) -> list[dict]:
     file_path = Path(__file__).absolute().parent / "../data/ny.csv"
@@ -29,7 +29,7 @@ Now when we write a test for this asset, it must include the context object. The
 
 ```python
 def test_state_population_file_logging_no_context(file_output):
-    result = unit_assets.state_population_file_logging()
+    result = lesson_3.state_population_file_logging()
     assert result == file_output
 ```
 
@@ -38,7 +38,7 @@ We can set the context object for testing by using the Dagster function `build_a
 ```python
 def test_state_population_file_logging(file_output):
     context = dg.build_asset_context()
-    result = unit_assets.state_population_file_logging(context)
+    result = lesson_3.state_population_file_logging(context)
     assert result == file_output
 ```
 
@@ -57,7 +57,7 @@ You can also handle context with `materialize()`. We already saw that this execu
 ```python
 def test_assets_context(file_output):
     result = dg.materialize(
-        assets=[unit_assets.state_population_file_logging],
+        assets=[lesson_3.state_population_file_logging],
     )
     assert result.success
 
@@ -87,7 +87,7 @@ Now in order to execute this asset we need to provide one of the three partition
 ```python
 def test_state_population_file_partition(file_output):
     context = dg.build_asset_context(partition_key="ny.csv")
-    assert unit_assets.state_population_file_partition(context) == file_output
+    assert lesson_3.state_population_file_partition(context) == file_output
 ```
 
 ```bash
@@ -102,7 +102,7 @@ We can still use `materialize()` to execute our assets that use context, though 
 def test_assets_partition(file_output):
     result = dg.materialize(
         assets=[
-            unit_assets.state_population_file_partition,
+            lesson_3.state_population_file_partition,
         ],
         partition_key="ny.csv",
     )
@@ -123,8 +123,8 @@ It's important to remember that when materializing multiple partitioned assets, 
 def test_assets_multiple_partition() -> None:
     result = dg.materialize(
         assets=[
-            unit_assets.state_population_file_partition,
-            unit_assets.partition_asset_letter,
+            lesson_3.state_population_file_partition,
+            lesson_3.partition_asset_letter,
         ],
         partition_key="ny.csv",
     )

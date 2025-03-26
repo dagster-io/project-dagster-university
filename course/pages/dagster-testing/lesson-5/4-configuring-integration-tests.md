@@ -100,7 +100,7 @@ def test_state_population_database():
         database="test_db",
     )
 
-    result = integration_assets.state_population_database(postgres_resource)
+    result = lesson_5.state_population_database(postgres_resource)
     assert result == [
         ("New York", 8804190),
         ("Buffalo", 278349),
@@ -120,4 +120,24 @@ We can confirm everything is working with pytest.
 > pytest dagster_testing_tests/test_lesson_5.py::test_state_population_database
 ...
 dagster_testing_tests/test_lesson_5.py .                                                          [100%]
+```
+
+## Testing with materialize
+
+Similar to the testing with resources, we can use `dg.materialize()` with our integration tests while testing multiple assets.
+
+```python
+@pytest.mark.integration
+def test_assets(docker_compose, postgres_resource, query_output_ny):  # noqa: F811
+    result = dg.materialize(
+        assets=[
+            lesson_5.state_population_database,
+            lesson_5.total_population_database,
+        ],
+        resources={"database": postgres_resource},
+    )
+    assert result.success
+
+    assert result.output_for_node("state_population_database") == query_output_ny
+    assert result.output_for_node("total_population_database") == 9082539
 ```
