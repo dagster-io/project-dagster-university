@@ -50,3 +50,8 @@ title: Dagster + dbt
   - [Creating the manifest during deployment](/dagster-dbt/lesson-7/4-creating-the-manifest-during-deployment)
   - [Preparing for a successful run](/dagster-dbt/lesson-7/5-preparing-for-a-successful-run)
 - [Capstone](/dagster-dbt/capstone)
+- Extra credit: Components
+  - [Overview](/dagster-dbt/extra-credit/1-overview)
+  - [Set up components](/dagster-dbt/extra-credit/2-set-up-components)
+  - [dbt components](/dagster-dbt/extra-credit/3-dbt-component)
+  - [When to use components?](/dagster-dbt/extra-credit/4-when-components)

@@ -19,6 +19,7 @@ setup(
         "smart_open",
         "boto3",
         "pyarrow",
+        "dagster-components",
     ],
     extras_require={"dev": ["ruff", "pytest"]},
 )
