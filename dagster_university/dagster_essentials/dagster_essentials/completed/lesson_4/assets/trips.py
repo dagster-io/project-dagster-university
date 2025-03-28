@@ -5,7 +5,7 @@ import duckdb
 import requests
 from dagster._utils.backoff import backoff
 
-from . import constants
+from dagster_essentials.completed.lesson_4.assets import constants
 
 
 @dg.asset

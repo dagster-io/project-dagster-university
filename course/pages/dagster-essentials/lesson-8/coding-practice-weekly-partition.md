@@ -18,7 +18,7 @@ The partition you built should look similar to the following code. Click **View 
 
 ```python {% obfuscated="true" %}
 import dagster as dg
-from .assets import constants
+from dagster_essentials.assets import constants
 
 start_date = constants.START_DATE
 end_date = constants.END_DATE

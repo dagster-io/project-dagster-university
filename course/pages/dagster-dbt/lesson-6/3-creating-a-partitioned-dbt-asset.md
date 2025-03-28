@@ -21,7 +21,7 @@ We have a few changes to make to our dbt setup to get things working. In `assets
 1. Add the following imports to the top of the file:
 
    ```python
-   from ..partitions import daily_partition
+   from dagster_and_dbt.partitions import daily_partition
    import json
    ```
 
@@ -126,8 +126,8 @@ import json
 import dagster as dg
 from dagster_dbt import DagsterDbtTranslator, DbtCliResource, dbt_assets
 
-from ..partitions import daily_partition
-from ..project import dbt_project
+from dagster_and_dbt.partitions import daily_partition
+from dagster_and_dbt.project import dbt_project
 
 INCREMENTAL_SELECTOR = "config.materialized:incremental"
 

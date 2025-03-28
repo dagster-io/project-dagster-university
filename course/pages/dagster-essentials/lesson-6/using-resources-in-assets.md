@@ -22,7 +22,7 @@ The following code shows what the `taxi_trips` asset currently looks like, witho
 import requests
 import duckdb
 import os
-from . import constants
+from dagster_essentials.assets import constants
 import dagster as dg
 
 ... # other assets
@@ -70,7 +70,7 @@ And now, after adding a resource, the `taxi_trips` asset looks like the followin
 
 import requests
 from dagster_duckdb import DuckDBResource
-from . import constants
+from dagster_essentials.assets import constants
 import dagster as dg
 
 ... # other assets

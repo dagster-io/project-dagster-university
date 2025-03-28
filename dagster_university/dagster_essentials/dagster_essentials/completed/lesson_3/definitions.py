@@ -1,6 +1,6 @@
 import dagster as dg
 
-from .assets import trips
+from dagster_essentials.completed.lesson_3.assets import trips
 
 trip_assets = dg.load_assets_from_modules([trips])
 

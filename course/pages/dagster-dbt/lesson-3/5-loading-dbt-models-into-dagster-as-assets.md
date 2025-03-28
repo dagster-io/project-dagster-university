@@ -36,7 +36,7 @@ We’ll only create one `@dbt_assets` definition for now, but in a later lesson,
    from dagster import AssetExecutionContext
    from dagster_dbt import dbt_assets, DbtCliResource
    
-   from ..project import dbt_project
+   from dagster_and_dbt.project import dbt_project
    ```
 
 3. Next, we'll use the `@dbt_assets` decorator to create a new asset function and provide it with a reference to the project's manifest file:
@@ -71,7 +71,7 @@ At this point, `dbt.py` should look like this:
 import dagster as dg
 from dagster_dbt import DbtCliResource, dbt_assets
 
-from ..project import dbt_project
+from dagster_and_dbt.project import dbt_project
 
 
 @dbt_assets(

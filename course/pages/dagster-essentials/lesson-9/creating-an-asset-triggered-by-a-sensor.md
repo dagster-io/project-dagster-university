@@ -16,7 +16,7 @@ Now that you’ve defined how the asset can be materialized, let’s create the 
 
    import matplotlib.pyplot as plt
 
-   from . import constants
+   from dagster_essentials.assets import constants
    ```
 
 2. Create a new asset named `adhoc_request` with the following arguments:
@@ -118,7 +118,7 @@ from dagster_duckdb import DuckDBResource
 
 import matplotlib.pyplot as plt
 
-from . import constants
+from dagster_essentials.assets import constants
 
 class AdhocRequestConfig(dg.Config):
     filename: str

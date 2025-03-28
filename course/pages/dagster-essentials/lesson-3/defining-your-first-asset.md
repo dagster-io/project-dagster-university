@@ -16,7 +16,7 @@ Your first asset, which you’ll name `taxi_trips_file`, will retrieve the yello
 
    ```python
    import requests
-   from . import constants
+   from dagster_essentials.assets import constants
    ```
 
 3. Below the imports, let's define a function that takes no inputs and returns nothing (type-annoted with `None`). Add the following code to create a function to do this named `taxi_trips_file`:
@@ -47,7 +47,7 @@ Your first asset, which you’ll name `taxi_trips_file`, will retrieve the yello
 
       ```python
       import requests
-      from . import constants
+      from dagster_essentials.assets import constants
       import dagster as dg
 
       @dg.asset

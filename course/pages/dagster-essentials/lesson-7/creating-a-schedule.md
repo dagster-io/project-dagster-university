@@ -12,7 +12,7 @@ Copy and paste the following snippet into `schedules.py`:
 
 ```python
 import dagster as dg
-from .jobs import trip_update_job
+from dagster_essentials.jobs import trip_update_job
 
 trip_update_schedule = dg.ScheduleDefinition(
     job=trip_update_job,

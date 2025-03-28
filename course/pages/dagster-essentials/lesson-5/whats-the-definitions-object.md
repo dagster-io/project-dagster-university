@@ -50,7 +50,7 @@ In your project, open the `dagster_university/definitions.py` file. It should lo
 ```python
 import dagster as dg
 
-from .assets import trips, metrics
+from dagster_essentials.assets import trips, metrics
 
 trip_assets = dg.load_assets_from_modules([trips])
 metric_assets = dg.load_assets_from_modules([metrics])
@@ -75,7 +75,7 @@ import dagster as dg
 Following Dagster’s recommended file structure, assets should be stored in a separate Python module. In this example, we used Python’s relative import functionality to import the `trips` and `metrics` sub-modules from the `.assets` module:
 
 ```python
-from .assets import trips, metrics
+from dagster_essentials.assets import trips, metrics
 ```
 
 These lines use the `load_assets_from_modules` function to store the assets into variables called `trip_assets` and `metric_assets`:

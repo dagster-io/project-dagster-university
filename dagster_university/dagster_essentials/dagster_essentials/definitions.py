@@ -1,6 +1,6 @@
 import dagster as dg
 
-from .assets import metrics, trips
+from dagster_essentials.assets import metrics, trips
 
 trip_assets = dg.load_assets_from_modules([trips])
 metric_assets = dg.load_assets_from_modules([metrics])

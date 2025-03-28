@@ -108,7 +108,7 @@ At this point, your `dbt.py` file should match the following:
 import dagster as dg
 from dagster_dbt import DagsterDbtTranslator, DbtCliResource, dbt_assets
 
-from ..project import dbt_project
+from dagster_and_dbt.project import dbt_project
 
 
 class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
