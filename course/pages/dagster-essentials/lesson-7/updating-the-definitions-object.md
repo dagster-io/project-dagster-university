@@ -19,7 +19,7 @@ The `jobs` argument of the `Definitions` object accepts a list of jobs. To add j
 1. Add the following to the imports, which will bring in the jobs you created:
 
    ```python
-   from .jobs import trip_update_job, weekly_update_job
+   from dagster_essentials.jobs import trip_update_job, weekly_update_job
    ```
 
    This tells Dagster to import the `trip_update_job` and `weekly_update_job` schedules from `.jobs`, or `jobs.py`.
@@ -43,9 +43,9 @@ At this point, `definitions.py` should look like this:
 ```python
 import dagster as dg
 
-from .assets import trips, metrics
-from .resources import database_resource
-from .jobs import trip_update_job, weekly_update_job
+from dagster_essentials.assets import trips, metrics
+from dagster_essentials.resources import database_resource
+from dagster_essentials.jobs import trip_update_job, weekly_update_job
 
 trip_assets = dg.load_assets_from_modules([trips])
 metric_assets = dg.load_assets_from_modules([metrics])
@@ -70,7 +70,7 @@ Now that you’ve added the jobs, let’s add the schedules to the `Definitions`
 1. In the imports section at the top of the file, add the following:
 
    ```python
-   from .schedules import trip_update_schedule, weekly_update_schedule
+   from dagster_essentials.schedules import trip_update_schedule, weekly_update_schedule
    ```
 
    This tells Dagster to import the `trip_update_schedule` and `weekly_update_schedule` schedules from `.schedules`, or `schedules.py`.
@@ -94,10 +94,10 @@ At this point, `definitions.py` should look like this:
 ```python
 import dagster as dg
 
-from .assets import trips, metrics
-from .resources import database_resource
-from .jobs import trip_update_job, weekly_update_job
-from .schedules import trip_update_schedule, weekly_update_schedule
+from dagster_essentials.assets import trips, metrics
+from dagster_essentials.resources import database_resource
+from dagster_essentials.jobs import trip_update_job, weekly_update_job
+from dagster_essentials.schedules import trip_update_schedule, weekly_update_schedule
 
 trip_assets = dg.load_assets_from_modules([trips])
 metric_assets = dg.load_assets_from_modules([metrics])

@@ -1,9 +1,15 @@
 import dagster as dg
 
-from .assets import metrics, trips
-from .jobs import trip_update_job, weekly_update_job
-from .resources import database_resource
-from .schedules import trip_update_schedule, weekly_update_schedule
+from dagster_essentials.completed.lesson_7.assets import metrics, trips
+from dagster_essentials.completed.lesson_7.jobs import (
+    trip_update_job,
+    weekly_update_job,
+)
+from dagster_essentials.completed.lesson_7.resources import database_resource
+from dagster_essentials.completed.lesson_7.schedules import (
+    trip_update_schedule,
+    weekly_update_schedule,
+)
 
 trip_assets = dg.load_assets_from_modules([trips])
 metric_assets = dg.load_assets_from_modules([metrics])

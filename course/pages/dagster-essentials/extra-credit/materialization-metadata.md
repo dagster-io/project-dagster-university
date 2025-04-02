@@ -26,8 +26,8 @@ Let’s add metadata to the `taxi_trips_file` asset to demonstrate further. This
    ```python
    import dagster as dg
    import requests
-   from . import constants
-   from ..partitions import monthly_partition
+   from dagster_essentials.assets import constants
+   from dagster_essentials.partitions import monthly_partition
 
    @dg.asset(
        partitions_def=monthly_partition,
