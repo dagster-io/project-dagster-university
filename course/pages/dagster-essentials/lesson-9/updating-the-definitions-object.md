@@ -11,11 +11,11 @@ As with your other Dagster definitions, the final step is to add the sensor, its
 1. Import the new asset, job, and sensor into the `definitions.py` file by updating the following imports:
 
    ```python
-   from .assets import trips, metrics, requests
+   from dagster_essentials.assets import trips, metrics, requests
    ...
-   from .jobs import trip_update_job, weekly_update_job, adhoc_request_job
+   from dagster_essentials.jobs import trip_update_job, weekly_update_job, adhoc_request_job
    ...
-   from .sensors import adhoc_request_sensor
+   from dagster_essentials.sensors import adhoc_request_sensor
    ```
 
 2. Beneath `metric_assets`, create a `request_assets` variable that loads the assets from `requests`:
@@ -55,11 +55,11 @@ At this point, `definitions.py` should look like this:
 ```python
 import dagster as dg
 
-from .assets import trips, metrics, requests
-from .resources import database_resource
-from .jobs import trip_update_job, weekly_update_job, adhoc_request_job
-from .schedules import trip_update_schedule, weekly_update_schedule
-from .sensors import adhoc_request_sensor
+from dagster_essentials.assets import trips, metrics, requests
+from dagster_essentials.resources import database_resource
+from dagster_essentials.jobs import trip_update_job, weekly_update_job, adhoc_request_job
+from dagster_essentials.schedules import trip_update_schedule, weekly_update_schedule
+from dagster_essentials.sensors import adhoc_request_sensor
 
 trip_assets = dg.load_assets_from_modules([trips])
 metric_assets = dg.load_assets_from_modules([metrics])

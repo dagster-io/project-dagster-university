@@ -3,7 +3,7 @@ from unittest.mock import Mock, patch
 import dagster as dg
 import pytest
 
-import dagster_testing.assets.mock_assets as mock_assets
+from dagster_testing.assets import lesson_4
 
 
 @pytest.fixture
@@ -51,14 +51,14 @@ def test_state_population_api(mock_get, example_response):
     mock_response.raise_for_status.return_value = None
     mock_get.return_value = mock_response
 
-    result = mock_assets.state_population_api()
+    result = lesson_4.state_population_api()
 
     assert len(result) == 2
     assert result[0] == {
         "city": "New York",
         "population": 8804190,
     }
-    mock_get.assert_called_once_with(mock_assets.API_URL, params={"state": "ny"})
+    mock_get.assert_called_once_with(lesson_4.API_URL, params={"state": "ny"})
 
 
 @patch("requests.get")
@@ -68,14 +68,14 @@ def test_state_population_api_resource_mock(mock_get, example_response):
     mock_response.raise_for_status.return_value = None
     mock_get.return_value = mock_response
 
-    result = mock_assets.state_population_api_resource(mock_assets.StatePopulation())
+    result = lesson_4.state_population_api_resource(lesson_4.StatePopulation())
 
     assert len(result) == 2
     assert result[0] == {
         "city": "New York",
         "population": 8804190,
     }
-    mock_get.assert_called_once_with(mock_assets.API_URL, params={"state": "ny"})
+    mock_get.assert_called_once_with(lesson_4.API_URL, params={"state": "ny"})
 
 
 @patch("requests.get")
@@ -87,10 +87,10 @@ def test_state_population_api_assets(mock_get, example_response, api_output):
 
     result = dg.materialize(
         assets=[
-            mock_assets.state_population_api_resource,
-            mock_assets.total_population_resource,
+            lesson_4.state_population_api_resource,
+            lesson_4.total_population_resource,
         ],
-        resources={"state_population_resource": mock_assets.StatePopulation()},
+        resources={"state_population_resource": lesson_4.StatePopulation()},
     )
     assert result.success
 
@@ -107,12 +107,12 @@ def test_state_population_api_assets_config(mock_get, example_response, api_outp
 
     result = dg.materialize(
         assets=[
-            mock_assets.state_population_api_resource_config,
-            mock_assets.total_population_resource_config,
+            lesson_4.state_population_api_resource_config,
+            lesson_4.total_population_resource_config,
         ],
-        resources={"state_population_resource": mock_assets.StatePopulation()},
+        resources={"state_population_resource": lesson_4.StatePopulation()},
         run_config=dg.RunConfig(
-            {"state_population_api_resource_config": mock_assets.StateConfig(name="ny")}
+            {"state_population_api_resource_config": lesson_4.StateConfig(name="ny")}
         ),
     )
     assert result.success
@@ -125,7 +125,7 @@ def test_state_population_api_mocked_resource(fake_city):
     mocked_resource = Mock()
     mocked_resource.get_cities.return_value = [fake_city]
 
-    result = mock_assets.state_population_api_resource(mocked_resource)
+    result = lesson_4.state_population_api_resource(mocked_resource)
 
     assert len(result) == 1
     assert result[0] == fake_city
@@ -137,12 +137,12 @@ def test_state_population_api_assets_mocked_resource(fake_city):
 
     result = dg.materialize(
         assets=[
-            mock_assets.state_population_api_resource_config,
-            mock_assets.total_population_resource_config,
+            lesson_4.state_population_api_resource_config,
+            lesson_4.total_population_resource_config,
         ],
         resources={"state_population_resource": mocked_resource},
         run_config=dg.RunConfig(
-            {"state_population_api_resource_config": mock_assets.StateConfig(name="ny")}
+            {"state_population_api_resource_config": lesson_4.StateConfig(name="ny")}
         ),
     )
     assert result.success

@@ -3,7 +3,7 @@ import os
 
 import dagster as dg
 
-from ..jobs import adhoc_request_job
+from dagster_essentials.completed.lesson_9.jobs import adhoc_request_job
 
 
 @dg.sensor(job=adhoc_request_job)

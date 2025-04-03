@@ -28,6 +28,6 @@ In summary, partitions in Dagster enable you to compute on individual slices, bu
 
 ## Backfills
 
-Backfilling is the process of running partitions for assets that either don’t exist or updating existing records.
+Backfilling is the process of running jobs for specific ranges. For example you might run a backfill for partitions that have not yet been processed in an asset or need to be updated.
 
 Backfills are common when setting up a pipeline for the first time. The assets you want to materialize might have historical data that needs to be materialized to get the assets up to date. Another common reason to run a backfill is when you’ve changed the logic for an asset and need to update historical data with the new logic.

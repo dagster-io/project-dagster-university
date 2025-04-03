@@ -26,7 +26,7 @@ To get our deployment working, we need to add a step to our GitHub Actions workf
         python -m pip install pip --upgrade
         cd project-repo
         pip install . --upgrade --upgrade-strategy eager
-        dagster-dbt project prepare-and-package --file dagster_university/project.py
+        dagster-dbt project prepare-and-package --file dagster_and_dbt/project.py
       shell: bash
     ```
 

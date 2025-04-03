@@ -4,13 +4,13 @@ import pytest
 import yaml  # noqa: F401
 from dagster._core.errors import DagsterTypeCheckDidNotPass  # noqa: F401
 
-import dagster_testing.assets.unit_assets as unit_assets
+from dagster_testing.assets import lesson_3
 
 
 @pytest.fixture()
 def config_file():
-    file_path = Path(__file__).absolute().parent / "../data/test.csv"
-    return unit_assets.FilepathConfig(path=file_path.as_posix())
+    file_path = Path(__file__).absolute().parent / "data/test.csv"
+    return lesson_3.FilepathConfig(path=file_path.as_posix())
 
 
 @pytest.fixture()
@@ -63,7 +63,7 @@ def test_total_population():
 
 
 def test_func_wrong_type():
-    assert unit_assets.func_wrong_type() == 2
+    assert lesson_3.func_wrong_type() == 2
 
 
 def test_wrong_type_annotation_error():

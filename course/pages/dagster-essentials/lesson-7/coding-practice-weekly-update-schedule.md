@@ -23,7 +23,7 @@ The schedule you built should look similar to the following code. Click **View a
 ```python {% obfuscated="true" %}
 import dagster as dg
 
-from ..jobs import weekly_update_job
+from dagster_essentials.jobs import weekly_update_job
 
 weekly_update_schedule = dg.ScheduleDefinition(
     job=weekly_update_job,

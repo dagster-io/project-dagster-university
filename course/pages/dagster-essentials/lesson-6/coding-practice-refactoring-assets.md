@@ -62,7 +62,7 @@ from dagster_duckdb import DuckDBResource
 import geopandas as gpd
 import pandas as pd
 
-from . import constants
+from dagster_essentials.assets import constants
 ```
 
 Update the `manhattan_stats` asset:

@@ -18,8 +18,8 @@ After making those changes, your `definitions.py` should look like similar to be
 ```python
 import dagster as dg
 
-from .assets import trips, metrics, requests, dbt # Import the dbt assets
-from .resources import database_resource, dbt_resource # import the dbt resource
+from dagster_and_dbt.assets import trips, metrics, requests, dbt # Import the dbt assets
+from dagster_and_dbt.resources import database_resource, dbt_resource # import the dbt resource
 # ...other existing imports
 
 # ... existing calls to load_assets_from_modules

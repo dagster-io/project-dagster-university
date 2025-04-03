@@ -42,7 +42,7 @@ Now that cursors have been explained, let’s start writing the sensor.
    import os
    import json
 
-   from ..jobs import adhoc_request_job
+   from dagster_essentials.jobs import adhoc_request_job
    ```
 
    Let’s break down these imports:
@@ -114,7 +114,7 @@ Now that cursors have been explained, let’s start writing the sensor.
                with open(file_path, "r") as f:
                    request_config = json.load(f)
 
-                   runs_to_request.append(RunRequest(
+                   runs_to_request.append(dg.RunRequest(
                        run_key=f"adhoc_request_{filename}_{last_modified}",
                        run_config={
                            "ops": {
@@ -154,7 +154,7 @@ import dagster as dg
 import os
 import json
 
-from ..jobs import adhoc_request_job
+from dagster_essentials.jobs import adhoc_request_job
 
 @dg.sensor(
     job=adhoc_request_job
@@ -178,7 +178,7 @@ def adhoc_request_sensor(context: dg.SensorEvaluationContext):
                 with open(file_path, "r") as f:
                     request_config = json.load(f)
 
-                    runs_to_request.append(RunRequest(
+                    runs_to_request.append(dg.RunRequest(
                         run_key=f"adhoc_request_{filename}_{last_modified}",
                         run_config={
                             "ops": {

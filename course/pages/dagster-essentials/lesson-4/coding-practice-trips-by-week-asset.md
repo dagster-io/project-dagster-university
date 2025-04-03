@@ -51,7 +51,7 @@ period,num_trips,total_amount,trip_distance,passenger_count
 
 The asset you built should look similar to the following code. Click **View answer** to view it.
 
-Note that the solution below is one of many possible ways to solve this challenge. Your way can be completely valid and more performant than this one!
+**Note**: The solution below is one of many possible ways to solve this challenge. Your way can be completely valid and more performant than this one! This is also more complicated than the assets we have seen so far so.
 
 We’ll assume your code looks like the following for the rest of the module. Despite not being the highest quality code, it’s flexible enough for us to extend in a later section.
 
@@ -59,7 +59,7 @@ We’ll assume your code looks like the following for the rest of the module. De
 
 ```python {% obfuscated="true" %}
 from datetime import datetime, timedelta
-from . import constants
+from dagster_essentials.assets import constants
 
 import pandas as pd
 import dagster as dg

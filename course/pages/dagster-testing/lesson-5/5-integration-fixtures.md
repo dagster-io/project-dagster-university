@@ -54,7 +54,7 @@ def test_state_population_database(docker_compose):  # noqa: F811
         database="test_db",
     )
 
-    result = integration_assets.state_population_database(postgres_resource)
+    result = lesson_5.state_population_database(postgres_resource)
     assert result == [
         ("New York", 8804190),
         ("Buffalo", 278349),

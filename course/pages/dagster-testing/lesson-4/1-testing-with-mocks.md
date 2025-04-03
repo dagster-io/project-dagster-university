@@ -30,7 +30,7 @@ Imagine that an API exists to query city populations by state (sadly this API do
 We want to rewrite the `state_population_file` asset to use this endpoint instead of reading a file to retrieve the necessary data. This is what the new asset will look like.
 
 ```python
-# /dagster_testing/assets/mock_assets.py
+# /dagster_testing/assets/lesson_4.py
 API_URL = "https://fake.com/population.json"
 
 
@@ -116,14 +116,14 @@ def test_state_population_api(mock_get, example_response):
     mock_response.raise_for_status.return_value = None
     mock_get.return_value = mock_response
 
-    result = mock_assets.state_population_api()
+    result = lesson_4.state_population_api()
 
     assert len(result) == 2
     assert result[0] == {
         "city": "New York",
         "population": 8804190,
     }
-    mock_get.assert_called_once_with(mock_assets.API_URL, params={"state": "ny"})
+    mock_get.assert_called_once_with(lesson_4.API_URL, params={"state": "ny"})
 ```
 
 The code above:

@@ -91,7 +91,7 @@ Update `definitions.py` with the following changes:
 1. Import the `database_resource` you made from the `resources` sub-module:
 
    ```python
-   from .resources import database_resource
+   from dagster_essentials.resources import database_resource
    ```
 
 2. Add the imported `database_resource` to your `Definitions` object through the `resources` argument. We’ll give it the identifier `database`. This is the key that we’ll use to tell Dagster that we want the DuckDB resource.
@@ -107,14 +107,14 @@ Update `definitions.py` with the following changes:
 
 3. In the Dagster UI, click **Deployment.**
 
-4. In the **Code locations** tab, click the **Reload** button next to the `dagster_university` code location.
+4. In the **Code locations** tab, click the **Reload** button next to the `dagster_essentials` code location.
 
 5. Click the code location to open it.
 
-6. In the code location page that displays, click the **Resources tab.** A resource named `database` should be displayed in the tab:
+6. In the code location page that displays, click the **Definitions tab.**.
 
-   ![The Resources tab in the Dagster UI, showing the database resource for the dagster_university code location](/images/dagster-essentials/lesson-6/resources-tab.png)
+7. Click **Resources** on the left side panel and select the resource named **database**.
 
-   Notice that the **Uses** column is currently **0.** This is because while the resource has been defined and loaded, none of the assets in the code location are currently using it.
+   Notice that the **Uses** tabe at the top is currently **0.** This is because while the resource has been defined and loaded, none of the assets in the code location are currently using it.
 
 Now that you've set up the resource, it's time to use it in your project. In the next section, you'll learn how to refactor your assets to use resources.

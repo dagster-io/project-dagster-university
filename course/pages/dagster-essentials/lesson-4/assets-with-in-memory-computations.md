@@ -25,7 +25,7 @@ Having all of your assets in one file becomes difficult to manage. Let’s separ
    import duckdb
    import os
 
-   from . import constants
+   from dagster_essentials.assets import constants
    ```
 
    There may be some imports you’re unfamiliar with, but we’ll cover those as we use them.

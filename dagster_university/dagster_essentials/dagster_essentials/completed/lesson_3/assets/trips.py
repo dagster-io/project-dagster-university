@@ -1,7 +1,7 @@
 import dagster as dg
 import requests
 
-from . import constants
+from dagster_essentials.completed.lesson_3.assets import constants
 
 
 @dg.asset

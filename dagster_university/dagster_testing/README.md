@@ -1,7 +1,4 @@
-# [WIP] Testing with Dagster
-
-> [!NOTE]  
-> This module is currently a work in progress.
+# Testing with Dagster
 
 ## Overview
 
