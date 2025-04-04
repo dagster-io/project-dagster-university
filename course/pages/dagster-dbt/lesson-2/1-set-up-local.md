@@ -72,7 +72,7 @@ pip install -e ".[dev]"
 
 ## Create .env file
 
-You will want to copy make a copy of the example file `.env.example` which will be used later on.
+You will want to make a copy of the example file `.env.example` which will be used later on.
 
 ```bash
 cp .env.example .env
