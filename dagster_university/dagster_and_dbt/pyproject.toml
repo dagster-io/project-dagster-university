@@ -20,6 +20,7 @@ dependencies = [
     "smart_open",
     "boto3",
     "pyarrow",
+    "dagster-components",
 ]
 
 [tool.uv]
@@ -38,3 +39,10 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 packages = ["dagster_and_dbt"]
+
+[tool.dg]
+directory_type = "project"
+
+[tool.dg.project]
+root_module = "my_existing_project"
+defs_module = "my_existing_project.defs"
