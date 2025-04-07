@@ -25,7 +25,7 @@ To ensure the jobs and schedules are visible, **reload the definitions** before 
 - {% width="60%" %}
   To view the jobs in the UI, you can:
 
-  - Click **Jobs**
+  - Click **Jobs**.
 
   The table in the **Jobs** tab contains the following info:
 
