@@ -1,6 +1,7 @@
 import dagster as dg
 
-from dagster_essentials.completed.lesson_4.assets import metrics, trips
+import dagster_essentials.completed.lesson_4.defs as defs
+from dagster_essentials.completed.lesson_4.defs.assets import metrics, trips
 
 
 def test_assets():
@@ -15,3 +16,7 @@ def test_assets():
     ]
     result = dg.materialize(assets)
     assert result.success
+
+
+def test_def_can_load():
+    assert defs
