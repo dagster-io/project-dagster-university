@@ -8,11 +8,11 @@ lesson: '3'
 
 Now that you’re familiar with how assets are materialized and where to find details about their execution, let’s focus on how to troubleshoot issues. To demonstrate how to troubleshoot, you’ll intentionally cause the `taxi_trips_file` asset to fail.
 
-In the `assets/trips.py` file, comment out the `from dagster_essentials.assets import constants` line so it looks like this:
+In the `assets/trips.py` file, comment out the `from dagster_essentials.defs.assets import constants` line so it looks like this:
 
 ```python
 import requests
-# from dagster_essentials.assets import constants # <---- Import commented out here
+# from dagster_essentials.defs.assets import constants # <---- Import commented out here
 import dagster as dg
 
 @dg.asset
@@ -74,7 +74,7 @@ To hone in on what went wrong, let’s take a closer look at the logs. We’ll u
 
   At this point, you can use the stacktrace to identify and fix the cause of the error. In this case, it’s because we didn’t import `constants`, leaving it undefined.
 
-  To fix this, uncomment the `from dagster_essentials.assets import constants` line in the `trips.py` file and save it.
+  To fix this, uncomment the `from dagster_essentials.defs.assets import constants` line in the `trips.py` file and save it.
 
   In the Dagster UI, click **OK** to close the popover window from the run logs.
 

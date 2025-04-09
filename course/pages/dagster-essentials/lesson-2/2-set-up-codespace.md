@@ -41,20 +41,12 @@ cd dagster_university/dagster_essentials
 To ensure everything is working you can launch the Dagster UI.
 
 ```bash
-dagster dev
+dg dev
 ```
 
 After Dagster starts running you will be prompted to open the Dagster UI within your browser. Click "Open in Browser".
 
 ![Codespace Launch](/images/shared/codespaces/codespaces-launch.png)
-
-## Create .env file
-
-You will want to make a copy of the example file `.env.example` which will be used later on.
-
-```bash
-cp .env.example .env
-```
 
 ## Stopping your Github Codespace
 

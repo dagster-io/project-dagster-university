@@ -10,34 +10,40 @@ Let’s talk a bit about the files in the Dagster Essentials course. The `dagste
 
 ```bash
 dagster_university/dagster_essentials
-├── Makefile
-├── README.md
+.
 ├── dagster_cloud.yaml
 ├── dagster_essentials
-│   ├── __init__.py
-│   ├── assets
-│   │   ├── __init__.py
-│   │   ├── constants.py
-│   │   ├── metrics.py
-│   │   └── trips.py
 │   ├── completed
-│   │   └── ...
+│   │   ├── lesson_3
+│   │   ├── lesson_4
+│   │   ├── lesson_5
+│   │   ├── lesson_6
+│   │   ├── lesson_7
+│   │   ├── lesson_8
+│   │   └── lesson_9
 │   ├── definitions.py
-│   ├── jobs.py
-│   ├── partitions.py
-│   ├── resources.py
-│   ├── schedules.py
-│   └── sensors.py
+│   └── defs
+│       ├── assets
+│       │   ├── __init__.py
+│       │   ├── constants.py
+│       │   ├── metrics.py
+│       │   └── trips.py
+│       ├── jobs.py
+│       ├── partitions.py
+│       ├── resources.py
+│       ├── schedules.py
+│       └── sensors.py
 ├── dagster_essentials_tests
-│   └── ...
 ├── data
 │   ├── outputs
 │   ├── raw
 │   ├── requests
 │   └── staging
-├── env.example
+├── .env
+├── Makefile
 ├── pyproject.toml
 ├── pytest.ini
+├── README.md
 └── uv.lock
 ```
 
@@ -90,7 +96,7 @@ The columns in the following table are as follows:
 
 ---
 
-- `.env.example`
+- `.env`
 - Python
 - A text file containing pre-configured environment variables. We’ll talk more about this file in Lesson 6, when we cover connecting to external services.
 

@@ -56,7 +56,7 @@ This code snippet imports a resource called `DuckDBResource` from Dagster’s `d
 
 When working across different settings or with secure values like passwords, environment variables are a standardized way to store configurations and credentials. Not specific to Python, environment variables are values that are saved outside of software and used within it. For a primer on environment variables in Python, check out [this post from our blog](https://dagster.io/blog/python-environment-variables).
 
-When configuring resources, it’s best practice to load your configurations and secrets into your programs from environment variables. You’ve been following this pattern by using `os.getenv` to fetch environment variables from the `.env` file you created in Lesson 2. A `.env` file is a standard for project-level environment variables and should **not** be committed to git, as they often contain passwords and sensitive information.
+When configuring resources, it’s best practice to load your configurations and secrets into your programs from environment variables. You’ve been following this pattern by using `os.getenv` to fetch environment variables from the `.env` that is part of this project. A `.env` file is a standard for project-level environment variables and should **not** be committed to git, as they often contain passwords and sensitive information.
 
 However, in this project, our `.env` file only contains one environment variable: `DUCKDB_DATABASE`. This variable contains the hard-coded path to the DuckDB database file, which is `data/staging/data.duckdb`. Let’s clean up this code by using Dagster’s `EnvVar` utility.
 
@@ -91,7 +91,7 @@ Update `definitions.py` with the following changes:
 1. Import the `database_resource` you made from the `resources` sub-module:
 
    ```python
-   from dagster_essentials.resources import database_resource
+   from dagster_essentials.defs.resources import database_resource
    ```
 
 2. Add the imported `database_resource` to your `Definitions` object through the `resources` argument. We’ll give it the identifier `database`. This is the key that we’ll use to tell Dagster that we want the DuckDB resource.
