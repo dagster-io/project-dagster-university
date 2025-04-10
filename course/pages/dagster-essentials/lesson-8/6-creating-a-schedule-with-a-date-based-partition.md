@@ -37,7 +37,7 @@ The job should now look like this:
 
 ```python
 import dagster as dg
-from dagster_essentials.partitions import monthly_partition
+from dagster_essentials.defs.partitions import monthly_partition
 
 trips_by_week = dg.AssetSelection.assets("trips_by_week")
 

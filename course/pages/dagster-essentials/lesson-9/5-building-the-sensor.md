@@ -33,16 +33,26 @@ Most sensors follow a similar lifecycle:
 
 Now that cursors have been explained, let’s start writing the sensor.
 
-1. Navigate to and open `sensors.py` in your Dagster project.
+1. Scaffold a sensor location:
 
-2. Add the following imports to the top of the file:
+    ```bash
+    dg scaffold dagster.sensor sensors.py
+    ```
+
+2. Check to make sure everything is correct:
+
+    ```bash
+    dg check defs
+    ```
+
+3. Add the following imports to the top of the file:
 
    ```python
    import dagster as dg
    import os
    import json
 
-   from dagster_essentials.jobs import adhoc_request_job
+   from dagster_essentials.defs.jobs import adhoc_request_job
    ```
 
    Let’s break down these imports:
@@ -54,7 +64,7 @@ Now that cursors have been explained, let’s start writing the sensor.
    - The `json` standard library will be used to read the request’s JSON files as needed
    - `adhoc_request_job` is used to specify that the sensor will create runs from this job
 
-3. To define a sensor, create a new function definition that takes `context` as a parameter. Similar to how your asset definitions had a context argument of type `AssetExecutionContext`, sensor definitions also have a similar `SensorEvaluationContext` to provide information and metadata about the currently running sensor. Your code should look like the snippet below:
+4. To define a sensor, create a new function definition that takes `context` as a parameter. Similar to how your asset definitions had a context argument of type `AssetExecutionContext`, sensor definitions also have a similar `SensorEvaluationContext` to provide information and metadata about the currently running sensor. Your code should look like the snippet below:
 
    ```python
    import dagster as dg
@@ -63,7 +73,7 @@ Now that cursors have been explained, let’s start writing the sensor.
    def adhoc_request_sensor(context: dg.SensorEvaluationContext):
    ```
 
-4. Annotate the function with the `@dg.sensor` decorator and pass `adhoc_request_job` as an argument for the job parameter. At this point, your code should look like this:
+5. Annotate the function with the `@dg.sensor` decorator and pass `adhoc_request_job` as an argument for the job parameter. At this point, your code should look like this:
 
    ```python
    @dg.sensor(
@@ -72,7 +82,7 @@ Now that cursors have been explained, let’s start writing the sensor.
    def adhoc_request_sensor(context: dg.SensorEvaluationContext):
    ```
 
-5. Let’s fill out the function’s body. Create a variable that resolves to the `data/requests` directory, which is the directory the sensor will observe:
+6. Let’s fill out the function’s body. Create a variable that resolves to the `data/requests` directory, which is the directory the sensor will observe:
 
    ```python
    @dg.sensor(
@@ -82,7 +92,7 @@ Now that cursors have been explained, let’s start writing the sensor.
        PATH_TO_REQUESTS = os.path.join(os.path.dirname(__file__), "../../", "data/requests")
    ```
 
-6. Next, define the cursor. Copy and paste the following code into the sensor’s function body:
+7. Next, define the cursor. Copy and paste the following code into the sensor’s function body:
 
    ```python
    previous_state = json.loads(context.cursor) if context.cursor else {}
@@ -93,13 +103,13 @@ Now that cursors have been explained, let’s start writing the sensor.
 
    To accommodate for this, we check if `context.cursor` exists and if it does, convert its string value into JSON. We also initialize the `current_state` to an empty object, which we’ll use to override the cursor after it reads through the directory.
 
-7. Next, initialize an empty list called `runs_to_request`. This will be used to store the new requests we want to create runs for:
+8. Next, initialize an empty list called `runs_to_request`. This will be used to store the new requests we want to create runs for:
 
    ```python
    runs_to_request = []
    ```
 
-8. Copy and paste the following into the sensor, and then we’ll discuss what it does:
+9. Copy and paste the following into the sensor, and then we’ll discuss what it does:
 
    ```python
    for filename in os.listdir(PATH_TO_REQUESTS):
@@ -138,7 +148,7 @@ Now that cursors have been explained, let’s start writing the sensor.
    - Constructs a unique `run_key`, which includes the name of the file and when it was last modified
    - Passes the `run_key` into the `RunRequest`'s configuration using the `run_config` argument. By using the `adhoc_request` key, you specify that the `adhoc_request` asset should use the config provided.
 
-9. Sensors expect a `SensorResult` returned, which contains all the information for the sensor, such as which runs to trigger and what the new cursor is. Append the following to the end of the sensor function:
+10. Sensors expect a `SensorResult` returned, which contains all the information for the sensor, such as which runs to trigger and what the new cursor is. Append the following to the end of the sensor function:
 
    ```python
    return dg.SensorResult(
@@ -154,7 +164,7 @@ import dagster as dg
 import os
 import json
 
-from dagster_essentials.jobs import adhoc_request_job
+from dagster_essentials.defs.jobs import adhoc_request_job
 
 @dg.sensor(
     job=adhoc_request_job

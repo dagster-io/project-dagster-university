@@ -34,7 +34,7 @@ For example:
 
 ```python
 import dagster as dg
-from dagster_essentials.assets import metrics
+from dagster_essentials.defs.assets import metrics
 
 metric_assets = dg.load_assets_from_modules(
     modules=[metrics],

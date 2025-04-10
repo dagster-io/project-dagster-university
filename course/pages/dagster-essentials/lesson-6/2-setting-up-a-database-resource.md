@@ -38,7 +38,7 @@ Let’s use a Dagster resource to manage this connection and share it across all
 
 ## Defining a resource
 
-Copy and paste the following code into `resources.py:`
+Copy and paste the following code into `defs/resources.py:`
 
 ```python
 from dagster_duckdb import DuckDBResource
@@ -84,36 +84,25 @@ By using `EnvVar` instead of `os.getenv`, you can dynamically customize a resour
 
 In the previous lesson, you learned about code locations, how they work, and how to collect assets and other Dagster definitions using the `Definitions` object.
 
-As resources are a type of Dagster definition, you’ll need to add them to the `Definitions` object before you can use them.
+You saw that using `dg` to scaffold our project, the `Definitions` will automatically load any assets within the module. The same is true for resources however there is one additional step we need to make to the `resources.py`.
 
-Update `definitions.py` with the following changes:
-
-1. Import the `database_resource` you made from the `resources` sub-module:
+1. In the `resources.py` add the following line:
 
    ```python
-   from dagster_essentials.defs.resources import database_resource
+   defs = dg.Definitions(resources={"database": database_resource})
    ```
 
-2. Add the imported `database_resource` to your `Definitions` object through the `resources` argument. We’ll give it the identifier `database`. This is the key that we’ll use to tell Dagster that we want the DuckDB resource.
+   This tells Dagster how to map the resources to specific key names. In this case the `database_resource` resource just defined is mapped to the key name `database`.
 
-   ```python
-   defs = dg.Definitions(
-       assets=[*trip_assets, *metric_assets],
-       resources={
-           "database": database_resource,
-       },
-   )
-   ```
+2. In the Dagster UI, click **Deployment.**
 
-3. In the Dagster UI, click **Deployment.**
+3. In the **Code locations** tab, click the **Reload** button next to the `dagster_essentials` code location.
 
-4. In the **Code locations** tab, click the **Reload** button next to the `dagster_essentials` code location.
+4. Click the code location to open it.
 
-5. Click the code location to open it.
+5. In the code location page that displays, click the **Definitions tab.**.
 
-6. In the code location page that displays, click the **Definitions tab.**.
-
-7. Click **Resources** on the left side panel and select the resource named **database**.
+6. Click **Resources** on the left side panel and select the resource named **database**.
 
    Notice that the **Uses** tabe at the top is currently **0.** This is because while the resource has been defined and loaded, none of the assets in the code location are currently using it.
 
