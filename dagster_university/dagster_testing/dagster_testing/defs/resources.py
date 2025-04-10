@@ -13,3 +13,11 @@ class StatePopulation(dg.ConfigurableResource):
                 "Population": 269840,
             },
         ]
+
+
+defs = dg.Definitions(
+    resources={
+        "state_population_resource": StatePopulation(),
+        "database": dg.ResourceDefinition.mock_resource(),
+    },
+)

@@ -6,7 +6,9 @@ lesson: '6'
 
 # Definitions
 
-Within your Dagster project the most important object is the definition. This defines all the objects that will deployed into your code location. Because of its importance we will want to write a test for it.
+Within your Dagster project the most important object is the `Definitions`. This defines all the objects that will deployed into your code location. If you are using `dg` you may already be in the habit of checking to ensure your `Definitions` is valid by running `dg check defs`.
+
+This is a great habit and you can build out workflows (such as precommit hooks) to always run that check. But it is also good to get in the habit of writing a specific test for this to live alongside your other Dagster tests.
 
 Luckily this is a very easy test to write.
 

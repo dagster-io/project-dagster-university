@@ -1,7 +1,7 @@
 import dagster as dg
 
-import dagster_testing.jobs as jobs
-from dagster_testing.assets import lesson_6
+import dagster_testing.defs.jobs as jobs
+from dagster_testing.defs.assets import lesson_6
 
 my_schedule = dg.ScheduleDefinition(
     name="my_schedule",

@@ -41,7 +41,7 @@ cd dagster_university/dagster_testing
 To ensure everything is working you can launch the Dagster UI.
 
 ```bash
-dagster dev
+dg dev
 ```
 
 After Dagster starts running you will be prompted to open the Dagster UI within your browser. Click "Open in Browser".

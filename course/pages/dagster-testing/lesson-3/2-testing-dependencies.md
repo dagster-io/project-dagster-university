@@ -11,7 +11,7 @@ Most Dagster asset graphs contain multiple assets that depend on the output of o
 We will add an additional asset downstream of `state_population_file` that takes in its output:
 
 ```python
-# /dagster_testing/assets/lesson_3.py
+# /dagster_testing/defs/assets/lesson_3.py
 @dg.asset
 def total_population(state_population_file: list[dict]) -> int:
     return sum([int(x["Population"]) for x in state_population_file])
