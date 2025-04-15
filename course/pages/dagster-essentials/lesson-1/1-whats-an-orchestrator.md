@@ -9,7 +9,7 @@ lesson: '1'
 An orchestrator is a tool that can manage and coordinate complex workflows and data pipelines. The field of orchestrators has continued to evolve with data engineering. For example, an orchestrator may be adopted when:
 
 - Data from an ERP (Enterprise Resource Planning) system needs to be brought into a data warehouse daily for downstream BI reporting. Instead of triggering the refresh daily, an orchestrator can schedule this to run automatically.
-- A video streaming platform wants to retrain its recommendation algorithm every time new content is added to the platform and does not want to retrain the algorithm every time the content is added manually
+- A video streaming platform wants to retrain its recommendation algorithm every time new content is added to the platform and does not want to manually retrain the algorithm every time the content is added
 - A financial platform wants to update stock prices every five minutes, and it would be difficult to have someone trigger the pipeline refresh at that frequency manually
 
 The first orchestrators were made to solve a simple problem: _I need to run some scripts as a sequence of steps at specific times_. Each step must wait for the step before it to finish before it starts. As time passed and the ceiling of what was possible in data engineering increased, people needed more out of their orchestrators.
