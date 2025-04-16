@@ -61,6 +61,7 @@ import dagster as dg
 from dagster_duckdb import DuckDBResource
 import geopandas as gpd
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from dagster_essentials.assets import constants
 ```
