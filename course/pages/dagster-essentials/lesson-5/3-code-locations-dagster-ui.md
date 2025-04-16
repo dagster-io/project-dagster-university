@@ -17,9 +17,9 @@ In this section, we’ll walk you through code locations in the Dagster UI.
 - {% width="60%; fixed" %}
   To view code locations in the Dagster UI, click **Deployment** in the top navigation. The list of code locations will be under the code locations tab, with the status, last updated and other information.
 
-  By default, code locations are named using the name of the module loaded by Dagster. In this case, that’s `dagster_university`, which is the name of the folder (or module) the project is contained in.
+  By default, code locations are named using the name of the module loaded by Dagster. In this case, that’s `dagster_essentials`, which is the name of the folder (or module) the project is contained in.
 
-- ![The Code locations tab in the Dagster UI, showing the project's dagster_university code location](/images/dagster-essentials/lesson-5/code-locations-ui.png) {% rowspan=2 %}
+- ![The Code locations tab in the Dagster UI, showing the project's dagster_essentials code location](/images/dagster-essentials/lesson-5/code-locations-ui.png) {% rowspan=2 %}
 
 {% /table %}
 
