@@ -17,7 +17,7 @@ In Lesson 9, you created the `adhoc_request` asset. During materialization, the 
 2. At this point in the course, the `adhoc_request` asset should look like this:
 
    ```python
-   from dagster import Config, asset
+   import dagster as dg
    from dagster_duckdb import DuckDBResource
 
    import matplotlib.pyplot as plt
@@ -89,7 +89,7 @@ In Lesson 9, you created the `adhoc_request` asset. During materialization, the 
        plt.close(fig)
    ```
 
-3. Add the `base64` and `MaterializeResult` imports to the top of the file:
+3. Add the `base64` import to the top of the file:
 
    ```python
    import base64
@@ -147,7 +147,7 @@ class AdhocRequestConfig(dg.Config):
     end_date: str
 
 @dg.asset
-def adhoc_request(config: AdhocRequestConfig, taxi_zones, taxi_trips, database: DuckDBResource) -> None:
+def adhoc_request(config: AdhocRequestConfig, database: DuckDBResource) -> dg.MaterializeResult:
     """
       The response to an request made in the `requests` directory.
       See `requests/README.md` for more information.

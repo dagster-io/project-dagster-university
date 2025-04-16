@@ -18,8 +18,8 @@ To demonstrate, let’s take a look at a portion of the cookie pipeline.
 - {% width="60%; fixed" %}
   In this example, **flour**, **cookie dough**, and **cookies** are our assets. Let’s break down what’s happening here:
 
-  - To make **cookie dough**, **flour** is required. Therefore, **cookie dough** is downstream - or dependent on - **flour.**
-  - To make **cookies**, **cookie dough** is required. Therefore, **cookie dough** is upstream - or **cookies** is dependent on - **cookie dough.**
+  - To make **cookie dough**, **flour** is required. Therefore, **cookie dough** is downstream from - or dependent on - **flour.**
+  - To make **cookies**, **cookie dough** is required. Therefore, **cookie dough** is upstream from - or a dependency of - **cookies.**
 
 - ![Cookie pipeline, labeled with different types of dependencies](/images/dagster-essentials/lesson-4/cookie-dependencies.png) {% rowspan=2 %}
 

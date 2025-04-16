@@ -34,9 +34,9 @@ Now that you've created your partitions, used those partitions in the assets, an
 - {% width="60%" %}
   Taking a closer look at the `taxi_trips_file` asset, there are three partitions that represent the three months that were included in the partition.
 
-  - ⚫ **0** - represents that 0 partitions have been successfully materialization
-  - **O All** represents all (three) partitions haven't yet been materialized
-  - **⚠️ 0** represents that there are zero failed partitions
+  - **&#10003;&#x20DD; 0** - represents that 0 partitions have been successfully materialization
+  - **&#x20E0; All** - represents all (three) partitions haven't yet been materialized
+  - **!&#x20DD; 0** - represents that there are zero failed partitions
 
   This information is useful to get a quick look at the state of your asset.
 
@@ -70,7 +70,7 @@ Now that you've created your partitions, used those partitions in the assets, an
 ---
 
 - {% width="60%" %}
-  To begin the backfill, click **Launch backfill** in the popup window from the last section. By default, the date range will be the entire date range.
+  To begin the backfill, click **Launch backfill** in the popup window from the last section. By default, no date range will be selected. Click the **All** button to select the entire date range.
 
   Next, click **Overview > Backfills** to view the backfill’s information.
 

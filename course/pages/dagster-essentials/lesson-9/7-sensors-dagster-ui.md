@@ -30,7 +30,7 @@ Now that the sensor is built, let's take a look around the Dagster UI.
 ---
 
 - {% width="60%" %}
-  Click **Overview > Sensors**. In this tab, you’ll see the `adhoc_request_sensor`.
+  Click **Automation**. In this tab, you’ll see the `adhoc_request_sensor` alongside the previously created schedules.
 
   Notice that the **Running** toggle button has the sensor marked as turned off. By default, all sensors and schedules are off when first loaded.
 

@@ -12,7 +12,7 @@ Your first asset, which you’ll name `taxi_trips_file`, will retrieve the yello
 
 1. First, navigate to and open the `assets/trips.py` file in your Dagster project. This is where you’ll write your asset code.
 
-2. At the top of the `trips.py` file, confirm the following imports already exist:
+2. At the top of the `trips.py` file, add the following imports:
 
    ```python
    import requests
@@ -37,7 +37,7 @@ Your first asset, which you’ll name `taxi_trips_file`, will retrieve the yello
 
 4. To turn the function into an asset in Dagster, you’ll need to do two things:
 
-   1. Import `asset` from the Dagster library:
+   1. Import the Dagster library:
 
       ```python
       import dagster as dg

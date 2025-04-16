@@ -47,9 +47,6 @@ Now that cursors have been explained, let’s start writing the sensor.
 
    Let’s break down these imports:
 
-   - A `RunRequest` is used to trigger runs from a job, often with a specified configuration
-   - `SensorResult` is the bundle of information returned after a sensor evaluates the condition
-   - `sensor` is a decorator you’ll use to define that the function you’re writing is a sensor
    - The `os` standard library will be used to look at the files in the `data/requests` directory
    - The `json` standard library will be used to read the request’s JSON files as needed
    - `adhoc_request_job` is used to specify that the sensor will create runs from this job
@@ -79,7 +76,7 @@ Now that cursors have been explained, let’s start writing the sensor.
        job=adhoc_request_job
    )
    def adhoc_request_sensor(context: dg.SensorEvaluationContext):
-       PATH_TO_REQUESTS = os.path.join(os.path.dirname(__file__), "../../", "data/requests")
+       PATH_TO_REQUESTS = os.path.join(os.path.dirname(__file__), "../", "data/requests")
    ```
 
 6. Next, define the cursor. Copy and paste the following code into the sensor’s function body:

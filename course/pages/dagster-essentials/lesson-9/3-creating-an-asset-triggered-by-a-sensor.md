@@ -113,7 +113,7 @@ Now that you’ve defined how the asset can be materialized, let’s create the 
 Verify that `requests.py` file looks like the code below:
 
 ```python
-from dagster import Config, asset
+import dagster as dg
 from dagster_duckdb import DuckDBResource
 
 import matplotlib.pyplot as plt

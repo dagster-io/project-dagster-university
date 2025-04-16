@@ -44,7 +44,7 @@ When a run results in an error, the Run details page will indicate that somethin
 - Listing the problem step(s) in the **Errored** section next to the **Run timeline**
 - Displaying detailed error information about the problem step(s) in the **Run logs**
 
-To hone in on what went wrong, let’s take a closer look at the logs. We’ll use the **structured view** of the logs for this example.
+To home in on what went wrong, let’s take a closer look at the logs. We’ll use the **structured view** of the logs for this example.
 
 ---
 
