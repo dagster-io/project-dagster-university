@@ -147,7 +147,7 @@ class AdhocRequestConfig(dg.Config):
     end_date: str
 
 @dg.asset
-def adhoc_request(config: AdhocRequestConfig, taxi_zones, taxi_trips, database: DuckDBResource) -> None:
+def adhoc_request(config: AdhocRequestConfig, database: DuckDBResource) -> dg.MaterializeResult:
     """
       The response to an request made in the `requests` directory.
       See `requests/README.md` for more information.
