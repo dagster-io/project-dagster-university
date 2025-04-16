@@ -70,7 +70,7 @@ Now that you've created your partitions, used those partitions in the assets, an
 ---
 
 - {% width="60%" %}
-  To begin the backfill, click **Launch backfill** in the popup window from the last section. By default, the date range will be the entire date range.
+  To begin the backfill, click **Launch backfill** in the popup window from the last section. By default, no date range will be selected. Click the **All** button to select the entire date range.
 
   Next, click **Overview > Backfills** to view the backfill’s information.
 
