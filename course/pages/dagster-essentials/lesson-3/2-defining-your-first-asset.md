@@ -37,7 +37,7 @@ Your first asset, which you’ll name `taxi_trips_file`, will retrieve the yello
 
 4. To turn the function into an asset in Dagster, you’ll need to do two things:
 
-   1. Import `asset` from the Dagster library:
+   1. Import the Dagster library:
 
       ```python
       import dagster as dg
