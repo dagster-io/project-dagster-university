@@ -76,7 +76,7 @@ Now that cursors have been explained, let’s start writing the sensor.
        job=adhoc_request_job
    )
    def adhoc_request_sensor(context: dg.SensorEvaluationContext):
-       PATH_TO_REQUESTS = os.path.join(os.path.dirname(__file__), "../../", "data/requests")
+       PATH_TO_REQUESTS = os.path.join(os.path.dirname(__file__), "../", "data/requests")
    ```
 
 6. Next, define the cursor. Copy and paste the following code into the sensor’s function body:
