@@ -13,9 +13,11 @@ Now that you’ve partitioned the relevant assets, the schedule can be changed t
 Currently, `trip_update_job` in `jobs.py` should look like this:
 
 ```python
+trips_by_week = dg.AssetSelection.assets("trips_by_week")
+
 trip_update_job = dg.define_asset_job(
     name="trip_update_job",
-    selection=dg.AssetSelection.all() - dg.AssetSelection.assets(["trips_by_week"]),
+    selection=dg.AssetSelection.all() - trips_by_week
 )
 ```
 

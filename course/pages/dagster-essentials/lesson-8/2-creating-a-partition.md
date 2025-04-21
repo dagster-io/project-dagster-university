@@ -41,8 +41,4 @@ Using Dagster’s `MonthlyPartitionDefinition`, we created a partition named `mo
 
 Before continuing, you should first delete Dagster’s materialization history of the existing assets. This only needs to be done when running locally.
 
-Run the following bash commands to delete this history:
-
-```bash
-rm $DAGSTER_HOME/storage/taxi_trips_file $DAGSTER_HOME/storage/taxi_trips $DAGSTER_HOME/storage/trips_by_week
-```
+In your terminal, stop the running server with `Ctrl+C`, then re-run the `dagster dev` command to start it again. This will delete this history.

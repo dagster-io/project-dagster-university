@@ -25,7 +25,7 @@ def taxi_trips_file() -> None:
         output_file.write(raw_trips.content)
 ```
 
-1. A description of the asset is added using a docstring (`”””`), which will display in the Dagster UI.
+1. A description of the asset is added using a docstring (`"""`), which will display in the Dagster UI.
 
 2. Next, a variable named `month_to_fetch` is defined. The value is `2023-03`, or March 2023.
 

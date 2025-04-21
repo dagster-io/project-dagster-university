@@ -22,11 +22,9 @@ Let’s write a new configuration that we can use to customize the asset materia
 
 2. Add the following import to the top of the file (`defs/assets/requests.py`):
 
-   ```bash
-   from dagster import Config
+   ```python
+   import dagster as dg
    ```
-
-   This is used as the base class when making custom configurations.
 
 3. Next, define a new subclass called `AdhocRequestsConfig` that takes in the following `str` attributes:
    - `filename`: the name of the request’s JSON file
@@ -37,7 +35,7 @@ Let’s write a new configuration that we can use to customize the asset materia
 The `requests.py` file should look like the code snippet below:
 
 ```python
-from dagster import Config
+import dagster as dg
 
 class AdhocRequestConfig(dg.Config):
     filename: str
@@ -45,3 +43,4 @@ class AdhocRequestConfig(dg.Config):
     start_date: str
     end_date: str
 ```
+   `Config` is used as the base class when making custom configurations.

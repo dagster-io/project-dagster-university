@@ -39,9 +39,9 @@ As sensors are turned off by default, you'll need to enable the sensor to be abl
 
   1. If you navigated away from the **Sensor details** page for the `adhoc_request_sensor`, navigate back to it before continuing.
 
-  2. On this page, click the **Test Sensor** button near the top-right of the page. This allows you to produce a single tick without turning the sensor on.
+  2. On this page, click the **Preview tick result** button near the top-right of the page. This allows you to produce a single tick without turning the sensor on.
 
-  3. Click **Evaluate** to begin the test.
+  3. Click **Continue**, then click **Launch all & commit tick result** to begin the test.
 
 - ![The Test Sensor dialog in the Dagster UI](/images/dagster-essentials/lesson-9/ui-test-sensor-dialog.png) {% rowspan=2 %}
 

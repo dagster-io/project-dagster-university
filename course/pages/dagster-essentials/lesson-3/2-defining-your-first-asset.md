@@ -82,7 +82,7 @@ With the files set we can now add our first asset.
 
 4. To turn the function into an asset in Dagster, you’ll need to do two things:
 
-   1. Import `asset` from the Dagster library:
+   1. Import the Dagster library:
 
       ```python
       import dagster as dg

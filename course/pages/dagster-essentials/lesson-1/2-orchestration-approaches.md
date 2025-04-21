@@ -28,7 +28,7 @@ As we mentioned, there are different approaches to orchestrating workflows, and 
 
 Task-centric orchestration is a methodology that focuses on managing and coordinating the execution of tasks. It focuses on the **hows** and less on the **whats**.
 
-For example, data engineers often perform tasks such as pulling data from an API, cleaning it, and loading it to a destination to perform analytics on it, a process known as ETL.
+For example, data engineers often perform tasks such as pulling data from an API, cleaning it, and loading it to a destination to perform analytics on it, a process known as ETL (extract, transform, load).
 
 ### Example of a task-centric workflow
 

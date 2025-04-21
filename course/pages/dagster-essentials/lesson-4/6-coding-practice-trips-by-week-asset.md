@@ -6,17 +6,15 @@ lesson: '4'
 
 # Practice: Create a trips_by_week asset
 
-To practice what you’ve learned, create an asset in `metrics.py` that:
+To practice what you’ve learned, create an asset (called `trips_by_week`) in `metrics.py`. This asset should produce a CSV that:
 
-- Is named `trips_by_week`
-- Produces a CSV that:
-  - Is saved in `constants.TRIPS_BY_WEEK_FILE_PATH`
-  - Has the following schema:
-    - `period` - a string representing the Sunday of the week aggregated by, ex. `2023-03-05`
-    - `num_trips` - The total number of trips that started in that week
-    - `passenger_count` - The total number of passengers that were on a taxi trip that week
-    - `total_amount` - The total sum of the revenue produced by trips that week
-    - `trip_distance` - The total miles driven in all trips that happened that week
+- Is saved in `constants.TRIPS_BY_WEEK_FILE_PATH`
+- Has the following schema:
+  - `period` - a string representing the Sunday of the week aggregated by, ex. `2023-03-05`
+  - `num_trips` - The total number of trips that started in that week
+  - `passenger_count` - The total number of passengers that were on a taxi trip that week
+  - `total_amount` - The total sum of the revenue produced by trips that week
+  - `trip_distance` - The total miles driven in all trips that happened that week
 
 {% callout %}
 

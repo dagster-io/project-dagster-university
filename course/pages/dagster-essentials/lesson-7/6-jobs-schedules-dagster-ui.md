@@ -25,8 +25,8 @@ To ensure the jobs and schedules are visible, **reload the definitions** before 
 - {% width="60%" %}
   To view the jobs in the UI, you can:
 
-  - Click **Overview > Jobs**, or
-  - Click **Deployment**, then click on a code location. Click the **Jobs tab**.
+  - Click **Jobs** in the top navigation bar, or
+  - Click **Deployment**, then click on a code location. Click the **Definitions** tab, then click **Jobs** on the side navigation bar.
 
   The table in the **Jobs** tab contains the following info:
 
@@ -65,14 +65,14 @@ To ensure the jobs and schedules are visible, **reload the definitions** before 
 - {% width="60%" %}
   To view the schedules in the UI, you can:
 
-  - Click **Overview > Schedules**, or
-  - Click **Deployment**, then click on a code location. Click the **Schedules tab**.
+  - Click **Automation** in the top navigation bar, or
+  - Click **Deployment**, then click on a code location. Click the **Definitions** tab, then click **Schedules** on the side navigation bar.
 
-  The table in the **Schedules tab** contains the following info:
+  The table in the **Automation** tab contains the following info:
 
-  - **Schedule name -** The name of the schedule
-  - **Schedule -** The frequency of the schedule
-  - **Running -** Whether the schedule is currently on or off
+  - **Name -** The name of the schedule, with a toggle to indicate whether the schedule is currently on or off
+  - **Type -** The frequency of the schedule
+  - **Target -** The job that the schedule will run
   - **Last tick -** When the schedule was last started
   - **Last run -** When the schedule was last run
 
