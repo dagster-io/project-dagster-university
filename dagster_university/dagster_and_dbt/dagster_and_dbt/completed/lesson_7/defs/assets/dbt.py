@@ -13,13 +13,6 @@ class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):
     def get_group_name(self, dbt_resource_props):
         return dbt_resource_props["fqn"][1]
 
-    def get_metadata(self, dbt_node_info):
-        return {
-            "columns": dbt_node_info["columns"],
-            "sources": dbt_node_info["sources"],
-            "description": dbt_node_info["description"],
-        }
-
     def get_asset_key(self, dbt_resource_props):
         resource_type = dbt_resource_props["resource_type"]
         name = dbt_resource_props["name"]

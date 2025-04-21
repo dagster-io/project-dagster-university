@@ -26,7 +26,6 @@ dbt_resource = DbtCliResource(
     project_dir=dbt_project,
 )
 
-
 defs = dg.Definitions(
     resources={
         "database": database_resource,
