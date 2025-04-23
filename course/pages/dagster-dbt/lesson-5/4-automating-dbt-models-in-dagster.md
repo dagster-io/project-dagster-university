@@ -8,7 +8,7 @@ lesson: '5'
 
 Did you realize that your dbt models have already been scheduled to run on a regular basis because of an existing schedule within this Dagster project?
 
-Check it out in the Dagster UI by clicking **Overview** in the top navigation bar, then the **Jobs** tab. Click `trip_update_job` to check out the job’s details. It looks like the dbt models are already attached to this job!
+Check it out in the Dagster UI by clicking **Jobs** in the top navigation bar, then click `trip_update_job` to check out the job’s details. It looks like the dbt models are already attached to this job!
 
 ![dbt assets in the trip_update_job in the Dagster UI](/images/dagster-dbt/lesson-5/trip-update-job-dbt-assets.png)
 

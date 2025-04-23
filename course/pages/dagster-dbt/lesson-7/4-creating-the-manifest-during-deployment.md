@@ -14,7 +14,7 @@ Since your CI/CD will be running in a fresh environment, you'll need to install 
 
 To get our deployment working, we need to add a step to our GitHub Actions workflow that runs the commands required to generate the `manifest.json`. Specifically, we need to run the `dbt project prepare-and-package` command, available in the `dagster_dbt` package.
 
-1. In your Dagster project, locate the `.github/workflows` directory.
+1. In your Dagster project, pull the latest changes from the remote repo (`git fetch && git pull`), then locate the `.github/workflows` directory.
 2. Open the `deploy.yml` file.
 3. Locate the `Checkout for Python Executable Deploy` step, which should be on or near line 38.
 4. After this step, add the following:
