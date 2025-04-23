@@ -33,7 +33,7 @@ We’ll only create one `@dbt_assets` definition for now, but in a later lesson,
 2. Add the following imports to the top of the file:
 
    ```python
-   from dagster import AssetExecutionContext
+   import dagster as dg
    from dagster_dbt import dbt_assets, DbtCliResource
    
    from dagster_and_dbt.project import dbt_project
@@ -45,7 +45,7 @@ We’ll only create one `@dbt_assets` definition for now, but in a later lesson,
    @dbt_assets(
        manifest=dbt_project.manifest_path,
    )
-   def dbt_analytics(context: AssetExecutionContext, dbt: DbtCliResource):
+   def dbt_analytics(context: dg.AssetExecutionContext, dbt: DbtCliResource):
    ```
 
    Here, we used `dbt_project.manifest_path` to provide the reference to the project's manifest file. This is possible because the `dbt_project` representation we created earlier contains the manifest path, accessible by using the `manifest_path` attribute.
