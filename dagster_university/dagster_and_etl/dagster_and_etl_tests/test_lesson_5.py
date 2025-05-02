@@ -1,7 +1,7 @@
 import dagster as dg
 from dagster_dlt import DagsterDltResource
 
-import dagster_and_etl.completed.lesson_5.assets as assets
+import dagster_and_etl.completed.lesson_5.defs.assets as assets
 from dagster_and_etl.completed.lesson_5.definitions import defs
 
 

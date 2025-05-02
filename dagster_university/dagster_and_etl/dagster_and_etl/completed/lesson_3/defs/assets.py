@@ -14,16 +14,20 @@ class FilePath(dg.Config):
     path: str
 
 
-@dg.asset
+@dg.asset(
+    group_name="static_etl",
+)
 def import_file(context: dg.AssetExecutionContext, config: FilePath) -> str:
-    file_path = Path(__file__).absolute().parent / f"../../../data/source/{config.path}"
+    file_path = (
+        Path(__file__).absolute().parent / f"../../../../data/source/{config.path}"
+    )
     return str(file_path.resolve())
 
 
 @dg.asset_check(
     asset=import_file,
     blocking=True,
-    description="Ensure file is not empty",
+    description="Ensure file contains no zero value shares",
 )
 def not_empty(
     context: dg.AssetCheckExecutionContext,
@@ -31,21 +35,24 @@ def not_empty(
 ) -> dg.AssetCheckResult:
     with open(import_file, mode="r", encoding="utf-8") as file:
         reader = csv.DictReader(file)
-        data = [row for row in reader]
+        data = (row for row in reader)
 
-    if len(data) > 0:
-        return dg.AssetCheckResult(
-            passed=True,
-            metadata={"number of rows": len(data)},
-        )
+        for row in data:
+            if float(row["share_price"]) <= 0:
+                return dg.AssetCheckResult(
+                    passed=False,
+                    metadata={"'share' is below 0": row},
+                )
 
     return dg.AssetCheckResult(
         passed=True,
-        metadata={"number of rows": len(data)},
     )
 
 
-@dg.asset
+@dg.asset(
+    kinds={"duckdb"},
+    group_name="static_etl",
+)
 def duckdb_table(
     context: dg.AssetExecutionContext,
     database: DuckDBResource,
@@ -71,6 +78,8 @@ def duckdb_table(
 # Showcase
 # - Partition
 # - Schedule
+
+
 partitions_def = dg.DailyPartitionsDefinition(
     start_date="2018-01-21",
     end_date="2018-01-24",
@@ -79,17 +88,20 @@ partitions_def = dg.DailyPartitionsDefinition(
 
 @dg.asset(
     partitions_def=partitions_def,
+    group_name="static_etl",
 )
 def import_partition_file(context: dg.AssetExecutionContext) -> str:
     file_path = (
         Path(__file__).absolute().parent
-        / f"../../../data/source/{context.partition_key}.csv"
+        / f"../../../../data/source/{context.partition_key}.csv"
     )
     return str(file_path.resolve())
 
 
 @dg.asset(
+    kinds={"duckdb"},
     partitions_def=partitions_def,
+    group_name="static_etl",
 )
 def duckdb_partition_table(
     context: dg.AssetExecutionContext,
@@ -123,24 +135,26 @@ s3_partitions_def = dg.DynamicPartitionsDefinition(name="s3")
 
 @dg.asset(
     partitions_def=s3_partitions_def,
+    group_name="static_etl",
 )
 def import_dynamic_partition_file(context: dg.AssetExecutionContext) -> str:
     file_path = (
         Path(__file__).absolute().parent
-        / f"../../../data/source/{context.partition_key}.csv"
+        / f"../../../../data/source/{context.partition_key}.csv"
     )
     return str(file_path.resolve())
 
 
 @dg.asset(
-    partitions_def=s3_partitions_def,
+    kinds={"duckdb"},
+    group_name="static_etl",
 )
 def duckdb_dynamic_partition_table(
     context: dg.AssetExecutionContext,
     database: DuckDBResource,
     import_dynamic_partition_file,
 ):
-    table_name = "raw_partition_data"
+    table_name = "raw_dynamic_partition_data"
     with database.get_connection() as conn:
         table_query = f"""
             create table if not exists {table_name} (

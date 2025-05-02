@@ -4,8 +4,8 @@ import dagster as dg
 import pytest
 from dagster_duckdb import DuckDBResource
 
-import dagster_and_etl.completed.lesson_4.assets as assets
-from dagster_and_etl.completed.lesson_4.definitions import defs
+import dagster_and_etl.completed.lesson_4.defs as defs
+import dagster_and_etl.completed.lesson_4.defs.assets as assets
 
 
 @pytest.fixture()
@@ -94,6 +94,21 @@ def test_asteroid_assets(nasa_config, mock_asteroid_response):
                 "asteroids_file": nasa_config,
             }
         ),
+    )
+    assert result.success
+
+
+def test_asteroid_partition_assets(mock_asteroid_response):
+    mocked_resource = Mock()
+    mocked_resource.get_near_earth_asteroids.return_value = mock_asteroid_response
+
+    _assets = [
+        assets.asteroids_partition,
+    ]
+    result = dg.materialize(
+        assets=_assets,
+        resources={"nasa": mocked_resource},
+        partition_key="2025-04-01",
     )
     assert result.success
 

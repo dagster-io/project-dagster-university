@@ -1,24 +1,11 @@
 import csv
+import datetime
 from pathlib import Path
 
 import dagster as dg
-import requests
 from dagster_duckdb import DuckDBResource
 
-
-class NASAResource(dg.ConfigurableResource):
-    api_key: str
-
-    def get_near_earth_asteroids(self, start_date: str, end_date: str):
-        url = "https://api.nasa.gov/neo/rest/v1/feed"
-        params = {
-            "start_date": start_date,
-            "end_date": end_date,
-            "api_key": self.api_key,
-        }
-
-        resp = requests.get(url, params=params)
-        return resp.json()["near_earth_objects"][start_date]
+from dagster_and_etl.completed.lesson_4.defs.resources import NASAResource
 
 
 class NasaDateRange(dg.Config):
@@ -26,7 +13,10 @@ class NasaDateRange(dg.Config):
     end_date: str
 
 
-@dg.asset
+@dg.asset(
+    kinds={"nasa"},
+    group_name="api_etl",
+)
 def asteroids(
     context: dg.AssetExecutionContext,
     config: NasaDateRange,
@@ -38,15 +28,16 @@ def asteroids(
     )
 
 
-@dg.asset
+@dg.asset(
+    group_name="api_etl",
+)
 def asteroids_file(
     context: dg.AssetExecutionContext,
-    config: NasaDateRange,
     asteroids,
 ):
-    filename = f"asteroid_staging_{config.start_date}_{config.end_date}"
+    filename = "asteroid_staging"
     file_path = (
-        Path(__file__).absolute().parent / f"../../../data/staging/{filename}.csv"
+        Path(__file__).absolute().parent / f"../../../../data/staging/{filename}.csv"
     )
 
     # Only load specific fields
@@ -68,7 +59,10 @@ def asteroids_file(
     return file_path
 
 
-@dg.asset
+@dg.asset(
+    kinds={"duckdb"},
+    group_name="api_etl",
+)
 def duckdb_table(
     context: dg.AssetExecutionContext,
     database: DuckDBResource,
@@ -86,3 +80,26 @@ def duckdb_table(
         """
         conn.execute(table_query)
         conn.execute(f"COPY {table_name} FROM '{asteroids_file}'")
+
+
+nasa_partitions_def = dg.DailyPartitionsDefinition(
+    start_date="2025-04-01",
+)
+
+
+@dg.asset(
+    kinds={"nasa"},
+    group_name="api_etl",
+    partitions_def=nasa_partitions_def,
+)
+def asteroids_partition(
+    context: dg.AssetExecutionContext,
+    nasa: NASAResource,
+):
+    anchor_date = datetime.datetime.strptime(context.partition_key, "%Y-%m-%d")
+    end_date = (anchor_date - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+
+    return nasa.get_near_earth_asteroids(
+        start_date=context.partition_key,
+        end_date=end_date,
+    )

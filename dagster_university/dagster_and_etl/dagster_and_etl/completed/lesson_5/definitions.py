@@ -1,13 +1,7 @@
 import dagster as dg
-from dagster_dlt import DagsterDltResource
 
-import dagster_and_etl.completed.lesson_5.assets as assets
+import dagster_and_etl.completed.lesson_5.defs as defs
 
-defs = dg.Definitions(
-    assets=[
-        assets.quickstart_duckdb_assets,
-    ],
-    resources={
-        "dlt": DagsterDltResource(),
-    },
+defs = dg.Definitions.merge(
+    dg.components.load_defs(defs),
 )
