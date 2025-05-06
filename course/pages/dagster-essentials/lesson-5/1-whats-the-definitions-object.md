@@ -20,7 +20,7 @@ import dagster_cookies.defs as defs
 defs = dg.components.load_defs(defs)
 ```
 
-If we are using `dg` to layout our Dagster project, we do not need to explicitly list all the assets in our project. Dagster can automatically load most objects (we will later see there are other object types besides assets) by importing the contents of the `defs` module.
+We do not need to explicitly list all the assets in our project. Dagster can automatically load most objects (we will later see there are other object types besides assets) by importing the contents of the `defs` module.
 
 Remember that using `dg scaffold` has been placing all our asset files within the `defs` directory.
 
