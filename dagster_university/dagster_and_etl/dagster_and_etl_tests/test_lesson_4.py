@@ -91,7 +91,6 @@ def test_asteroid_assets(nasa_config, mock_asteroid_response):
         run_config=dg.RunConfig(
             {
                 "asteroids": nasa_config,
-                "asteroids_file": nasa_config,
             }
         ),
     )

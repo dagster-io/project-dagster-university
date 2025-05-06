@@ -1,3 +1,5 @@
+import os
+
 import dlt
 
 data = [
@@ -17,7 +19,7 @@ def simple_source():
 
 pipeline = dlt.pipeline(
     pipeline_name="simple_pipeline",
-    destination="duckdb",
+    destination=dlt.destinations.duckdb(os.getenv("DUCKDB_DATABASE")),
     dataset_name="mydata",
 )
 
