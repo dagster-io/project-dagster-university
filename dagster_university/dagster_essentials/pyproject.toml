@@ -13,6 +13,7 @@ dependencies = [
     "pandas[parquet]",
     "shapely",
     "matplotlib",
+    "dagster-dg",
 ]
 
 [tool.uv]
@@ -21,13 +22,16 @@ dev-dependencies = [
     "pytest",
 ]
 
-[tool.dagster]
-module_name = "dagster_essentials.definitions"
-code_location_name = "dagster_essentials"
-
 [build-system]
 requires = ["setuptools>=42"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 packages = ["dagster_essentials"]
+
+[tool.dg]
+directory_type = "project"
+
+[tool.dg.project]
+root_module = "dagster_essentials"
+code_location_target_module = "dagster_essentials.definitions"

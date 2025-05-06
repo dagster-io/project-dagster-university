@@ -57,7 +57,7 @@ We’ll assume your code looks like the following for the rest of the module. De
 
 ```python {% obfuscated="true" %}
 from datetime import datetime, timedelta
-from dagster_essentials.assets import constants
+from dagster_essentials.defs.assets import constants
 
 import pandas as pd
 import dagster as dg

@@ -1,9 +1,5 @@
 import dagster as dg
 
-from dagster_essentials.completed.lesson_3.assets import trips
+import dagster_essentials.completed.lesson_3.defs as defs
 
-trip_assets = dg.load_assets_from_modules([trips])
-
-defs = dg.Definitions(
-    assets=trip_assets,
-)
+defs = dg.components.load_defs(defs)

@@ -6,7 +6,7 @@ lesson: '7'
 
 # Practice: Create a weekly_update_schedule
 
-To practice what you’ve learned, add a schedule to `schedules.py` that:
+To practice what you’ve learned, add a schedule to `defs/schedules.py` that:
 
 - Is named `weekly_update_schedule`
 - Materializes the `trips_by_week` asset

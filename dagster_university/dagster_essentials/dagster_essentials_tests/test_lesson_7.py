@@ -1,13 +1,13 @@
 import dagster as dg
 
-from dagster_essentials.completed.lesson_7.assets import metrics, trips
 from dagster_essentials.completed.lesson_7.definitions import defs
-from dagster_essentials.completed.lesson_7.jobs import (
+from dagster_essentials.completed.lesson_7.defs.assets import metrics, trips
+from dagster_essentials.completed.lesson_7.defs.jobs import (
     trip_update_job,
     weekly_update_job,
 )
-from dagster_essentials.completed.lesson_7.resources import database_resource
-from dagster_essentials.completed.lesson_7.schedules import (
+from dagster_essentials.completed.lesson_7.defs.resources import database_resource
+from dagster_essentials.completed.lesson_7.defs.schedules import (
     trip_update_schedule,
     weekly_update_schedule,
 )
