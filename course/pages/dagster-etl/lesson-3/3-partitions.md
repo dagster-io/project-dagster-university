@@ -4,7 +4,7 @@ module: 'dagster_etl'
 lesson: '3'
 ---
 
-## Partitions
+# Partitions
 
 When we run ETL pipelines in production we want a better way to track what we have loaded. This can be difficult in pipelines that have a long history of events or import data frequently.
 

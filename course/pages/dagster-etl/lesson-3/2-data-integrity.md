@@ -4,7 +4,7 @@ module: 'dagster_etl'
 lesson: '3'
 ---
 
-## Data integrity
+# Data integrity
 
 Our simple ETL pipeline is now ready to execute: we provide a file, and it gets loaded into DuckDB. While it's great that we can load data without errors, there's actually something worse than pipelines that fail to run, pipelines that run and load bad data.
 

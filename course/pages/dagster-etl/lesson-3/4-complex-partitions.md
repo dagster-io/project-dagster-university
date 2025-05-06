@@ -1,10 +1,10 @@
 ---
-title: "Lesson 3: Irregular partitions"
+title: "Lesson 3: Complex partitions"
 module: 'dagster_etl'
 lesson: '3'
 ---
 
-## Irregular partitions
+# Complex partitions
 
 So far we have looked at partitioning data from sources that follow specific patterns. Files that are associated with specific times (daily, weekly, monthly) work well with partitions and are easy to track.
 

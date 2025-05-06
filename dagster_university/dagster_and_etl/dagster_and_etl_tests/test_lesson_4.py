@@ -10,14 +10,13 @@ import dagster_and_etl.completed.lesson_4.defs.assets as assets
 
 @pytest.fixture()
 def nasa_config():
-    return assets.NasaDateRange(
-        start_date="2025-04-01",
-        end_date="2025-04-02",
+    return assets.NasaDate(
+        date="2025-04-01",
     )
 
 
 @pytest.fixture()
-def mock_asteroid_response():
+def asteroid_response():
     return [
         {
             "links": {
@@ -71,9 +70,9 @@ def mock_asteroid_response():
     ]
 
 
-def test_asteroid_assets(nasa_config, mock_asteroid_response):
+def test_asteroid_assets(nasa_config, asteroid_response):
     mocked_resource = Mock()
-    mocked_resource.get_near_earth_asteroids.return_value = mock_asteroid_response
+    mocked_resource.get_near_earth_asteroids.return_value = asteroid_response
 
     _assets = [
         assets.asteroids,
@@ -97,9 +96,9 @@ def test_asteroid_assets(nasa_config, mock_asteroid_response):
     assert result.success
 
 
-def test_asteroid_partition_assets(mock_asteroid_response):
+def test_asteroid_partition_assets(asteroid_response):
     mocked_resource = Mock()
-    mocked_resource.get_near_earth_asteroids.return_value = mock_asteroid_response
+    mocked_resource.get_near_earth_asteroids.return_value = asteroid_response
 
     _assets = [
         assets.asteroids_partition,

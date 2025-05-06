@@ -1,4 +1,5 @@
 import csv
+import datetime
 import os
 from pathlib import Path
 
@@ -70,21 +71,23 @@ def dlt_load_csv(context: dg.AssetExecutionContext, import_file: str):
     return load_info
 
 
-class NasaDateRange(dg.Config):
-    start_date: str
-    end_date: str
+class NasaDate(dg.Config):
+    date: str
 
 
 @dg.asset
-def dlt_nasa(context: dg.AssetExecutionContext, config: NasaDateRange):
+def dlt_nasa(context: dg.AssetExecutionContext, config: NasaDate):
+    anchor_date = datetime.datetime.strptime(config.date, "%Y-%m-%d")
+    start_date = (anchor_date - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+
     @dlt.source
     def nasa_neo_source():
         @dlt.resource
         def load_neo_data():
             url = "https://api.nasa.gov/neo/rest/v1/feed"
             params = {
-                "start_date": config.start_date,
-                "end_date": config.end_date,
+                "start_date": start_date,
+                "end_date": config.date,
                 "api_key": os.getenv("NASA_API_KEY"),
             }
 
@@ -93,7 +96,60 @@ def dlt_nasa(context: dg.AssetExecutionContext, config: NasaDateRange):
 
             data = response.json()
 
-            for neo in data["near_earth_objects"][config.start_date]:
+            for neo in data["near_earth_objects"][config.date]:
+                neo_data = {
+                    "id": neo["id"],
+                    "name": neo["name"],
+                    "absolute_magnitude_h": neo["absolute_magnitude_h"],
+                    "is_potentially_hazardous": neo[
+                        "is_potentially_hazardous_asteroid"
+                    ],
+                }
+
+                yield neo_data
+
+        return load_neo_data
+
+    pipeline = dlt.pipeline(
+        pipeline_name="nasa_neo_pipeline",
+        destination=dlt.destinations.duckdb(os.getenv("DUCKDB_DATABASE")),
+        dataset_name="nasa_neo",
+    )
+
+    load_info = pipeline.run(nasa_neo_source())
+
+    return load_info
+
+
+nasa_partitions_def = dg.DailyPartitionsDefinition(
+    start_date="2015-09-01",
+)
+
+
+@dg.asset(
+    partitions_def=nasa_partitions_def,
+)
+def dlt_nasa_partition(context: dg.AssetExecutionContext):
+    anchor_date = datetime.datetime.strptime(context.partition_key, "%Y-%m-%d")
+    start_date = (anchor_date - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+
+    @dlt.source
+    def nasa_neo_source():
+        @dlt.resource
+        def load_neo_data():
+            url = "https://api.nasa.gov/neo/rest/v1/feed"
+            params = {
+                "start_date": start_date,
+                "end_date": context.partition_key,
+                "api_key": os.getenv("NASA_API_KEY"),
+            }
+
+            response = requests.get(url, params=params)
+            response.raise_for_status()
+
+            data = response.json()
+
+            for neo in data["near_earth_objects"][context.partition_key]:
                 neo_data = {
                     "id": neo["id"],
                     "name": neo["name"],

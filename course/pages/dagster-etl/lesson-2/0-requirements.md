@@ -4,7 +4,7 @@ module: 'dagster_etl'
 lesson: '2'
 ---
 
-## Set up requirements
+# Set up requirements
 
 This is an interactive class where you will be coding. In order to follow along you can either run the project locally on your own machine or work with the code in Github Codespaces where all requirements will be set.
 

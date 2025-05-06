@@ -4,7 +4,7 @@ module: 'dagster_etl'
 lesson: '3'
 ---
 
-## Triggering partitions
+# Triggering partitions
 
 The question of how to automate your pipelines is dependent on how your data and how you react to it. At a high level there are two main choices, scheduled and event-driven.
 
