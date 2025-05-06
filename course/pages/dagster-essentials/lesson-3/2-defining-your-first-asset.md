@@ -32,7 +32,7 @@ This will add a `trips.py` file to our Dagster project.
             └── trips.py
 ```
 
-**Note:** If we were starting a project from scratch we would use [`dg initialization`](https://docs.dagster.io/guides/labs/dg/scaffolding-a-project) which will handle the creation of our virtual environment. However since we already have a virtual environment defined, we can skip this step.
+**Note:** If we were starting a project from scratch we would use [`dg init`](https://docs.dagster.io/guides/labs/dg/scaffolding-a-project) which will handle the creation of our virtual environment. However since we already have a virtual environment defined, we can skip this step.
 
 
 Using `dg` to scaffold your project will ensure that files are placed in the correct location. We can ensure that everything is configured correctly also using `dg`.
