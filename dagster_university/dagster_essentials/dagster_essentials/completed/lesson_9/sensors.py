@@ -11,7 +11,7 @@ def adhoc_request_sensor(context: dg.SensorEvaluationContext):
     PATH_TO_REQUESTS = os.path.join(
         # Additional layer of nesting for lessons than project
         os.path.dirname(__file__),
-        "../../../",
+        "../../../../",
         "data/requests",
     )
 
