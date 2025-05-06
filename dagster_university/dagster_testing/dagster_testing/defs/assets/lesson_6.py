@@ -3,7 +3,7 @@ from pathlib import Path
 
 import dagster as dg
 
-import dagster_testing.resources as resources
+import dagster_testing.defs.resources as resources
 
 
 class FilepathConfig(dg.Config):

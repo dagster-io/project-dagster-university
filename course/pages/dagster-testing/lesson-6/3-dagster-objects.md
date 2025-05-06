@@ -128,7 +128,7 @@ In order to write a reliable test for this sensor, we will go back to our lesson
 First we can set a test where our sensor will skip.
 
 ```python
-@patch("dagster_testing.sensors.check_for_new_files", return_value=[])
+@patch("dagster_testing.defs.sensors.check_for_new_files", return_value=[])
 def test_sensor_skip(mock_check_new_files):
     instance = dg.DagsterInstance.ephemeral()
     context = dg.build_sensor_context(instance=instance)
@@ -152,7 +152,7 @@ What would it look like to write a test to ensure the sensor picks up a new file
 
 ```python {% obfuscated="true" %}
 @patch(
-    "dagster_testing.sensors.check_for_new_files",
+    "dagster_testing.defs.sensors.check_for_new_files",
     return_value=["test_file"],
 )
 def test_sensor_run(mock_check_new_files):

@@ -4,12 +4,12 @@ from unittest.mock import patch
 import dagster as dg
 import pytest
 
-import dagster_testing.jobs as jobs
-import dagster_testing.resources as resources
-import dagster_testing.schedules as schedules
-import dagster_testing.sensors as sensors
-from dagster_testing.assets import lesson_6
+import dagster_testing.defs.jobs as jobs
+import dagster_testing.defs.resources as resources
+import dagster_testing.defs.schedules as schedules
+import dagster_testing.defs.sensors as sensors
 from dagster_testing.definitions import defs
+from dagster_testing.defs.assets import lesson_6
 
 
 @pytest.fixture()
@@ -128,7 +128,7 @@ def test_sensors():
     assert sensors.my_sensor
 
 
-@patch("dagster_testing.sensors.check_for_new_files", return_value=[])
+@patch("dagster_testing.defs.sensors.check_for_new_files", return_value=[])
 def test_sensor_skip(mock_check_new_files):
     instance = dg.DagsterInstance.ephemeral()
     context = dg.build_sensor_context(instance=instance)
@@ -136,7 +136,7 @@ def test_sensor_skip(mock_check_new_files):
 
 
 @patch(
-    "dagster_testing.sensors.check_for_new_files",
+    "dagster_testing.defs.sensors.check_for_new_files",
     return_value=["test_file"],
 )
 def test_sensor_run(mock_check_new_files):
