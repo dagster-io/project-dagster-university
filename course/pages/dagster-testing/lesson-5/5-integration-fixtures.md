@@ -37,11 +37,11 @@ def docker_compose():
 
 The code above does the following:
 
-1. Gets the file path of the `docker-compose.yaml` relative to the test (which is in the same directory)
-2. Starts the Docker service using the `docker compose` command
-3. Waits for the service to be ready by checking when the database is ready using `pg_isready`
-4. Yields to the test execution (running the test)
-5. Spins down the Docker service when testing has completed
+1. Gets the file path of the `docker-compose.yaml` relative to the test (which is in the same directory).
+2. Starts the Docker service using the `docker compose` command.
+3. Waits for the service to be ready by checking when the database is ready using `pg_isready`.
+4. Yields to the test execution (running the test).
+5. Spins down the Docker service when testing has completed.
 
 Now that fixture can be used within the parameters of the integration test and couple our test and the underlying services:
 

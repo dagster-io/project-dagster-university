@@ -31,7 +31,7 @@ dbt_resource = DbtCliResource(
 
 The code above:
 
-1. Imports the `DbtCliResource` from the `dagster_dbt` package that we installed earlier
-2. Imports the `dbt_project` representation we just defined
-3. Instantiates a new `DbtCliResource` under the variable name `dbt_resource`
-4. Tells the resource that the dbt project to execute is the `dbt_project`
+1. Imports the `DbtCliResource` from the `dagster_dbt` package that we installed earlier.
+2. Imports the `dbt_project` representation we just defined.
+3. Instantiates a new `DbtCliResource` under the variable name `dbt_resource`.
+4. Tells the resource that the dbt project to execute is the `dbt_project`.
