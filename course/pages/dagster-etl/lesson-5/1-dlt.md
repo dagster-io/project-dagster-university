@@ -6,9 +6,9 @@ lesson: '5'
 
 # dlt
 
-One ETL framework we are particuarly excited about is [data load tool (dlt)](https://dlthub.com/docs/intro). dlt is an open-source and lightweight Python library for loading data. It handles many of the messier parts of ETL like schemas, data types, and normalization. It also supports a variety of popular sources and destinations.
+One ETL framework we’re particularly excited about is [data load tool (dlt)](https://dlthub.com/docs/intro). dlt is an open-source, lightweight Python library designed to simplify data loading. It takes care of many of the more tedious aspects of ETL — including schema management, data type handling, and normalization — so you can focus on what matters most.
 
-This means that we are able to move data around without having to do so much unnecessary work ourselves. dlt still offers the flexibility to process just about any incoming data but removes most of the boilerplate code we would need to write.
+dlt supports a wide range of popular sources and destinations, which means you can move data between systems without having to build and maintain all the supporting infrastructure yourself. While it still gives you the flexibility to handle custom or complex data workflows, it eliminates much of the boilerplate code you'd otherwise need to write — making your pipelines cleaner, more maintainable, and faster to develop.
 
 ![dlt](/images/dagster-etl/lesson-5/dlt.png)
 

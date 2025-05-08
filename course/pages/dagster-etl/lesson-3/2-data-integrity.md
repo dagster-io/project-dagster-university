@@ -6,19 +6,31 @@ lesson: '3'
 
 # Data integrity
 
-Our simple ETL pipeline is now ready to execute: we provide a file, and it gets loaded into DuckDB. While it's great that we can load data without errors, there's actually something worse than pipelines that fail to run, pipelines that run and load bad data.
+Our ETL pipeline can execute successfully: we provide a file, and it gets loaded into DuckDB. While it’s reassuring to see data load without errors, there's actually something worse than a pipeline that fails to run, a pipeline that loads bad data.
 
-Bad data entering an ETL workflow can cause far more issues than a failed job. When poor-quality data is ingested, it creates a cascading effect where all downstream consumers are impacted. This means we not only have to fix the original error in the ETL pipeline, but also clean up every dependent process that has been affected.
+Poor-quality data entering an ETL workflow can cause far more damage than a job that simply fails. Once bad data is ingested, it can have cascading effects, affecting all downstream consumers and applications. When fixing a bug around bad data, we not only have to fix the original issue, we’re also tasked with cleaning up every process that depends on it.
 
-In most cases, the data we receive comes from systems outside our control. Generally, we treat these sources as the source of truth and assume they have their own validation in place to ensure data quality. However, when we know specific aspects of the data could negatively affect our system, it's critical to include validation checks before ingestion.
+In many cases, the data we ingest comes from systems outside our control. We often treat these sources as the source of truth and assume they enforce their own validation rules. But when we know there are specific characteristics of the data that could disrupt our pipelines or outputs, it becomes critical to add validation checks before ingestion.
 
 ## Asset checks
 
-In Dagster, one way to handle data validation is through asset checks. Asset checks allow you to define custom logic to ensure your assets meet specific quality criteria. For example, we can add an asset check to import_file to verify that the file structure and contents are as expected.
+In Dagster, one way to handle data validation is through asset checks. Asset checks let you define custom logic to ensure that an asset meets defined quality standards. For example, we can attach an asset check to `import_file` to verify that the file structure and contents meet our expectations.
 
-Let’s write an asset check to ensure the "share price" in the file matches what we expect:
+Let’s start by writing an asset check to ensure the "share_price" column in the file contains only valid, non-zero values:
 
-```python
+```python {% obfuscated="true" %}
+with open("my_file.csv", mode="r", encoding="utf-8") as file:
+    reader = csv.DictReader(file)
+    data = (row for row in reader)
+
+    for row in data:
+        if float(row["share_price"]) <= 0:
+            break
+```
+
+Here’s what the logic might look like:
+
+```python {% obfuscated="true" %}
 @dg.asset_check(
     asset=import_file,
     blocking=True,
@@ -46,11 +58,11 @@ def not_empty(
 
 The code above does the following:
 
-1. Uses the @dg.asset_check decorator to define an asset check. Within the decorator, we reference the import_file asset and set blocking=True, which ensures that downstream assets will not execute if the check fails.
-2. Reads the file path from import_file and returns a generator of dictionaries.
-3. Iterates through each row to check whether any share prices are less than or equal to zero.
-4. If any share price is less than or equal to zero, the check fails; otherwise, it passes.
+1. Uses the `@dg.asset_chec`k decorator to define an asset check. It references the `import_file` asset and sets `blocking=True`, which prevents downstream assets from executing if the check fails.
+2. Reads the file path returned by the import_file asset and parses it as a CSV.
+3. Iterates through each row to check whether the "share_price" value is less than or equal to zero (or missing/invalid).
+4. Fails the check if any bad values are found; otherwise, it passes.
 
-When you launch dg dev again, you won’t see any additional nodes in the asset graph, the asset check is visually tied directly to the import_file asset.
+When you launch dg dev, you won’t see an additional node in the asset graph the asset check is visually tied to the import_file asset.
 
-Now, if you re-execute the pipeline, a green dot will appear within the import_file node to indicate that the asset successfully materialized and the asset check passed.
+Now, when you re-execute the pipeline, a green dot will appear on the `import_file` node if the asset check passes, indicating both successful materialization and validation. If the check fails, the dot will appear red, helping you catch data issues early in the process.

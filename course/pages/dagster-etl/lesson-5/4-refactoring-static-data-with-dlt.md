@@ -6,9 +6,9 @@ lesson: '5'
 
 # Refactoring static data with dlt
 
-There are a couple of differences between our CSV pipeline and the dlt quickstart we just converted into assets. First of all it has a run configuration so you can supply a file name to process and dlt asset is dependent on an upstream asset.
+There are a couple of key differences between our original CSV pipeline and the dlt quickstart we just converted into Dagster assets. First, the CSV pipeline uses a run configuration to allow a specific file name to be passed in at runtime. Second, the dlt asset in this case is dependent on an upstream asset that stages the file.
 
-We can start with the run configuration and asset. These all can actually remain the same:
+We’ll start by reusing the existing run configuration and upstream asset, both of which can remain unchanged. This allows us to maintain the same flexible file-based interface while swapping in dlt to handle the data loading:
 
 ```python
 class FilePath(dg.Config):
@@ -23,7 +23,7 @@ def import_file(context: dg.AssetExecutionContext, config: FilePath) -> str:
     return str(file_path.resolve())
 ```
 
-The next thing we need to do is define the `dlt.source` function. This will look very similar to the `simple_source` function except that it reads from a csv file and takes an input parameter of a file type.
+Next, we need to define the `dlt.source` function for our CSV pipeline. This will look very similar to the `simple_source` function we used earlier, but with a few changes: it will read from a CSV file and take a file path as an input parameter. This allows us to dynamically pass in the file we want to process, while letting dlt handle the parsing and schema inference behind the scenes:
 
 ```python {% obfuscated="true" %}
 @dlt.source
@@ -38,7 +38,9 @@ def csv_source(file_path: str = None):
     return load_csv
 ```
 
-So far things are looking pretty much the same. We will use the `dlt_assets` decorator to once again generate dlt assets. The one difference we have to account for is that the `csv_source` function has an input parameter. Like our Dagster pipeline before that parameter is the file path returned from the `import_file` asset.
+So far, things are looking very similar to our previous setup. We’ll once again use the `@dlt_assets `decorator to generate our dlt-backed assets. The one key difference in this case is that our `csv_source` function accepts an input parameter for the file path.
+
+Just like in our earlier Dagster pipeline, this parameter will be satisfied by the upstream `import_file` asset. This allows the dlt asset to consume the file path dynamically and run the ETL process based on the specific file returned by `import_file`:
 
 ```python {% obfuscated="true" %}
 @dlt_assets(
@@ -58,11 +60,11 @@ def dlt_csv_assets(
 
 ## dlt Translator
 
-This might look complete but there is actually one final step we need to do. Because the dlt assets are special in how they are generated, they also have a special way to map depdendencies.
+This setup might look complete, but there’s one final step we need to take. Because dlt assets are generated differently, they also have a unique way of handling dependencies.
 
-If you have taken the [Dagster & dbt course](https://courses.dagster.io/courses/dagster-dbt) you may remember the need for a `Translator` to map our dbt assets to other assets. There is a specific `DagsterDltTranslator` we will use to accomplish the same thing.
+If you’ve taken the[Dagster & dbt course](https://courses.dagster.io/courses/dagster-dbt), you may recall the need for a Translator to map dbt assets to other assets in your Dagster project. Similarly, for dlt, we use a specialized translator — the `DagsterDltTranslator` — to accomplish the same thing.
 
-In this case we want to map our dlt assets to the `import_file` asset. This is relatively easy and our translator will look like this:
+In this case, we want to map our dlt asset to depend on the import_file asset, so that the file path returned by import_file is passed into the dlt source function. Fortunately, this is straightforward to implement. Our translator will look like this:
 
 
 ```python
@@ -74,7 +76,7 @@ class CustomDagsterDltTranslator(DagsterDltTranslator):
         )
 ```
 
-With the translator set. We can include it within the `dlt_assets` decorator for the `dagster_dlt_translator` parameter.
+With the translator set. We can include it within the `dlt_assets` decorator for the `dagster_dlt_translator` parameter:
 
 ```python
 @dlt_assets(
@@ -82,4 +84,3 @@ With the translator set. We can include it within the `dlt_assets` decorator for
     dagster_dlt_translator=CustomDagsterDltTranslator(),
 )
 ```
-

@@ -6,14 +6,15 @@ lesson: '4'
 
 # API Dagster assets
 
-Now that we know more how we want to structure our data extraction from the API, we can start to lay out our code in Dagster. We want to be able to run the pipeline for any date so we can begin by creating a run configuration for a specific date
+Now that we have a better understanding of how we want to structure data extraction from the API, we can start laying out our Dagster code. Since we want the pipeline to be runnable for any given date, a good first step is to create a run configuration that allows us to specify the target date at execution time. This provides the flexibility to manually trigger runs, automate daily ingestion, or even backfill historical data when needed:
 
 ```python
 class NasaDate(dg.Config):
     date: str
 ```
 
-Because run configurations inherit from Pydantic, we can also include a `field_validator` to ensure the string is in the correct format.
+Since Dagster run configurations are built on top of Pydantic models, we can use a `field_validator` to ensure the provided date string is in the correct format (e.g., `YYYY-MM-DD`). This adds a layer of validation that helps catch issues early, before the pipeline begins executing:
+
 
 ```python
 class NasaDate(dg.Config):
@@ -31,9 +32,9 @@ class NasaDate(dg.Config):
 
 ## Dagster asset
 
-With our run configuration we can now create our Dagster assets. Our first asset should be named `asteroids` and extract the previous day using the `NASAResource` resource we defined earlier. This will return a list of dicts.
+With our run configuration in place, we can now define our Dagster assets. Our first asset will be called `asteroids`, and it will use the `NASAResource` we defined earlier to extract asteroid data for a specific day. In this case, the previous day based on the date provided in the run configuration.
 
-Remember that we will also need to set a start and end date for the API call based on the date provided in the run configuration.
+To make the correct API call, we’ll need to compute both the start_date and end_date using that input date. The asset will return a list of dictionaries, each representing an asteroid observed during that time period:
 
 ```python {% obfuscated="true" %}
 @dg.asset(
@@ -54,9 +55,11 @@ def asteroids(
     )
 ```
 
-Now that we have the data from the API, we have to figure out how to get that data into DuckDB. One way to do this would be running an `INSERT` statement and loading all the values. However, most OLAP databases are not optimized for this type of workflow. It is usually much more efficient to load bulk in as files. Similar to how we loaded data in the previous lesson. So our next asset should take in the list of dicts and save them to a file.
+Now that we’ve fetched the data from the API, the next step is getting that data into DuckDB. One approach would be to run an `INSERT` statement for each record, but that pattern isn’t ideal for OLAP databases like DuckDB, which are optimized for bulk inserts rather than row-by-row operations.
 
-Also to keep things easier and avoid some of the nesting that exists in the JSON returned by the API. Let's say we only care about the following fields:
+A more efficient method, and one that aligns with what we did in the previous lesson, is to write the data to a file and then load that file into DuckDB using a `COPY` statement or a similar bulk load mechanism.
+
+So, our next asset will take the list of dictionaries returned by the API and save it to a flat file (e.g., a CSV). To simplify the output and avoid dealing with deeply nested JSON structures, we’ll narrow our focus to just the following fields:
 
 - id
 - name
@@ -95,7 +98,7 @@ def asteroids_file(
     return file_path
 ```
 
-The final asset can look very similar to the asset used in the previous lesson. In DuckDB we will create a table (with the four fields mentioned above) and execute a `COPY` statement to load the data.
+The final asset will look very similar to the one we built in the previous lesson. We’ll create a table in DuckDB with the four selected fields and use a `COPY` statement to load the data from the file we just wrote. This approach takes advantage of DuckDB’s efficient bulk loading capabilities and keeps the asset clean and performant. By reusing the same pattern, we maintain consistency across our ETL pipelines, whether the source is a local file or an external API:
 
 ```python
 @dg.asset(

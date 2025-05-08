@@ -6,23 +6,33 @@ lesson: '3'
 
 # Triggering partitions
 
-The question of how to automate your pipelines is dependent on how your data and how you react to it. At a high level there are two main choices, scheduled and event-driven.
+The question of how to automate your pipelines largely depends on how your data arrives and how you want to respond to it. At a high level, there are two main strategies: scheduled and event-driven execution.
 
-Scheduled ETL executes at fixed intervals. This works well for data that arrives at similar fixed intervals. For example if we know a file will be uploaded each morning at 5am, we can schedule our ETL process at 5:15am (including an extra buffer to be safe) to run.
+## Scheduled ETL
+Scheduled ETL pipelines run at fixed intervals. This works well for data that arrives consistently — for example, if a file is uploaded every morning at 5:00 AM, you might schedule your ETL process to run at 5:15 AM, giving it a buffer to ensure the file has arrived.
 
-Handling ETL with schedules is common because it is very easy to configure and maintain. Though it is not a very nuanced way to handle ETL. What happens if our file comes in at 5:45am? If we have proper alerting we would be notified that our pipeline did not run successfully. We would then have to manually check to see when the file has been uploaded and then trigger an adhoc run to ingest that file.
+Scheduling is a simple and common way to manage ETL. It's easy to set up, reliable in predictable environments, and integrates cleanly with most orchestration tools. However, it lacks nuance. What if the file arrives late — say at 5:45 AM? Unless you’ve implemented proper alerting, your pipeline might fail silently or generate errors. Even with alerts, you'd need to manually verify the file has arrived and trigger an ad-hoc run to process it.
 
-The opposite of scheduled pipelines are event-driven. In an event-driven pipeline, the triggering event is a change in state. This can be any number of things. But keeping with our file example, the triggering event would be when the file itself is added. In an event-driven workflow it would not matter when the file is added (5am, 5:45am, 8am...), the event of a new file being added triggers our pipeline.
+## Event-driven ETL
+Event-driven pipelines are triggered by a change in state — such as the arrival of a new file. In this model, the timing of the file’s arrival doesn’t matter (5:00 AM, 5:45 AM, 8:00 AM...). The event itself — the detection of a new file — is what triggers the pipeline.
 
-This is helpful but adds complexity. In order to determine what the new file is, there has to be some way to retain the state of what files have already been processed.
+This approach is more flexible and responsive, but it comes with additional complexity. You need a way to track state, so the system knows which files have already been processed and which ones are new. Without this, you risk duplicate processing or missed data.
 
-The best way to see this difference is going back into Dagster. We have actually set up our two partitioned pipelines to work with each of these different workflows.
+The best way to understand the difference is to see it in action within Dagster. In fact, we’ve already set up our two partitioned pipelines to demonstrate both workflows:
 
-## Scheduled
+One pipeline uses a schedule to process time-based partitions.
 
-For our scheduled pipeline we will use the assets associated with the `DailyPartitionsDefinition` partition. If we remember that partition requires a date (like "2018-01-22") for the asset to execute.
+The other uses a sensor to react to file system events and drive dynamic partitions.
 
-Because we are using the Dagster class `DailyPartitionsDefinition` to generate the fixed pattern of a daily partition, we can have Dagster automatically generate a schedule for us. All we have to do is supply our job and the schedule we would like our job to run on:
+This contrast will give you a clear picture of how Dagster supports both scheduled and event-driven ETL, and when each approach is most appropriate.
+
+## Implementing schedules
+
+For our scheduled pipeline, we’ll use the assets associated with the `DailyPartitionsDefinition` partition. As a reminder, this partition definition requires a specific date (e.g., "2018-01-22") for the asset to execute.
+
+Because we're using Dagster’s built-in `DailyPartitionsDefinition` class to generate a fixed pattern of daily partitions, Dagster can automatically create a corresponding schedule for us. All we need to do is provide the job we want to run and define the cadence at which it should run — for example, daily at a specific time. Dagster will then handle generating the appropriate partition key for each run.
+
+This makes it simple to set up reliable, automated ETL for any use case where data arrives on a regular schedule:
 
 ```python
 import dagster as dg
@@ -35,11 +45,13 @@ asset_partitioned_schedule = dg.build_schedule_from_partitioned_job(
 )
 ```
 
-## Event-driven
+## Implementing Event-driven
 
-We mentioned that event-driven pipelines are a little more complicated because they require us to maintain state. The good news is that Dagster can handle most of the hard work around this. In Dagster we use the abstraction of sensors to check for changes in an external source.
+As mentioned earlier, event-driven pipelines are a bit more complex because they require maintaining state — specifically, knowing which data has already been processed and which is new. The good news is that Dagster handles most of this complexity for you through an abstraction called sensors.
 
-Here is what a sensor would look like for the dynamically partitioned `s3_partitions_def`
+Sensors in Dagster allow you to monitor external systems — like cloud storage or APIs — and trigger pipeline runs when new data is detected. They are particularly useful when working with dynamic partitions, where the set of valid partition keys can change over time.
+
+Here’s an example of what a sensor might look like for a dynamically partitioned asset using `s3_partitions_def`:
 
 ```python
 import json
@@ -75,4 +87,6 @@ def dynamic_sensor(context: dg.SensorEvaluationContext):
     )
 ```
 
-Event-driven pipelines can be more resilient but they do have some considerations. First of all you need to have some degree of access to where state is checked. For our example this is not a problem since we are just checking our local file system. But what if the files existed in a  
+Event-driven pipelines can be more resilient and responsive, but they do come with some important considerations. First, you need access to the system where the state is being checked. In our example, this isn’t an issue since we’re monitoring the local file system. But what if the files lived in a remote system, like an S3 bucket, Azure Blob Storage, or a third-party FTP server?
+
+In those cases, you’ll need appropriate credentials and potentially network access to query those systems regularly. You also need to ensure your sensor logic is efficient — especially when dealing with cloud resources, where frequent polling could result in increased costs or throttling. Despite these concerns, when implemented properly, event-driven pipelines can significantly reduce latency and manual intervention in your workflows.

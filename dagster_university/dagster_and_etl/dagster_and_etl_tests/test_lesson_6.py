@@ -5,6 +5,7 @@ from dagster_dlt import DagsterDltResource
 from dagster_and_etl_tests.fixtures import docker_compose  # noqa: F401
 
 
+@pytest.mark.integration
 def test_dlt_postgres_assets(docker_compose):  # noqa: F811
     from dagster_and_etl.completed.lesson_6.defs.assets import dlt_postgres_assets
 

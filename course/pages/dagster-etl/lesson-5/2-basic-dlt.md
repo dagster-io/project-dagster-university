@@ -6,9 +6,11 @@ lesson: '5'
 
 # Basic dlt
 
-When you think about dlt you should consider your source and your destination. To start with our source will be a list of dicts contained in our dlt code and the destination will be the same DuckDB database we have been using.
+When working with dlt, you should think in terms of two main components: your source and your destination. In our case, the source will be a simple list of dictionaries defined in our code, and the destination will be the same DuckDB database we’ve been using throughout this course.
 
-A basic dlt pipeline would look something like this:
+This setup allows us to explore the basics of how a dlt pipeline works without adding complexity. Once you're comfortable with the mechanics, you can easily scale up to dynamic sources like APIs or cloud storage.
+
+
 
 ```python
 import os
@@ -52,14 +54,14 @@ We can execute this code by running the file:
 python dlt_quick_start.py
 ```
 
-Since dlt is a pure Python framework, there are no other dependencies we need to install.
+Since dlt is a pure Python framework, there are no additional services or heavy dependencies required, it runs natively in your Python environment.
 
 ## dlt Benefits
 
-What should stand out the most with the dlt approach is how much more erognomic it is compared to the code we wrote ourselves. If you remember how we had been working with DuckDB we had to manually program a few steps to load the data:
+What should stand out most about the dlt approach is how much more ergonomic and streamlined it is compared to the code we previously wrote by hand. If you recall, when working directly with DuckDB, we had to manually manage several steps:
 
-1. Stage the data (in a csv file).
-2. Define the table in DuckDB before loading the data.
-3. Load the data into DuckDB with a `COPY` statement.
+1. Stage the data by writing it to a CSV file.
+2. Define the target table and schema in DuckDB ahead of time.
+3. Load the data using a COPY statement.
 
-dlt hides the responsibilty for all of those steps. When we work with dlt all we have to do is define the destination. dlt handles the management of the schema and table (as well as inferring our data types) and loading data.
+With dlt, all of these responsibilities are abstracted away. Once you define your destination, dlt takes care of the rest. From managing the schema and table creation to inferring data types and performing the actual data load is handled by dlt. This greatly reduces boilerplate code and makes your ETL pipelines more maintainable and adaptable.

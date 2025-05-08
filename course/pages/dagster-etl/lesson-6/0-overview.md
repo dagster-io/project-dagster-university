@@ -4,6 +4,8 @@ module: 'dagster_etl'
 lesson: '6'
 ---
 
-We have talked about a lot of different ways to ingest data from external sources. One way we haven't discussed yet is moving data between databases. Moving data between databases is a board term since there are so many different types of databases. But the most common situation that most people think of when they are doing ETL is moving from an OLTP database (Postgres or MySQL) to a data warehouse (Snowflake or Redshift).
+# Overview
 
-Despite it being a very common flow that almost all organizations do to some point. It is a very nuanced operation and one with many potential pitfalls.
+We’ve explored several ways to ingest data from external sources, but one approach we haven’t covered yet is moving data between databases. This is a broad category, as databases vary widely in type and behavior. However, the most common scenario and one that many people associate with traditional ETL, is replicating data from an OLTP database (like Postgres or MySQL) into a data warehouse (such as Snowflake or Redshift).
+
+Although this flow is extremely common — and something nearly every data-driven organization performs to some extent — it's also a nuanced and potentially error-prone process. From schema drift and type mismatches to performance bottlenecks and data consistency challenges, moving data between systems requires careful handling and thoughtful architecture.

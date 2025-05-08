@@ -6,9 +6,9 @@ lesson: '1'
 
 # About this course
 
-This course is geared towards those who have some familiarity with dbt and Dagster. You don't need to be an expert, but you should know your way around a dbt or Dagster project.
+This course is geared towards those who have some familiarity Dagster and want to learn move about ETL. You don't need to be an expert, but you should know your way around a Dagster project.
 
-In this course, you’ll leran how to orchestrate your ETL layer with Dagster. You will load static files from S3 using both a schedule and sensor based approach and learn how Dagster integrates with common ETL tools and frameworks to dynamically generate your ETL assets.
+In this course, you’ll learn how to orchestrate your ETL layer using Dagster. You’ll load static files into a data warehouse using schedules, sensors, and partitions. You'll explore the nuances of extracting data from APIs, streamline your workflows with ETL frameworks, and replicate data across databases. Finally, you'll see how Dagster Components can help you build production-quality ETL solutions with just a few lines of code.
 
 ---
 

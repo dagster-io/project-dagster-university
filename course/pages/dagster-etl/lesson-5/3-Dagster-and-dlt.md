@@ -6,17 +6,17 @@ lesson: '5'
 
 # Dagster and dlt
 
-Dagster is built around integrating with the best tools in the space and using them where it makes sense in your pipelines. That is why we created speccial integrations for tools like dlt. This feature is called Embedded ETL and is designed to combine lightweight ETL frameworks with the robutness of Dagster.
+Dagster is built to integrate seamlessly with the best tools in the modern data ecosystem — using each tool where it makes the most sense within your pipeline. That’s why we created specialized integrations for libraries like dlt. This feature is called Embedded ETL, and it's designed to combine the simplicity and flexibility of lightweight ETL frameworks with the robustness and orchestration capabilities of Dagster.
 
-These lightweight services work so well with Dagster because they can leverage our existing architecture. Other ETL tools tend to rely on databases and queues in order to handle stateful processes and task tracking. These services overlap with Dagster so rather than having to define that architecture separately, dlt and Dagster can work together.
+These lightweight services pair well with Dagster because they can leverage Dagster’s existing architecture. Many standalone ETL tools require setting up separate infrastructure — like databases and task queues — to handle state tracking and orchestration. With Dagster, those responsibilities are already built-in. Instead of duplicating that architecture, tools like dlt can integrate directly and let Dagster manage scheduling, retries, observability, and lineage.
 
 ![Dagster and dlt](/images/dagster-etl/lesson-5/dlt-etl.png)
 
 ## dlt assets
 
-To see how this works. Let's take the dlt quick start pipeline we just created and turn it into Dagster assets.
+To see this in action, we’ll take the dlt quickstart pipeline we just created and convert it into a set of Dagster assets.
 
-We will still need the `dlt.source` decorated `simple_source` function we had defined. The only difference is we will inject the `data` list within the function itself.
+We’ll continue using the `simple_source` function decorated with `@dlt.source`. The only change is that we’ll now inject the `data` list directly within the function, so it behaves as a self-contained data source inside the pipeline:
 
 ```python
 @dlt.source
@@ -33,7 +33,8 @@ def simple_source():
     return load_dict
 ```
 
-Now within the `resources.py` file we will include the `DagsterDltResource`. This resource allows Dagster to both execute dlt pipelines. Note that we no longer need the Dagster `DuckDBResource`. That is because dlt will be reponsible for loading our data.
+Next, we’ll update our `resources.py` file to include the `DagsterDltResource`. This resource allows Dagster to execute dlt pipelines directly, bridging the gap between Dagster’s orchestration layer and dlt’s data loading capabilities. With this integration in place, we no longer need to define a separate `DuckDBResource` in Dagster — dlt will now be fully responsible for loading data into the database:
+
 
 ```python
 import dagster as dg
@@ -46,7 +47,7 @@ defs = dg.Definitions(
 )
 ```
 
-Back in `assets.py` we can now define our dlt assets. This will look similar to the dlt `pipeline` code except most of it will be defined in the `@dlt_assets` decorator. The function itself will just yield a run of the dlt pipeline.
+Back in `assets.py`, we can define our dlt assets. This will resemble the dlt.pipeline code we used earlier, but much of the logic will now be embedded in the `@dlt_assets` decorator. The function itself simply yields the result of running the `dlt pipeline`:
 
 ```python
 @dlt_assets(
@@ -62,6 +63,6 @@ def dlt_assets(context: dg.AssetExecutionContext, dlt: DagsterDltResource):
     yield from dlt.run(context=context)
 ```
 
-Now that same dlt pipeline we had before can be executed with Dagster! Using Dagster and dlt together not only makes our ETL pipelines more maintainable, but cleans up our code.
+Just like that, the same dlt pipeline we previously built can now be executed and tracked by Dagster! This integration doesn’t just improve maintainability, it also cleans up our code and reduces boilerplate, making our ETL pipelines more modular and production-ready.
 
-This is great for our simple dlt example. Next we will refactor the CSV and API pipelines from the previous sections to use dlt.
+This works well for our simple example, but the real power comes next, we’ll refactor our earlier CSV and API pipelines to use dlt for extraction and loading, while continuing to orchestrate and monitor them through Dagster.

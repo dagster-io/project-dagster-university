@@ -6,9 +6,15 @@ lesson: '4'
 
 # API Resource
 
-When working with external APIs with Dagster, it is usually best to first create a resource. Creating a resource will give us a nice abstraction that we can use across multiple assets to interact with the API. It will also make testing and maintaining our pipelines much easier.
+When working with external APIs in Dagster, it's often best to start by creating a resource. A resource provides a clean abstraction for external services, making it easy to reuse API logic across multiple assets. It also simplifies testing and long-term maintenance by isolating API-specific logic in a single, well-defined interface.
 
-Before we start writing any code, let's look at the characteristics of the NeoWs API. The base URL for this endpoint is `https://api.nasa.gov/neo/rest/v1/feed` which has three parameters associated with it.
+Before we write any code, let’s review the characteristics of the NeoWs (Near Earth Object Web Service) API. The base URL for the endpoint is:
+
+```bash
+https://api.nasa.gov/neo/rest/v1/feed
+```
+
+This endpoint supports three query parameters:
 
 | Parameter	| Type | Default | Description|
 | --- | --- | --- | --- |
@@ -16,15 +22,21 @@ Before we start writing any code, let's look at the characteristics of the NeoWs
 | end_date | YYYY-MM-DD | 7 days after start_date | Ending date for asteroid search |
 | api_key | string | DEMO_KEY | api.nasa.gov key for expanded usage |
 
-This means that a full API request would look like:
+Given this structure, a full API request might look like:
 
-`https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY`
+```bash
+https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY
+```
 
-This will return a large JSON object. To keep things easy, we can ignore most of the metadata in the JSON. We are interested in getting the information about asteroids. So from this JSON we are interested in the "near_earth_objects" field for the date we are parsing.
+The API will return a large JSON response that includes various metadata fields. To keep things simple, we’ll focus only on the part we care about — the `near_earth_objects` field. This field contains the actual asteroid data, organized by date, and is all we need for our ETL pipeline.
 
 ## Coding our resource
 
-We know the API endpoint and the parameters necessary to make an API call. Let's start writing out our resource. There are many ways to write this but we want a resource named `NASAResource` that is initialized with an API key and has a single method `get_near_earth_asteroids` that takes in two parameters: `start_date` and `end_date` which will return our JSON.
+Now that we know the API endpoint and the parameters required to make a call, let’s write our resource. There are many ways to structure this, but we’ll keep it clean and focused.
+
+We’ll create a resource called NASAResource, which is initialized with an API key. It will expose a single method: get_near_earth_asteroids(start_date, end_date), which returns the parsed JSON response from the API.
+
+Here’s what that might look like:
 
 ```python {% obfuscated="true" %}
 import dagster as dg
@@ -46,7 +58,7 @@ class NASAResource(dg.ConfigurableResource):
         return resp.json()["near_earth_objects"][start_date]
 ```
 
-Now that we have our resource defined, we can include it in the `Definitions` alongside the `DuckDBResource`.
+Now that we have our resource defined, we can include it in the `Definitions` alongside the `DuckDBResource`:
 
 ```python
 defs = dg.Definitions(

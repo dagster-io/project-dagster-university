@@ -6,15 +6,15 @@ lesson: '3'
 
 # Partitions
 
-When we run ETL pipelines in production we want a better way to track what we have loaded. This can be difficult in pipelines that have a long history of events or import data frequently.
+When running ETL pipelines in production, it's important to have a reliable way to track what data has been loaded, especially in workflows that handle frequent imports or have a long operational history. Without a structured approach, it can quickly become difficult to manage which data has been processed and which hasn't.
 
-In Dagster this can be handled with partitions. Partitions enable you to manage, process, and track large datasets more efficiently by dividing data into smaller, logical segments. Each partition represents a subset of your data (for example, a specific day, region, or category).
+Dagster addresses this challenge with partitions. Partitions allow you to break down your data into smaller, logical segments, such as by date, region, or category — and treat each segment as an independently tracked unit. This makes your pipelines more efficient, scalable, and resilient.
 
-When assets are configured with partitions we can:
+When assets are configured with partitions, you can:
 
-- Materialize and update only the relevant subset of data, rather than reprocessing everything.
-- Launch backfills for specific partitions, making it easier to recover from failures or reprocess historical data.
-- Track the status and lineage of each partition independently, providing better observability and operational control.
+- Materialize and update only specific partitions, avoiding unnecessary reprocessing of unchanged data.
+- Launch targeted backfills to reprocess historical data or recover from failures without rerunning the entire pipeline.
+- Track the status and lineage of each partition independently, giving you better visibility and control over your data workflows.
 
 ## Partitioned assets
 
@@ -33,9 +33,9 @@ partitions_def = dg.DailyPartitionsDefinition(
 )
 ```
 
-Now that we have our partition we can supply it to our `import_file` asset. We we create a new asset called `import_partition_file` that relies on the partition we just created rather than the `FilePath` run configuration.
+Now that we’ve defined our partition, we can use it in a new asset called `import_partition_file`. This asset will rely on the partition key instead of using a `FilePath` run configuration.
 
-The rest of the asset code will remain the same, but now instead of taking in any arbitrary file path set at execution, the asset can be executed with any number of partitions for each day between 2018-01-21 and 2018-01-23.
+The core logic of the asset remains the same, reading and loading a file, but instead of passing in an arbitrary file path at runtime, the asset will now be executed based on a specific partition value. For example, you can run it for each day between 2018-01-21 and 2018-01-23, with each partition corresponding to a file for that date. This allows you to scale execution, track progress per partition, and reprocess specific days as needed:
 
 ```python
 @dg.asset(
@@ -50,7 +50,7 @@ def import_partition_file(context: dg.AssetExecutionContext) -> str:
     return str(file_path.resolve())
 ```
 
-**Note**: This daily partition has an explicit end date. If we left that off, there would be valid parititons for every day up to the present.
+**Note**: This daily partition has an explicit end date. If we left that off, there would be valid partitions for every day up to the present.
 
 Finally we can add a new downstream asset that loaded the partitioned data into DuckDB:
 

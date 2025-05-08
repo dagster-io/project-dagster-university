@@ -4,10 +4,12 @@ module: 'dagster_etl'
 lesson: '3'
 ---
 
-We are going start with a simple example, loading data from external cloud storage system (like S3 or Azure Blob Storage) and load that data into database.
+# Overview
 
-This is such a common use case, many systems support this natively. If you needed to load data from S3 into most data warehouses, this can be accomplished by running a SQL statement within the data warehouse itself. However there are also cases where you need to do some amount of custom processing to the data before it can be loaded.
+We'll begin by loading data from an external system into a data warehouse. In production, this source might be something like S3 or Azure Blob Storage, but for now, we’ll start with a simpler setup using the local filesystem.
 
-Either way, this will serve as a good first use case as we describe the various ways to perform ETL with Dagster.
+This is one of the most common ETL use cases, and many data warehouses support it natively. For example, loading data from S3 can often be accomplished by executing a SQL command directly within the warehouse. However, there are also situations where some level of custom processing is needed before the data can be ingested.
+
+In either case, this provides a solid starting point to explore the different ways ETL can be implemented in Dagster.
 
 ![API ETL](/images/dagster-etl/lesson-3/csv-etl.png)

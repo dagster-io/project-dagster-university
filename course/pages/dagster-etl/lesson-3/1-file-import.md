@@ -6,22 +6,22 @@ lesson: '3'
 
 # File import
 
-As mentioned we will start by loading a file into a data warehouse. Most of the principles covered here will apply regardless of the source and destination. We can pull data from cloud storage and load them into a cloud data warehouse. But to keep things simple to start we will load a local file from a directory into DuckDB warehouse also running locally.
+As mentioned, we’ll start by loading a file into a data warehouse. While we’re using a local file and a local DuckDB instance for simplicity, the same principles apply regardless of the source and destination. You could easily adapt this to pull data from cloud storage and load it into a cloud-based data warehouse.
 
 ## Config
 
-Let's think about the first asset we need. If we are building a pipeline to load files into the data warehouse, we likely have more than one file to bring in and more files over time. Therefore we don't want to build a pipeline that is hardcoded for a single file.
+Let’s consider the first asset we need. If we’re building a pipeline to load files into a data warehouse, it’s likely that we’ll have more than one file to ingest, with new files arriving over time. Because of this, we want to avoid hardcoding the pipeline for a single file.
 
-Instead we can use a [run configuration](https://docs.dagster.io/guides/operate/configuration/run-configuration) to parameterize our process so that multiple files can be loaded.
+Instead, we can use a [run configuration](https://docs.dagster.io/guides/operate/configuration/run-configuration) to parameterize the process. This allows us to dynamically specify which file to load each time the pipeline runs.
 
-First we need a run configuration so we can set the file path:
+First, we’ll define a run configuration to set the file path:
 
 ```python
 class FilePath(dg.Config):
     path: str
 ```
 
-Next we can use that run configuration within an asset. In order to make things easier, we the asset will ensure we are looking within a specific directory relative to the asset file so we can simplify the file name we need to provide:
+Next, we can use that run configuration within an asset. To make things easier, the asset will be designed to look within a specific directory relative to the asset file itself. This way, we only need to provide the file name, rather than the full path, when specifying the configuration:
 
 ```python
 @dg.asset(
@@ -38,17 +38,17 @@ Now we can set the file path at runtime to look at any file within the `data/sou
 
 ## Loading data
 
-Now that we the file we want to load from our source, we can define the destination. In this case we will use [DuckDB](https://duckdb.org/) which is an Online Analytical Processing (OLAP) database similar to Redshift and Snowflake that can be run locally.
+Now that we’ve identified the file we want to load, we can define the destination. In this case, we’ll use [DuckDB](https://duckdb.org/), an in-process Online Analytical Processing (OLAP) database similar to Redshift and Snowflake, but designed to run locally with minimal setup.
 
-DuckDB is a very useful tool for working with large datasets and can actually read directly from files. But to demonstrate the ETL process, we will load all the data from our file into the DuckDB database.
+DuckDB is a powerful tool for working with large datasets and can even read directly from files without needing to import them. However, to demonstrate a more traditional ETL workflow, we’ll load the data from our file into a DuckDB table.
 
-One way to do this is a with a [`COPY`](https://duckdb.org/docs/stable/sql/statements/copy.html) statement within DuckDB. This is DuckDB's primary way to load external data. A `COPY` statement generally follows this a general pattern:
+One common way to do this is with DuckDB’s [`COPY`](https://duckdb.org/docs/stable/sql/statements/copy.html) statement. This is the primary method for ingesting external data into a DuckDB table. A typical COPY command follows this pattern:
 
 `COPY {table name} FROM {source}`
 
-There are other parameters we can include for things like file type and formatting but DuckDB is pretty good about assuming the correct configuration.
+You can include additional parameters to specify things like file type and formatting, but DuckDB often infers these settings correctly on its own.
 
-With that, we are ready to create our second asset.
+With that, we're ready to define our second asset. This asset will both create a table to match the schema of our file and load the file:
 
 ```python
 @dg.asset(
@@ -82,7 +82,7 @@ The code above does the following:
 2. Uses the DuckDB connection to create a table `raw_data` if it does not already exist in the DuckDB database.
 3. Copies the data from the file returned by the `import_file` asset into the `raw_data` table.
 
-Now we can execute these assets using `dg`
+Now we can execute these assets using `dg`:
 
 ```bash
 dg launch --assets import_file,duckdb_table --config-json
@@ -90,7 +90,7 @@ dg launch --assets import_file,duckdb_table --config-json
 
 ## Confirm data
 
-Then to confirm everything has loaded we can connect to our DuckDB database and query the table.
+To confirm that everything has loaded correctly, we can connect to the DuckDB database using the DuckDB CLI and run a simple query against the table.
 
 ```bash
 > duckdb data/staging/duckdb

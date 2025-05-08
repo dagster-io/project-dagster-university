@@ -40,8 +40,3 @@ ruff check . --select I --fix
 ```
 
 The Github Action will check for errors with ruff.
-
-
-```bash
-docker compose -f dagster_and_etl_tests/docker-compose.yaml up -d
-```

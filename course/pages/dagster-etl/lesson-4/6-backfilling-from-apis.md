@@ -6,11 +6,11 @@ lesson: '4'
 
 # Backfilling from APIs
 
-The ETL API is now set up to bring in all data going forward. But what about previous data? The NASA data actually goes back years and maybe we want to ingest all of it into our data warehouse. What would be the best stratedgy for that?
+Our ETL pipeline is now set up to ingest new data from the API on an ongoing basis. But what about historical data? The NASA dataset goes back several years, and we may want to load that full history into our data warehouse.
 
-We can actually use a Dagster feature we used before, partitions. If we partition our data by date we can use Dagster to launch a backfill job to ingest data for specific date ranges. This is a much more elegant solution than doing this through scripting or launching one giant run by pinging and paging through a large time range from the API.
+The best strategy for this is to use a Dagster feature we’ve already worked with: partitions. By partitioning the data by date, we can use Dagster’s built-in backfill functionality to launch jobs that process data across specific date ranges. This is a far more elegant and manageable approach than writing custom scripts or triggering a massive, monolithic run that pages through years of API results.
 
-To start let's create a daily partition.
+To begin, let’s define a daily partition for our asteroid ingestion pipeline. This will allow us to backfill one day at a time and track progress across the full history:
 
 ```python
 nasa_partitions_def = dg.DailyPartitionsDefinition(
@@ -40,10 +40,10 @@ def asteroids_partition(
     )
 ```
 
-All of the other downstream assets would remain the same so we will keep this as a single asset just to demonstrate what it would look like to implement this with partitions.
+All of the downstream assets we've already built can remain unchanged, so for this example, we’ll focus on a single partitioned asset to demonstrate how backfilling works with partitions.
 
 ## Rate limits
 
-Another reason why partitions are an ideal way to handle backfilling with APIs is because of rate limiting. Especially for APIs that return large amounts of data there is usually some mechanism in place to ensure you do not overwhelm the underlying system.
+Another reason partitions are well-suited for API-based backfills is because of rate limiting. APIs, especially those that return large volumes of data, often enforce limits to prevent excessive load on their systems.
 
-Partitions do not get around the problem of rate limiting but make it much easier to track which partitions have been ingested. And because partitions are processed individually, there is less of a risk if we hit a rate limit midway through the process.
+While partitions don't eliminate rate limits, they make it much easier to track progress and recover gracefully. Since each partition represents a discrete time window (like a single day), if a request fails due to a rate limit, only that partition is affected. This avoids losing the entire job and allows you to retry just the failed partitions, rather than restarting the entire ingestion process. It also makes it easy to throttle or space out runs as needed.
