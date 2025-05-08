@@ -45,10 +45,10 @@ def state_population_file() -> list[dict]:
 
 The code above:
 
-1. Determines the directory of the Python script being executed and appends `../data/ny.txt`
-2. Opens the `ny.txt` file
-3. Parses each row of the csv into dictionaries with `csv.DictReader` 
-4. Returns the contents of that file as a `list[dict]`
+1. Determines the directory of the Python script being executed and appends `../data/ny.txt`.
+2. Opens the `ny.txt` file.
+3. Parses each row of the csv into dictionaries with `csv.DictReader`.
+4. Returns the contents of that file as a `list[dict]`.
 
 The `ny.csv` file contains the population for three cities in New York. So what would a unit test for this asset look like? Let's think about the test function above. Tests should be deterministic. Given the same input, we should always expect the same output. In this case our input will always be the same file. And based on the type annotations, we can always expect the same list of dictionaries:
 

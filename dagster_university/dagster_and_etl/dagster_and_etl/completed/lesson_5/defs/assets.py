@@ -6,32 +6,36 @@ from pathlib import Path
 import dagster as dg
 import dlt
 import requests
+from dagster_dlt import DagsterDltResource, DagsterDltTranslator, dlt_assets
+from dagster_dlt.translator import DltResourceTranslatorData
 
 
-@dg.asset
-def dlt_simple(context: dg.AssetExecutionContext):
-    data = [
-        {"id": 1, "name": "Alice"},
-        {"id": 2, "name": "Bob"},
-    ]
+@dlt.source
+def simple_source():
+    @dlt.resource
+    def load_dict():
+        data = [
+            {"id": 1, "name": "Alice"},
+            {"id": 2, "name": "Bob"},
+        ]
 
-    @dlt.source
-    def simple_source():
-        @dlt.resource
-        def load_dict():
-            yield data
+        yield data
 
-        return load_dict
+    return load_dict
 
-    pipeline = dlt.pipeline(
-        pipeline_name="simple_pipeline",
-        destination="duckdb",
-        dataset_name="simple_data",
-    )
 
-    load_info = pipeline.run(simple_source())
-
-    return load_info
+# TODO: Enable multiple dlt assets
+# @dlt_assets(
+#     dlt_source=simple_source(),
+#     dlt_pipeline=dlt.pipeline(
+#         pipeline_name="simple_pipeline",
+#         dataset_name="simple",
+#         destination="duckdb",
+#         progress="log",
+#     ),
+# )
+# def dlt_assets(context: dg.AssetExecutionContext, dlt: DagsterDltResource):
+#     yield from dlt.run(context=context)
 
 
 class FilePath(dg.Config):
@@ -46,29 +50,40 @@ def import_file(context: dg.AssetExecutionContext, config: FilePath) -> str:
     return str(file_path.resolve())
 
 
-@dg.asset
-def dlt_load_csv(context: dg.AssetExecutionContext, import_file: str):
-    with open(import_file, mode="r", encoding="utf-8") as file:
-        reader = csv.DictReader(file)
-        data = [row for row in reader]
+@dlt.source
+def csv_source(file_path: str = None):
+    def load_csv():
+        with open(file_path, mode="r", encoding="utf-8") as file:
+            reader = csv.DictReader(file)
+            data = [row for row in reader]
 
-    @dlt.source
-    def csv_source():
-        @dlt.resource
-        def load_csv():
-            yield data
+        yield data
 
-        return load_csv
+    return load_csv
 
-    pipeline = dlt.pipeline(
+
+class CustomDagsterDltTranslator(DagsterDltTranslator):
+    def get_asset_spec(self, data: DltResourceTranslatorData) -> dg.AssetSpec:
+        default_spec = super().get_asset_spec(data)
+        return default_spec.replace_attributes(
+            deps=[dg.AssetKey("import_file")],
+        )
+
+
+@dlt_assets(
+    dlt_source=csv_source(),
+    dlt_pipeline=dlt.pipeline(
         pipeline_name="csv_pipeline",
-        destination=dlt.destinations.duckdb(os.getenv("DUCKDB_DATABASE")),
         dataset_name="csv_data",
-    )
-
-    load_info = pipeline.run(csv_source())
-
-    return load_info
+        destination="duckdb",
+        progress="log",
+    ),
+    dagster_dlt_translator=CustomDagsterDltTranslator(),
+)
+def dlt_csv_assets(
+    context: dg.AssetExecutionContext, dlt: DagsterDltResource, import_file
+):
+    yield from dlt.run(context=context, dlt_source=csv_source(import_file))
 
 
 class NasaDate(dg.Config):

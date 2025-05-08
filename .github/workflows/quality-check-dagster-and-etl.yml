@@ -11,6 +11,7 @@ on:
 
 jobs:
   check:
+    if: github.event.pull_request.draft == false
     uses: ./.github/workflows/template-quality-check.yml
     with:
       working_directory: ./dagster_university/dagster_and_etl

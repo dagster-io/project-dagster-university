@@ -32,17 +32,18 @@ title: Dagster ETL
   - [Backfilling from APIs](/dagster-etl/lesson-4/6-backfilling-from-apis)
 
 - Lesson 5: Embedded ETL
-  - [Overview](/dagster-etl/lesson-5/overview)
-  - [dlt](/dagster-etl/lesson-5/dlt)
-  - [Basic dlt](/dagster-etl/lesson-5/basic-dlt)
-  - [Dagster and dlt](/dagster-etl/lesson-5/basic-dlt)
-  - [Refactoring static data with dlt](/dagster-etl/lesson-5/refactoring-static-data--with-dlt)
-  - [Refactoring APIs with dlt](/dagster-etl/lesson-5/refactoring-apis-with-dlt)
+  - [Overview](/dagster-etl/lesson-5/0-overview)
+  - [dlt](/dagster-etl/lesson-5/1-dlt)
+  - [Basic dlt](/dagster-etl/lesson-5/2-basic-dlt)
+  - [Dagster and dlt](/dagster-etl/lesson-5/3-basic-dlt)
+  - [Refactoring static data with dlt](/dagster-etl/lesson-5/4-refactoring-static-data--with-dlt)
+  - [Refactoring APIs with dlt](/dagster-etl/lesson-5/5-refactoring-apis-with-dlt)
 
-- Lesson 6: Change Data Capture
-  - [Overview](/dagster-etl/lesson-6/overview)
-  - [Database replication](/dagster-etl/lesson-6/database-replication)
+- Lesson 6: Database replication
+  - [Overview](/dagster-etl/lesson-6/0-overview)
+  - [Database replication](/dagster-etl/lesson-6/1-database-replication)
+  - [dlt database replication](/dagster-etl/lesson-6/2-dlt-database-replication)
 
 - Lesson 7: ETL with Components
-  - [Overview](/dagster-etl/lesson-7/overview)
+  - [Overview](/dagster-etl/lesson-7/0-overview)
   - [Dagster Components](/dagster-etl/lesson-7/dagster-components)

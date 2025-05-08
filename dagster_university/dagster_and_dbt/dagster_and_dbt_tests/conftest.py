@@ -2,5 +2,5 @@ import pytest
 
 
 @pytest.fixture(autouse=True)
-def duckdb_env_path(monkeypatch):
+def duckdb_path_env(monkeypatch):
     monkeypatch.setenv("DUCKDB_DATABASE", "data/staging/data.duckdb")
