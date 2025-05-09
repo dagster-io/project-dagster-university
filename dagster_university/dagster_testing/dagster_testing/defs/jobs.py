@@ -3,7 +3,7 @@ from pathlib import Path
 import dagster as dg
 import yaml
 
-from dagster_testing.assets import lesson_6
+from dagster_testing.defs.assets import lesson_6
 
 my_job = dg.define_asset_job(
     name="jobs",
