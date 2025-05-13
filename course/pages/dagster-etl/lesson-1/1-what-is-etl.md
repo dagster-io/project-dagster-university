@@ -6,7 +6,7 @@ lesson: '1'
 
 # What is ETL?
 
-ETL stands for Extract, Transform, Load and is the process of consolidating data from various upstream sources into a single storage layer. These upstream sources often span multiple systems and data formats: including application databases, third-party services, and raw files. To fully leverage this data, it’s typically best to bring everything into one centralized location, traditionally a data warehouse or data lake, where it can be standardized and made usable across the organization.
+ETL stands for Extract, Transform, Load and is the process of consolidating data from various upstream sources into a single storage layer. These upstream sources often span multiple systems and data formats: including application databases, third-party services, and raw files. To fully leverage this data, it’s typically best to bring everything into one centralized location, traditionally a data warehouse or data lake, where it can be standardized and made usable.
 
 ![ETL](/images/dagster-etl/lesson-1/what-is-etl.png)
 

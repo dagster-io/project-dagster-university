@@ -23,7 +23,7 @@ def import_file(context: dg.AssetExecutionContext, config: FilePath) -> str:
     return str(file_path.resolve())
 ```
 
-Next, we need to define the `dlt.source` function for our CSV pipeline. This will look very similar to the `simple_source` function we used earlier, but with a few changes: it will read from a CSV file and take a file path as an input parameter. This allows us to dynamically pass in the file we want to process, while letting dlt handle the parsing and schema inference behind the scenes:
+Next, we need to define the `dlt.source` function for our CSV pipeline. This will look very similar to the `simple_source` function we used earlier, but with a few changes: it will read from a CSV file and take a file path as an input parameter. This allows us to dynamically pass in the file we want to process, while letting dlt handle the parsing and schema inference:
 
 ```python {% obfuscated="true" %}
 @dlt.source
@@ -37,6 +37,8 @@ def csv_source(file_path: str = None):
 
     return load_csv
 ```
+
+This is very helpful. Before our pipelines had to be hardcoded to define the schema for the destination table. Offloading your schema management to a framework can make your pipelines much less error prone. Though it is still good to be aware of what data types it has selected. Just because a zip code looks like an integer does not mean that is how we want the data represented.
 
 So far, things are looking very similar to our previous setup. We’ll once again use the `@dlt_assets `decorator to generate our dlt-backed assets. The one key difference in this case is that our `csv_source` function accepts an input parameter for the file path.
 

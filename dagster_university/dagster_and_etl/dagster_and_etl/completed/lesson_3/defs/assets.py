@@ -130,11 +130,11 @@ def duckdb_partition_table(
 # - Sensors
 
 
-s3_partitions_def = dg.DynamicPartitionsDefinition(name="s3")
+dynamic_partitions_def = dg.DynamicPartitionsDefinition(name="dynamic_partition")
 
 
 @dg.asset(
-    partitions_def=s3_partitions_def,
+    partitions_def=dynamic_partitions_def,
     group_name="static_etl",
 )
 def import_dynamic_partition_file(context: dg.AssetExecutionContext) -> str:

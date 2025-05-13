@@ -8,7 +8,9 @@ lesson: '1'
 
 This course is geared towards those who have some familiarity Dagster and want to learn move about ETL. You don't need to be an expert, but you should know your way around a Dagster project.
 
-In this course, you’ll learn how to orchestrate your ETL layer using Dagster. You’ll load static files into a data warehouse using schedules, sensors, and partitions. You'll explore the nuances of extracting data from APIs, streamline your workflows with ETL frameworks, and replicate data across databases. Finally, you'll see how Dagster Components can help you build production-quality ETL solutions with just a few lines of code.
+In this course, you’ll learn how to orchestrate ETL pipelines. We will discuss common ETL situations and some of their pitfalls and how to effectively layer in Dagster to make managing these pipelines easier.
+
+You’ll load static files into a data warehouse using schedules, sensors, and partitions. You'll explore the nuances of extracting data from APIs, streamline your workflows with ETL frameworks (dlt), and replicate data across databases. Finally, you'll see how Dagster Components can help you build production-quality ETL solutions with just a few lines of code.
 
 ---
 

@@ -20,6 +20,7 @@ title: Dagster ETL
   - [Partitions](/dagster-etl/lesson-3/3-partitions)
   - [Complex partitions](/dagster-etl/lesson-3/4-complex-partitions)
   - [Triggering partitions](/dagster-etl/lesson-3/5-triggering-partitions)
+  - [Cloud storage](/dagster-etl/lesson-3/6-cloud-storage)
 
 - Lesson 4: ETL with APIs
   - [Overview](/dagster-etl/lesson-4/0-overview)
@@ -43,7 +44,7 @@ title: Dagster ETL
   - [Database replication](/dagster-etl/lesson-6/1-database-replication)
   - [dlt database replication set up](/dagster-etl/lesson-6/2-dlt-database-replication-set-up)
   - [dlt database assets](/dagster-etl/lesson-6/3-dlt-database-assets)
-  - [Executing pipeline](/dagster-etl/lesson-6/4-executing-pipeline)
+  - [Executing the pipeline](/dagster-etl/lesson-6/4-executing-the-pipeline)
 
 - Lesson 7: ETL with Components
   - [Overview](/dagster-etl/lesson-7/0-overview)

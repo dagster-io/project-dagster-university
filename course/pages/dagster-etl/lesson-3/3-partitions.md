@@ -6,9 +6,9 @@ lesson: '3'
 
 # Partitions
 
-When running ETL pipelines in production, it's important to have a reliable way to track what data has been loaded, especially in workflows that handle frequent imports or have a long operational history. Without a structured approach, it can quickly become difficult to manage which data has been processed and which hasn't.
+When running ETL pipelines in production, it's important to have a reliable way to track what data has been loaded, especially when a pipeline has matured and has a longer execution history.
 
-Dagster addresses this challenge with partitions. Partitions allow you to break down your data into smaller, logical segments, such as by date, region, or category — and treat each segment as an independently tracked unit. This makes your pipelines more efficient, scalable, and resilient.
+Without a structured approach, it can become difficult to manage which data has been processed and which hasn't. Dagster addresses this challenge with partitions. Partitions allow you to break down your data into smaller, logical segments: such as by date, region, or category. Each segment can then be treated and tacked as an independent unit.
 
 When assets are configured with partitions, you can:
 
@@ -18,13 +18,13 @@ When assets are configured with partitions, you can:
 
 ## Partitioned assets
 
-Let's go back to our `import_file` asset. What is a logical way to divide that data? Let's say there are 3 files:
+Let's go back to our `import_file` asset. What is a logical way to divide that data if our three files look like this?
 
 - 2018-01-22.csv
 - 2018-01-23.csv
 - 2018-01-24.csv
 
-Where each file contains data associated with the timestamp on the file. This lends itself to a daily partition. We can configure a daily partition like so:
+Based on these files it would be safe to assume that each one corresponds to a specific day. This lends itself to a daily partition which we can configure with Dagster like so:
 
 ```python
 partitions_def = dg.DailyPartitionsDefinition(
@@ -33,9 +33,9 @@ partitions_def = dg.DailyPartitionsDefinition(
 )
 ```
 
-Now that we’ve defined our partition, we can use it in a new asset called `import_partition_file`. This asset will rely on the partition key instead of using a `FilePath` run configuration.
+Now that we’ve defined our partition, we can use the partition in a new asset called `import_partition_file`. This asset will rely on the partition key instead of the `FilePath` run configuration to determine which file should be processed.
 
-The core logic of the asset remains the same, reading and loading a file, but instead of passing in an arbitrary file path at runtime, the asset will now be executed based on a specific partition value. For example, you can run it for each day between 2018-01-21 and 2018-01-23, with each partition corresponding to a file for that date. This allows you to scale execution, track progress per partition, and reprocess specific days as needed:
+The core logic of the asset remains the same but now you can run the pipeline for each day between 2018-01-21 and 2018-01-23, with each partition corresponding to a file for that date. This allows you to scale execution, track progress per partition, and reprocess specific days as needed:
 
 ```python
 @dg.asset(
@@ -50,9 +50,9 @@ def import_partition_file(context: dg.AssetExecutionContext) -> str:
     return str(file_path.resolve())
 ```
 
-**Note**: This daily partition has an explicit end date. If we left that off, there would be valid partitions for every day up to the present.
+**Note**: This daily partition we are using in this example has an explicit end date. If we left that off, there would be valid partitions for every day from the start of the partition to the current day.
 
-Finally we can add a new downstream asset that loaded the partitioned data into DuckDB:
+Finally we can create a new downstream asset that relies on the partitioned data:
 
 ```python
 @dg.asset(
@@ -80,3 +80,5 @@ def duckdb_partition_table(
         conn.execute(table_query)
         conn.execute(f"COPY {table_name} FROM '{import_partition_file}';")
 ```
+
+Again none of the logic is different though we are including the partition in the `dg.asset` decorator.

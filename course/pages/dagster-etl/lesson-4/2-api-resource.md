@@ -32,9 +32,9 @@ The API will return a large JSON response that includes various metadata fields.
 
 ## Coding our resource
 
-Now that we know the API endpoint and the parameters required to make a call, let’s write our resource. There are many ways to structure this, but we’ll keep it clean and focused.
+Now that we know the API endpoint and the parameters required to make a call, let’s write our resource. There are many ways to structure this, but we’ll keep the implementation lean.
 
-We’ll create a resource called NASAResource, which is initialized with an API key. It will expose a single method: get_near_earth_asteroids(start_date, end_date), which returns the parsed JSON response from the API.
+We’ll create a resource called `NASAResource`, which is initialized from our API key. This resource will expose a single method: `get_near_earth_asteroids` with two parameters (start_date, end_date), which returns the parsed JSON response from the API.
 
 Here’s what that might look like:
 
@@ -58,7 +58,7 @@ class NASAResource(dg.ConfigurableResource):
         return resp.json()["near_earth_objects"][start_date]
 ```
 
-Now that we have our resource defined, we can include it in the `Definitions` alongside the `DuckDBResource`:
+Now that we have our resource defined, we can include it in the `Definitions` alongside the `DuckDBResource` resource:
 
 ```python
 defs = dg.Definitions(
@@ -73,4 +73,4 @@ defs = dg.Definitions(
 )
 ```
 
-Remember you will need to set the environment variable `NASA_API_KEY` to the API key you created if you want to execute this pipeline.
+**Note**: Remember you will need to set the environment variable `NASA_API_KEY` to the API key you created if you want to execute this pipeline.

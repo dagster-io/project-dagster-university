@@ -6,33 +6,27 @@ lesson: '3'
 
 # Triggering partitions
 
-The question of how to automate your pipelines largely depends on how your data arrives and how you want to respond to it. At a high level, there are two main strategies: scheduled and event-driven execution.
+The question of how to automate your pipelines largely depends on how your data arrives. At a high level, there are two main strategies: scheduled and event-driven execution.
 
 ## Scheduled ETL
-Scheduled ETL pipelines run at fixed intervals. This works well for data that arrives consistently — for example, if a file is uploaded every morning at 5:00 AM, you might schedule your ETL process to run at 5:15 AM, giving it a buffer to ensure the file has arrived.
+Scheduled ETL pipelines run at fixed intervals. This works well for data that arrives consistently. For example, if a file is uploaded every morning at 5:00 AM, you might schedule your ETL process to run at 5:15 AM (supplying a small buffer).
 
-Scheduling is a simple and common way to manage ETL. It's easy to set up, reliable in predictable environments, and integrates cleanly with most orchestration tools. However, it lacks nuance. What if the file arrives late — say at 5:45 AM? Unless you’ve implemented proper alerting, your pipeline might fail silently or generate errors. Even with alerts, you'd need to manually verify the file has arrived and trigger an ad-hoc run to process it.
+Scheduling is a simple and very common with ETL. It's easy to set up, reliable, and integrates cleanly with most orchestration tools. However, it lacks nuance. What if the file arrives late, say at 5:45 AM? Unless you’ve implemented proper alerting, your pipeline might fail silently. Even with alerts, you'd need to manually verify when file has actually arrived and trigger an ad-hoc run to process it.
 
 ## Event-driven ETL
-Event-driven pipelines are triggered by a change in state — such as the arrival of a new file. In this model, the timing of the file’s arrival doesn’t matter (5:00 AM, 5:45 AM, 8:00 AM...). The event itself — the detection of a new file — is what triggers the pipeline.
+Event-driven pipelines are triggered by a change in state, such as the arrival of a new file itself. In this model, the timing of the file’s arrival doesn’t matter (5:00 AM, 5:45 AM, 8:00 AM...). The detecting a new file is what triggers the pipeline.
 
 This approach is more flexible and responsive, but it comes with additional complexity. You need a way to track state, so the system knows which files have already been processed and which ones are new. Without this, you risk duplicate processing or missed data.
 
-The best way to understand the difference is to see it in action within Dagster. In fact, we’ve already set up our two partitioned pipelines to demonstrate both workflows:
+## Scheduling in Dagster
 
-One pipeline uses a schedule to process time-based partitions.
-
-The other uses a sensor to react to file system events and drive dynamic partitions.
-
-This contrast will give you a clear picture of how Dagster supports both scheduled and event-driven ETL, and when each approach is most appropriate.
+Our two partitioned pipelines can demonstrate the differences between these two strategies. The time-based partitioned assets fit a schedule while the dynamic partitioned assets will use a sensor (which is Dagster's way to handle event driven architectures).
 
 ## Implementing schedules
 
 For our scheduled pipeline, we’ll use the assets associated with the `DailyPartitionsDefinition` partition. As a reminder, this partition definition requires a specific date (e.g., "2018-01-22") for the asset to execute.
 
-Because we're using Dagster’s built-in `DailyPartitionsDefinition` class to generate a fixed pattern of daily partitions, Dagster can automatically create a corresponding schedule for us. All we need to do is provide the job we want to run and define the cadence at which it should run — for example, daily at a specific time. Dagster will then handle generating the appropriate partition key for each run.
-
-This makes it simple to set up reliable, automated ETL for any use case where data arrives on a regular schedule:
+Because we're using Dagster’s built-in `DailyPartitionsDefinition` class to generate a fixed pattern of daily partitions, Dagster can automatically create a corresponding schedule for us. All we need to do is provide the job we want to run and define the cadence at which it should run. Dagster will handle generating the appropriate partition key for each execution:
 
 ```python
 import dagster as dg
@@ -45,13 +39,17 @@ asset_partitioned_schedule = dg.build_schedule_from_partitioned_job(
 )
 ```
 
+# TODO Include screenshot
+
+This makes it simple to set up reliable, automated ETL for any use case where data arrives on a regular schedule.
+
 ## Implementing Event-driven
 
-As mentioned earlier, event-driven pipelines are a bit more complex because they require maintaining state — specifically, knowing which data has already been processed and which is new. The good news is that Dagster handles most of this complexity for you through an abstraction called sensors.
+As mentioned earlier, event-driven pipelines are a bit more complex because they require maintaining state, specifically knowing which data has already been processed and which is new. The good news is that Dagster handles most of the complexity around state management through an abstraction called sensors.
 
-Sensors in Dagster allow you to monitor external systems — like cloud storage or APIs — and trigger pipeline runs when new data is detected. They are particularly useful when working with dynamic partitions, where the set of valid partition keys can change over time.
+Sensors in Dagster allow you to monitor external systems, like cloud storage, and trigger pipeline runs when new data is detected. They are particularly useful when working with dynamic partitions, where the set of valid partition keys is not always known.
 
-Here’s an example of what a sensor might look like for a dynamically partitioned asset using `s3_partitions_def`:
+Here’s an example of what a sensor might look like for a dynamically partitioned asset:
 
 ```python
 import json
@@ -87,6 +85,21 @@ def dynamic_sensor(context: dg.SensorEvaluationContext):
     )
 ```
 
-Event-driven pipelines can be more resilient and responsive, but they do come with some important considerations. First, you need access to the system where the state is being checked. In our example, this isn’t an issue since we’re monitoring the local file system. But what if the files lived in a remote system, like an S3 bucket, Azure Blob Storage, or a third-party FTP server?
+The code above does the following:
 
-In those cases, you’ll need appropriate credentials and potentially network access to query those systems regularly. You also need to ensure your sensor logic is efficient — especially when dealing with cloud resources, where frequent polling could result in increased costs or throttling. Despite these concerns, when implemented properly, event-driven pipelines can significantly reduce latency and manual intervention in your workflows.
+1. Defines a sensor using the `dg.sensor` decorator for our `import_dynamic_partition_job` job.
+2. Sets the current state from the `context` of the sensor. This determines the history of what the sensor has already processed.
+3. Iterates through the files in the `data/sources` directory and determines if there are any new files since the last time the sensor ran.
+4. Executes the `import_dynamic_partition_job` for any new files that have been added.
+
+Now if we enable this sensor, it will trigger executions for all three files in the `data/sources` directory.
+
+# TODO Include screenshot
+
+Event-driven pipelines like this can be more resilient and responsive, but they come with some important considerations.
+
+First, you need access to the system where state is being checked. In our example, this isn’t an issue since we’re monitoring the local file system. But what if the files lived in a remote system where we don’t have full read access? That could limit our ability to detect changes reliably.
+
+You also need to ensure that your sensor logic is efficient. For example, if you’re reading from an S3 bucket containing thousands of files, your sensor would need to query the entire bucket each time it runs. To mitigate this, it's often better to include logic that filters files by a specific prefix or folder path, reducing the scope of each scan.
+
+Finally, consider what happens when a sensor is enabled for the first time. Because sensors typically detect anything that hasn’t already been processed, the initial run can trigger a large number of events — potentially attempting to process everything at once.

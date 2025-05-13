@@ -54,7 +54,7 @@ def test_import_partition_file_assets(duckdb_resource):
 
 def test_import_dynamic_partition_file_assets(duckdb_resource):
     instance = dg.DagsterInstance.ephemeral()
-    instance.add_dynamic_partitions("s3", ["2018-01-22"])
+    instance.add_dynamic_partitions("dynamic_partition", ["2018-01-22"])
 
     _assets = [
         assets.import_dynamic_partition_file,
