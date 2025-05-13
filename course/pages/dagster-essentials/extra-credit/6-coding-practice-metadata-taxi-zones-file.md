@@ -17,7 +17,6 @@ The metadata you built should look similar to the code contained in the **View a
 ```python {% obfuscated="true" %}
 import dagster as dg
 
-
 @dg.asset(
     group_name="raw_files",
 )

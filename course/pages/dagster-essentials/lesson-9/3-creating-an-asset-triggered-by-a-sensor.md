@@ -8,7 +8,7 @@ lesson: '9'
 
 Now that you’ve defined how the asset can be materialized, let’s create the ad hoc report asset.
 
-1. Add the following imports to `requests.py`:
+1. Add the following imports to `defs/assets/requests.py`:
 
    ```python
    import dagster as dg
@@ -16,7 +16,7 @@ Now that you’ve defined how the asset can be materialized, let’s create the 
 
    import matplotlib.pyplot as plt
 
-   from dagster_essentials.assets import constants
+   from dagster_essentials.defs.assets import constants
    ```
 
 2. Create a new asset named `adhoc_request` with the following arguments:
@@ -34,7 +34,7 @@ Now that you’ve defined how the asset can be materialized, let’s create the 
    def adhoc_request(config: AdhocRequestConfig, database: DuckDBResource) -> None:
    ```
 
-3. When the report is written to a file, it should have a similar name to the request. A template has been provided in `assets/constants.py` that contains a template named `REQUEST_DESTINATION_TEMPLATE_FILE_PATH` .
+3. When the report is written to a file, it should have a similar name to the request. A template has been provided in `defs/assets/constants.py` that contains a template named `REQUEST_DESTINATION_TEMPLATE_FILE_PATH` .
 
    Generate the file name by using the template and stripping the `.json` extension from the request’s file name:
 
@@ -118,7 +118,7 @@ from dagster_duckdb import DuckDBResource
 
 import matplotlib.pyplot as plt
 
-from dagster_essentials.assets import constants
+from dagster_essentials.defs.assets import constants
 
 class AdhocRequestConfig(dg.Config):
     filename: str

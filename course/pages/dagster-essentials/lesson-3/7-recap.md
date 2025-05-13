@@ -8,6 +8,7 @@ lesson: '3'
 
 In this lesson, you learned:
 
+- How to use `dg` to help build a Dagster project
 - What an asset is
 - What makes up an asset
 - How to define and materialize an asset
