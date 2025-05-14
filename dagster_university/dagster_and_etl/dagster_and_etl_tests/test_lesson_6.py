@@ -1,18 +1,23 @@
 import dagster as dg
 import pytest
-from dagster_dlt import DagsterDltResource
 
 from dagster_and_etl_tests.fixtures import docker_compose  # noqa: F401
 
 
 @pytest.mark.integration
-def test_dlt_postgres_assets(docker_compose):  # noqa: F811
-    from dagster_and_etl.completed.lesson_6.defs.assets import dlt_postgres_assets
+def test_postgres_sling_assets(docker_compose):  # noqa: F811
+    import dagster_and_etl.completed.lesson_6.defs.assets as assets
+    from dagster_and_etl.completed.lesson_6.defs.resources import sling
 
     result = dg.materialize(
-        assets=[dlt_postgres_assets],
+        assets=[
+            assets.postgres_sling_assets,
+            assets.downstream_orders,
+            assets.downstream_products,
+            assets.downstream_orders_and_products,
+        ],
         resources={
-            "dlt": DagsterDltResource(),
+            "sling": sling,
         },
     )
     assert result.success

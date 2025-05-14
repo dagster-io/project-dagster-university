@@ -1,12 +1,8 @@
--- https://dlthub.com/docs/dlt-ecosystem/verified-sources/pg_replication#setup-user
--- Create replication user
 CREATE ROLE replication_user WITH LOGIN REPLICATION;
 GRANT CREATE ON DATABASE postgres TO replication_user;
 
--- Create schema
 CREATE SCHEMA IF NOT EXISTS data;
 
--- Create tables
 CREATE TABLE data.customers (
     customer_id SERIAL PRIMARY KEY,
     first_name VARCHAR(100),
@@ -30,7 +26,6 @@ CREATE TABLE data.orders (
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Seed data
 INSERT INTO data.customers (first_name, last_name, email) VALUES
     ('Alice', 'Johnson', 'alice.johnson@example.com'),
     ('Bob', 'Smith', 'bob.smith@example.com'),

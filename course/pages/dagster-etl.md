@@ -42,12 +42,14 @@ title: Dagster ETL
 - Lesson 6: Database replication
   - [Overview](/dagster-etl/lesson-6/0-overview)
   - [Database replication](/dagster-etl/lesson-6/1-database-replication)
-  - [dlt database replication set up](/dagster-etl/lesson-6/2-dlt-database-replication-set-up)
-  - [dlt database assets](/dagster-etl/lesson-6/3-dlt-database-assets)
-  - [Executing the pipeline](/dagster-etl/lesson-6/4-executing-the-pipeline)
+  - [Sling](/dagster-etl/lesson-6/2-sling)
+  - [Sling database replication set up](/dagster-etl/lesson-6/3-sling-database-repication-set-up)
+  - [Dagster and Sling](/dagster-etl/lesson-6/4-dagster-and-sling)
+  - [Managing Sling assets](/dagster-etl/lesson-6/5-managing-sling-assets)
 
 - Lesson 7: ETL with Components
   - [Overview](/dagster-etl/lesson-7/0-overview)
   - [Dagster Components](/dagster-etl/lesson-7/1-dagster-components)
-  - [dlt with components](/dagster-etl/lesson-7/2-dlt-with-components)
+  - [Sling with components](/dagster-etl/lesson-7/2-sling-with-components)
   - [Using components](/dagster-etl/lesson-7/3-using-components)
+  - [Organizing our project](/dagster-etl/lesson-7/4-organizing-our-project)

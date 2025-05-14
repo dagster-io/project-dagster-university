@@ -9,6 +9,7 @@ dependencies = [
     "dagster-webserver",
     "dagster-duckdb",
     "dagster-dlt",
+    "dagster-sling",
     "psycopg2-binary",
     "dlt[duckdb]",
     "pandas",

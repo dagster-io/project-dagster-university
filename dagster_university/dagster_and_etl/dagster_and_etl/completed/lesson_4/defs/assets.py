@@ -24,7 +24,6 @@ class NasaDate(dg.Config):
 
 @dg.asset(
     kinds={"nasa"},
-    group_name="api_etl",
 )
 def asteroids(
     context: dg.AssetExecutionContext,
@@ -40,9 +39,7 @@ def asteroids(
     )
 
 
-@dg.asset(
-    group_name="api_etl",
-)
+@dg.asset()
 def asteroids_file(
     context: dg.AssetExecutionContext,
     asteroids,
@@ -73,7 +70,6 @@ def asteroids_file(
 
 @dg.asset(
     kinds={"duckdb"},
-    group_name="api_etl",
 )
 def duckdb_table(
     context: dg.AssetExecutionContext,
@@ -101,7 +97,6 @@ nasa_partitions_def = dg.DailyPartitionsDefinition(
 
 @dg.asset(
     kinds={"nasa"},
-    group_name="api_etl",
     partitions_def=nasa_partitions_def,
 )
 def asteroids_partition(

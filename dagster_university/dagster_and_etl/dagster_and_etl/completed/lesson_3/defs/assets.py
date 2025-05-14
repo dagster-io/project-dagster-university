@@ -14,9 +14,7 @@ class FilePath(dg.Config):
     path: str
 
 
-@dg.asset(
-    group_name="static_etl",
-)
+@dg.asset()
 def import_file(context: dg.AssetExecutionContext, config: FilePath) -> str:
     file_path = (
         Path(__file__).absolute().parent / f"../../../../data/source/{config.path}"
@@ -51,7 +49,6 @@ def not_empty(
 
 @dg.asset(
     kinds={"duckdb"},
-    group_name="static_etl",
 )
 def duckdb_table(
     context: dg.AssetExecutionContext,
@@ -88,7 +85,6 @@ partitions_def = dg.DailyPartitionsDefinition(
 
 @dg.asset(
     partitions_def=partitions_def,
-    group_name="static_etl",
 )
 def import_partition_file(context: dg.AssetExecutionContext) -> str:
     file_path = (
@@ -101,7 +97,6 @@ def import_partition_file(context: dg.AssetExecutionContext) -> str:
 @dg.asset(
     kinds={"duckdb"},
     partitions_def=partitions_def,
-    group_name="static_etl",
 )
 def duckdb_partition_table(
     context: dg.AssetExecutionContext,
@@ -135,7 +130,6 @@ dynamic_partitions_def = dg.DynamicPartitionsDefinition(name="dynamic_partition"
 
 @dg.asset(
     partitions_def=dynamic_partitions_def,
-    group_name="static_etl",
 )
 def import_dynamic_partition_file(context: dg.AssetExecutionContext) -> str:
     file_path = (
@@ -147,7 +141,6 @@ def import_dynamic_partition_file(context: dg.AssetExecutionContext) -> str:
 
 @dg.asset(
     kinds={"duckdb"},
-    group_name="static_etl",
 )
 def duckdb_dynamic_partition_table(
     context: dg.AssetExecutionContext,

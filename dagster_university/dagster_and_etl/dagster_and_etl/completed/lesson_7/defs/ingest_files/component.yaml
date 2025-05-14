@@ -1,0 +1,17 @@
+type: dagster_sling.SlingReplicationCollectionComponent
+
+attributes:
+  sling:
+    connections:
+      - name: MY_DUCKDB
+        type: duckdb
+        instance: duckdb:///var/tmp/duckdb.db
+      - name: MY_POSTGRES
+        type: postgres
+        host: localhost
+        port: 5432
+        database: test_db
+        user: test_user
+        password: test_pass
+  replications:
+    - path: replication.yaml

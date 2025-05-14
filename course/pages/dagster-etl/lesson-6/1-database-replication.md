@@ -89,5 +89,3 @@ Most modern ETL tools that handle database replication use a hybrid approach:
 This approach provides both completeness and efficiency but it requires careful coordination during the cutover to ensure that no data is lost or duplicated.
 
 If this sounds complex, that’s because it is. Replicating data between databases is challenging and full of edge cases, which is why we strongly recommend using a dedicated framework instead of trying to build one from scratch.
-
-So with that in mind… let’s dive back into dlt and see how it can help us solve this problem with less effort and more reliability.
