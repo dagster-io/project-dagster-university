@@ -16,7 +16,7 @@ To partition an incremental dbt model, you’ll need first to partition your `@d
 
 ## Defining an incremental selector
 
-We have a few changes to make to our dbt setup to get things working. In `assets/dbt.py`:
+We have a few changes to make to our dbt setup to get things working. In `defs/assets/dbt.py`:
 
 1. Add the following imports to the top of the file:
 
@@ -25,7 +25,7 @@ We have a few changes to make to our dbt setup to get things working. In `assets
    import json
    ```
 
-   This imports the `daily_partition` from `dagster_university/partitions.py` and the `json` standard module. We’ll use the `json` module to format how we tell dbt what partition to materialize.
+   This imports the `daily_partition` from `defs/partitions.py` and the `json` standard module. We’ll use the `json` module to format how we tell dbt what partition to materialize.
 
 2. We now need a way to indicate that we’re selecting or excluding incremental models, so we’ll make a new constant in the `dbt.py` file called `INCREMENTAL_SELECTOR:`
 
@@ -118,7 +118,7 @@ def dbt_analytics(context: dg.AssetExecutionContext, dbt: DbtCliResource):
     yield from dbt.cli(["build"], context=context).stream()
 ```
 
-At this point, the `dagster_university/assets/dbt.py` file should look like this:
+At this point, the `defs/assets/dbt.py` file should look like this:
 
 ```python
 import json
@@ -126,8 +126,8 @@ import json
 import dagster as dg
 from dagster_dbt import DagsterDbtTranslator, DbtCliResource, dbt_assets
 
-from dagster_and_dbt.partitions import daily_partition
-from dagster_and_dbt.project import dbt_project
+from dagster_and_dbt.defs.partitions import daily_partition
+from dagster_and_dbt.defs.project import dbt_project
 
 INCREMENTAL_SELECTOR = "config.materialized:incremental"
 

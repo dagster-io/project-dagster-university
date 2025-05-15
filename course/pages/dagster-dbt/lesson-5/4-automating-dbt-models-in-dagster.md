@@ -12,7 +12,7 @@ Check it out in the Dagster UI by clicking **Jobs** in the top navigation bar, t
 
 ![dbt assets in the trip_update_job in the Dagster UI](/images/dagster-dbt/lesson-5/trip-update-job-dbt-assets.png)
 
-Pretty cool, right? Let’s check out the code that made this happen. Open the `dagster_university/jobs.py` and look at the definition for `trip_update_job`:
+Pretty cool, right? Let’s check out the code that made this happen. Open the `defs/jobs.py` and look at the definition for `trip_update_job`:
 
 ```python
 trip_update_job = dg.define_asset_job(
