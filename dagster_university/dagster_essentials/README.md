@@ -20,20 +20,6 @@ dagster_essentials
 │   └── lesson_9
 ```
 
-## Dagster UI
-
-To launch the UI for your project you can execute.
-
-```bash
-dagster dev
-```
-
-Open http://localhost:3000 with your browser to see the project.
-
-> [!NOTE]
-> Running `dagster dev` will put you in the starter Dagster project. To see any of the completed lessons execute.
-> `dagster dev -m dagster_essentials.completed.lesson_{LESSON NUMBER}.definitions`
-
 ## Deploy on Dagster Cloud
 
 The easiest way to deploy your Dagster project is to use Dagster Cloud.

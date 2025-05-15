@@ -1,11 +1,5 @@
 import dagster as dg
 
-from dagster_essentials.completed.lesson_5.assets import metrics, trips
+import dagster_essentials.completed.lesson_5.defs as defs
 
-trip_assets = dg.load_assets_from_modules([trips])
-metric_assets = dg.load_assets_from_modules([metrics])
-
-
-defs = dg.Definitions(
-    assets=trip_assets + metric_assets,
-)
+defs = dg.components.load_defs(defs)
