@@ -1,0 +1,15 @@
+source: MY_POSTGRES
+target: MY_DUCKDB
+
+defaults:
+  mode: full-refresh
+
+  object: "{stream_schema}_{stream_table}"
+
+streams:
+  data.customers:
+  data.products:
+  data.orders:
+    mode: incremental
+    primary_key: order_id
+    update_key: order_date
