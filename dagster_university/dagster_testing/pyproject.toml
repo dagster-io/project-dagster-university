@@ -20,3 +20,17 @@ dev-dependencies = [
 [tool.dagster]
 module_name = "dagster_testing.definitions"
 code_location_name = "dagster_testing"
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+
+ignore = [
+    "ERA001", # comments are fine for a learning environment
+    "E501",   # Line too long for docstrings
+    "F401",   # unused imports already caught by pylance
+]
+
+fixable = ["ALL"]
+unfixable = [
+    "F401", # dont remove unused imports
+]
