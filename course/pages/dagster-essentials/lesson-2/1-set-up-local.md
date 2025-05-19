@@ -46,16 +46,10 @@ uv sync
 
 This will create a virtual environment that you can now use.
 
-<Tabs>
-    <TabItem value="macos" label="MacOS">
-    ```bash python -m venv dagster_tutorial source dagster_tutorial/bin/activate ```
-    ```source .venv/bin/activate ```
-    </TabItem>
-    <TabItem value="windows" label="Windows">
-    ```bash python -m venv dagster_tutorial dagster_tutorial\Scripts\activate ```
-    ```.venv\Scripts\activate ```
-    </TabItem>
-</Tabs>
+| OS | Command |
+| --- | --- |
+| MacOS | ```source .venv/bin/activate ``` |
+| Windows | ```.venv\Scripts\activate ``` |
 
 **pip**
 
@@ -67,16 +61,10 @@ python3 -m venv .venv
 
 Enter the virtual environment.
 
-<Tabs>
-    <TabItem value="macos" label="MacOS">
-    ```bash python -m venv dagster_tutorial source dagster_tutorial/bin/activate ```
-    ```source .venv/bin/activate ```
-    </TabItem>
-    <TabItem value="windows" label="Windows">
-    ```bash python -m venv dagster_tutorial dagster_tutorial\Scripts\activate ```
-    ```.venv\Scripts\activate ```
-    </TabItem>
-</Tabs>
+| OS | Command |
+| --- | --- |
+| MacOS | ```source .venv/bin/activate ``` |
+| Windows | ```.venv\Scripts\activate ``` |
 
 Install the packages.
 
