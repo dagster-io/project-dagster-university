@@ -3,7 +3,7 @@ name = "dagster-and-dbt"
 version = "0.0.1"
 description = "Dagster and dbt"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.9,<3.12"
 dependencies = [
     "dagster==1.10.*",
     "dagster-webserver",
