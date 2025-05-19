@@ -1,14 +1,5 @@
 import dagster as dg
 
-from dagster_essentials.completed.lesson_6.assets import metrics, trips
-from dagster_essentials.completed.lesson_6.resources import database_resource
+import dagster_essentials.completed.lesson_6.defs as defs
 
-trip_assets = dg.load_assets_from_modules([trips])
-metric_assets = dg.load_assets_from_modules([metrics])
-
-defs = dg.Definitions(
-    assets=trip_assets + metric_assets,
-    resources={
-        "database": database_resource,
-    },
-)
+defs = dg.components.load_defs(defs)

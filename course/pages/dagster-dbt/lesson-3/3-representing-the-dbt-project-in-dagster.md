@@ -22,7 +22,7 @@ After the import, add the following code:
 
 ```python
 dbt_project = DbtProject(
-  project_dir=Path(__file__).joinpath("..", "analytics").resolve(),
+  project_dir=Path(__file__).joinpath("../..", "analytics").resolve(),
 )
 ```
 
@@ -30,7 +30,7 @@ This code creates a representation of the dbt project called `dbt_project`. The 
 
 - The location of the `project.py` file (via `__file__`) is used as a point of reference for finding the dbt project
 - The arguments in `joinpath` point us towards our dbt project by appending the following to the current path:
-   - One directory level up (`".."`)
+   - Two directory levels up (`"../.."`)
    - A directory named `analytics`, which is the directory containing our dbt project
 - The `resolve` method turns that path into an absolute file path that points to the dbt project correctly from any file we’re working in
 

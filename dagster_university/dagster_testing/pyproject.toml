@@ -10,6 +10,7 @@ dependencies = [
     "dagster-snowflake",
     "psycopg2-binary",
     "pytest",
+    "dagster-dg",
 ]
 
 [tool.uv]
@@ -17,6 +18,9 @@ dev-dependencies = [
     "ruff",
 ]
 
-[tool.dagster]
-module_name = "dagster_testing.definitions"
-code_location_name = "dagster_testing"
+[tool.dg]
+directory_type = "project"
+
+[tool.dg.project]
+root_module = "dagster_testing"
+code_location_target_module = "dagster_testing.definitions"
