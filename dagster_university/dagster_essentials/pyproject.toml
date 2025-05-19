@@ -33,8 +33,6 @@ build-backend = "setuptools.build_meta"
 packages = ["dagster_essentials"]
 
 [tool.ruff.lint]
-select = ["E", "F", "W"]
-
 ignore = [
     "ERA001", # comments are fine for a learning environment
     "E501",   # Line too long for docstrings
