@@ -46,9 +46,10 @@ uv sync
 
 This will create a virtual environment that you can now use.
 
-```bash
-source .venv/bin/activate
-```
+| OS | Command |
+| --- | --- |
+| MacOS | ```source .venv/bin/activate ``` |
+| Windows | ```.venv\Scripts\activate ``` |
 
 **pip**
 
@@ -60,9 +61,10 @@ python3 -m venv .venv
 
 Enter the virtual environment.
 
-```bash
-source .venv/bin/activate
-```
+| OS | Command |
+| --- | --- |
+| MacOS | ```source .venv/bin/activate ``` |
+| Windows | ```.venv\Scripts\activate ``` |
 
 Install the packages.
 
