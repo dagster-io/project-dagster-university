@@ -58,7 +58,9 @@ defaults:
   mode: full-refresh
 ```
 
-For the small database we’re using, this is fine. However, as data volumes grow, you may want to switch to a more efficient replication strategy.
+This is the same as the full refresh strategy we discussed about earlier where the entire table is copied over every time. For the small database we’re using, this is fine. However, as data volumes grow, you may want to switch to a more efficient replication strategy.
+
+Sling does not offer a full CDC solution but we can still manage replication with fairly large databases by using incremental replication.
 
 Let’s think about our schema. Of the three tables, customers, products, and orders, which is most likely to grow the largest? The orders table. This makes sense: a single user may place many orders, and each order can involve multiple products.
 

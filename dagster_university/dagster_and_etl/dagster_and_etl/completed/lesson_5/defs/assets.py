@@ -143,6 +143,7 @@ nasa_partitions_def = dg.DailyPartitionsDefinition(
 
 @dg.asset(
     partitions_def=nasa_partitions_def,
+    automation_condition=dg.AutomationCondition.on_cron("@daily"),
 )
 def dlt_nasa_partition(context: dg.AssetExecutionContext):
     anchor_date = datetime.datetime.strptime(context.partition_key, "%Y-%m-%d")
@@ -187,3 +188,11 @@ def dlt_nasa_partition(context: dg.AssetExecutionContext):
     load_info = pipeline.run(nasa_neo_source())
 
     return load_info
+
+
+@dg.asset(
+    automation_condition=dg.AutomationCondition.eager(),
+    deps=[dlt_nasa_partition],
+)
+def dlt_nasa_partition_eager(context: dg.AssetExecutionContext):
+    pass

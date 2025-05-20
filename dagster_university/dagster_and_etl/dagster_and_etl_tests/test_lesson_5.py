@@ -129,6 +129,7 @@ def test_dlt_nasa_assets_partition(mock_get, asteroid_response):
     result = dg.materialize(
         assets=[
             assets.dlt_nasa_partition,
+            assets.dlt_nasa_partition_eager,
         ],
         resources={
             "dlt": DagsterDltResource(),

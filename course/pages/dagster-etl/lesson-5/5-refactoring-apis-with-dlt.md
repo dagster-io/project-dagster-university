@@ -7,3 +7,5 @@ lesson: '5'
 # Refactoring APIs with dlt
 
 TODO - Determine dlt code is correct
+
+## Declarative automation
