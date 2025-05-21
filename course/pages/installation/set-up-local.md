@@ -29,7 +29,7 @@ git clone https://github.com/dagster-io/project-dagster-university.git
 
 After cloning the Dagster University project, you’ll want to navigate to specific course within the repository. All courses are within the `dagster_university`.
 
-For example you are completing Dagster Essentials:
+For example if you are completing "Dagster Essentials" you would change into that directory:
 
 ```bash
 cd dagster_university/dagster_essentials
