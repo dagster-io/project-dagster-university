@@ -31,10 +31,10 @@ The first time you create a codespace it may take a minute for everything to sta
 
 ## Working in the Codespace
 
-In the terminal of the Codespace IDE the bottom navigate to the specific course.
+In the terminal at the bottom of the Codespace IDE, navigate to the specific course directory. For example, if you are completing "Dagster Essentials", change into that directory:
 
 ```bash
-cd dagster_university/dagster_and_dbt
+cd dagster_university/dagster_essentials
 ```
 
 To ensure everything is working you can launch the Dagster UI.
