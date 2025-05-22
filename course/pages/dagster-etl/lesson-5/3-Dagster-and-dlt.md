@@ -8,7 +8,7 @@ lesson: '5'
 
 Dagster is built to integrate seamlessly with the best tools in the modern data ecosystem — using each tool where it makes the most sense within your pipeline. That’s why we created specialized integrations for libraries like dlt. This feature is called Embedded ETL, and it's designed to combine the simplicity and flexibility of lightweight ETL frameworks with the robustness and orchestration capabilities of Dagster.
 
-These lightweight services pair well with Dagster because they can leverage Dagster’s existing architecture. Many standalone ETL tools require setting up separate infrastructure — like databases and task queues — to handle state tracking and orchestration. With Dagster, those responsibilities are already built-in. Instead of duplicating that architecture, tools like dlt can integrate directly and let Dagster manage scheduling, retries, observability, and lineage.
+These lightweight services pair well with Dagster because they can leverage Dagster’s existing architecture. Many standalone ETL tools require setting up separate infrastructure, like databases and task queues, to handle state tracking and orchestration. With Dagster, those responsibilities are already built-in. Instead of duplicating that architecture, tools like dlt can integrate directly and let Dagster manage scheduling and focus on what it does best around orchestration and observability.
 
 ![Dagster and dlt](/images/dagster-etl/lesson-5/dlt-etl.png)
 
@@ -65,4 +65,4 @@ def dlt_assets(context: dg.AssetExecutionContext, dlt: DagsterDltResource):
 
 Just like that, the same dlt pipeline we previously built can now be executed and tracked by Dagster! This integration doesn’t just improve maintainability, it also cleans up our code and reduces boilerplate, making our ETL pipelines more modular and production-ready.
 
-This works well for our simple example, but the real power comes next, we’ll refactor our earlier CSV and API pipelines to use dlt for extraction and loading, while continuing to orchestrate and monitor them through Dagster.
+This works well for our simple example, but the real power comes next, we’ll refactor our earlier CSV and API pipelines to use dlt for extraction and loading, while continuing to orchestrate and monitor them through Dagster and represent each dlt resource as an asset.

@@ -10,12 +10,12 @@ from dagster_duckdb import DuckDBResource
 # - Asset checks
 
 
-class FilePath(dg.Config):
+class IngestionFileConfig(dg.Config):
     path: str
 
 
 @dg.asset()
-def import_file(context: dg.AssetExecutionContext, config: FilePath) -> str:
+def import_file(context: dg.AssetExecutionContext, config: IngestionFileConfig) -> str:
     file_path = (
         Path(__file__).absolute().parent / f"../../../../data/source/{config.path}"
     )
@@ -116,6 +116,9 @@ def duckdb_partition_table(
             ) 
         """
         conn.execute(table_query)
+        conn.execute(
+            f"DELETE FROM {table_name} WHERE date = '{context.partition_key}';"
+        )
         conn.execute(f"COPY {table_name} FROM '{import_partition_file}';")
 
 
@@ -160,4 +163,7 @@ def duckdb_dynamic_partition_table(
             ) 
         """
         conn.execute(table_query)
+        conn.execute(
+            f"DELETE FROM {table_name} WHERE date = '{context.partition_key}';"
+        )
         conn.execute(f"COPY {table_name} FROM '{import_dynamic_partition_file}'")

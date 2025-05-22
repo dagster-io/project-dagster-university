@@ -14,10 +14,10 @@ Let’s consider the first asset we need. If we’re building a pipeline to load
 
 Instead, we can use a [run configuration](https://docs.dagster.io/guides/operate/configuration/run-configuration) to parameterize the process. This allows us to dynamically specify which file to load each time we execute the pipeline.
 
-First, we’ll define a run configuration to set the file path:
+First, we’ll define a run configuration to set the file path in the `defs/assets.py` file:
 
 ```python
-class FilePath(dg.Config):
+class IngestionFileConfig(dg.Config):
     path: str
 ```
 
@@ -29,7 +29,7 @@ Next, we will write an asset that uses that config. To make things easier, the a
 @dg.asset(
     group_name="static_etl",
 )
-def import_file(context: dg.AssetExecutionContext, config: FilePath) -> str:
+def import_file(context: dg.AssetExecutionContext, config: IngestionFileConfig) -> str:
     file_path = (
         Path(__file__).absolute().parent / f"../../../../data/source/{config.path}"
     )
@@ -84,7 +84,7 @@ The code above does the following:
 
 1. Connects to DuckDB using the Dagster resource `DuckDBResource`.
 2. Uses the DuckDB connection to create a table `raw_data` if that tables does not already exist.
-3. Runs a `COPY` for file path from the `import_file` asset into the `raw_data` table.
+3. Runs a `COPY` for file path from the `import_file` asset into the `raw_data` table. `COPY` is an append command so if we run the command twice, the data will be loaded again.
 
 These two assets are all we need to ingest the data. We can execute these assets from the command line using `dg`:
 
@@ -92,7 +92,15 @@ These two assets are all we need to ingest the data. We can execute these assets
 dg launch --assets import_file,duckdb_table --config-json "{\"config\":{\"ops\":{\"import_file\":\"2018-01-22.csv\"}}}"
 ```
 
-Remember that since we are using a run configuration, we need to supply a value for the file path in order to execute the assets.
+Or you can launch the assets in the Dagster UI using:
+
+```bash
+dg dev
+```
+
+# TODO Include screenshot
+
+In either case (whether using the CLI or the UI) remember that we need to provide a value for the file path as a run configuration in order to execute the assets.
 
 ## Confirm data
 

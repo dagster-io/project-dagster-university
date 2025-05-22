@@ -32,7 +32,7 @@ def test_import_file_assets(duckdb_resource):
         resources=duckdb_resource,
         run_config=dg.RunConfig(
             {
-                "import_file": assets.FilePath(path="2018-01-22.csv"),
+                "import_file": assets.IngestionFileConfig(path="2018-01-22.csv"),
             }
         ),
     )

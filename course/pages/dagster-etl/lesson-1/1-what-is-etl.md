@@ -16,6 +16,16 @@ A quick note on definitions. If you're familiar with ETL, you may have also enco
 
 With the rise of modern data warehouses and lakes that support semi-structured and unstructured data, it's become less critical to transform data into a strict schema before loading. As a result, ETL and ELT are increasingly used interchangeably. Throughout this course, we’ll refer to the process as ETL, even if some examples technically follow the ELT pattern.
 
+Each stage of the ETL/ELT process can take many different forms:
+
+| Stage | Types|
+| --- | --- |
+| (E)xtract | Web scraping, external files (e.g., CSV, Excel), database replication, API ingestion, log parsing, message queues (Kafka, Kinesis) |
+| (T)ransform | Data cleaning, normalization, filtering, aggregation, enrichment, joins, deduplication, business logic application, format conversion |
+| (L)oad | Data warehouse ingestion (e.g., BigQuery, Snowflake, Redshift), database inserts/updates, data lake storage (e.g., S3, Delta Lake), streaming sinks, flat file outputs |
+
+A variety of tools are available to perform one or more of these stages. For example, a tool like Fivetran can handle both extraction and loading, while a tool like dbt is commonly used for transformation.
+
 ## The Importance of ETL
 
 No matter the industry, ETL is foundational to data systems and applications. When implemented effectively, your data becomes a strategic moat that powers everything from operational dashboards to machine learning pipelines. Whether you're building classic BI reports or cutting-edge AI products, the value lies less in the tools and more in the quality and structure of your data.

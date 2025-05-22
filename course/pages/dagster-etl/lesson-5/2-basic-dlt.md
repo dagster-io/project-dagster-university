@@ -58,10 +58,26 @@ Since dlt is a pure Python framework, there are no additional services or heavy 
 
 ## dlt Benefits
 
-What should stand out most about the dlt approach is how much more ergonomic and streamlined it is compared to the code we previously wrote by hand. If you recall, when working directly with DuckDB, we had to manually manage several steps:
+What stands out most about the dlt approach is how much more ergonomic and streamlined it is compared to the code we previously wrote by hand. Recall that when working directly with DuckDB, we had to manually manage several tedious steps:
 
-1. Stage the data by writing it to a CSV file.
-2. Define the target table and schema in DuckDB ahead of time.
-3. Load the data using a COPY statement.
+* Stage the data by writing it to a CSV file.
+* Define the target table and schema in DuckDB ahead of time.
+* Load the data using a COPY statement.
 
-With dlt, all of these responsibilities are abstracted away. Once you define your destination, dlt takes care of the rest. From managing the schema and table creation to inferring data types and performing the actual data load is handled by dlt. This greatly reduces boilerplate code and makes your ETL pipelines more maintainable and adaptable.
+With dlt, all of these responsibilities are abstracted away. Once you define your destination, dlt takes care of the rest. Its configuration based approach to REST APIs minimizes the amount of code required, reducing it to just the configuration object.
+
+In addition to simplifying setup, dlt handles a number of complex API behaviors out of the box, including:
+
+* Pagination
+* Chained/multi-step API requests
+* Other common API reliability issues
+
+dlt also takes care of:
+
+* Schema and table creation
+* Data type inference
+* Loading the data into your destination
+
+This dramatically reduces boilerplate code and makes your ETL pipelines more maintainable, reliable, and adaptable.
+
+Finally, while we’re building a custom API integration here, it's worth noting that dlt also provides out-of-the-box support for [many common verified sources](https://dlthub.com/docs/dlt-ecosystem/verified-sources/).

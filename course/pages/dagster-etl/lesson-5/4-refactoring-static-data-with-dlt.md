@@ -64,7 +64,7 @@ def dlt_csv_assets(
 
 This setup might look complete, but there’s one final step we need to take. Because dlt assets are generated differently, they also have a unique way of handling dependencies.
 
-If you’ve taken the[Dagster & dbt course](https://courses.dagster.io/courses/dagster-dbt), you may recall the need for a Translator to map dbt assets to other assets in your Dagster project. Similarly, for dlt, we use a specialized translator — the `DagsterDltTranslator` — to accomplish the same thing.
+If you’ve taken the [Dagster & dbt course](https://courses.dagster.io/courses/dagster-dbt), you may recall the need for a Translator to map dbt assets to other assets in your Dagster project. Similarly, for dlt, we use a specialized translator — the `DagsterDltTranslator` — to accomplish the same thing.
 
 In this case, we want to map our dlt asset to depend on the import_file asset, so that the file path returned by import_file is passed into the dlt source function. Fortunately, this is straightforward to implement. Our translator will look like this:
 

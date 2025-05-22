@@ -61,9 +61,9 @@ def asteroids_file(
         writer = csv.DictWriter(file, fieldnames=fields)
 
         writer.writeheader()
-        for row in asteroids:
-            filtered_row = {key: row[key] for key in fields if key in row}
-            writer.writerow(filtered_row)
+        writer.writerows(
+            {key: row[key] for key in fields if key in row} for row in asteroids
+        )
 
     return file_path
 

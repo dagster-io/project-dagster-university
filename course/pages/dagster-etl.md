@@ -9,9 +9,6 @@ title: Dagster ETL
   - [Project preview](/dagster-etl/lesson-1/3-project-preview)
 
 - Lesson 2: Installation & Setup
-  - [Requirements](/dagster-etl/lesson-2/0-requirements)
-  - [Set up local](/dagster-etl/lesson-2/1-set-up-local)
-  - [Set up Codespace](/dagster-etl/lesson-2/2-set-up-codespace)
 
 - Lesson 3: Loading Static Data into DuckDB
   - [Overview](/dagster-etl/lesson-3/0-overview)

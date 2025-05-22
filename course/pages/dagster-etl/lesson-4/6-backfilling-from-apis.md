@@ -47,3 +47,38 @@ All of the downstream assets we've already built can remain unchanged, so for th
 Another reason partitions are well-suited for API-based backfills is because of rate limiting. APIs, especially those that return large volumes of data, often enforce limits to prevent excessive load on their systems.
 
 While partitions don't eliminate rate limits, they make it much easier to track progress and recover gracefully. Since each partition represents a discrete time window (like a single day), if a request fails due to a rate limit, only that partition is affected. This avoids losing the entire job and allows you to retry just the failed partitions, rather than restarting the entire ingestion process. It also makes it easy to throttle or space out runs as needed.
+
+If we wanted to include rate limiting functionality into our `NASAResource` what might it look like?
+
+```python {% obfuscated="true" %}
+import dagster as dg
+import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
+
+class NASAResource(dg.ConfigurableResource):
+    api_key: str
+
+    def get_near_earth_asteroids(self, start_date: str, end_date: str):
+        url = "https://api.nasa.gov/neo/rest/v1/feed"
+        params = {
+            "start_date": start_date,
+            "end_date": end_date,
+            "api_key": self.api_key,
+        }
+
+        # Retries
+        session = requests.Session()
+        retries = Retry(
+            total=5,
+            backoff_factor=0.5,
+            status_forcelist=[500, 502, 503, 504],
+            allowed_methods=["GET"]
+        )
+        adapter = HTTPAdapter(max_retries=retries)
+        session.mount("https://", adapter)
+
+        resp = session.get(url, params=params)
+        return resp.json()["near_earth_objects"][start_date]
+```

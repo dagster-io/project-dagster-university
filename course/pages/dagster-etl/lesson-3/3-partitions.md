@@ -78,7 +78,15 @@ def duckdb_partition_table(
             ) 
         """
         conn.execute(table_query)
+        conn.execute(f"DELETE FROM {table_name} WHERE date = '{context.partition_key}';")
         conn.execute(f"COPY {table_name} FROM '{import_partition_file}';")
 ```
 
-Again none of the logic is different though we are including the partition in the `dg.asset` decorator.
+There are two key differences from the original logic:
+
+1. We now include the partition in the @dg.asset decorator.
+2. We add a `DELETE FROM...` SQL statement targeting the table for the specific partition date. This ensures the pipeline is idempotent, allowing us to run backfills without the risk of data duplication.
+
+Deleting from the table before loading new data is one strategy for achieving idempotence. Another approach is to import the incoming data into a staging table and then upsert it into the final table. This method has the advantage of preserving existing data in the final table in case an error occurs during the copy process.
+
+While the staging strategy is generally more resilient, we will use the simpler `DELETE FROM...` method for the purposes of this course.
