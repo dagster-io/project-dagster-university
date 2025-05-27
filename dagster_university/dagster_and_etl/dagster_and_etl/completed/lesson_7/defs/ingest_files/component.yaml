@@ -5,7 +5,7 @@ attributes:
     connections:
       - name: MY_DUCKDB
         type: duckdb
-        instance: duckdb:///var/tmp/duckdb.db
+        instance: /tmp/duckdb.db
       - name: MY_POSTGRES
         type: postgres
         host: localhost

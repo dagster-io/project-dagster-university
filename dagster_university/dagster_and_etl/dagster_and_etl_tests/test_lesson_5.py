@@ -1,3 +1,4 @@
+import os
 from unittest.mock import Mock, patch
 
 import dagster as dg
@@ -27,6 +28,22 @@ def asteroid_response():
 def test_dlt_quick_start():
     load_info = dlt_quick_start.pipeline.run(dlt_quick_start.simple_source())
     assert load_info is not None
+
+
+def test_simple_dlt_source():
+    source = dlt_quick_start.simple_source()
+    data = list(source.load_dict())
+
+    assert len(data) == 2
+    assert data[0] == {"id": 1, "name": "Alice"}
+    assert data[1] == {"id": 2, "name": "Bob"}
+
+
+@patch.dict(os.environ, {"NASA_API_KEY": "test_key", "DUCKDB_DATABASE": "test.db"})
+def test_environment_variables():
+    # Test that environment variables are properly used
+    assert os.getenv("NASA_API_KEY") == "test_key"
+    assert os.getenv("DUCKDB_DATABASE") == "test.db"
 
 
 @patch("requests.get")

@@ -2,15 +2,15 @@
 title: Dagster ETL
 ---
 
-- Lesson 1: Introduction to ETL with Dagster
+- Lesson 1: Introduction
   - [About this course](/dagster-etl/lesson-1/0-about-this-course)
   - [What is ETL?](/dagster-etl/lesson-1/1-what-is-etl)
   - [ETL and Dagster](/dagster-etl/lesson-1/2-etl-and-dagster)
   - [Project preview](/dagster-etl/lesson-1/3-project-preview)
 
-- Lesson 2: Installation & Setup
+- Lesson 2: Installation & setup
 
-- Lesson 3: Loading Static Data into DuckDB
+- Lesson 3: Loading static data
   - [Overview](/dagster-etl/lesson-3/0-overview)
   - [File import](/dagster-etl/lesson-3/1-file-import)
   - [Data integrity](/dagster-etl/lesson-3/2-data-integrity)
@@ -24,7 +24,7 @@ title: Dagster ETL
   - [APIs](/dagster-etl/lesson-4/1-apis)
   - [API resource](/dagster-etl/lesson-4/2-api-resource)
   - [ETL with API](/dagster-etl/lesson-4/3-etl-with-api)
-  - [API Dagster](/dagster-etl/lesson-4/4-api-dagster-assets)
+  - [API Dagster assets](/dagster-etl/lesson-4/4-api-dagster-assets)
   - [Triggering API jobs](/dagster-etl/lesson-4/5-triggering-api-jobs)
   - [Backfilling from APIs](/dagster-etl/lesson-4/6-backfilling-from-apis)
 
@@ -47,6 +47,6 @@ title: Dagster ETL
 - Lesson 7: ETL with Components
   - [Overview](/dagster-etl/lesson-7/0-overview)
   - [Dagster Components](/dagster-etl/lesson-7/1-dagster-components)
-  - [Sling with components](/dagster-etl/lesson-7/2-sling-with-components)
-  - [Using components](/dagster-etl/lesson-7/3-using-components)
+  - [Sling with Components](/dagster-etl/lesson-7/2-sling-with-components)
+  - [Using Components](/dagster-etl/lesson-7/3-using-components)
   - [Organizing our project](/dagster-etl/lesson-7/4-organizing-our-project)

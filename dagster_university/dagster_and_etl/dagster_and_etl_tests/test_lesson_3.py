@@ -1,3 +1,5 @@
+import csv
+import tempfile
 from pathlib import Path
 
 import dagster as dg
@@ -69,12 +71,50 @@ def test_import_dynamic_partition_file_assets(duckdb_resource):
     assert result.success
 
 
-def test_not_empty(config_file):
-    asset_check_pass = assets.not_empty(
+def test_invalid_share_price(config_file):
+    asset_check_pass = assets.invalid_share_price(
         dg.build_asset_context(),
         import_file=config_file,
     )
     assert asset_check_pass.passed
+
+
+def test_invalid_share_price_failure():
+    with tempfile.NamedTemporaryFile(mode="w", delete=False) as temp_file:
+        writer = csv.DictWriter(
+            temp_file,
+            fieldnames=["date", "share_price", "amount", "spend", "shift", "spread"],
+        )
+        writer.writeheader()
+        writer.writerow(
+            {
+                "date": "2018-01-22",
+                "share_price": "0",  # Invalid share price
+                "amount": "100",
+                "spend": "1000",
+                "shift": "0.1",
+                "spread": "0.2",
+            }
+        )
+
+    try:
+        asset_check_fail = assets.invalid_share_price(
+            dg.build_asset_context(),
+            import_file=temp_file.name,
+        )
+        assert not asset_check_fail.passed
+        assert "'share' is below 0" in asset_check_fail.metadata
+    finally:
+        Path(temp_file.name).unlink()
+
+
+def test_asset_check_with_actual_data(config_file):
+    asset_check_pass = assets.invalid_share_price(
+        dg.build_asset_context(),
+        import_file=config_file,
+    )
+    assert asset_check_pass.passed
+    assert asset_check_pass.metadata == {}
 
 
 def test_def_can_load():

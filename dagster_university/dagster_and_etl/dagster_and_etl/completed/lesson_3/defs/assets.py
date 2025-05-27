@@ -27,7 +27,7 @@ def import_file(context: dg.AssetExecutionContext, config: IngestionFileConfig) 
     blocking=True,
     description="Ensure file contains no zero value shares",
 )
-def not_empty(
+def invalid_share_price(
     context: dg.AssetCheckExecutionContext,
     import_file,
 ) -> dg.AssetCheckResult:
