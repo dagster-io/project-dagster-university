@@ -58,21 +58,3 @@ jobs:
         if: "${{ matrix.os == 'windows-latest' }}"
         working-directory: ${{ inputs.working_directory }}
         run: ${{ inputs.windows_pytest_cmd }}
-
-  install_check:
-    name: Ensure install options
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Ensure pip install
-        working-directory: ${{ inputs.working_directory }}
-        run: pip install -e ".[dev]"

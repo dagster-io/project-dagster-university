@@ -170,6 +170,7 @@ cython_debug/
 #.idea/
 
 tmp*/
+.tmp*
 
 *.duckdb
 *.geojson
@@ -187,4 +188,3 @@ tmp*/
 .user.yml
 
 postgres_data/
-

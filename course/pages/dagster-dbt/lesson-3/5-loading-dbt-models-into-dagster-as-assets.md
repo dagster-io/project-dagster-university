@@ -33,7 +33,7 @@ We’ll only create one `@dbt_assets` definition for now, but in a later lesson,
 2. Add the following imports to the top of the file:
 
    ```python
-   from dagster import AssetExecutionContext
+   import dagster as dg
    from dagster_dbt import dbt_assets, DbtCliResource
    
    from dagster_and_dbt.project import dbt_project
@@ -45,10 +45,12 @@ We’ll only create one `@dbt_assets` definition for now, but in a later lesson,
    @dbt_assets(
        manifest=dbt_project.manifest_path,
    )
-   def dbt_analytics(context: AssetExecutionContext, dbt: DbtCliResource):
+   def dbt_analytics(context: dg.AssetExecutionContext, dbt: DbtCliResource):
    ```
 
    Here, we used `dbt_project.manifest_path` to provide the reference to the project's manifest file. This is possible because the `dbt_project` representation we created earlier contains the manifest path, accessible by using the `manifest_path` attribute.
+
+   Notice we provided two arguments here. The first argument is the `context`, which indicates which dbt models to run and any related configurations. The second refers to the dbt resource you’ll be using to run dbt.
 
 4. Finally, add the following to the body of `dbt_analytics` function:
 
@@ -56,11 +58,9 @@ We’ll only create one `@dbt_assets` definition for now, but in a later lesson,
    yield from dbt.cli(["run"], context=context).stream()
    ```
 
-   Notice we provided two arguments here. The first argument is the `context`, which indicates which dbt models to run and any related configurations. The second refers to the dbt resource you’ll be using to run dbt.
-
    Let’s review what’s happening in this line in a bit more detail:
 
-   - We use the `dbt` argument (which is a `DbtCliResource`) to execute a dbt command through its `.cli` method.
+   - We use the `dbt` resource (defined in the asset's second argument, which is a `DbtCliResource`) to execute a dbt command through its `.cli` method.
    - The `.stream()` method fetches the events and results of this dbt execution.
      - This is one of multiple ways to get the Dagster events, such as what models materialized or tests passed. We recommend starting with this and exploring other methods in the future as your use cases grow (such as fetching the run artifacts after a run). In this case, the above line will execute `dbt run`.
    - The results of the `stream` are a Python generator of what Dagster events happened. We used `yield from` (not just `yield`!) to have Dagster track asset materializations.
