@@ -1,6 +1,7 @@
 import csv
 import tempfile
 from pathlib import Path
+from unittest.mock import MagicMock
 
 import dagster as dg
 import pytest
@@ -22,6 +23,16 @@ def duckdb_resource():
             database="data/staging/data.duckdb",
         )
     }
+
+
+@pytest.fixture()
+def duckdb_mock_resource():
+    mock_conn = MagicMock()
+    mock_conn.execute = MagicMock()
+
+    mock_db = MagicMock()
+    mock_db.get_connection.return_value.__enter__.return_value = mock_conn
+    return {"database": mock_db}
 
 
 def test_import_file_assets(duckdb_resource):
@@ -115,6 +126,26 @@ def test_asset_check_with_actual_data(config_file):
     )
     assert asset_check_pass.passed
     assert asset_check_pass.metadata == {}
+
+
+def test_import_file_s3_assets(duckdb_mock_resource):
+    _assets = [
+        assets.import_file_s3,
+        assets.duckdb_table_s3,
+    ]
+    result = dg.materialize(
+        assets=_assets,
+        resources=duckdb_mock_resource,
+        run_config=dg.RunConfig(
+            {
+                "import_file_s3": assets.IngestionFileS3Config(
+                    bucket="test-bucket",
+                    path="source/2018-01-22.csv",
+                ),
+            }
+        ),
+    )
+    assert result.success
 
 
 def test_def_can_load():

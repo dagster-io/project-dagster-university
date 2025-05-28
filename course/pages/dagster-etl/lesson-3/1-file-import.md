@@ -6,15 +6,17 @@ lesson: '3'
 
 # File import
 
-As mentioned, we’ll start by loading a file into a data warehouse. While we’re using a local file and a local DuckDB instance for simplicity, the same principles apply regardless of the source and destination. You could easily adapt this pipeline to pull data from cloud storage and load it into a cloud-based data warehouse.
+As mentioned, we’ll start by loading a file into a data warehouse. While we’re using a local file and a local DuckDB instance for simplicity, the same principles apply regardless of the source and destination. You could easily adapt this pipeline to pull data from another storage layer and load it into a different data warehouse.
 
 ## Config
 
-Let’s consider the first asset we need. If we’re building a pipeline to load files into a data warehouse, it’s likely that we’ll have more than one file to ingest, with new files arriving over time. Because of this, we want to avoid hardcoding the pipeline for a single file.
+Let’s consider the first asset we need. As we discussed, the logical approach to designing ETL pipelines is to start as far left in the diagram as possible and follow the data as it progresses through our system.
+
+If we’re building a pipeline to load files into a data warehouse, we should start with the files we want to important. When we think about those files, it’s likely that we’ll have more than one file to ingest, with new files arriving over time. Because of this, we want to avoid hardcoding the pipeline for a single file.
 
 Instead, we can use a [run configuration](https://docs.dagster.io/guides/operate/configuration/run-configuration) to parameterize the process. This allows us to dynamically specify which file to load each time we execute the pipeline.
 
-First, we’ll define a run configuration to set the file path in the `defs/assets.py` file:
+First, we’ll define a run configuration so we can set the file path. In the `defs/assets.py` file add the code for the run configuration:
 
 ```python
 class IngestionFileConfig(dg.Config):
@@ -23,12 +25,10 @@ class IngestionFileConfig(dg.Config):
 
 Run configurations inherit from the Dagster `Config` class and allow us to define schemas that can be used in our Dagster assets.
 
-Next, we will write an asset that uses that config. To make things easier, the asset will be designed to look within a specific directory relative to the asset file itself. This way, we only need to provide the file name, rather than the full path, when specifying the configuration:
+Next, we will write an asset that uses this config. To make things easier, the asset will be designed to look within a specific directory relative to the asset file itself. This way, we only need to provide the file name, rather than the full path, when specifying the configuration:
 
 ```python
-@dg.asset(
-    group_name="static_etl",
-)
+@dg.asset()
 def import_file(context: dg.AssetExecutionContext, config: IngestionFileConfig) -> str:
     file_path = (
         Path(__file__).absolute().parent / f"../../../../data/source/{config.path}"
@@ -42,7 +42,28 @@ This asset will take in the run config and return the full file path string of a
 
 Now that we’ve identified the file we want to load, we can define the destination. In this case, we’ll use [DuckDB](https://duckdb.org/). DuckDB is an in-process Online Analytical Processing (OLAP) database similar to Redshift and Snowflake, but designed to run locally with minimal setup.
 
-DuckDB is a powerful tool for working with large datasets and can even read directly from files without needing to import them. However, to demonstrate a more traditional ETL workflow, we’ll load the data from our file directly into a DuckDB table.
+In order to use DuckDB we need to establish a connection with our database. In Dagster we can do this with resources, so in the `resources.py` file, add the following:
+
+```python
+import dagster as dg
+from dagster_duckdb import DuckDBResource
+
+defs = dg.Definitions(
+    resources={
+        "database": DuckDBResource(
+            database="data/staging/data.duckdb",
+        ),
+    },
+)
+```
+
+The code above does the following:
+1. Maps the `DuckDBResource` resource to the `Definitions` object.
+2. Initializes the `DuckDBResource` to use the local file at `data/staging/data.duckdb` as the backend.
+
+Defining our resource here means we can use it throughout out Dagster project.
+
+## DuckDB asset
 
 Like most databases, DuckDB offers multiple ways to ingest data. One common way when working with files is using DuckDB’s [`COPY`](https://duckdb.org/docs/stable/sql/statements/copy.html) statement. A typical COPY command follows this pattern:
 
@@ -52,12 +73,11 @@ COPY {table name} FROM {source}
 
 This can include additional parameters to specify things like file type and formatting, but DuckDB often infers these settings correctly so we will not worry about it here.
 
-But before we load the data into DuckDB, we need a destination table. We can design an asset that creates a table to match the schema of our file and load the file:
+As well as loading data into DuckDB, we need a destination table defined. We can design an asset that creates a table to match the schema of our file and load the file:
 
 ```python
 @dg.asset(
     kinds={"duckdb"},
-    group_name="static_etl",
 )
 def duckdb_table(
     context: dg.AssetExecutionContext,
@@ -77,13 +97,13 @@ def duckdb_table(
             ) 
         """
         conn.execute(table_query)
-        conn.execute(f"COPY {table_name} FROM '{import_file}';")
+        conn.execute(f"copy {table_name} from '{import_file}';")
 ```
 
 The code above does the following:
 
 1. Connects to DuckDB using the Dagster resource `DuckDBResource`.
-2. Uses the DuckDB connection to create a table `raw_data` if that tables does not already exist.
+2. Uses the DuckDB connection to create a table `raw_data` if that tables does not already exist. We define the schema of the table ourselves, knowing the structure of the data.
 3. Runs a `COPY` for file path from the `import_file` asset into the `raw_data` table. `COPY` is an append command so if we run the command twice, the data will be loaded again.
 
 These two assets are all we need to ingest the data. We can execute these assets from the command line using `dg`:

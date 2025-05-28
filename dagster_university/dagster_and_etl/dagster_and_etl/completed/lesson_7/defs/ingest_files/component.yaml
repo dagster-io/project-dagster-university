@@ -3,9 +3,6 @@ type: dagster_sling.SlingReplicationCollectionComponent
 attributes:
   sling:
     connections:
-      - name: MY_DUCKDB
-        type: duckdb
-        instance: /tmp/duckdb.db
       - name: MY_POSTGRES
         type: postgres
         host: localhost
@@ -13,5 +10,8 @@ attributes:
         database: test_db
         user: test_user
         password: test_pass
+      - name: MY_DUCKDB
+        type: duckdb
+        instance: "{{ env('DUCKDB_DATABASE') }}"
   replications:
     - path: replication.yaml

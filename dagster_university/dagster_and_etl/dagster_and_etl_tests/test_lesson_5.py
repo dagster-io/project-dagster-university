@@ -9,7 +9,7 @@ import dagster_and_etl.completed.lesson_5.defs.assets as assets
 import dagster_and_etl.completed.lesson_5.dlt_nasa as dlt_nasa
 import dagster_and_etl.completed.lesson_5.dlt_quick_start as dlt_quick_start
 from dagster_and_etl.completed.lesson_5.definitions import defs
-from dagster_and_etl_tests.fixtures import nasa_response
+from dagster_and_etl_tests.nasa_data import nasa_response
 
 
 @pytest.fixture()

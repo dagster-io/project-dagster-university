@@ -1,10 +1,10 @@
 ---
-title: "Lesson 7: dlt with Components"
+title: "Lesson 7: Sling with Components"
 module: 'dagster_etl'
-lesson: '7'
+lesson: 'extra-credit'
 ---
 
-# dlt with Components
+# Sling with Components
 
 To navigate including Components with Dagster, we will be using the Dagster `dg` command line. `dg` is a useful to initializing and navigating Dagster projects. Because we have been working the virtual envionment and project structure of this course we have not needed `dg` as much.
 
@@ -105,9 +105,6 @@ type: dagster_sling.SlingReplicationCollectionComponent
 attributes:
   sling:
     connections:
-      - name: MY_DUCKDB
-        type: duckdb
-        instance: duckdb:///var/tmp/duckdb.db
       - name: MY_POSTGRES
         type: postgres
         host: localhost
@@ -115,11 +112,16 @@ attributes:
         database: test_db
         user: test_user
         password: test_pass
+      - name: MY_DUCKDB
+        type: duckdb
+        instance: duckdb:///var/tmp/duckdb.db
   replications:
     - path: replication.yaml
 ```
 
 Notice that the names of the connection in the `components.yaml` still need to match up to the `replication.yaml` (`MY_DUCKDB` and `MY_POSTGRES`).
+
+![Sling components comparison](/images/dagster-etl/extra-credit/components-vs-asset.png.png)
 
 ## Viewing the assets
 

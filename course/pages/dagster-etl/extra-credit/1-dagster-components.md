@@ -1,7 +1,7 @@
 ---
 title: "Lesson 7: Dagster Components"
 module: 'dagster_etl'
-lesson: '7'
+lesson: 'extra-credit'
 ---
 
 # Dagster Components

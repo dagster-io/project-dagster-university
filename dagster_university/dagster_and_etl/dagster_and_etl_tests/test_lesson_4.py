@@ -7,7 +7,7 @@ from dagster_duckdb import DuckDBResource
 
 import dagster_and_etl.completed.lesson_4.defs as defs
 import dagster_and_etl.completed.lesson_4.defs.assets as assets
-from dagster_and_etl_tests.fixtures import nasa_response
+from dagster_and_etl_tests.nasa_data import nasa_response
 
 
 @pytest.fixture()

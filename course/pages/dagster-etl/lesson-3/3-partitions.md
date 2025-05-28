@@ -6,17 +6,17 @@ lesson: '3'
 
 # Partitions
 
-When running ETL pipelines in production, it's important to have a reliable way to track what data has been loaded, especially when a pipeline has matured and has a longer execution history.
+When running ETL pipelines in production, it's important to have a reliable way to track what data has been loaded, especially when a pipeline has matured and contains a longer execution history.
 
-Without a structured approach, it can become difficult to manage which data has been processed and which hasn't. Dagster addresses this challenge with partitions. Partitions allow you to break down your data into smaller, logical segments: such as by date, region, or category. Each segment can then be treated and tacked as an independent unit.
+Without a structured approach, it can become difficult to manage which data has been processed. How do we know which files have yet to be processed? Dagster addresses this challenge with partitions. Partitions allow you to break down your data into smaller, logical segments: such as date, region, or category. Each segment can then be treated and tacked as an independent unit tied to a specific execution.
 
-When assets are configured with partitions, you can:
+Partitions can then be tied to assets. Configured an asset with partitions allows you to:
 
 - Materialize and update only specific partitions, avoiding unnecessary reprocessing of unchanged data.
 - Launch targeted backfills to reprocess historical data or recover from failures without rerunning the entire pipeline.
 - Track the status and lineage of each partition independently, giving you better visibility and control over your data workflows.
 
-## Partitioned assets
+## Creating partitions
 
 Let's go back to our `import_file` asset. What is a logical way to divide that data if our three files look like this?
 
@@ -24,7 +24,7 @@ Let's go back to our `import_file` asset. What is a logical way to divide that d
 - 2018-01-23.csv
 - 2018-01-24.csv
 
-Based on these files it would be safe to assume that each one corresponds to a specific day. This lends itself to a daily partition which we can configure with Dagster like so:
+Based on these files, it would be safe to assume that each corresponds to a specific day. This lends itself to a daily partition which we can configure with Dagster like so:
 
 ```python
 partitions_def = dg.DailyPartitionsDefinition(
@@ -32,6 +32,10 @@ partitions_def = dg.DailyPartitionsDefinition(
     end_date="2018-01-24",
 )
 ```
+
+This creates a partition specifically for the dates 2018-01-22 to 20218-01-24. If we removed the upper bound (`end_date`) this partition would include all days from 2018-01-22 to present. This can be useful for new incoming files but for this example we will limit our partition to only include the days contained in our local files.
+
+## Partitioned assets
 
 Now that we’ve defined our partition, we can use the partition in a new asset called `import_partition_file`. This asset will rely on the partition key instead of the `FilePath` run configuration to determine which file should be processed.
 
@@ -49,8 +53,6 @@ def import_partition_file(context: dg.AssetExecutionContext) -> str:
     )
     return str(file_path.resolve())
 ```
-
-**Note**: This daily partition we are using in this example has an explicit end date. If we left that off, there would be valid partitions for every day from the start of the partition to the current day.
 
 Finally we can create a new downstream asset that relies on the partitioned data:
 
@@ -78,15 +80,13 @@ def duckdb_partition_table(
             ) 
         """
         conn.execute(table_query)
-        conn.execute(f"DELETE FROM {table_name} WHERE date = '{context.partition_key}';")
-        conn.execute(f"COPY {table_name} FROM '{import_partition_file}';")
+        conn.execute(f"delete from {table_name} where date = '{context.partition_key}';")
+        conn.execute(f"copy {table_name} from '{import_partition_file}';")
 ```
 
-There are two key differences from the original logic:
+This is very similar to our original logic except for are two key differences:
 
-1. We now include the partition in the @dg.asset decorator.
+1. We now include the partition (`partitions_def`) in the `@dg.asset decorator`.
 2. We add a `DELETE FROM...` SQL statement targeting the table for the specific partition date. This ensures the pipeline is idempotent, allowing us to run backfills without the risk of data duplication.
 
-Deleting from the table before loading new data is one strategy for achieving idempotence. Another approach is to import the incoming data into a staging table and then upsert it into the final table. This method has the advantage of preserving existing data in the final table in case an error occurs during the copy process.
-
-While the staging strategy is generally more resilient, we will use the simpler `DELETE FROM...` method for the purposes of this course.
+A quick not that deleting from the table before loading new data is one strategy for achieving idempotence. Another approach is to import the incoming data into a staging location and then upsert the new data into the final table. This method has the advantage of preserving existing data in the final table in case an error occurs during the copy process. And while the staging strategy is generally more resilient, we will use the simpler `DELETE FROM...` method for the purposes of this course.

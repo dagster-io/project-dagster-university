@@ -6,8 +6,6 @@ lesson: '6'
 
 # Database replication
 
-We’ve talked about many different ways to ingest data from external sources. One method we haven’t discussed yet is moving data between databases. While this is a broad topic, covering many database types, the most common scenario in ETL is replicating data from an OLTP database (like Postgres or MySQL) into a data warehouse (such as Snowflake or Redshift).
-
 Despite being a very common workflow, database replication is nuanced and full of potential pitfalls.
 
 ## Understanding your source
@@ -21,7 +19,7 @@ Just like with APIs, replicating data from a database starts with understanding 
 | Vector | Semantic | FAISS, Pinecone, Weaviate |
 | Time-series | SQL-like | InfluxDB, Prometheus |
 
-Since it's too much to cover all of these in a single course, we’ll focus on relational databases, specifically Postgres. And even limiting it to just that, there are multiple strategies on how to sync data.
+Since it's too much to cover all of these in a single course, we’ll focus on relational databases, specifically Postgres (it is also the most common form of replication). And even limiting it to just that, there are multiple strategies on how to sync data.
 
 ## Full refresh replication
 
@@ -41,7 +39,7 @@ The most straightforward way to extract this data is to query the entire content
 SELECT * FROM customers;
 ```
 
-This method is known as full refresh or snapshot replication. It’s simple and works with just about any database that supports `SELECT` queries. But as you can imagine, there’s a major drawback: how do we keep the source and destination in sync?
+This method is known as full refresh or snapshot replication. It’s simple and works with just about any database (as long as the database is not append only) that supports `SELECT` queries. But as you can imagine, there’s a major drawback: how do we keep the source and destination in sync?
 
 If we rely solely on full refreshes, we have to run the entire extraction process every time. This can be prohibitively expensive for large tables and can strain the source database, impacting performance during the sync.
 
@@ -52,7 +50,8 @@ You can optimize full refreshes by filtering the data. Usually this involves que
 This helps limit the strain on ingestion because much less data needs to be queried and transferred. To perform incremental replication with our customers table, we could add in the created_at column to only pull new records:
 
 ```sql
-SELECT * FROM customers WHERE created_at > '2024-05-01';
+CREATE OR REPLACE ...
+    SELECT * FROM customers WHERE created_at > '2024-05-01';
 ```
 
 This is helpful though adds some complexity and raises some additional questions:
@@ -68,11 +67,9 @@ Most ETL services that do incremental replication can address these issues thoug
 
 The final strategy we will cover is Change Data Capture (CDC). Relational databases like Postgres maintain a log of changes, in Postgres, this is the Write-Ahead Log (WAL), which records inserts, updates, and deletes for recovery and replication purposes.
 
-With CDC, an ETL pipeline listens to the database log and reacts to changes. It’s similar to the difference between scheduled vs. event-driven pipelines. Full refreshes are like schedules: they poll periodically. CDC is like sensors: they respond to events as they happen (though typically in small batches).
-
 CDC is more efficient and much less taxing on the source database. But it comes with trade-offs:
 
-1. CDC logs are not retained forever — typically only for a few days.
+1. CDC logs are not retained forever, typically only for a few days. This means that brings in new records must complete before those records are removed.
 2. CDC doesn’t provide full historical context, so it can’t be used alone to initialize a replica.
 
 You need to apply the log events in order to reconstruct the current state of the data.

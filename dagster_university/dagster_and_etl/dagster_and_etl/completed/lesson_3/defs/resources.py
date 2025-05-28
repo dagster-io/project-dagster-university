@@ -6,5 +6,5 @@ defs = dg.Definitions(
         "database": DuckDBResource(
             database="data/staging/data.duckdb",
         ),
-    },
+    }
 )

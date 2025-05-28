@@ -24,7 +24,7 @@ def simple_source():
     return load_dict
 
 
-# TODO: Enable multiple dlt assets
+# TODO: Disable for multiple dlt assets
 # @dlt_assets(
 #     dlt_source=simple_source(),
 #     dlt_pipeline=dlt.pipeline(
@@ -35,7 +35,7 @@ def simple_source():
 #     ),
 # )
 # def dlt_assets(context: dg.AssetExecutionContext, dlt: DagsterDltResource):
-#     yield from dlt.run(context=context)
+#     yield from dlt.run(context=context, dlt_source=simple_source())
 
 
 class FilePath(dg.Config):
