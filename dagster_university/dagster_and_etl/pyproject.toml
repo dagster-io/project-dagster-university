@@ -1,0 +1,36 @@
+[project]
+name = "dagster-etl"
+version = "0.0.1"
+description = "Dagster ETL"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "dagster==1.10.*",
+    "dagster-webserver",
+    "dagster-duckdb",
+    "dagster-dlt",
+    "dagster-sling",
+    "psycopg2-binary",
+    "dlt[duckdb]",
+    "pandas",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "ruff",
+    "pytest",
+]
+
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["dagster_and_etl"]
+
+[tool.dg]
+directory_type = "project"
+
+[tool.dg.project]
+root_module = "dagster_and_etl"
+code_location_target_module = "dagster_and_etl.definitions"
