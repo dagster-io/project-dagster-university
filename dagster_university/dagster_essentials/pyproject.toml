@@ -3,7 +3,7 @@ name = "dagster-essentials"
 version = "0.0.1"
 description = "Dagster Essentials"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.9,<3.13"
 dependencies = [
     "dagster==1.10.*",
     "dagster-webserver",
@@ -35,3 +35,15 @@ directory_type = "project"
 [tool.dg.project]
 root_module = "dagster_essentials"
 code_location_target_module = "dagster_essentials.definitions"
+
+[tool.ruff.lint]
+ignore = [
+    "ERA001", # comments are fine for a learning environment
+    "E501",   # Line too long for docstrings
+    "F401",   # unused imports already caught by pylance
+]
+
+fixable = ["ALL"]
+unfixable = [
+    "F401", # dont remove unused imports
+]

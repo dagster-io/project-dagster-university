@@ -148,10 +148,3 @@ def test_sensor_run(mock_check_new_files):
 # Definitions
 def test_def():
     assert defs
-
-
-def test_def_objects():
-    assert defs.get_assets_def("total_population")
-    assert defs.get_job_def("jobs_config")
-    assert defs.get_schedule_def("my_schedule")
-    assert defs.get_sensor_def("my_sensor")

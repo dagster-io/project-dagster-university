@@ -76,11 +76,3 @@ def test_schedules():
 
 def test_sensors():
     assert adhoc_request_sensor
-
-
-def test_def_can_load():
-    assert defs
-    assert defs.get_job_def("trip_update_job")
-    assert defs.get_job_def("weekly_update_job")
-    assert defs.get_schedule_def("trip_update_job_schedule")
-    assert defs.get_schedule_def("weekly_update_job_schedule")

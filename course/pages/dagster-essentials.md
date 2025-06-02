@@ -9,9 +9,9 @@ title: Dagster Essentials
   - [Why is asset-centric orchestration good for data engineering?](/dagster-essentials/lesson-1/3-why-is-asset-centric-orchestration-good-for-data-engineering)
   - [Project preview](/dagster-essentials/lesson-1/4-project-preview)
 - Lesson 2: Requirements & installation
-  - [Requirements](/dagster-essentials/lesson-2/0-requirements)
-  - [Set up local](/dagster-essentials/lesson-2/1-set-up-local)
-  - [Set up Codespace](/dagster-essentials/lesson-2/2-set-up-codespace)
+  - [Requirements](/installation/requirements)
+  - [Set up local](/installation/set-up-local)
+  - [Set up Codespace](/installation/set-up-codespace)
   - [Project files](/dagster-essentials/lesson-2/3-project-files)
 - Lesson 3: SDAs
   - [Overview](/dagster-essentials/lesson-3/0-overview)

@@ -1,7 +1,8 @@
 import dagster as dg
 
-import dagster_essentials.completed.lesson_9.defs as defs
+import dagster_essentials.completed.lesson_9.defs
 
-defs = dg.Definitions.merge(
-    dg.components.load_defs(defs),
-)
+
+@dg.definitions
+def defs():
+    return dg.load_defs(defs_root=dagster_essentials.completed.lesson_9.defs)

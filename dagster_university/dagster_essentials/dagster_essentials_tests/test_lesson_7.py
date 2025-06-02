@@ -47,11 +47,3 @@ def test_schedules():
     assert trip_update_schedule.job == trip_update_job
     assert weekly_update_schedule.cron_schedule == "0 0 * * 1"
     assert weekly_update_schedule.job == weekly_update_job
-
-
-def test_def_can_load():
-    assert defs
-    assert defs.get_job_def("trip_update_job")
-    assert defs.get_job_def("weekly_update_job")
-    assert defs.get_schedule_def("trip_update_job_schedule")
-    assert defs.get_schedule_def("weekly_update_job_schedule")

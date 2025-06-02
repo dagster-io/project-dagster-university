@@ -3,7 +3,7 @@ name = "dagster-testing"
 version = "0.0.1"
 description = "Dagster Testing"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.9,<3.13"
 dependencies = [
     "dagster==1.10.*",
     "dagster-webserver",
@@ -18,9 +18,28 @@ dev-dependencies = [
     "ruff",
 ]
 
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["dagster_testing"]
+
 [tool.dg]
 directory_type = "project"
 
 [tool.dg.project]
 root_module = "dagster_testing"
 code_location_target_module = "dagster_testing.definitions"
+
+[tool.ruff.lint]
+ignore = [
+    "ERA001", # comments are fine for a learning environment
+    "E501",   # Line too long for docstrings
+    "F401",   # unused imports already caught by pylance
+]
+
+fixable = ["ALL"]
+unfixable = [
+    "F401", # dont remove unused imports
+]

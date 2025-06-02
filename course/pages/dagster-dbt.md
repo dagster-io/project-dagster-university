@@ -11,9 +11,9 @@ title: Dagster + dbt
   - [How do dbt models relate to Dagster assets?](/dagster-dbt/lesson-1/3-how-do-dbt-models-relate-to-dagster-assets)
   - [Project preview](/dagster-dbt/lesson-1/4-project-preview)
 - Lesson 2: Installation & Setup
-  - [Requirements](/dagster-dbt/lesson-2/0-requirements)
-  - [Set up local](/dagster-dbt/lesson-2/1-set-up-local)
-  - [Set up Codespace](/dagster-dbt/lesson-2/2-set-up-codespace)
+  - [Requirements](/installation/requirements)
+  - [Set up local](/installation/set-up-local)
+  - [Set up Codespace](/installation/set-up-codespace)
   - [Set up the Dagster project](/dagster-dbt/lesson-2/3-set-up-the-dagster-project)
   - [Set up the dbt project](/dagster-dbt/lesson-2/3-set-up-the-dbt-project)
   - [dbt project files](/dagster-dbt/lesson-2/4-dbt-project-files)

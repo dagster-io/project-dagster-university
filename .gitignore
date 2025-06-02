@@ -169,6 +169,7 @@ cython_debug/
 #.idea/
 
 tmp*/
+.tmp*
 
 *.duckdb
 *.geojson
