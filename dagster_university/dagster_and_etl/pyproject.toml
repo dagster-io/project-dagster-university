@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
     "dagster==1.10.*",
+    "dagster-dg-cli",
     "dagster-webserver",
     "dagster-duckdb",
     "dagster-dlt",
@@ -34,3 +35,15 @@ directory_type = "project"
 [tool.dg.project]
 root_module = "dagster_and_etl"
 code_location_target_module = "dagster_and_etl.definitions"
+
+[tool.ruff.lint]
+ignore = [
+    "ERA001", # comments are fine for a learning environment
+    "E501",   # Line too long for docstrings
+    "F401",   # unused imports already caught by pylance
+]
+
+fixable = ["ALL"]
+unfixable = [
+    "F401", # dont remove unused imports
+]

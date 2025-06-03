@@ -9,8 +9,8 @@ from dagster_and_dbt_tests.fixtures import setup_dbt_env  # noqa: F401
 
 @pytest.mark.parametrize("setup_dbt_env", ["lesson_7"], indirect=True)
 def test_trips_partitioned_assets(setup_dbt_env):  # noqa: F811
-    from dagster_and_dbt.completed.lesson_7.assets import metrics, requests, trips
-    from dagster_and_dbt.completed.lesson_7.resources import database_resource
+    from dagster_and_dbt.completed.lesson_7.defs.assets import metrics, requests, trips
+    from dagster_and_dbt.completed.lesson_7.defs.resources import database_resource
 
     assets = [
         trips.taxi_trips_file,
@@ -37,8 +37,8 @@ def test_trips_partitioned_assets(setup_dbt_env):  # noqa: F811
 
 @pytest.mark.parametrize("setup_dbt_env", ["lesson_7"], indirect=True)
 def test_trips_by_week_partitioned_assets(setup_dbt_env):  # noqa: F811
-    from dagster_and_dbt.completed.lesson_7.assets import metrics
-    from dagster_and_dbt.completed.lesson_7.resources import database_resource
+    from dagster_and_dbt.completed.lesson_7.defs.assets import metrics
+    from dagster_and_dbt.completed.lesson_7.defs.resources import database_resource
 
     assets = [
         metrics.trips_by_week,
@@ -55,8 +55,8 @@ def test_trips_by_week_partitioned_assets(setup_dbt_env):  # noqa: F811
 
 @pytest.mark.parametrize("setup_dbt_env", ["lesson_7"], indirect=True)
 def test_dbt_partitioned_incremental_assets(setup_dbt_env):  # noqa: F811
-    from dagster_and_dbt.completed.lesson_7.assets import dbt
-    from dagster_and_dbt.completed.lesson_7.resources import dbt_resource
+    from dagster_and_dbt.completed.lesson_7.defs.assets import dbt
+    from dagster_and_dbt.completed.lesson_7.defs.resources import dbt_resource
 
     dbt_analytics_assets = dg.load_assets_from_modules(modules=[dbt])
 

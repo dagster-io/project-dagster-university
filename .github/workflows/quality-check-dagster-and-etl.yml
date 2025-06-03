@@ -17,4 +17,4 @@ jobs:
       working_directory: ./dagster_university/dagster_and_etl
       # TODO:  Disable integration tests from GHA
       # postgres image has no windows/amd64
-      windows_pytest_cmd: uv run pytest dagster_and_etl/completed -v -m "not integration"
+      windows_pytest_cmd: uv run pytest dagster_and_etl_tests -v -m "not integration"

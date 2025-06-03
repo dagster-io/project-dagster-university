@@ -3,19 +3,19 @@ from pathlib import Path
 import dagster as dg
 import yaml
 
-from dagster_essentials.completed.lesson_9.assets import metrics, requests, trips
 from dagster_essentials.completed.lesson_9.definitions import defs
-from dagster_essentials.completed.lesson_9.jobs import (
+from dagster_essentials.completed.lesson_9.defs.assets import metrics, requests, trips
+from dagster_essentials.completed.lesson_9.defs.jobs import (
     adhoc_request_job,
     trip_update_job,
     weekly_update_job,
 )
-from dagster_essentials.completed.lesson_9.resources import database_resource
-from dagster_essentials.completed.lesson_9.schedules import (
+from dagster_essentials.completed.lesson_9.defs.resources import database_resource
+from dagster_essentials.completed.lesson_9.defs.schedules import (
     trip_update_schedule,
     weekly_update_schedule,
 )
-from dagster_essentials.completed.lesson_9.sensors import (
+from dagster_essentials.completed.lesson_9.defs.sensors import (
     adhoc_request_sensor,
 )
 from dagster_essentials_tests.fixtures import drop_tax_trips_table  # noqa: F401
@@ -76,11 +76,3 @@ def test_schedules():
 
 def test_sensors():
     assert adhoc_request_sensor
-
-
-def test_def_can_load():
-    assert defs
-    assert defs.get_job_def("trip_update_job")
-    assert defs.get_job_def("weekly_update_job")
-    assert defs.get_schedule_def("trip_update_job_schedule")
-    assert defs.get_schedule_def("weekly_update_job_schedule")

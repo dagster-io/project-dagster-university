@@ -1,10 +1,8 @@
 import dagster as dg
 
-from dagster_essentials.assets import metrics, trips
+import dagster_essentials.defs
 
-trip_assets = dg.load_assets_from_modules([trips])
-metric_assets = dg.load_assets_from_modules([metrics])
 
-defs = dg.Definitions(
-    assets=[*trip_assets, *metric_assets],
-)
+@dg.definitions
+def defs():
+    return dg.load_defs(defs_root=dagster_essentials.defs)
