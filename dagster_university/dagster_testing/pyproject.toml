@@ -6,11 +6,11 @@ readme = "README.md"
 requires-python = ">=3.9,<3.13"
 dependencies = [
     "dagster==1.10.*",
+    "dagster-dg-cli",
     "dagster-webserver",
     "dagster-snowflake",
     "psycopg2-binary",
     "pytest",
-    "dagster-dg",
 ]
 
 [tool.uv]

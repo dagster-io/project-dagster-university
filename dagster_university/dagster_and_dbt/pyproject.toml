@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.9,<3.13"
 dependencies = [
     "dagster==1.10.*",
+    "dagster-dg-cli",
     "dagster-webserver",
     "dagster-cloud",
     "dagster-duckdb",
@@ -20,7 +21,6 @@ dependencies = [
     "smart_open",
     "boto3",
     "pyarrow",
-    "dagster-dg",
 ]
 
 [tool.uv]
