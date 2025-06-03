@@ -57,7 +57,12 @@ code_location_target_module = "dagster_essentials.definitions"
 In your project, open the `dagster_university/dagster_essentials/definitions.py` file. It should look like the following code:
 
 ```python
-import dagster_essentials.defs as defs
+import dagster as dg
 
-defs = dg.components.load_defs(defs)
+import dagster_essentials.defs
+
+
+@dg.definitions
+def defs():
+    return dg.load_defs(defs_root=dagster_essentials.defs)
 ```
