@@ -43,37 +43,6 @@ With the basics of materialization out of the way, let’s move on to actually m
 
 ---
 
-## Materializing assets using dg
-
-We can use `dg` to execute and launch assets. In order to execute an asset, use the `dg launch` command while providing the asset you wish to execute.
-
-```bash
-dg launch --assets taxi_trips_file
-```
-
-You will then see the logs as Dagster executes our asset:
-```
-2025-04-09 13:43:50 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15920 - RUN_START - Started execution of run for "__ASSET_JOB".
-2025-04-09 13:43:50 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15920 - ENGINE_EVENT - Executing steps using multiprocess executor: parent process (pid: 15920)
-2025-04-09 13:43:50 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15920 - taxi_trips_file - STEP_WORKER_STARTING - Launching subprocess for "taxi_trips_file".
-2025-04-09 13:43:51 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15925 - taxi_trips_file - STEP_WORKER_STARTED - Executing step "taxi_trips_file" in subprocess.
-2025-04-09 13:43:51 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15925 - taxi_trips_file - RESOURCE_INIT_STARTED - Starting initialization of resources [io_manager].
-2025-04-09 13:43:51 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15925 - taxi_trips_file - RESOURCE_INIT_SUCCESS - Finished initialization of resources [io_manager].
-2025-04-09 13:43:51 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15925 - LOGS_CAPTURED - Started capturing logs in process (pid: 15925).
-2025-04-09 13:43:51 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15925 - taxi_trips_file - STEP_START - Started execution of step "taxi_trips_file".
-2025-04-09 13:43:59 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15925 - taxi_trips_file - STEP_OUTPUT - Yielded output "result" of type "Nothing". (Type check passed).
-2025-04-09 13:43:59 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15925 - taxi_trips_file - ASSET_MATERIALIZATION - Materialized value taxi_trips_file.
-2025-04-09 13:43:59 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15925 - taxi_trips_file - STEP_SUCCESS - Finished execution of step "taxi_trips_file" in 7.71s.
-2025-04-09 13:43:59 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15920 - ENGINE_EVENT - Multiprocess executor: parent process exiting after 8.35s (pid: 15920)
-2025-04-09 13:43:59 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15920 - RUN_SUCCESS - Finished execution of run for "__ASSET_JOB".
-```
-
-You do not need to follow every line of the output, for now the most important thing is last line that the execution was successful.
-
-```
-2025-04-09 13:43:59 -0500 - dagster - DEBUG - __ASSET_JOB - 5b735e96-e6d4-4f37-80f4-641c22ef896d - 15920 - RUN_SUCCESS - Finished execution of run for "__ASSET_JOB".
-```
-
 ## Materializing assets using the Dagster UI
 
 If you don’t still have the Dagster UI running from Lesson 2, use the command line to run the following command in the root of your Dagster project (the top-level `dagster-university/dagster_essentials` directory):

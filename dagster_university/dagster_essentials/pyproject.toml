@@ -5,7 +5,7 @@ description = "Dagster Essentials"
 readme = "README.md"
 requires-python = ">=3.9,<3.13"
 dependencies = [
-    "dagster==1.10.*",
+    "dagster==1.10.19",
     "dagster-dg-cli",
     "dagster-webserver",
     "dagster-cloud",
@@ -22,19 +22,15 @@ dev-dependencies = [
     "pytest",
 ]
 
-[build-system]
-requires = ["setuptools>=42"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools]
-packages = ["dagster_essentials"]
-
 [tool.dg]
 directory_type = "project"
 
 [tool.dg.project]
 root_module = "dagster_essentials"
-code_location_target_module = "dagster_essentials.definitions"
+autoload_defs = true
+
+[tool.dg.project.python_environment]
+active = true
 
 [tool.ruff.lint]
 ignore = [

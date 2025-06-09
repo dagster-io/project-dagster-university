@@ -12,38 +12,24 @@ Let’s talk a bit about the files in the Dagster Essentials course. The `dagste
 dagster_university/dagster_essentials
 .
 ├── dagster_cloud.yaml
-├── dagster_essentials
-│   ├── completed
-│   │   ├── lesson_3
-│   │   ├── lesson_4
-│   │   ├── lesson_5
-│   │   ├── lesson_6
-│   │   ├── lesson_7
-│   │   ├── lesson_8
-│   │   └── lesson_9
-│   ├── definitions.py
-│   └── defs
-│       ├── assets
-│       │   ├── __init__.py
-│       │   ├── constants.py
-│       │   ├── metrics.py
-│       │   └── trips.py
-│       ├── jobs.py
-│       ├── partitions.py
-│       ├── resources.py
-│       ├── schedules.py
-│       └── sensors.py
-├── dagster_essentials_tests
 ├── data
-│   ├── outputs
-│   ├── raw
-│   ├── requests
-│   └── staging
-├── .env
 ├── Makefile
 ├── pyproject.toml
 ├── pytest.ini
 ├── README.md
+├── src
+│   ├── __init__.py
+│   └── dagster_essentials
+│       ├── __init__.py
+│       ├── completed
+│       └── defs
+│           ├── __init__.py
+│           ├── assets
+│           │   └── constants.py
+│           ├── jobs.py
+│           ├── partitions.py
+│           └── resources.py
+├── tests
 └── uv.lock
 ```
 
@@ -78,13 +64,13 @@ The columns in the following table are as follows:
 
 ---
 
-- `dagster_essentials/completed`
+- `src/dagster_essentials/completed/`
 - Dagster U
 - Finished code for each lesson of the course.
 
 ---
 
-- `dagster_essentials_tests/`
+- `src/tests/`
 - Dagster U
 - A Python module that contains unit tests for the completed code.
 

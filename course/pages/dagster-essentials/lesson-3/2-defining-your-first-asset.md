@@ -17,7 +17,7 @@ Before we write our first asset, let's talk a little about project structures in
 However we can use `dg` to scaffold a file for our first asset. Run the following command to create the file that will contain our first asset.
 
 ```bash
-dg scaffold dagster.asset assets/trips.py
+dg scaffold defs dagster.asset assets/trips.py
 ```
 
 This will add a `trips.py` file to our Dagster project.
@@ -26,10 +26,11 @@ This will add a `trips.py` file to our Dagster project.
 .
 └── dagster_essentials
     └── defs
-        └── assets
-            ├── __init__.py
-            ├── constants.py # already present
-            └── trips.py
+        └── defs
+            └── assets
+                ├── __init__.py
+                ├── constants.py # already present
+                └── trips.py
 ```
 
 **Note:** If we were starting a project from scratch we would use [`dg init`](https://docs.dagster.io/guides/labs/dg/scaffolding-a-project) which will handle the creation of our virtual environment. However since we already have a virtual environment defined, we can skip this step.
@@ -39,14 +40,8 @@ Using `dg` to scaffold your project will ensure that files are placed in the cor
 
 ```bash
 > dg check defs
-No definitions are defined for this project.
-```
-
-This command will confirm that our project is laid out correctly. Next we can use `dg` to list all the objects in our project.
-
-```bash
-> dg list defs
-No definitions are defined for this project.
+All components validated successfully.
+All definitions loaded successfully.
 ```
 
 This makes sense because even though we created the file that will contain our asset, we have not yet included the code.
@@ -61,7 +56,7 @@ With the files set we can now add our first asset.
 
    ```python
    import requests
-   from dagster_essentials.defs.assets import constants
+   from src.dagster_essentials.defs.assets import constants
    ```
 
 3. Below the imports, let's define a function that takes no inputs and returns nothing (type-annoted with `None`). Add the following code to create a function to do this named `taxi_trips_file`:
@@ -92,7 +87,7 @@ With the files set we can now add our first asset.
 
       ```python
       import requests
-      from dagster_essentials.defs.assets import constants
+      from src.dagster_essentials.defs.assets import constants
       import dagster as dg
 
       @dg.asset
@@ -115,18 +110,8 @@ We can use `dg` again to check our asset:
 
 ```bash
 > dg check defs
-No definitions are defined for this project.
-```
-
-And now when we run `dg list defs` our asset will register:
-```bash
-> dg list defs
-┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Key             ┃ Group   ┃ Deps ┃ Kinds ┃ Description                                                  ┃
-┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ taxi_trips_file │ default │      │       │ The raw parquet files for the taxi trips dataset. Sourced    │
-│                 │         │      │       │ from the NYC Open Data portal.                               │
-└─────────────────┴─────────┴──────┴───────┴──────────────────────────────────────────────────────────────┘
+All components validated successfully.
+All definitions loaded successfully.
 ```
 
 **Questions about the `-> None` bit?** That's a Python feature called **type annotation**. In this case, it's saying that the function returns nothing. You can learn more about type annotations in the [Python documentation](https://docs.python.org/3/library/typing.html). We highly recommend using type annotations in your code to make it easier to read and understand.
