@@ -4,7 +4,7 @@ import pytest
 import yaml  # noqa: F401
 from dagster._core.errors import DagsterTypeCheckDidNotPass  # noqa: F401
 
-from dagster_testing.assets import lesson_3
+from dagster_testing.defs.assets import lesson_3
 
 
 @pytest.fixture()

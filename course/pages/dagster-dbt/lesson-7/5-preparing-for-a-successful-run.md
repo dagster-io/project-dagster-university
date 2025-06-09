@@ -81,7 +81,7 @@ Next, we need to update the `DbtProject` object in `dagster_university/project.p
 
 ```python
 dbt_project = DbtProject(
-   project_dir=Path(__file__).joinpath("..", "analytics").resolve(),
+   project_dir=Path(__file__).joinpath("../..", "analytics").resolve(),
    target=os.getenv("DBT_TARGET")
 )
 ```

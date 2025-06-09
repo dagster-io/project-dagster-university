@@ -42,7 +42,7 @@ The updated asset should look similar to the following code. Click **View answer
 ```python {% obfuscated="true" %}
 import dagster as dg
 from dagster_duckdb import DuckDBResource
-from dagster_essentials.partitions import monthly_partition
+from dagster_essentials.defs.partitions import monthly_partition
 
 @dg.asset(
   deps=["taxi_trips_file"],
