@@ -58,7 +58,7 @@ dagster_testing_tests/test_lesson_3.py .                                        
 
 As your pipelines become more complex, it's a good idea to test materializing your Dagster assets. `dg.materialize()` is a `dagster.ExecuteInProcessResult` which will execute assets. We can then check the `success` property of the execution to ensure that everything materialized as expected.
 
-Since the `processed_file` asset only relies on the output of  the `loaded_file` asset, we can materialize both of those assets together to ensure they are working as expected:
+Since the `total_population` asset only relies on the output of  the `state_population_file` asset, we can materialize both of those assets together to ensure they are working as expected:
 
 ```python
 def test_assets():
