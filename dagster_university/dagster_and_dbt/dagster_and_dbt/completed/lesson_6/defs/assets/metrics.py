@@ -14,7 +14,7 @@ from dagster_and_dbt.completed.lesson_6.defs.partitions import weekly_partition
 @dg.asset(
     deps=[dg.AssetKey(["taxi_trips"])],
     partitions_def=weekly_partition,
-    compute_kind="DuckDB",
+    kinds={"duckdb"},
 )
 def trips_by_week(context: dg.AssetExecutionContext, database: DuckDBResource):
     """The number of trips per week, aggregated by week.
@@ -70,7 +70,7 @@ def trips_by_week(context: dg.AssetExecutionContext, database: DuckDBResource):
 @dg.asset(
     deps=[dg.AssetKey(["taxi_trips"]), dg.AssetKey(["taxi_zones"])],
     key_prefix="manhattan",
-    compute_kind="DuckDB",
+    kinds={"duckdb"},
 )
 def manhattan_stats(database: DuckDBResource):
     """Metrics on taxi trips in Manhattan."""
@@ -98,7 +98,7 @@ def manhattan_stats(database: DuckDBResource):
 
 @dg.asset(
     deps=[dg.AssetKey(["manhattan", "manhattan_stats"])],
-    compute_kind="Python",
+    kinds={"python"},
 )
 def manhattan_map() -> dg.MaterializeResult:
     """A map of the number of trips per taxi zone in Manhattan."""

@@ -17,7 +17,7 @@ class AdhocRequestConfig(dg.Config):
 
 @dg.asset(
     deps=["taxi_trips", "taxi_zones"],
-    compute_kind="Python",
+    kinds={"python"},
 )
 def adhoc_request(
     config: AdhocRequestConfig, database: DuckDBResource

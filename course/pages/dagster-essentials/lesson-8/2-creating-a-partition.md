@@ -22,7 +22,7 @@ Now that you have all the info you need to start building partitions, let’s ta
 
 ```python
 import dagster as dg
-from dagster_essentials.assets import constants
+from src.dagster_essentials.defs.assets import constants
 
 start_date = constants.START_DATE
 end_date = constants.END_DATE

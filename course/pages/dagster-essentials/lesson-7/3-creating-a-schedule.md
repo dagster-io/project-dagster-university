@@ -14,7 +14,7 @@ We can use `dg` again to scaffold our schedules. So first run:
 dg scaffold dagster.schedule schedules.py
 ```
 
-This will create a file in `defs/schedules.py` where we can add the following schedule code:
+This will create a file in `src/dagster_essentials/defs/schedules.py` where we can add the following schedule code:
 
 ```python
 import dagster as dg

@@ -52,7 +52,7 @@ Now that cursors have been explained, let’s start writing the sensor.
    import os
    import json
 
-   from dagster_essentials.defs.jobs import adhoc_request_job
+   from src.dagster_essentials.defs.jobs import adhoc_request_job
    ```
 
    Let’s break down these imports:

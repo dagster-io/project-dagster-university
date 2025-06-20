@@ -33,17 +33,3 @@ def taxi_zones_file() -> None:
     with open(constants.TAXI_ZONES_FILE_PATH, "wb") as output_file:
         output_file.write(raw_taxi_zones.content)
 ```
-
-Now if we rerun `dg` you will also see our new asset is included:
-
-```bash
-> dg list defs
-┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Key             ┃ Group   ┃ Deps ┃ Kinds ┃ Description                                                  ┃
-┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ taxi_trips_file │ default │      │       │ The raw parquet files for the taxi trips dataset. Sourced    │
-│                 │         │      │       │ from the NYC Open Data portal.                               │
-│ taxi_zones_file │ default │      │       │ The raw CSV file for the taxi zones dataset. Sourced from    │
-│                 │         │      │       │ the NYC Open Data portal.                                    │
-└─────────────────┴─────────┴──────┴───────┴──────────────────────────────────────────────────────────────┘
-```

@@ -24,8 +24,8 @@ This will add a `trips.py` file to our Dagster project.
 
 ```
 .
-└── dagster_essentials
-    └── defs
+└── src
+    └── dagster_essentials
         └── defs
             └── assets
                 ├── __init__.py
@@ -33,7 +33,7 @@ This will add a `trips.py` file to our Dagster project.
                 └── trips.py
 ```
 
-**Note:** If we were starting a project from scratch we would use [`dg init`](https://docs.dagster.io/guides/labs/dg/scaffolding-a-project) which will handle the creation of our virtual environment. However since we already have a virtual environment defined, we can skip this step.
+**Note:** If we were starting a Dagster project from scratch we would use [`uvx create-dagster`](https://docs.dagster.io/getting-started/installation) which will handle the creation of full Dagster project and virtual environment. However since we working in a repository that has already been initialized, we can skip this step.
 
 
 Using `dg` to scaffold your project will ensure that files are placed in the correct location. We can ensure that everything is configured correctly also using `dg`.
@@ -50,7 +50,7 @@ This makes sense because even though we created the file that will contain our a
 
 With the files set we can now add our first asset.
 
-1. Navigate and open the newly created `defs/assets/trips.py` file in your Dagster project. This is where you’ll write your asset code.
+1. Navigate and open the newly created `src/dagster_essentials/defs/assets/trips.py` file in your Dagster project. This is where you’ll write your asset code.
 
 2. Within the `trips.py` file, remove the generated code from the scaffolding and replace it with the following imports:
 

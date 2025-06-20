@@ -6,7 +6,7 @@ lesson: '8'
 
 # Adding partitions to assets
 
-In this section, you’ll update the assets in `defs/assets/trips.py` to use the partitions.
+In this section, you’ll update the assets in `src/dagster_essentials/defs/assets/trips.py` to use the partitions.
 
 Starting with `taxi_trips_file`, the asset code should currently look like this:
 
@@ -29,7 +29,7 @@ In this asset, `month_to_fetch` is set to `2023-03` to retrieve trip data for Ma
 
 To add the partition to the asset:
 
-1. Import the `monthly_partition` from the `partitions` folder by adding the following to the top of `defs/assets/trips.py`:
+1. Import the `monthly_partition` from the `partitions` folder by adding the following to the top of `src/dagster_essentials/defs/assets/trips.py`:
 
    ```python
    from dagster_essentials.defs.partitions import monthly_partition

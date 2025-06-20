@@ -33,7 +33,7 @@ When working with large asset graphs, you likely don’t want to materialize all
 
 Jobs are a Dagster utility to take a slice of your asset graph and focus specifically on running materializations of those assets. As you learn more about Dagster, you’ll also learn more about how to customize your materializations and runs with jobs. For example, having multiple jobs can enable running one set of assets in an isolated Kubernetes pod and another selection of assets on a single process.
 
-As you might have noticed while defining assets and resources, Dagster’s best practice is to store definitions in their own directory/Python sub-module. In the case of jobs, we recommend that you define your jobs within the `defs/jobs.py` file.
+As you might have noticed while defining assets and resources, Dagster’s best practice is to store definitions in their own directory/Python sub-module.
 
 To select only the assets you want to include, you’ll use the `AssetSelection` class. This class lets you look up and reference assets across your code location. In particular, there will be two methods that you’ll be using:
 
@@ -42,7 +42,13 @@ To select only the assets you want to include, you’ll use the `AssetSelection`
 
 For more info on asset selection, refer to the [asset selection syntax guide in the Dagster docs](https://docs.dagster.io/concepts/assets/asset-selection-syntax).
 
-1. In `defs/jobs.py`, let’s first define our asset selection. Copy and paste the following snippet into the file:
+1. Scaffold the `jobs.py` using `dg`:
+
+   ```bash
+   dg scaffold defs dagster.job jobs.py
+   ```
+
+2. In `src/dagster_essentials/defs/jobs.py`, let’s first define our asset selection. Copy and paste the following snippet into the file:
 
    ```python
    import dagster as dg
@@ -61,9 +67,9 @@ For more info on asset selection, refer to the [asset selection syntax guide in 
    )
    ```
 
-3. Save your changes and continue.
+4. Save your changes and continue.
 
-Your final code in `defs/jobs.py` should look like the following:
+Your final code in `src/dagster_essentials/defs/jobs.py` should look like the following:
 
 ```python
 import dagster as dg

@@ -18,7 +18,7 @@ Having all of your assets in one file becomes difficult to manage. Let’s separ
     dg scaffold dagster.asset assets/metrics.py
     ```
 
-2. At the top of the `defs/assets/metrics.py` file, add the following imports:
+2. At the top of the `src/dagster_essentials/defs/assets/metrics.py` file, add the following imports:
 
    ```python
    import dagster as dg

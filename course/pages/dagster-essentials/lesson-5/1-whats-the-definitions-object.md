@@ -20,13 +20,16 @@ import dagster_cookies.defs as defs
 defs = dg.components.load_defs(defs)
 ```
 
-We do not need to explicitly list all the assets in our project. Dagster can automatically load most objects (we will later see there are other object types besides assets) by importing the contents of the `defs` module.
+## Autoloading
+
+After the introduction of `dg`, you no longer need to explicitly list all the assets in our project within a `Definitions` object. Dagster can automatically load most objects (we will later see there are other object types besides assets) by importing the contents of the `defs` module.
 
 Remember that using `dg scaffold` has been placing all our asset files within the `defs` directory.
 
 ```
-.
+src
 └── dagster_essentials
+    ├── definitions.py
     └── defs
         └── assets
             ├── __init__.py
@@ -51,7 +54,10 @@ directory_type = "project"
 
 [tool.dg.project]
 root_module = "dagster_essentials"
-code_location_target_module = "dagster_essentials.definitions"
+autoload_defs = true
+registry_modules = [
+    "dagster_essentials.components.*",
+]
 ```
 
 In your project, open the `dagster_university/dagster_essentials/definitions.py` file. It should look like the following code:

@@ -13,7 +13,7 @@ from dagster_and_dbt.completed.lesson_6.defs.resources import smart_open_config
 
 @dg.asset(
     group_name="raw_files",
-    compute_kind="Python",
+    kinds={"python"},
 )
 def taxi_zones_file() -> dg.MaterializeResult:
     """The raw CSV file for the taxi zones dataset. Sourced from the NYC Open Data portal."""
@@ -36,7 +36,7 @@ def taxi_zones_file() -> dg.MaterializeResult:
 @dg.asset(
     deps=["taxi_zones_file"],
     group_name="ingested",
-    compute_kind="DuckDB",
+    kinds={"duckdb"},
 )
 def taxi_zones(context: dg.AssetExecutionContext, database: DuckDBResource):
     """The raw taxi zones dataset, loaded into a DuckDB database."""
@@ -58,7 +58,7 @@ def taxi_zones(context: dg.AssetExecutionContext, database: DuckDBResource):
 @dg.asset(
     partitions_def=monthly_partition,
     group_name="raw_files",
-    compute_kind="DuckDB",
+    kinds={"duckdb"},
 )
 def taxi_trips_file(context: dg.AssetExecutionContext) -> dg.MaterializeResult:
     """The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal."""
@@ -86,7 +86,7 @@ def taxi_trips_file(context: dg.AssetExecutionContext) -> dg.MaterializeResult:
     deps=["taxi_trips_file"],
     partitions_def=monthly_partition,
     group_name="ingested",
-    compute_kind="DuckDB",
+    kinds={"duckdb"},
 )
 def taxi_trips(context: dg.AssetExecutionContext, database: DuckDBResource):
     """The raw taxi trips dataset, loaded into a DuckDB database, partitioned by month."""

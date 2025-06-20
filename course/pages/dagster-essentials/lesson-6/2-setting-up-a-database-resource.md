@@ -38,10 +38,27 @@ Let’s use a Dagster resource to manage this connection and share it across all
 
 ## Defining a resource
 
-Copy and paste the following code into `defs/resources.py:`
+We can scaffold our resources with `dg` in a way similar to the how we scaffolded assets in lesson 3.
+
+```bash
+dg scaffold defs dagster.resources resources.py
+```
+
+This adds a `resources.py` file within the `dagster_essentials` module.
+
+```
+.
+└── src
+    └── dagster_essentials
+        └── defs
+            └── resources.py
+```
+
+Within this newly created file, add the following code:
 
 ```python
 from dagster_duckdb import DuckDBResource
+
 
 database_resource = DuckDBResource(
     database="data/staging/data.duckdb"
@@ -89,7 +106,9 @@ You saw that using `dg` to scaffold our project, the `Definitions` will automati
 1. In the `resources.py` add the following line:
 
    ```python
-   defs = dg.Definitions(resources={"database": database_resource})
+   @dg.definitions
+   def resources():
+       return dg.Definitions(resources={"database": database_resource})
    ```
 
    This tells Dagster how to map the resources to specific key names. In this case the `database_resource` resource just defined is mapped to the key name `database`.

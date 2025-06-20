@@ -8,7 +8,7 @@ lesson: '2'
 This will set up Dagster for you local machine. If you would prefer to do this course in Github Codespaces, please follow [that guide](/dagster-essentials/lesson-2/2-set-up-codespace).
 
 - **To install git.** Refer to the [Git documentation](https://github.com/git-guides/install-git) if you don’t have this installed.
-- **To have Python installed.**  Dagster supports Python 3.9 - 3.12.
+- **To have Python installed.**  Dagster supports Python 3.9 - 3.12 (3.12 recommended).
 - **To install a package manager**. To manage the python packages, we recommend [`uv`]((https://docs.astral.sh/uv/)) which Dagster uses internally.
 
 ---
@@ -40,12 +40,6 @@ If you do not have `uv` instead already, you can do so with:
 
 ```bash
 brew install uv
-```
-
-Now you can use `uv` to install `dg` globally:
-
-```bash
-uv tool install dagster-dg
 ```
 
 ## Install the dependencies

@@ -8,7 +8,7 @@ from src.dagster_essentials.completed.lesson_8.defs.partitions import monthly_pa
 
 
 @dg.asset(
-    compute_kind="Python",
+    kinds={"python"},
 )
 def taxi_zones_file():
     """
@@ -30,7 +30,7 @@ def taxi_zones_file():
 
 @dg.asset(
     deps=["taxi_zones_file"],
-    compute_kind="DuckDB",
+    kinds={"duckdb"},
 )
 def taxi_zones(database: DuckDBResource):
     """
@@ -54,7 +54,7 @@ def taxi_zones(database: DuckDBResource):
 
 @dg.asset(
     partitions_def=monthly_partition,
-    compute_kind="DuckDB",
+    kinds={"duckdb"},
 )
 def taxi_trips_file(context: dg.AssetExecutionContext):
     """
@@ -84,7 +84,7 @@ def taxi_trips_file(context: dg.AssetExecutionContext):
 @dg.asset(
     deps=["taxi_trips_file"],
     partitions_def=monthly_partition,
-    compute_kind="DuckDB",
+    kinds={"duckdb"},
 )
 def taxi_trips(context: dg.AssetExecutionContext, database: DuckDBResource):
     """

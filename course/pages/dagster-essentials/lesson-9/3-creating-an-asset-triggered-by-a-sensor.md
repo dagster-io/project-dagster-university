@@ -118,7 +118,7 @@ from dagster_duckdb import DuckDBResource
 
 import matplotlib.pyplot as plt
 
-from dagster_essentials.defs.assets import constants
+from src.dagster_essentials.defs.assets import constants
 
 class AdhocRequestConfig(dg.Config):
     filename: str
