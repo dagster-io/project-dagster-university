@@ -75,7 +75,7 @@ That is all the configuration required for Docker. We can now spin up the Postgr
 ```bash 
 > docker compose up -d
 [+] Running 2/2
- ✔ Network dagster_testing_tests_default  Created                                                   0.0s
+ ✔ Network tests_default  Created                                                   0.0s
  ✔ Container postgresql                   Started                                                   0.2s
 ```
 
@@ -117,9 +117,9 @@ You can see all the parts of the testing code working together.
 We can confirm everything is working with pytest.
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_5.py::test_state_population_database
+> pytest tests/test_lesson_5.py::test_state_population_database
 ...
-dagster_testing_tests/test_lesson_5.py .                                                          [100%]
+tests/test_lesson_5.py .                                                          [100%]
 ```
 
 ## Testing with materialize

@@ -46,14 +46,14 @@ To test our jobs, we can write tests around their configurations by accessing el
 def test_job_config():
     assert (
         jobs.my_job_configured.config["ops"]["population_file_config"]["config"]["path"]
-        == "dagster_testing_tests/data/test.csv"
+        == "tests/data/test.csv"
     )
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_6.py::test_job_config
+> pytest tests/test_lesson_6.py::test_job_config
 ...
-dagster_testing_tests/test_lesson_6.py .                                                          [100%]
+tests/test_lesson_6.py .                                                          [100%]
 ```
 
 Tests like this may not always be necessary but you may have Dagster projects where you need to ensure all aspects.
@@ -70,7 +70,7 @@ my_schedule = dg.ScheduleDefinition(
     run_config=dg.RunConfig(
         {
             "state_population_file_config": assets.FilepathConfig(
-                path="dagster_testing_tests/data/test.csv"
+                path="tests/data/test.csv"
             )
         }
     ),
@@ -87,9 +87,9 @@ def test_schedule():
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_6.py::test_schedule
+> pytest tests/test_lesson_6.py::test_schedule
 ...
-dagster_testing_tests/test_lesson_6.py .                                                          [100%]
+tests/test_lesson_6.py .                                                          [100%]
 ```
 
 ## Sensors
@@ -136,9 +136,9 @@ def test_sensor_skip(mock_check_new_files):
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_6.py::test_sensor_skip
+> pytest tests/test_lesson_6.py::test_sensor_skip
 ...
-dagster_testing_tests/test_lesson_6.py .                                                          [100%]
+tests/test_lesson_6.py .                                                          [100%]
 ```
 
 The code above:

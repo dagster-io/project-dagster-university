@@ -94,7 +94,7 @@ If you are familiar with Python testing, writing a test for an asset should look
 To run this test, use the pytest CLI from the virtual environment:
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_total_population
+> pytest tests/test_lesson_3.py::test_total_population
 ...
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+tests/test_lesson_3.py .                                                          [100%]
 ```

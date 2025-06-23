@@ -139,9 +139,9 @@ The code above:
 We can still use pytest to run the test.
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_4.py::test_state_population_api
+> pytest tests/test_lesson_4.py::test_state_population_api
 ...
-dagster_testing_tests/test_lesson_4.py .                                                          [100%]
+tests/test_lesson_4.py .                                                          [100%]
 ```
 
 The test completely bypasses the API and returns our mocked data.

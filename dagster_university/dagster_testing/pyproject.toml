@@ -5,7 +5,7 @@ description = "Dagster Testing"
 readme = "README.md"
 requires-python = ">=3.9,<3.13"
 dependencies = [
-    "dagster==1.10.*",
+    "dagster",
     "dagster-dg-cli",
     "dagster-webserver",
     "dagster-snowflake",
@@ -19,18 +19,17 @@ dev-dependencies = [
 ]
 
 [build-system]
-requires = ["setuptools>=42"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools]
-packages = ["dagster_testing"]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.dg]
 directory_type = "project"
 
 [tool.dg.project]
 root_module = "dagster_testing"
-code_location_target_module = "dagster_testing.definitions"
+registry_modules = [
+    "dagster_testing.components.*",
+]
 
 [tool.ruff.lint]
 ignore = [

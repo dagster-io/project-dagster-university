@@ -26,7 +26,7 @@ To add a partition to the job, make the following changes:
 1. Import the `monthly_partition` from `partitions`:
 
    ```python
-   from src.dagster_essentials.defs.partitions import monthly_partition
+   from dagster_essentials.defs.partitions import monthly_partition
    ```
 
 2. In the job, add a `partitions_def` parameter equal to `monthly_partition`:
@@ -39,7 +39,7 @@ The job should now look like this:
 
 ```python
 import dagster as dg
-from src.dagster_essentials.defs.partitions import monthly_partition
+from dagster_essentials.defs.partitions import monthly_partition
 
 trips_by_week = dg.AssetSelection.assets("trips_by_week")
 

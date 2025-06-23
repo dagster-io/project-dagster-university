@@ -45,9 +45,9 @@ def test_state_population_file_logging(file_output):
 The test above should now pass.
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file_logging
+> pytest tests/test_lesson_3.py::test_state_population_file_logging
 ...
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+tests/test_lesson_3.py .                                                          [100%]
 ```
 
 ## Handling context with materialize()
@@ -91,9 +91,9 @@ def test_state_population_file_partition(file_output):
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file_partition
+> pytest tests/test_lesson_3.py::test_state_population_file_partition
 ...
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+tests/test_lesson_3.py .                                                          [100%]
 ```
 
 We can still use `materialize()` to execute our assets that use context, though we will need to set the specific partition:
@@ -112,9 +112,9 @@ def test_assets_partition(file_output):
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_assets_partition
+> pytest tests/test_lesson_3.py::test_assets_partition
 ...
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+tests/test_lesson_3.py .                                                          [100%]
 ```
 
 It's important to remember that when materializing multiple partitioned assets, just like when launching a run in the Dagster UI, you cannot use `materialize()` to execute multiple partitioned assets if they do not share the same partition. For example, if we try to run the following materialization with an additional asset, the test will fail:

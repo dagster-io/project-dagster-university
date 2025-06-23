@@ -5,7 +5,7 @@ description = "Dagster Essentials"
 readme = "README.md"
 requires-python = ">=3.9,<3.13"
 dependencies = [
-    "dagster==1.10.20",
+    "dagster",
     "dagster-dg-cli",
     "dagster-webserver",
     "dagster-cloud",
@@ -31,7 +31,6 @@ directory_type = "project"
 
 [tool.dg.project]
 root_module = "dagster_essentials"
-autoload_defs = true
 registry_modules = [
     "dagster_essentials.components.*",
 ]

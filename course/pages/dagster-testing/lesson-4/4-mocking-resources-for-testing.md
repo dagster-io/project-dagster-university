@@ -72,9 +72,9 @@ def test_state_population_api_assets_mocked_resource(fake_city):
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_4.py::test_state_population_api_assets_mocked_resource
+> pytest tests/test_lesson_4.py::test_state_population_api_assets_mocked_resource
 ...
-dagster_testing_tests/test_lesson_4.py .                                                          [100%]
+tests/test_lesson_4.py .                                                          [100%]
 ```
 
 ## When to mock a resource

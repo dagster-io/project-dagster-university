@@ -23,7 +23,7 @@ def state_population_file_config(config: FilepathConfig) -> list[dict]:
         return [row for row in reader]
 ```
 
-Now let's write a new test for this asset. Since we can now provide any file. we will use the `test.csv` file in the `dagster_testing_tests/data` directory. This file has the same schema as our ny.csv file but includes some test data.
+Now let's write a new test for this asset. Since we can now provide any file. we will use the `test.csv` file in the `tests/data` directory. This file has the same schema as our ny.csv file but includes some test data.
 
 ```
 City,Population
@@ -56,9 +56,9 @@ def test_state_population_file_config():
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file_config
+> pytest tests/test_lesson_3.py::test_state_population_file_config
 ...
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+tests/test_lesson_3.py .                                                          [100%]
 ```
 
 ## pytest fixtures
@@ -90,8 +90,8 @@ def test_state_population_file_config_fixture_1(config_file):
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file_config_fixture_1
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+> pytest tests/test_lesson_3.py::test_state_population_file_config_fixture_1
+tests/test_lesson_3.py .                                                          [100%]
 ```
 
 ## Multiple pytext fixtures
@@ -128,9 +128,9 @@ def test_state_population_file_config_fixture_2(config_file, file_example_output
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file_config_fixture_2
+> pytest tests/test_lesson_3.py::test_state_population_file_config_fixture_2
 ...
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+tests/test_lesson_3.py .                                                          [100%]
 ```
 
 ## Passing run configuration to the materialization run
@@ -154,9 +154,9 @@ def test_assets_config(config_file, file_example_output):
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_assets_config
+> pytest tests/test_lesson_3.py::test_assets_config
 ...
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+tests/test_lesson_3.py .                                                          [100%]
 ```
 
 You can also pass in this configuration information with YAML in a format similar to the Dagster UI. Here is the same run configuration as YAML:
@@ -165,7 +165,7 @@ You can also pass in this configuration information with YAML in a format simila
 ops:
   state_population_file_config:
     config:
-      path: "dagster_testing_tests/data/test.csv"
+      path: "tests/data/test.csv"
 ```
 
 Then we can update the `run_config` parameter to use that YAML file:
@@ -189,9 +189,9 @@ def test_assets_config_yaml(file_example_output):
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_assets_config_yaml
+> pytest tests/test_lesson_3.py::test_assets_config_yaml
 ...
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+tests/test_lesson_3.py .                                                          [100%]
 ```
 
 There is no difference between using `dg.RunConfig` or a YAML when running tests. You may find YAML easier to manage in more complex configurations for readability or to keep as examples for users who will run executions in the Dagster UI.

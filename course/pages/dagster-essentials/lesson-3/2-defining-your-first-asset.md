@@ -56,7 +56,7 @@ With the files set we can now add our first asset.
 
    ```python
    import requests
-   from src.dagster_essentials.defs.assets import constants
+   from dagster_essentials.defs.assets import constants
    ```
 
 3. Below the imports, let's define a function that takes no inputs and returns nothing (type-annoted with `None`). Add the following code to create a function to do this named `taxi_trips_file`:

@@ -12,7 +12,7 @@ In the `assets/trips.py` file, comment out the `from dagster_essentials.defs.ass
 
 ```python
 import requests
-# from src.dagster_essentials.defs.assets import constants # <---- Import commented out here
+# from dagster_essentials.defs.assets import constants # <---- Import commented out here
 import dagster as dg
 
 @dg.asset

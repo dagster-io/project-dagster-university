@@ -20,18 +20,18 @@ def test_def():
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_6.py::test_def
+> pytest tests/test_lesson_6.py::test_def
 ...
-dagster_testing_tests/test_lesson_6.py .                                                          [100%]
+tests/test_lesson_6.py .                                                          [100%]
 ```
 
 As simple as it may seem, this test will find many issues associated with your Dagster project. This ensures that all the Dagster objects can load successfully and that certain dependencies between objects are satisfied (such a given resource being present if it is required for an asset). So if there is an issue loading any of your assets, asset checks, jobs, resources, schedules and sensors into the definition this test will trigger.
 
 {% callout %}
 
-> 💡 **Unit tests:** While this test will catch many issues, we still need individual tests to ensure that the assets and other Dagster objects __execute__ as expected. The definition test only ensures proper __loading__ of the objects.
+💡 **Unit tests:** While this test will catch many issues, we still need individual tests to ensure that the assets and other Dagster objects __execute__ as expected. The definition test only ensures proper __loading__ of the objects.
 
-> {% /callout %}
+{% /callout %}
 
 ## Definition objects
 
@@ -48,9 +48,9 @@ def test_def_objects():
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_6.py::test_non_negative
+> pytest tests/test_lesson_6.py::test_non_negative
 ...
-dagster_testing_tests/test_lesson_6.py .                                                          [100%]
+tests/test_lesson_6.py .                                                          [100%]
 ```
 
 These tests can be helpful if you want to make sure that certain objects are present such as a critical asset or schedule.

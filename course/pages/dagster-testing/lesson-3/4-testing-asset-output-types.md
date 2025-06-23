@@ -40,13 +40,13 @@ def test_wrong_type_annotation():
 Will this pass? Click **View answer** to view it.
 
 ```bash {% obfuscated="true" %}
-> pytest dagster_testing_tests/test_lesson_3.py::test_wrong_type_annotation
+> pytest tests/test_lesson_3.py::test_wrong_type_annotation
 ...
-dagster_testing_tests/test_lesson_3.py F                        [100%]
+tests/test_lesson_3.py F                        [100%]
 ...
 E           dagster._core.errors.DagsterTypeCheckDidNotPass: Type check failed for op "wrong_type_annotation" output "result" - expected type "String". Description: Value "2" of python type "int" must be a string.
 ...
-FAILED dagster_testing_tests/test_lesson_3.py::test_wrong_type_annotation - dagster._core.errors.DagsterTypeCheckDidNotPass: Type check failed...
+FAILED tests/test_lesson_3.py::test_wrong_type_annotation - dagster._core.errors.DagsterTypeCheckDidNotPass: Type check failed...
 ```
 
 Because Dagster enforces types as part of its execution, we will never need to write a tests around type check. Just make sure that your annotate any assets where you care about types.
@@ -70,7 +70,7 @@ def test_wrong_type_annotation_error():
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_wrong_type_annotation_error
+> pytest tests/test_lesson_3.py::test_wrong_type_annotation_error
 ...
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+tests/test_lesson_3.py .                                                          [100%]
 ```

@@ -5,7 +5,7 @@ description = "Dagster and dbt"
 readme = "README.md"
 requires-python = ">=3.9,<3.13"
 dependencies = [
-    "dagster==1.10.*",
+    "dagster",
     "dagster-dg-cli",
     "dagster-webserver",
     "dagster-cloud",
@@ -41,7 +41,9 @@ directory_type = "project"
 
 [tool.dg.project]
 root_module = "dagster_and_dbt"
-code_location_target_module = "dagster_and_dbt.definitions"
+registry_modules = [
+    "dagster_and_dbt.components.*",
+]
 
 [tool.ruff.lint]
 ignore = [

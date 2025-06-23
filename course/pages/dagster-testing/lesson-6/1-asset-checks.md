@@ -66,7 +66,7 @@ def test_non_negative():
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_6.py::test_non_negative
+> pytest tests/test_lesson_6.py::test_non_negative
 ...
-dagster_testing_tests/test_lesson_6.py .                                                          [100%]
+tests/test_lesson_6.py .                                                          [100%]
 ```

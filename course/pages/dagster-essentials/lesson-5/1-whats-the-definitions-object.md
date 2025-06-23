@@ -54,21 +54,22 @@ directory_type = "project"
 
 [tool.dg.project]
 root_module = "dagster_essentials"
-autoload_defs = true
 registry_modules = [
     "dagster_essentials.components.*",
 ]
 ```
 
-In your project, open the `dagster_university/dagster_essentials/definitions.py` file. It should look like the following code:
+In your project, open the `dagster_university/dagster_essentials/src/definitions.py` file. It should look like the following code:
 
 ```python
-import dagster as dg
+from pathlib import Path
 
-import dagster_essentials.defs
+from dagster import definitions, load_from_defs_folder
 
 
-@dg.definitions
+@definitions
 def defs():
-    return dg.load_defs(defs_root=dagster_essentials.defs)
+    return load_from_defs_folder(project_root=Path(__file__).parent.parent.parent)
 ```
+
+**Note** The `definitions.py` file is automatically generated when you scaffold a new Dagster project using [`uvx`](https://docs.dagster.io/getting-started/installation).
