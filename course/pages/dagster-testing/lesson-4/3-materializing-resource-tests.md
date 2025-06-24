@@ -9,7 +9,7 @@ lesson: '4'
 When we discussed unit tests we showed how you can execute one or more assets together using `dg.materialize()`. We can still materialize our assets this way using mocks.
 
 ```python
-# /dagster_testing/defs/assets/lesson_4.py
+# /tests/test_lesson_4.py
 @patch("requests.get")
 def test_state_population_api_assets(mock_get, example_response, api_output):
     mock_response = Mock()
@@ -41,7 +41,7 @@ This uses the same patch and mocked object as before. The only difference is tha
 
 ## Testing with materialize and config
 
-We can also materialize resources and configs together. We will make a slight modification to our `author_works_with_resource` so it can take in a run configuration.
+We can also materialize resources and configs together. We will make a slight modification to our `state_population_api_resource_config` so it can take in a run configuration.
 
 ```python
 class StateConfig(dg.Config):
