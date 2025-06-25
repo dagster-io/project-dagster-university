@@ -10,34 +10,26 @@ Let’s talk a bit about the files in the Dagster Essentials course. The `dagste
 
 ```bash
 dagster_university/dagster_essentials
-├── Makefile
-├── README.md
+.
 ├── dagster_cloud.yaml
-├── dagster_essentials
-│   ├── __init__.py
-│   ├── assets
-│   │   ├── __init__.py
-│   │   ├── constants.py
-│   │   ├── metrics.py
-│   │   └── trips.py
-│   ├── completed
-│   │   └── ...
-│   ├── definitions.py
-│   ├── jobs.py
-│   ├── partitions.py
-│   ├── resources.py
-│   ├── schedules.py
-│   └── sensors.py
-├── dagster_essentials_tests
-│   └── ...
 ├── data
-│   ├── outputs
-│   ├── raw
-│   ├── requests
-│   └── staging
-├── env.example
+├── Makefile
 ├── pyproject.toml
 ├── pytest.ini
+├── README.md
+├── src
+│   ├── __init__.py
+│   └── dagster_essentials
+│       ├── __init__.py
+│       ├── completed
+│       └── defs
+│           ├── __init__.py
+│           ├── assets
+│           │   └── constants.py
+│           ├── jobs.py
+│           ├── partitions.py
+│           └── resources.py
+├── tests
 └── uv.lock
 ```
 
@@ -72,13 +64,13 @@ The columns in the following table are as follows:
 
 ---
 
-- `dagster_essentials/completed`
+- `src/dagster_essentials/completed/`
 - Dagster U
 - Finished code for each lesson of the course.
 
 ---
 
-- `dagster_essentials_tests/`
+- `src/tests/`
 - Dagster U
 - A Python module that contains unit tests for the completed code.
 
@@ -90,7 +82,7 @@ The columns in the following table are as follows:
 
 ---
 
-- `.env.example`
+- `.env`
 - Python
 - A text file containing pre-configured environment variables. We’ll talk more about this file in Lesson 6, when we cover connecting to external services.
 

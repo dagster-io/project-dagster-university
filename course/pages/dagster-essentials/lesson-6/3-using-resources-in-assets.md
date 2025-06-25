@@ -22,7 +22,7 @@ The following code shows what the `taxi_trips` asset currently looks like, witho
 import requests
 import duckdb
 import os
-from dagster_essentials.assets import constants
+from dagster_essentials.defs.assets import constants
 import dagster as dg
 
 ... # other assets
@@ -70,7 +70,7 @@ And now, after adding a resource, the `taxi_trips` asset looks like the followin
 
 import requests
 from dagster_duckdb import DuckDBResource
-from dagster_essentials.assets import constants
+from dagster_essentials.defs.assets import constants
 import dagster as dg
 
 ... # other assets
@@ -133,6 +133,6 @@ To refactor `taxi_trips` to use the `database` resource, we had to:
 
 Before continuing, make sure you:
 
-1. Update `asset/trips.py` with the refactored `taxi_trips` asset code
+1. Update `defs/asset/trips.py` with the refactored `taxi_trips` asset code
 2. Reload the definitions in the Dagster UI
 3. Rematerialize the `taxi_trips` asset

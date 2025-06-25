@@ -48,7 +48,7 @@ With the basics of materialization out of the way, let’s move on to actually m
 If you don’t still have the Dagster UI running from Lesson 2, use the command line to run the following command in the root of your Dagster project (the top-level `dagster-university/dagster_essentials` directory):
 
 ```bash
-dagster dev
+dg dev
 ```
 
 Navigate to [`localhost:3000`](http://localhost:3000/) in your browser. The page should look like the following - if it doesn’t, click **Overview** in the top navigation bar:
@@ -138,3 +138,9 @@ The page is empty for now, but it’ll look more interesting shortly. Let’s ge
 {% /table %}
 
 That’s it! You’ve successfully materialized your first asset! 🎉
+
+## When to use `dg launch` vs `dg dev`
+
+You now know two different ways to launch your asset. You may be wondering which one to use. Luckily there is no wrong answer. You might find it easier to execute an asset with `dg launch` when you need to quickly test something out while you may want to use `dg dev` as your Dagster project becomes more sophisticated.
+
+For the majority of this course we will use `dg dev` to showcase more of the features of Dagster.

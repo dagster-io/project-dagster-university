@@ -1,4 +1,0 @@
-ops:
-  population_file_config:
-    config:
-      path: "dagster_testing_tests/data/test.csv"

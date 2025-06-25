@@ -40,7 +40,7 @@ def dbt_project_assets(context: dg.AssetExecutionContext, dbt: DbtCliResource):
 
 
 @dg.asset(
-    compute_kind="tensorflow",
+    kinds={"tensorflow"},
     deps=[get_asset_key_for_model([dbt_project_assets], "daily_order_summary")],
 )
 def predicted_orders():

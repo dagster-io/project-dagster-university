@@ -1,0 +1,4 @@
+ops:
+  state_population_file_config:
+    config:
+      path: "tests/data/test.csv"

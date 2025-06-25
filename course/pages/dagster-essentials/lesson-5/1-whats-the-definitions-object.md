@@ -12,22 +12,31 @@ Let’s use our cookie example to demonstrate. In this case, our cookie assets -
 
 ![In this example, our cookie assets, like our dry and wet ingredients, can be likened to Dagster definitions](/images/dagster-essentials/lesson-5/cookie-definitions.png)
 
-In Dagster, the `Definitions` object is located in the `definitions.py` file. If we wanted to create a `Definitions` object for the cookie definitions we have so far, it would look something like this:
+In Dagster, the `Definitions` object is located in the `definitions.py` file. If we wanted to create a `Definitions` object for the cookie definitions it would look something like this:
 
 ```python
-defs = Definitions(
-    assets=[
-        dry_ingredients,
-        wet_ingredients,
-        chocolate_chips,
-        cookie_dough,
-        chocolate_chip_cookie_dough,
-        chocolate_chip_cookies,
-    ]
-)
+import dagster_cookies.defs as defs
+
+defs = dg.components.load_defs(defs)
 ```
 
-Note that assets aren’t the only type of definition in Dagster: there are also others like resources, schedules, and sensors. We’ll go into detail on each of these in later lessons, but for now, keep this in mind.
+## Autoloading
+
+After the introduction of `dg`, you no longer need to explicitly list all the assets in our project within a `Definitions` object. Dagster can automatically load most objects (we will later see there are other object types besides assets) by importing the contents of the `defs` module.
+
+Remember that using `dg scaffold` has been placing all our asset files within the `defs` directory.
+
+```
+src
+└── dagster_essentials
+    ├── definitions.py
+    └── defs
+        └── assets
+            ├── __init__.py
+            ├── constants.py
+            ├── metrics.py
+            └── trips.py
+```
 
 You’ll only have one code location (and therefore one `Definitions` object) in this course, but as your project grows, you’ll need to update the `Definitions` object to include new definitions.
 
@@ -37,60 +46,30 @@ You’ll only have one code location (and therefore one `Definitions` object) in
 
 Now that we’ve discussed what the `Definitions` object is, let’s go into how Dagster uses it.
 
-When running `dagster dev`, Dagster looks to the `pyproject.toml` file. This file contains all of the Python dependencies necessary to run Dagster as well as Dagster specific settings on where the `Definitions` object should be loaded.
+When running `dg dev`, Dagster looks to the `pyproject.toml` file. This file contains all of the Python dependencies necessary to run Dagster as well as Dagster specific settings on where the `Definitions` object should be loaded.
 
 ```yaml
-[tool.dagster]
-module_name = "dagster_essentials.definitions"
-code_location_name = "dagster_essentials"
+[tool.dg]
+directory_type = "project"
+
+[tool.dg.project]
+root_module = "dagster_essentials"
+registry_modules = [
+    "dagster_essentials.components.*",
+]
 ```
 
-In your project, open the `dagster_university/definitions.py` file. It should look like the following code:
+In your project, open the `dagster_university/dagster_essentials/src/definitions.py` file. It should look like the following code:
 
 ```python
-import dagster as dg
+from pathlib import Path
 
-from dagster_essentials.assets import trips, metrics
+from dagster import definitions, load_from_defs_folder
 
-trip_assets = dg.load_assets_from_modules([trips])
-metric_assets = dg.load_assets_from_modules([metrics])
 
-defs = dg.Definitions(
-    assets=[*trip_assets, *metric_assets]
-)
+@definitions
+def defs():
+    return load_from_defs_folder(project_root=Path(__file__).parent.parent.parent)
 ```
 
----
-
-## Anatomy of the `definitions.py` file
-
-Let’s break down this file’s code line-by-line.
-
-The following line introduces the `Definitions` object we were talking about. It also imports a method called `load_assets_from_modules`, which we’ll use to tell Dagster to retrieve the assets you defined:
-
-```python
-import dagster as dg
-```
-
-Following Dagster’s recommended file structure, assets should be stored in a separate Python module. In this example, we used Python’s relative import functionality to import the `trips` and `metrics` sub-modules from the `.assets` module:
-
-```python
-from dagster_essentials.assets import trips, metrics
-```
-
-These lines use the `load_assets_from_modules` function to store the assets into variables called `trip_assets` and `metric_assets`:
-
-```python
-trip_assets = dg.load_assets_from_modules([trips])
-metric_assets = dg.load_assets_from_modules([metrics])
-```
-
-When loading a code location, Dagster looks for a variable that contains a `Definitions` object. This is the most important section of the `definitions.py` file. Here, everything is combined and added into the `Definitions` object.
-
-The `Definitions` object takes multiple arguments, one for each of the possible Dagster definitions (ex., `assets`, `resources`, `schedules`). In this case, we passed in the assets we loaded into the `assets` argument:
-
-```python
-defs = dg.Definitions(
-    assets=[*trip_assets, *metric_assets],
-)
-```
+**Note** The `definitions.py` file is automatically generated when you scaffold a new Dagster project using [`uvx`](https://docs.dagster.io/getting-started/installation).

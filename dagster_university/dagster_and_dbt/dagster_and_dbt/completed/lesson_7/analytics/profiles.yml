@@ -1,7 +1,0 @@
-dagster_dbt_university:
-  target: dev
-  outputs:
-    dev:
-      type: duckdb
-      # Different path for nested project
-      path: '../../../../{{ env_var("DUCKDB_DATABASE", "data/staging/data.duckdb") }}'

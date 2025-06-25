@@ -16,4 +16,4 @@ By the end of the course, you will:
 - Replicate data across databases
 - Refactor your code using Dagster Components for better modularity and reuse
 
-If you get stuck or want to jump ahead, check out the [finished project here on GitHub](https://github.com/dagster-io/project-dagster-university/tree/main/dagster_university/dagster_and_etl/dagster_and_etl/completed).
+If you get stuck or want to jump ahead, check out the [finished project here on GitHub](https://github.com/dagster-io/project-dagster-university/tree/main/dagster_university/dagster_and_etl).
