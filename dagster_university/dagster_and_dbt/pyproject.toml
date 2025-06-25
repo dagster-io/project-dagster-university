@@ -30,8 +30,8 @@ dev-dependencies = [
 ]
 
 [build-system]
-requires = ["setuptools>=42"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.setuptools]
 packages = ["dagster_and_dbt"]
