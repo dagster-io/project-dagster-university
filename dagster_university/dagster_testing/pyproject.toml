@@ -5,7 +5,7 @@ description = "Dagster Testing"
 readme = "README.md"
 requires-python = ">=3.9,<3.13"
 dependencies = [
-    "dagster",
+    "dagster==1.11",
     "dagster-dg-cli",
     "dagster-webserver",
     "dagster-snowflake",
