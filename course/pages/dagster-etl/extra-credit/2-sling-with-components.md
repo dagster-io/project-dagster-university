@@ -10,41 +10,12 @@ To navigate including Components with Dagster, we will be using the Dagster `dg`
 
 We used `dg` before to lanuch the UI to view and execute our assets but now we will use it to scaffold our Component.
 
-To start run:
-
-```bash
-dg list plugins
-```
-
-This will list all the plugins available in our Dagster project. At the bottom of that output you should see plugins for for `dagster_dlt.DltLoadCollectionComponent` and `dagster_sling.SlingReplicationCollectionComponent`.
-
-```
-│ dagster_dlt   │ ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                                                                   │
-│               │ ┃ Symbol                                 ┃ Summary                                            ┃ Features                     ┃                                                                   │
-│               │ ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩                                                                   │
-│               │ │ dagster_dlt.DltLoadCollectionComponent │ Expose one or more dlt loads to Dagster as assets. │ [component, scaffold-target] │                                                                   │
-│               │ └────────────────────────────────────────┴────────────────────────────────────────────────────┴──────────────────────────────┘                                                                   │
-│ dagster_sling │ ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                                               │
-│               │ ┃ Symbol                                            ┃ Summary                                                     ┃ Features                     ┃                                               │
-│               │ ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩                                               │
-│               │ │ dagster_sling.SlingReplicationCollectionComponent │ Expose one or more Sling replications to Dagster as assets. │ [component, scaffold-target] │                                               │
-│               │ └───────────────────────────────────────────────────┴─────────────────────────────────────────────────────────────┴──────────────────────────────┘                                               │
-```
-
-Both of these Component are available to use because our Python environment has the `dagster-dlt` and `dagster-sling` packages installed. As well as giving us the ability to work directly with the libraries, they also include the Component versions.
-
-If we were starting our project from scratch we could add the plugin by adding it to our Python envrionment.
-
-```bash
-uv pip install dagster-sling
-```
-
 ## Create dlt Component
 
 To initialize our dlt Component, we will run the `dg` command to scaffold the Sling Component (`dagster_sling.SlingReplicationCollectionComponent`): 
 
 ```bash
-dg scaffold 'dagster_sling.SlingReplicationCollectionComponent' ingest_files
+dg scaffold defs 'dagster_sling.SlingReplicationCollectionComponent' ingest_files
 ```
 
 There will now be a new directory in `defs` containing two files:

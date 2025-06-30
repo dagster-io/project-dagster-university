@@ -87,7 +87,7 @@ With the files set we can now add our first asset.
 
       ```python
       import requests
-      from src.dagster_essentials.defs.assets import constants
+      from dagster_essentials.defs.assets import constants
       import dagster as dg
 
       @dg.asset

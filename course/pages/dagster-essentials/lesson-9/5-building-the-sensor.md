@@ -36,7 +36,7 @@ Now that cursors have been explained, let’s start writing the sensor.
 1. Scaffold a sensor location:
 
     ```bash
-    dg scaffold dagster.sensor sensors.py
+    dg scaffold defs dagster.sensor sensors.py
     ```
 
 2. Check to make sure everything is correct:
@@ -86,7 +86,11 @@ Now that cursors have been explained, let’s start writing the sensor.
        job=adhoc_request_job
    )
    def adhoc_request_sensor(context: dg.SensorEvaluationContext):
-       PATH_TO_REQUESTS = os.path.join(os.path.dirname(__file__), "../", "data/requests")
+       PATH_TO_REQUESTS = os.path.join(
+       os.path.dirname(__file__),
+        "../../../",
+       "data/requests",
+   )
    ```
 
 7. Next, define the cursor. Copy and paste the following code into the sensor’s function body:
@@ -167,8 +171,11 @@ from dagster_essentials.defs.jobs import adhoc_request_job
     job=adhoc_request_job
 )
 def adhoc_request_sensor(context: dg.SensorEvaluationContext):
-    PATH_TO_REQUESTS = os.path.join(os.path.dirname(__file__), "../../", "data/requests")
-
+    PATH_TO_REQUESTS = os.path.join(
+        os.path.dirname(__file__),
+        "../../../",
+        "data/requests",
+    )
     previous_state = json.loads(context.cursor) if context.cursor else {}
     current_state = {}
     runs_to_request = []

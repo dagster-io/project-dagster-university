@@ -11,7 +11,7 @@ Some assets in Dagster pipelines may take in parameters defined outside of asset
 If we think about the `state_population_file` it can currently only parse a single file. Let's create a new asset called `state_population_file_config` with a run configuration. This asset will be able to process any file:
 
 ```python
-# /dagster_testing/defs/assets/lesson_3.py
+# src/dagster_testing/defs/assets/lesson_3.py
 class FilepathConfig(dg.Config):
     path: str
 

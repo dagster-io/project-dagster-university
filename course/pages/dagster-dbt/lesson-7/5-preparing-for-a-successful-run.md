@@ -49,7 +49,7 @@ dagster_dbt_university:
   outputs:
     dev:
       type: duckdb
-      path: '../../{{ env_var("DUCKDB_DATABASE", "data/staging/data.duckdb") }}'
+      path: '../../../{{ env_var("DUCKDB_DATABASE", "data/staging/data.duckdb") }}'
     prod:
       type: duckdb
       path: '{{ env_var("DUCKDB_DATABASE", "") }}'

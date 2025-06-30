@@ -106,12 +106,29 @@ You saw that using `dg` to scaffold our project, the `Definitions` will automati
 1. In the `resources.py` add the following line:
 
    ```python
+   ...
+
    @dg.definitions
    def resources():
        return dg.Definitions(resources={"database": database_resource})
    ```
 
    This tells Dagster how to map the resources to specific key names. In this case the `database_resource` resource just defined is mapped to the key name `database`.
+
+   The `resources.py` file should now look like:
+
+   ```python
+    from dagster_duckdb import DuckDBResource
+    import dagster as dg
+
+    database_resource = DuckDBResource(
+        database=dg.EnvVar("DUCKDB_DATABASE")
+    )
+
+    @dg.definitions
+    def resources():
+        return dg.Definitions(resources={"database": database_resource})
+   ```
 
 2. In the Dagster UI, click **Deployment.**
 

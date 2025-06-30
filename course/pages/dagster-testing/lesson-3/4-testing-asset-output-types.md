@@ -9,7 +9,7 @@ lesson: '3'
 In standard Python, a function does not need to match its type annotation in order to execute properly. For example:
 
 ```python
-# /dagster_testing/defs/assets/lesson_3.py
+# src/dagster_testing/defs/assets/lesson_3.py
 def func_wrong_type() -> str:
     return 2
 ```

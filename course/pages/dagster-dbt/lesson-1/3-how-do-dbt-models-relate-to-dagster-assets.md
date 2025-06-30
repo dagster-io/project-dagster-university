@@ -20,7 +20,7 @@ These similarities make it natural to interact with dbt models as Dagster assets
 
 From code like this:
 
-```python file=/integrations/dbt/potemkin_dag_for_cover_image.py startafter=start endbefore=end
+```python
 from pathlib import Path
 
 from dagster_dbt import DbtCliResource, dbt_assets, get_asset_key_for_model

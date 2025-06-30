@@ -15,7 +15,7 @@ The `DbtCliResource` is the main resource that you’ll be working with. In late
 > 💡 **Resource refresher:** Resources are Dagster’s recommended way of connecting to other services and tools, such as dbt, your data warehouse, or a BI tool.
 > {% /callout %}
 
-Navigate to the `dagster_university/dagster_and_dbt/dagster_and_dbt/defs/resources.py`, which is where other resources are defined. Copy and paste the following code to their respective locations:
+Navigate to the `defs/resources.py`, which is where other resources are defined. Copy and paste the following code to their respective locations:
 
 ```python
 from dagster_dbt import DbtCliResource

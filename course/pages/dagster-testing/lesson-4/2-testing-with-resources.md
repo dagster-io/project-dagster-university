@@ -13,7 +13,7 @@ Resources are objects that provide access to external systems, databases, or ser
 We can refactor the API asset code into a resource. A resource is just a class that inherits from `dg.ConfigurableResource`. It can have any number of methods which assets can use. This resource will only include a single method for `get_cities`.
 
 ```python
-# /dagster_testing/defs/assets/lesson_4.py
+# src/dagster_testing/defs/assets/lesson_4.py
 class StatePopulation(dg.ConfigurableResource):
     def get_cities(self, state: str) -> list[dict]:
         output = []

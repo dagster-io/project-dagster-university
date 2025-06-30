@@ -13,7 +13,7 @@ If your assets do not access any of the context APIs, you will not need to worry
 However if we rewrite the `state_population_file` asset to include context logging, we will need to update our tests:
 
 ```python
-# /dagster_testing/defs/assets/lesson_3.py
+# src/dagster_testing/defs/assets/lesson_3.py
 @dg.asset()
 def state_population_file_logging(context: dg.AssetExecutionContext) -> list[dict]:
     file_path = Path(__file__).absolute().parent / "../data/ny.csv"

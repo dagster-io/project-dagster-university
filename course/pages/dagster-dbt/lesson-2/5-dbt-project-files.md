@@ -45,7 +45,7 @@ Now you’re ready - let’s go!
       outputs:
         dev:
           type: duckdb
-          path: '../../{{ env_var("DUCKDB_DATABASE", "data/staging/data.duckdb") }}'
+          path: '../../../{{ env_var("DUCKDB_DATABASE", "data/staging/data.duckdb") }}'
     ```
     
 Let’s review what this does:

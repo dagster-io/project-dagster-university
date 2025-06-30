@@ -15,7 +15,7 @@ Having all of your assets in one file becomes difficult to manage. Let’s separ
 1. Use `dg` to create a new file for our metrics assets:
 
     ```bash
-    dg scaffold dagster.asset assets/metrics.py
+    dg scaffold defs dagster.asset assets/metrics.py
     ```
 
 2. At the top of the `src/dagster_essentials/defs/assets/metrics.py` file, add the following imports:

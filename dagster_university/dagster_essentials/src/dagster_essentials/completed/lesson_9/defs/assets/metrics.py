@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from dagster_duckdb import DuckDBResource
 
-from dagster_essentials.completed.lesson_8.defs.assets import constants
-from dagster_essentials.completed.lesson_8.defs.partitions import weekly_partition
+from dagster_essentials.completed.lesson_9.defs.assets import constants
+from dagster_essentials.completed.lesson_9.defs.partitions import weekly_partition
 
 
 @dg.asset(

@@ -17,7 +17,7 @@ Let’s write a new configuration that we can use to customize the asset materia
 1. Use `dg` to scaffold a new asset location:
 
    ```bash
-   dg scaffold dagster.asset assets/requests.py
+   dg scaffold defs dagster.asset assets/requests.py
    ```
 
 2. Add the following import to the top of the file (`defs/assets/requests.py`):
