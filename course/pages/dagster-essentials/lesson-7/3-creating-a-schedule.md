@@ -8,11 +8,17 @@ lesson: '7'
 
 Now that you know what makes up a schedule, let’s create one. To do this, we’ll use the `ScheduleDefinition` class.
 
-Copy and paste the following snippet into `schedules.py`:
+We can use `dg` again to scaffold our schedules. So first run:
+
+```bash
+dg scaffold defs dagster.schedule schedules.py
+```
+
+This will create a file in `src/dagster_essentials/defs/schedules.py` where we can add the following schedule code:
 
 ```python
 import dagster as dg
-from dagster_essentials.jobs import trip_update_job
+from dagster_essentials.defs.jobs import trip_update_job
 
 trip_update_schedule = dg.ScheduleDefinition(
     job=trip_update_job,

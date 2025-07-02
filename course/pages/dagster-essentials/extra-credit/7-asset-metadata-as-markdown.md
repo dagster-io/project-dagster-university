@@ -22,7 +22,7 @@ In Lesson 9, you created the `adhoc_request` asset. During materialization, the 
 
    import matplotlib.pyplot as plt
 
-   from dagster_essentials.assets import constants
+   from dagster_essentials.defs.assets import constants
 
    class AdhocRequestConfig(dg.Config):
      filename: str
@@ -138,7 +138,7 @@ from dagster_duckdb import DuckDBResource
 import matplotlib.pyplot as plt
 import base64
 
-from dagster_essentials.assets import constants
+from dagster_essentials.defs.assets import constants
 
 class AdhocRequestConfig(dg.Config):
     filename: str

@@ -12,9 +12,13 @@ So far when writing assets, you’ve orchestrated computations in a database and
 
 Having all of your assets in one file becomes difficult to manage. Let’s separate the assets by their purpose and put these analysis-focused assets in a different file than the assets that ingest data.
 
-1. In the `assets` directory, navigate to and open the `metrics.py` file.
+1. Use `dg` to create a new file for our metrics assets:
 
-2. At the top of the `assets/metrics.py` file, add the following imports:
+    ```bash
+    dg scaffold defs dagster.asset assets/metrics.py
+    ```
+
+2. At the top of the `src/dagster_essentials/defs/assets/metrics.py` file, add the following imports:
 
    ```python
    import dagster as dg
@@ -25,7 +29,7 @@ Having all of your assets in one file becomes difficult to manage. Let’s separ
    import duckdb
    import os
 
-   from dagster_essentials.assets import constants
+   from dagster_essentials.defs.assets import constants
    ```
 
    There may be some imports you’re unfamiliar with, but we’ll cover those as we use them.

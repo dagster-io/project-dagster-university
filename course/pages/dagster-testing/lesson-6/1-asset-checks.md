@@ -23,7 +23,7 @@ When the asset runs, we can see that its associated asset checks also run and va
 To define an asset check we first need an asset. `total_population` is a slightly modified version of the asset we have used throughout the course. Now it will take in the output of several assets and sums their populations.
 
 ```python
-# /dagster_testing/assets/lesson_6.py
+# src/dagster_testing/defs/assets/lesson_6.py
 @dg.asset
 def total_population(
     state_population_file_config: list[dict],
@@ -66,7 +66,7 @@ def test_non_negative():
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_6.py::test_non_negative
+> pytest tests/test_lesson_6.py::test_non_negative
 ...
-dagster_testing_tests/test_lesson_6.py .                                                          [100%]
+tests/test_lesson_6.py .                                                          [100%]
 ```

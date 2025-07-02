@@ -34,7 +34,7 @@ Dagster assets are good candidates for unit tests. Since an asset is responsible
 We will begin with the following asset:
 
 ```python
-# /dagster_testing/assets/lesson_3.py
+# src/dagster_testing/defs/assets/lesson_3.py
 @dg.asset
 def state_population_file() -> list[dict]:
     file_path = Path(__file__).absolute().parent / "../data/ny.csv"
@@ -94,7 +94,7 @@ If you are familiar with Python testing, writing a test for an asset should look
 To run this test, use the pytest CLI from the virtual environment:
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_state_population_file
+> pytest tests/test_lesson_3.py::test_state_population_file
 ...
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+tests/test_lesson_3.py .                                                          [100%]
 ```

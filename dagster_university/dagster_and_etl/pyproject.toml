@@ -1,11 +1,12 @@
 [project]
-name = "dagster-etl"
+name = "dagster-and-etl"
 version = "0.0.1"
 description = "Dagster ETL"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "dagster==1.10.*",
+    "dagster==1.11",
+    "dagster-dg-cli",
     "dagster-webserver",
     "dagster-duckdb",
     "dagster-dlt",
@@ -22,15 +23,26 @@ dev-dependencies = [
 ]
 
 [build-system]
-requires = ["setuptools>=42"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools]
-packages = ["dagster_and_etl"]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.dg]
 directory_type = "project"
 
 [tool.dg.project]
 root_module = "dagster_and_etl"
-code_location_target_module = "dagster_and_etl.definitions"
+registry_modules = [
+    "dagster_and_etl.components.*",
+]
+
+[tool.ruff.lint]
+ignore = [
+    "ERA001", # comments are fine for a learning environment
+    "E501",   # Line too long for docstrings
+    "F401",   # unused imports already caught by pylance
+]
+
+fixable = ["ALL"]
+unfixable = [
+    "F401", # dont remove unused imports
+]

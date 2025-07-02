@@ -14,9 +14,13 @@ These configurations are most commonly added at the run-level and can be passed 
 
 Let’s write a new configuration that we can use to customize the asset materialization.
 
-1. In the `assets` directory, create a `requests.py` file.
+1. Use `dg` to scaffold a new asset location:
 
-2. Add the following import to the top of the file:
+   ```bash
+   dg scaffold defs dagster.asset assets/requests.py
+   ```
+
+2. Add the following import to the top of the file (`defs/assets/requests.py`):
 
    ```python
    import dagster as dg

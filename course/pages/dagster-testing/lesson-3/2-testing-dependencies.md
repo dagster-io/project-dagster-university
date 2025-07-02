@@ -11,7 +11,7 @@ Most Dagster asset graphs contain multiple assets that depend on the output of o
 We will add an additional asset downstream of `state_population_file` that takes in its output:
 
 ```python
-# /dagster_testing/assets/lesson_3.py
+# src/dagster_testing/defs/assets/lesson_3.py
 @dg.asset
 def total_population(state_population_file: list[dict]) -> int:
     return sum([int(x["Population"]) for x in state_population_file])
@@ -49,9 +49,9 @@ Because we are setting the input parameter for `total_population` we can ensure 
 Like the other asset test, this test looks like standard Python. Again, we can run this test with `pytest`:
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_total_population
+> pytest tests/test_lesson_3.py::test_total_population
 ...
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+tests/test_lesson_3.py .                                                          [100%]
 ```
 
 ## Testing materializations
@@ -71,9 +71,9 @@ def test_assets():
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_assets
+> pytest tests/test_lesson_3.py::test_assets
 ...
-dagster_testing_tests/test_lesson_3.py .                                                          [100%]
+tests/test_lesson_3.py .                                                          [100%]
 ```
 
 Confirming that the assets materialize without issue is a great start, but we still want to check the return values of each asset. Luckily `materialize()` allows us to access the output value with the `output_for_node()` method for each asset from the materialization:
@@ -112,9 +112,9 @@ Using `output_for_node()` we access the individual assets and ensure that their 
 Since we are using Dagster to execute the assets, when we run `materialize()`, the default Dagster event execution will be logged. If you rerun `pytest` with the `-s` flag set to view the logs, all of the Dagster logs will be included as well as the test output:
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_3.py::test_assets -s
+> pytest tests/test_lesson_3.py::test_assets -s
 ...
-dagster_testing_tests/test_lesson_3.py 2025-02-14 09:30:11 -0600 - dagster - DEBUG - __ephemeral_asset_job__ - 7924f6b8-72c6-4789-b34a-d25b144f7f66 - 62349 - RUN_START - Started execution of run for "__ephemeral_asset_job__".
+tests/test_lesson_3.py 2025-02-14 09:30:11 -0600 - dagster - DEBUG - __ephemeral_asset_job__ - 7924f6b8-72c6-4789-b34a-d25b144f7f66 - 62349 - RUN_START - Started execution of run for "__ephemeral_asset_job__".
 2025-02-14 09:30:11 -0600 - dagster - DEBUG - __ephemeral_asset_job__ - 7924f6b8-72c6-4789-b34a-d25b144f7f66 - 62349 - ENGINE_EVENT - Executing steps in process (pid: 62349)
 2025-02-14 09:30:11 -0600 - dagster - DEBUG - __ephemeral_asset_job__ - 7924f6b8-72c6-4789-b34a-d25b144f7f66 - 62349 - RESOURCE_INIT_STARTED - Starting initialization of resources [io_manager].
 ...

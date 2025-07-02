@@ -5,7 +5,8 @@ description = "Dagster and dbt"
 readme = "README.md"
 requires-python = ">=3.9,<3.13"
 dependencies = [
-    "dagster==1.10.*",
+    "dagster==1.11",
+    "dagster-dg-cli",
     "dagster-webserver",
     "dagster-cloud",
     "dagster-duckdb",
@@ -28,16 +29,21 @@ dev-dependencies = [
     "pytest",
 ]
 
-[tool.dagster]
-module_name = "dagster_and_dbt.definitions"
-code_location_name = "dagster_dbt"
-
 [build-system]
-requires = ["setuptools>=42"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.setuptools]
 packages = ["dagster_and_dbt"]
+
+[tool.dg]
+directory_type = "project"
+
+[tool.dg.project]
+root_module = "dagster_and_dbt"
+registry_modules = [
+    "dagster_and_dbt.components.*",
+]
 
 [tool.ruff.lint]
 ignore = [

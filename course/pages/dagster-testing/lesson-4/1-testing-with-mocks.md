@@ -30,7 +30,7 @@ Imagine that an API exists to query city populations by state (sadly this API do
 We want to rewrite the `state_population_file` asset to use this endpoint instead of reading a file to retrieve the necessary data. This is what the new asset will look like.
 
 ```python
-# /dagster_testing/assets/lesson_4.py
+# src/dagster_testing/defs/assets/lesson_4.py
 API_URL = "https://fake.com/population.json"
 
 
@@ -139,9 +139,9 @@ The code above:
 We can still use pytest to run the test.
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_4.py::test_state_population_api
+> pytest tests/test_lesson_4.py::test_state_population_api
 ...
-dagster_testing_tests/test_lesson_4.py .                                                          [100%]
+tests/test_lesson_4.py .                                                          [100%]
 ```
 
 The test completely bypasses the API and returns our mocked data.

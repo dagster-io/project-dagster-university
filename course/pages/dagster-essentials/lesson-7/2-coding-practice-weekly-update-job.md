@@ -6,7 +6,7 @@ lesson: '7'
 
 # Practice: Create a weekly_update_job
 
-To practice what you’ve learned, add a job to `jobs.py` that will materialize the `trips_by_week` asset.
+To practice what you’ve learned, add a job to `src/dagster_essentials/defs/jobs.py` that will materialize the `trips_by_week` asset.
 
 ---
 

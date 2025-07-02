@@ -9,7 +9,7 @@ lesson: '4'
 When we discussed unit tests we showed how you can execute one or more assets together using `dg.materialize()`. We can still materialize our assets this way using mocks.
 
 ```python
-# /dagster_testing_tests/test_lesson_4.py
+# /tests/test_lesson_4.py
 @patch("requests.get")
 def test_state_population_api_assets(mock_get, example_response, api_output):
     mock_response = Mock()
@@ -32,9 +32,9 @@ def test_state_population_api_assets(mock_get, example_response, api_output):
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_4.py::test_state_population_api_assets
+> pytest tests/test_lesson_4.py::test_state_population_api_assets
 ...
-dagster_testing_tests/test_lesson_4.py .                                                          [100%]
+tests/test_lesson_4.py .                                                          [100%]
 ```
 
 This uses the same patch and mocked object as before. The only difference is that because there is an asset that requires a resource, it must be initialized and set within `dg.materialize()`.
@@ -84,9 +84,9 @@ def test_state_population_api_assets_config(mock_get, example_response, api_outp
 ```
 
 ```bash
-> pytest dagster_testing_tests/test_lesson_4.py::test_state_population_api_assets_config
+> pytest tests/test_lesson_4.py::test_state_population_api_assets_config
 ...
-dagster_testing_tests/test_lesson_4.py .                                                          [100%]
+tests/test_lesson_4.py .                                                          [100%]
 ```
 
 `dg.materialize()` is very flexible for testing and allows us to do almost anything that is possible in the Dagster UI when executing assets.

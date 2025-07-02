@@ -38,10 +38,27 @@ Let’s use a Dagster resource to manage this connection and share it across all
 
 ## Defining a resource
 
-Copy and paste the following code into `resources.py:`
+We can scaffold our resources with `dg` in a way similar to the how we scaffolded assets in lesson 3.
+
+```bash
+dg scaffold defs dagster.resources resources.py
+```
+
+This adds a `resources.py` file within the `dagster_essentials` module.
+
+```
+.
+└── src
+    └── dagster_essentials
+        └── defs
+            └── resources.py
+```
+
+Within this newly created file, add the following code:
 
 ```python
 from dagster_duckdb import DuckDBResource
+
 
 database_resource = DuckDBResource(
     database="data/staging/data.duckdb"
@@ -56,7 +73,7 @@ This code snippet imports a resource called `DuckDBResource` from Dagster’s `d
 
 When working across different settings or with secure values like passwords, environment variables are a standardized way to store configurations and credentials. Not specific to Python, environment variables are values that are saved outside of software and used within it. For a primer on environment variables in Python, check out [this post from our blog](https://dagster.io/blog/python-environment-variables).
 
-When configuring resources, it’s best practice to load your configurations and secrets into your programs from environment variables. You’ve been following this pattern by using `os.getenv` to fetch environment variables from the `.env` file you created in Lesson 2. A `.env` file is a standard for project-level environment variables and should **not** be committed to git, as they often contain passwords and sensitive information.
+When configuring resources, it’s best practice to load your configurations and secrets into your programs from environment variables. You’ve been following this pattern by using `os.getenv` to fetch environment variables from the `.env` that is part of this project. A `.env` file is a standard for project-level environment variables and should **not** be committed to git, as they often contain passwords and sensitive information.
 
 However, in this project, our `.env` file only contains one environment variable: `DUCKDB_DATABASE`. This variable contains the hard-coded path to the DuckDB database file, which is `data/staging/data.duckdb`. Let’s clean up this code by using Dagster’s `EnvVar` utility.
 
@@ -84,36 +101,44 @@ By using `EnvVar` instead of `os.getenv`, you can dynamically customize a resour
 
 In the previous lesson, you learned about code locations, how they work, and how to collect assets and other Dagster definitions using the `Definitions` object.
 
-As resources are a type of Dagster definition, you’ll need to add them to the `Definitions` object before you can use them.
+You saw that using `dg` to scaffold our project, the `Definitions` will automatically load any assets within the module. The same is true for resources however there is one additional step we need to make to the `resources.py`.
 
-Update `definitions.py` with the following changes:
-
-1. Import the `database_resource` you made from the `resources` sub-module:
+1. In the `resources.py` add the following line:
 
    ```python
-   from dagster_essentials.resources import database_resource
+   ...
+
+   @dg.definitions
+   def resources():
+       return dg.Definitions(resources={"database": database_resource})
    ```
 
-2. Add the imported `database_resource` to your `Definitions` object through the `resources` argument. We’ll give it the identifier `database`. This is the key that we’ll use to tell Dagster that we want the DuckDB resource.
+   This tells Dagster how to map the resources to specific key names. In this case the `database_resource` resource just defined is mapped to the key name `database`.
+
+   The `resources.py` file should now look like:
 
    ```python
-   defs = dg.Definitions(
-       assets=[*trip_assets, *metric_assets],
-       resources={
-           "database": database_resource,
-       },
-   )
+    from dagster_duckdb import DuckDBResource
+    import dagster as dg
+
+    database_resource = DuckDBResource(
+        database=dg.EnvVar("DUCKDB_DATABASE")
+    )
+
+    @dg.definitions
+    def resources():
+        return dg.Definitions(resources={"database": database_resource})
    ```
 
-3. In the Dagster UI, click **Deployment.**
+2. In the Dagster UI, click **Deployment.**
 
-4. In the **Code locations** tab, click the **Reload** button next to the `dagster_essentials` code location.
+3. In the **Code locations** tab, click the **Reload** button next to the `dagster_essentials` code location.
 
-5. Click the code location to open it.
+4. Click the code location to open it.
 
-6. In the code location page that displays, click the **Definitions tab.**.
+5. In the code location page that displays, click the **Definitions tab.**.
 
-7. Click **Resources** on the left side panel and select the resource named **database**.
+6. Click **Resources** on the left side panel and select the resource named **database**.
 
    Notice that the **Uses** tabe at the top is currently **0.** This is because while the resource has been defined and loaded, none of the assets in the code location are currently using it.
 

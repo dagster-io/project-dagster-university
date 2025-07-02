@@ -15,23 +15,31 @@ The `DbtCliResource` is the main resource that you’ll be working with. In late
 > 💡 **Resource refresher:** Resources are Dagster’s recommended way of connecting to other services and tools, such as dbt, your data warehouse, or a BI tool.
 > {% /callout %}
 
-Navigate to the `dagster_university/dagster_and_dbt/dagster_and_dbt/resources.py`, which is where other resources are defined. Copy and paste the following code to their respective locations:
+Navigate to the `defs/resources.py`, which is where other resources are defined. Copy and paste the following code to their respective locations:
 
 ```python
 from dagster_dbt import DbtCliResource
 
-from dagster_and_dbt.project import dbt_project
+from dagster_and_dbt.defs.project import dbt_project
 # the import lines go at the top of the file
 
 # this can be defined anywhere below the imports
 dbt_resource = DbtCliResource(
     project_dir=dbt_project,
 )
+
+defs = dg.Definitions(
+    resources={
+        "database": database_resource,
+        "dbt": dbt_resource,
+    },
+)
 ```
 
 The code above:
 
-1. Imports the `DbtCliResource` from the `dagster_dbt` package that we installed earlier.
-2. Imports the `dbt_project` representation we just defined.
-3. Instantiates a new `DbtCliResource` under the variable name `dbt_resource`.
-4. Tells the resource that the dbt project to execute is the `dbt_project`.
+1. Imports the `DbtCliResource` from the `dagster_dbt` package that we installed earlier
+2. Imports the `dbt_project` representation we just defined
+3. Instantiates a new `DbtCliResource` under the variable name `dbt_resource`
+4. Tells the resource that the dbt project to execute is the `dbt_project`
+5. Imports the resource mappings so it can be automatically loaded by the `Definitions`

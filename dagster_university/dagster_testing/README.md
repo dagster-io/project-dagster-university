@@ -6,10 +6,10 @@ Learn how to write tests in Python and apply them to Dagster. In this course, yo
 
 ## Completed code
 
-Most of this module involves running tests with [`pytest`](https://docs.pytest.org/en/stable/). The code you will be testing is located within `dagster_testing`. The tests are in `dagster_testing_tests`. Each lesson has its own file for tests.
+Most of this module involves running tests with [`pytest`](https://docs.pytest.org/en/stable/). The code you will be testing is located within `dagster_testing`. The tests are in `tests`. Each lesson has its own file for tests.
 
 ```
-dagster_testing_tests
+tests
 ├── test_lesson_3.py
 ├── test_lesson_4.py
 ├── test_lesson_5.py
@@ -19,7 +19,7 @@ dagster_testing_tests
 The completed tests are located within a subdirectory `completed`.
 
 ```
-dagster_testing_tests
+tests
 ├── completed
 │   ├── test_lesson_3.py
 │   ├── test_lesson_4.py
