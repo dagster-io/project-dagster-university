@@ -33,8 +33,8 @@ title: Dagster Essentials
 - Lesson 5: Definitions & project
   - [Overview](/dagster-essentials/lesson-5/0-overview)
   - [What's the Definitions object?](/dagster-essentials/lesson-5/1-whats-the-definitions-object)
-  - [What's a project?](/dagster-essentials/lesson-5/2-whats-a-code-location)
-  - [Projects in the Dagster UI](/dagster-essentials/lesson-5/3-code-locations-dagster-ui)
+  - [What's a project?](/dagster-essentials/lesson-5/2-whats-a-project)
+  - [Projects in the Dagster UI](/dagster-essentials/lesson-5/3-projects-dagster-ui)
 - Lesson 6: Resources
   - [Overview](/dagster-essentials/lesson-6/0-overview)
   - [What's a resource?](/dagster-essentials/lesson-6/1-whats-a-resource)

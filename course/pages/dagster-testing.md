@@ -36,4 +36,4 @@ title: Testing with Dagster
   - [Asset checks](/dagster-testing/lesson-6/1-asset-checks)
   - [Definitions](/dagster-testing/lesson-6/2-definitions)
   - [Dagster objects](/dagster-testing/lesson-6/3-dagster-objects)
-  - [Projects](/dagster-testing/lesson-6/4-code-locations)
+  - [Projects](/dagster-testing/lesson-6/4-projects)
