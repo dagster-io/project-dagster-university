@@ -30,11 +30,11 @@ title: Dagster Essentials
   - [Practice: Create a taxi_zones asset](/dagster-essentials/lesson-4/4-coding-practice-taxi-zones-asset)
   - [Assets with in-memory computations](/dagster-essentials/lesson-4/5-assets-with-in-memory-computations)
   - [Practice: Create a trips_by_week asset](/dagster-essentials/lesson-4/6-coding-practice-trips-by-week-asset)
-- Lesson 5: Definitions & code locations
+- Lesson 5: Definitions & project
   - [Overview](/dagster-essentials/lesson-5/0-overview)
   - [What's the Definitions object?](/dagster-essentials/lesson-5/1-whats-the-definitions-object)
-  - [What's a code location?](/dagster-essentials/lesson-5/2-whats-a-code-location)
-  - [Code locations in the Dagster UI](/dagster-essentials/lesson-5/3-code-locations-dagster-ui)
+  - [What's a project?](/dagster-essentials/lesson-5/2-whats-a-code-location)
+  - [Projects in the Dagster UI](/dagster-essentials/lesson-5/3-code-locations-dagster-ui)
 - Lesson 6: Resources
   - [Overview](/dagster-essentials/lesson-6/0-overview)
   - [What's a resource?](/dagster-essentials/lesson-6/1-whats-a-resource)

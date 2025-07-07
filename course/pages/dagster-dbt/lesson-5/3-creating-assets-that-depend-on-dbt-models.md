@@ -57,7 +57,7 @@ In the `dagster_university/dagster_and_dbt/dagster_and_dbt/analytics/models` dir
     from trips_by_zone
     ```
     
-4. In the Dagster UI, reload the code location. 
+4. In the Dagster UI, reload the project. 
 5. Observe and materialize the new `location_metrics` dbt asset:
 
    ![The new location_metrics dbt asset in the Dagster UI](/images/dagster-dbt/lesson-5/new-location-metrics-asset.png)
@@ -159,6 +159,6 @@ Now we’re ready to create the asset!
        )
    ```
 
-5. Reload your code location to see the new `airport_trips` asset within the `metrics` group. Notice how the asset graph links the dependency between the `location_metrics` dbt asset and the new `airport_trips` chart asset:
+5. Reload your project to see the new `airport_trips` asset within the `metrics` group. Notice how the asset graph links the dependency between the `location_metrics` dbt asset and the new `airport_trips` chart asset:
 
    ![The airport_trips asset in the Asset Graph of the Dagster UI](/images/dagster-dbt/lesson-5/airport-trips-asset.png)

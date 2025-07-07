@@ -11,6 +11,6 @@ Now that you’ve learned how to write data pipelines using Dagster’s asset-ba
 In this lesson, you’ll learn:
 
 - What a `Definitions` object is
-- What a code location is
-- How code locations fit into Dagster’s architecture
-- How to view and manage code locations in the Dagster UI
+- What a project is
+- How projects fit into Dagster’s architecture
+- How to view and manage projects in the Dagster UI

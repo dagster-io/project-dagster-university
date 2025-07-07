@@ -12,7 +12,7 @@ Once you finished everything from the previous sections, you’re ready to see y
 2. Expand the `default` group in the asset graph.
 3. You should see your two dbt models, `stg_trips` and `stg_zones`, converted as assets within your Dagster project!
 
-   If you don't see the dbt models, click **Reload definitions** to have Dagster reload the code location.
+   If you don't see the dbt models, click **Reload definitions** to have Dagster reload the project.
 
    ![dbt assets with description metadata in the Dagster UI](/images/dagster-dbt/lesson-3/asset-description-metadata.png)
 
