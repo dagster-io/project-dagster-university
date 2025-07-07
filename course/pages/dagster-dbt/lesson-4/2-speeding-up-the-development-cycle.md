@@ -6,7 +6,7 @@ lesson: '4'
 
 # Speeding up the development cycle
 
-By now, you’ve had to run `dbt parse` to create the manifest file and reload your code location quite frequently, which doesn’t feel like the cleanest developer experience.
+By now, you’ve had to run `dbt parse` to create the manifest file and reload your project quite frequently, which doesn’t feel like the cleanest developer experience.
 
 Before we move on, we’ll reduce the number of steps in the feedback loop. We'll automate the creation of the manifest file by taking advantage of the `dbt_project` representation that we wrote earlier.
 
@@ -14,7 +14,7 @@ Before we move on, we’ll reduce the number of steps in the feedback loop. We'l
 
 ## Automating creating the manifest file in development
 
-The first detail is that the `dbt_project` doesn’t need to be part of an asset to be executed. This means that once a `dbt_project` is defined, you can use it to execute commands when your code location is being built. Rather than manually running `dbt parse`, let’s use the `dbt_project` to prepare the manifest file for us.
+The first detail is that the `dbt_project` doesn’t need to be part of an asset to be executed. This means that once a `dbt_project` is defined, you can use it to execute commands when your project is being built. Rather than manually running `dbt parse`, let’s use the `dbt_project` to prepare the manifest file for us.
 
 In `project.py`, after the code initializing `dbt_project`, add the following code:
 
@@ -26,7 +26,7 @@ If you look at the dbt project’s `/target` directory, you’ll see it stores t
 
 The `prepare_if_dev()` method automatically prepares your dbt project at run time during development, meaning you no longer have to run `dbt parse`! The preparation process works by pulling the dbt project's dependencies and reloading the manifest file to detect any changes.
 
-Reload your code location in the Dagster UI, and you’ll see that everything should still work: the dbt models are still shown as assets and you can manually materialize any of the models. 
+Reload your project in the Dagster UI, and you’ll see that everything should still work: the dbt models are still shown as assets and you can manually materialize any of the models. 
 
 ---
 

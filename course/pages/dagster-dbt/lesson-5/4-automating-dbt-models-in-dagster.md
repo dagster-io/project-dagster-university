@@ -62,7 +62,7 @@ The function will return an `AssetSelection` of the dbt models that match your d
     )
     ```
     
-4. Reload the code location and confirm that the dbt models are not in the `trip_update_job` anymore!
+4. Reload the project and confirm that the dbt models are not in the `trip_update_job` anymore!
 
    ![trip_update_job without dbt models](/images/dagster-dbt/lesson-5/job-with-dbt-models.png)
 
@@ -74,7 +74,7 @@ If you want to also exclude the new `airport_trips` asset from this job, modify 
 dbt_trips_selection = build_dbt_asset_selection([dbt_analytics], "stg_trips").downstream()
 ```
 
-Reload the code location and look at the `trip_update_job` once more to verify that everything looks right:
+Reload the project and look at the `trip_update_job` once more to verify that everything looks right:
 
 ![trip_update_job with the airport_trips asset](/images/dagster-dbt/lesson-5/job-without-dbt-models.png)
 

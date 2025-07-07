@@ -190,7 +190,7 @@ Here, we’ve changed the logic to say that we only want to select rows between 
 
 That’s it! Now you can check out the new `daily_metrics` asset in Dagster.
 
-1. In the Dagster UI, reload the code location. Once loaded, you should see the new partitioned `daily_metrics` asset:
+1. In the Dagster UI, reload the project. Once loaded, you should see the new partitioned `daily_metrics` asset:
 
    ![daily_metrics asset in the Asset Graph of the Dagster UI](/images/dagster-dbt/lesson-6/daily-metrics-asset.png)
 

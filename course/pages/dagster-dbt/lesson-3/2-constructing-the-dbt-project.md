@@ -8,7 +8,7 @@ lesson: '3'
 
 Independent of Dagster, running most dbt commands creates a set of files in a new directory called `target`. The most important file is the `manifest.json`. More commonly referred to as “the manifest file,” [this file](https://docs.getdbt.com/reference/artifacts/manifest-json) is a complete representation of your dbt project in a predictable format.
 
-When Dagster builds your code location, it reads the manifest file to discover the dbt models and turn them into Dagster assets. There are a variety of ways to build the `manifest.json` file. However, we recommend using the `dbt parse` CLI command.
+When Dagster builds your project, it reads the manifest file to discover the dbt models and turn them into Dagster assets. There are a variety of ways to build the `manifest.json` file. However, we recommend using the `dbt parse` CLI command.
 
 Change your current working directory to the `dagster_university/dagster_and_dbt/dagster_and_dbt/analytics`  folder and run the following command:
 
