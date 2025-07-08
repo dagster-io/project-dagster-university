@@ -18,6 +18,10 @@ It performs a static analysis of the project's definitions, including assets, jo
 #Add the @dg.asset decorator before the function
 
 
+When an asset is materialized, Dagster runs the asset function and creates the asset by persisting the results in storage, such as in a data warehouse. When a materialization begins, it kicks off a run.
+
+dg launch when you need to quickly test something out
+dg dev as your Dagster project becomes more sophisticated.
 
 '''
 @dg.asset
