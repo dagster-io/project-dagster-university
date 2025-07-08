@@ -5,12 +5,17 @@ from unittest.mock import patch
 import dagster as dg
 import pytest
 
+import src.dagster_testing.defs
 import src.dagster_testing.defs.jobs as jobs
 import src.dagster_testing.defs.resources as resources
 import src.dagster_testing.defs.schedules as schedules
 import src.dagster_testing.defs.sensors as sensors
-from src.dagster_testing.definitions import defs
 from src.dagster_testing.defs.assets import lesson_6
+
+
+@pytest.fixture()
+def defs():
+    return dg.Definitions.merge(dg.components.load_defs(src.dagster_testing.defs))
 
 
 @pytest.fixture()
@@ -147,5 +152,16 @@ def test_sensor_run(mock_check_new_files):
 
 
 # Definitions
-def test_def():
+def test_defs(defs):
     assert defs
+
+
+# Access assets
+def test_square_asset(defs):
+    _asset = defs.get_assets_def("squared")
+    assert _asset(5) == 25
+
+
+def test_square_key_asset(defs):
+    _asset = defs.get_assets_def(dg.AssetKey(["target", "main", "square_key"]))
+    assert _asset(5) == 25

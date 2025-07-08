@@ -35,28 +35,16 @@ def state_population_database(database: SnowflakeResource) -> list[tuple]:
         return cur.fetchall()
 ```
 
-When we run this asset, we need to supply a Snowflake resource. The connection to Snowflake is defined with environmental variables when initializing the Snowflake resource and is set in the Definition.
+When we run this asset, we need to supply a Snowflake resource. The connection to Snowflake is defined with environmental variables when initializing the Snowflake resource and is set in the Definition for the resources.
 
 ```python
-import dagster_testing.assets.lesson_5 as lesson_5
-
-all_assets = dg.load_assets_from_modules([lesson_5])
-
-
-snowflake_resource = SnowflakeResource(
-    account=dg.EnvVar("SNOWFLAKE_ACCOUNT"),
-    user=dg.EnvVar("SNOWFLAKE_USERNAME"),
-    password=dg.EnvVar("SNOWFLAKE_PASSWORD"),
-    warehouse=dg.EnvVar("SNOWFLAKE_WAREHOUSE"),
-)
-
-
-defs = dg.Definitions(
-    assets=all_assets,
-    resources={
-        "database": snowflake_resource,
-    },
-)
+@dg.definitions
+def resources():
+    return defs = dg.Definitions(
+        resources={
+            "database": snowflake_resource,
+        },
+    )
 ```
 
 This is a good way to structure the code. We separate the application code from the configuration code in proper [Twelve-Factor](https://12factor.net/) fashion.
