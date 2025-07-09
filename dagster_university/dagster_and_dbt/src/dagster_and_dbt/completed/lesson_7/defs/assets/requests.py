@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from dagster_duckdb import DuckDBResource
 from smart_open import open
 
-from src.dagster_and_dbt.completed.lesson_7.defs.assets import constants
+from dagster_and_dbt.completed.lesson_7.defs.assets import constants
 
 
 class AdhocRequestConfig(dg.Config):

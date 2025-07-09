@@ -1,7 +1,7 @@
 import dagster as dg
 
-import src.dagster_essentials.completed.lesson_4.defs
-from src.dagster_essentials.completed.lesson_4.defs.assets import metrics, trips
+import dagster_essentials.completed.lesson_4.defs
+from dagster_essentials.completed.lesson_4.defs.assets import metrics, trips
 
 
 def test_assets():
@@ -20,5 +20,5 @@ def test_assets():
 
 def test_defs():
     assert dg.Definitions.merge(
-        dg.components.load_defs(src.dagster_essentials.completed.lesson_4.defs)
+        dg.components.load_defs(dagster_essentials.completed.lesson_4.defs)
     )

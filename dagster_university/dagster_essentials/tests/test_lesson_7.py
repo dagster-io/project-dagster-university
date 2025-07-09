@@ -1,13 +1,13 @@
 import dagster as dg
 
-import src.dagster_essentials.completed.lesson_7.defs
-from src.dagster_essentials.completed.lesson_7.defs.assets import metrics, trips
-from src.dagster_essentials.completed.lesson_7.defs.jobs import (
+import dagster_essentials.completed.lesson_7.defs
+from dagster_essentials.completed.lesson_7.defs.assets import metrics, trips
+from dagster_essentials.completed.lesson_7.defs.jobs import (
     trip_update_job,
     weekly_update_job,
 )
-from src.dagster_essentials.completed.lesson_7.defs.resources import database_resource
-from src.dagster_essentials.completed.lesson_7.defs.schedules import (
+from dagster_essentials.completed.lesson_7.defs.resources import database_resource
+from dagster_essentials.completed.lesson_7.defs.schedules import (
     trip_update_schedule,
     weekly_update_schedule,
 )
@@ -51,5 +51,5 @@ def test_schedules():
 
 def test_defs():
     assert dg.Definitions.merge(
-        dg.components.load_defs(src.dagster_essentials.completed.lesson_7.defs)
+        dg.components.load_defs(dagster_essentials.completed.lesson_7.defs)
     )
