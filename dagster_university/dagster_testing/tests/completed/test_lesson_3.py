@@ -5,7 +5,7 @@ import pytest
 import yaml
 from dagster._core.errors import DagsterTypeCheckDidNotPass
 
-from src.dagster_testing.defs.assets import lesson_3
+from dagster_testing.defs.assets import lesson_3
 
 
 @pytest.fixture()

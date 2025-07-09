@@ -5,7 +5,7 @@ import psycopg2
 import pytest
 from dagster_snowflake import SnowflakeResource
 
-from src.dagster_testing.defs.assets import lesson_5
+from dagster_testing.defs.assets import lesson_5
 
 from .fixtures import docker_compose  # noqa: F401
 

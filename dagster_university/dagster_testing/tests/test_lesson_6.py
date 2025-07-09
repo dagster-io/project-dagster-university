@@ -1,16 +1,16 @@
 import dagster as dg
 import pytest
 
-import src.dagster_testing.defs
-import src.dagster_testing.defs.jobs as jobs  # noqa: F401
-import src.dagster_testing.defs.schedules as schedules  # noqa: F401
-import src.dagster_testing.defs.sensors as sensors  # noqa: F401
-from src.dagster_testing.defs.assets import lesson_6  # noqa: F401
+import dagster_testing.defs
+import dagster_testing.defs.jobs as jobs  # noqa: F401
+import dagster_testing.defs.schedules as schedules  # noqa: F401
+import dagster_testing.defs.sensors as sensors  # noqa: F401
+from dagster_testing.defs.assets import lesson_6  # noqa: F401
 
 
 @pytest.fixture()
 def defs():
-    return dg.Definitions.merge(dg.components.load_defs(src.dagster_testing.defs))
+    return dg.Definitions.merge(dg.components.load_defs(dagster_testing.defs))
 
 
 @pytest.fixture()

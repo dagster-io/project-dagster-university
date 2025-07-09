@@ -19,10 +19,10 @@ The `@dg.definitions` decorator is lazily evaluated. This means it is not loaded
 We can now write a test to assert that the definition can load properly.
 
 ```python
-import src.dagster_testing.defs
+import dagster_testing.defs
 
 def test_defs():
-    assert dg.Definitions.merge(dg.components.load_defs(src.dagster_testing.defs))
+    assert dg.Definitions.merge(dg.components.load_defs(dagster_testing.defs))
 ```
 
 ```bash
@@ -38,7 +38,7 @@ We can also pull out loading the definition into a fixture if we want to run mul
 ```python
 @pytest.fixture()
 def defs():
-    return dg.Definitions.merge(dg.components.load_defs(src.dagster_testing.defs))
+    return dg.Definitions.merge(dg.components.load_defs(dagster_testing.defs))
 
 def test_defs(defs):
     assert defs
