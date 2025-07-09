@@ -1,5 +1,6 @@
 import dagster as dg
 
+import src.dagster_and_dbt.completed.lesson_2.defs
 from src.dagster_and_dbt.completed.lesson_2.defs.assets import metrics, trips
 from src.dagster_and_dbt.completed.lesson_2.defs.jobs import trip_update_job
 from src.dagster_and_dbt.completed.lesson_2.defs.resources import database_resource
@@ -26,3 +27,9 @@ def test_trips_partitioned_assets():
 
 def test_jobs():
     assert trip_update_job
+
+
+def test_defs():
+    assert dg.Definitions.merge(
+        dg.components.load_defs(src.dagster_and_dbt.completed.lesson_2.defs)
+    )

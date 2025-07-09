@@ -3,6 +3,7 @@ from pathlib import Path
 import dagster as dg
 import yaml
 
+import src.dagster_essentials.completed.lesson_9.defs
 from src.dagster_essentials.completed.lesson_9.defs.assets import (
     metrics,
     requests,
@@ -79,3 +80,9 @@ def test_schedules():
 
 def test_sensors():
     assert adhoc_request_sensor
+
+
+def test_defs():
+    assert dg.Definitions.merge(
+        dg.components.load_defs(src.dagster_essentials.completed.lesson_9.defs)
+    )

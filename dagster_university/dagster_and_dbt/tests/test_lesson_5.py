@@ -1,6 +1,7 @@
 import dagster as dg
 import pytest
 
+import src.dagster_and_dbt.completed.lesson_5.defs
 from tests.fixtures import setup_dbt_env  # noqa: F401
 
 
@@ -29,3 +30,10 @@ def test_jobs(setup_dbt_env):  # noqa: F811
     from src.dagster_and_dbt.completed.lesson_5.defs.jobs import trip_update_job
 
     assert trip_update_job
+
+
+@pytest.mark.parametrize("setup_dbt_env", ["lesson_5"], indirect=True)
+def test_defs(setup_dbt_env):  # noqa: F811
+    assert dg.Definitions.merge(
+        dg.components.load_defs(src.dagster_and_dbt.completed.lesson_5.defs)
+    )

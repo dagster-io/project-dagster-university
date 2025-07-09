@@ -1,6 +1,7 @@
 import dagster as dg
 import pytest
 
+import src.dagster_and_dbt.completed.lesson_6.defs
 from tests.fixtures import setup_dbt_env  # noqa: F401
 
 
@@ -19,3 +20,10 @@ def test_dbt_partitioned_incremental_assets(setup_dbt_env):  # noqa: F811
         partition_key="2023-01-01",
     )
     assert result.success
+
+
+@pytest.mark.parametrize("setup_dbt_env", ["lesson_6"], indirect=True)
+def test_defs(setup_dbt_env):  # noqa: F811
+    assert dg.Definitions.merge(
+        dg.components.load_defs(src.dagster_and_dbt.completed.lesson_6.defs)
+    )
