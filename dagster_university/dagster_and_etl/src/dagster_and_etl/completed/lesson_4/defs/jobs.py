@@ -1,6 +1,6 @@
 import dagster as dg
 
-import src.dagster_and_etl.completed.lesson_4.defs.assets as assets
+import dagster_and_etl.completed.lesson_4.defs.assets as assets
 
 asteroid_job = dg.define_asset_job(
     name="asteroid_job",

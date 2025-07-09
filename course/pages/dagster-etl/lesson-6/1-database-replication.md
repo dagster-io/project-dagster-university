@@ -86,6 +86,6 @@ Here’s what a stream of CDC events might look like:
 
 Most modern ETL tools that handle database replication use one or more of these approaches. For example a tool may perform a full refresh to establish the initial snapshot of the table and then switch to CDC to capture all changes moving forward.
 
-This combined approach provides both completeness and efficiency but requires careful coordination during the cutover to ensure that no data is lost or duplicated.
+This combined approach provides both completeness and efficiency but requires careful coordination during the cut over to ensure that no data is lost or duplicated.
 
 If this sounds complex, that’s because it is. Replicating data between databases is challenging and full of edge cases, which is why we strongly recommend using a dedicated framework instead of trying to build one from scratch.

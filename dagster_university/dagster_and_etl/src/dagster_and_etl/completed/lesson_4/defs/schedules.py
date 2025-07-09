@@ -1,6 +1,6 @@
 import dagster as dg
 
-from src.dagster_and_etl.completed.lesson_4.defs.jobs import (
+from dagster_and_etl.completed.lesson_4.defs.jobs import (
     asteroid_job,
     asteroid_partition_job,
 )
@@ -25,5 +25,4 @@ def date_range_schedule(context):
 
 asset_partitioned_schedule = dg.build_schedule_from_partitioned_job(
     asteroid_partition_job,
-    cron_schedule="0 6 * * *",
 )

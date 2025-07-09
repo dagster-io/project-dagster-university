@@ -76,7 +76,7 @@ def asteroids_file(
 ) -> Path:
     filename = "asteroid_staging"
     file_path = (
-        Path(__file__).absolute().parent / f"../../../../data/staging/{filename}.csv"
+        Path(__file__).absolute().parent / f"../../../data/staging/{filename}.csv"
     )
 
     # Only load specific fields

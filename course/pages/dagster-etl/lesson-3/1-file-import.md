@@ -31,7 +31,7 @@ Next, we will write an asset that uses this config. To make things easier, the a
 @dg.asset()
 def import_file(context: dg.AssetExecutionContext, config: IngestionFileConfig) -> str:
     file_path = (
-        Path(__file__).absolute().parent / f"../../../../data/source/{config.path}"
+        Path(__file__).absolute().parent / f"../../../data/source/{config.path}"
     )
     return str(file_path.resolve())
 ```
@@ -120,11 +120,11 @@ dg dev
 
 # TODO Include screenshot
 
-In either case (whether using the CLI or the UI) remember that we need to provide a value for the file path as a run configuration in order to execute the assets.
+In either case (whether using the CLI or the UI) remember that we need to provide a value for the file path as a run configuration in orders to execute the assets.
 
 ## Confirm data
 
-To check that everything has loaded correctly, we can connect to the DuckDB database using the DuckDB CLI and run a query for the table we just made.
+To check that everything has loaded correctly, we can connect to the DuckDB database using the [DuckDB CLI](https://duckdb.org/docs/stable/clients/cli/overview.html) and run a query for the table we just made.
 
 ```bash
 > duckdb data/staging/duckdb

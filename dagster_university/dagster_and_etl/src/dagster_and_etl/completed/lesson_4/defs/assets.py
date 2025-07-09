@@ -6,7 +6,7 @@ import dagster as dg
 from dagster_duckdb import DuckDBResource
 from pydantic import field_validator
 
-from src.dagster_and_etl.completed.lesson_4.defs.resources import NASAResource
+from dagster_and_etl.completed.lesson_4.defs.resources import NASAResource
 
 
 class NasaDate(dg.Config):

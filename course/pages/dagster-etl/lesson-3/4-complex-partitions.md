@@ -36,7 +36,7 @@ Similar to our time based partition, let's create a new set of assets. Once agai
 def import_dynamic_partition_file(context: dg.AssetExecutionContext) -> str:
     file_path = (
         Path(__file__).absolute().parent
-        / f"../../../../data/source/{context.partition_key}.csv"
+        / f"../../../data/source/{context.partition_key}.csv"
     )
     return str(file_path.resolve())
 ```

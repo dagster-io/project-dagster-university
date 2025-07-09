@@ -49,7 +49,7 @@ The core logic of the asset remains the same but now you can run the pipeline fo
 def import_partition_file(context: dg.AssetExecutionContext) -> str:
     file_path = (
         Path(__file__).absolute().parent
-        / f"../../../../data/source/{context.partition_key}.csv"
+        / f"../../../data/source/{context.partition_key}.csv"
     )
     return str(file_path.resolve())
 ```
