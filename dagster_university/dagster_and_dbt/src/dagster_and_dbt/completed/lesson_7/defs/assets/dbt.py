@@ -3,8 +3,8 @@ import json
 import dagster as dg
 from dagster_dbt import DagsterDbtTranslator, DbtCliResource, dbt_assets
 
-from src.dagster_and_dbt.completed.lesson_7.defs.partitions import daily_partition
-from src.dagster_and_dbt.completed.lesson_7.defs.project import dbt_project
+from dagster_and_dbt.completed.lesson_7.defs.partitions import daily_partition
+from dagster_and_dbt.completed.lesson_7.defs.project import dbt_project
 
 INCREMENTAL_SELECTOR = "config.materialized:incremental"
 

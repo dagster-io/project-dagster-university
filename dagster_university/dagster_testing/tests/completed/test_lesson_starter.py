@@ -1,7 +1,7 @@
 import dagster as dg
 
-from dagster_testing.definitions import defs
+import dagster_testing.defs
 
 
-def test_def_can_load():
-    assert defs
+def test_defs():
+    assert dg.Definitions.merge(dg.components.load_defs(dagster_testing.defs))

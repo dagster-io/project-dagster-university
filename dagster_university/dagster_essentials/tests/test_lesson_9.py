@@ -3,22 +3,23 @@ from pathlib import Path
 import dagster as dg
 import yaml
 
-from src.dagster_essentials.completed.lesson_9.defs.assets import (
+import dagster_essentials.completed.lesson_9.defs
+from dagster_essentials.completed.lesson_9.defs.assets import (
     metrics,
     requests,
     trips,
 )
-from src.dagster_essentials.completed.lesson_9.defs.jobs import (
+from dagster_essentials.completed.lesson_9.defs.jobs import (
     adhoc_request_job,
     trip_update_job,
     weekly_update_job,
 )
-from src.dagster_essentials.completed.lesson_9.defs.resources import database_resource
-from src.dagster_essentials.completed.lesson_9.defs.schedules import (
+from dagster_essentials.completed.lesson_9.defs.resources import database_resource
+from dagster_essentials.completed.lesson_9.defs.schedules import (
     trip_update_schedule,
     weekly_update_schedule,
 )
-from src.dagster_essentials.completed.lesson_9.defs.sensors import (
+from dagster_essentials.completed.lesson_9.defs.sensors import (
     adhoc_request_sensor,
 )
 from tests.fixtures import drop_tax_trips_table  # noqa: F401
@@ -79,3 +80,9 @@ def test_schedules():
 
 def test_sensors():
     assert adhoc_request_sensor
+
+
+def test_defs():
+    assert dg.Definitions.merge(
+        dg.components.load_defs(dagster_essentials.completed.lesson_9.defs)
+    )

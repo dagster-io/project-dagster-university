@@ -3,7 +3,7 @@ from unittest.mock import Mock, patch
 import dagster as dg
 import pytest
 
-from src.dagster_testing.defs.assets import lesson_4
+from dagster_testing.defs.assets import lesson_4
 
 
 @pytest.fixture

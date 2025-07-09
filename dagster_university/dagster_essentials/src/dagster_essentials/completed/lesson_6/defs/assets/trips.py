@@ -2,7 +2,7 @@ import dagster as dg
 import requests
 from dagster_duckdb import DuckDBResource
 
-from src.dagster_essentials.completed.lesson_6.defs.assets import constants
+from dagster_essentials.completed.lesson_6.defs.assets import constants
 
 
 @dg.asset

@@ -1,7 +1,7 @@
 import dagster as dg
 from dagster_dbt import DbtCliResource, dbt_assets
 
-from src.dagster_and_dbt.completed.lesson_4.defs.project import dbt_project
+from dagster_and_dbt.completed.lesson_4.defs.project import dbt_project
 
 
 @dbt_assets(

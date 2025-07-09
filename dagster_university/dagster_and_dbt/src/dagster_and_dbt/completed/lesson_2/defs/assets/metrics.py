@@ -7,8 +7,8 @@ import pandas as pd
 from dagster_duckdb import DuckDBResource
 from smart_open import open
 
-from src.dagster_and_dbt.completed.lesson_2.defs.assets import constants
-from src.dagster_and_dbt.completed.lesson_2.defs.partitions import weekly_partition
+from dagster_and_dbt.completed.lesson_2.defs.assets import constants
+from dagster_and_dbt.completed.lesson_2.defs.partitions import weekly_partition
 
 
 @dg.asset(
