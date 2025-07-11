@@ -67,6 +67,7 @@ def test_incremental_replication(docker_compose):  # noqa: F811
     assert result.success
 
 
+@pytest.mark.integration
 def test_defs():
     assert dg.Definitions.merge(
         dg.components.load_defs(dagster_and_etl.completed.lesson_6.defs)
