@@ -10,6 +10,7 @@ title: Dagster + dbt
   - [Why use dbt and Dagster together?](/dagster-dbt/lesson-1/2-why-use-dbt-and-dagster-together)
   - [How do dbt models relate to Dagster assets?](/dagster-dbt/lesson-1/3-how-do-dbt-models-relate-to-dagster-assets)
   - [Project preview](/dagster-dbt/lesson-1/4-project-preview)
+
 - Lesson 2: Installation & Setup
   - [Requirements](/installation/requirements)
   - [Set up local](/installation/set-up-local)
@@ -18,6 +19,7 @@ title: Dagster + dbt
   - [Set up the dbt project](/dagster-dbt/lesson-2/3-set-up-the-dbt-project)
   - [dbt project files](/dagster-dbt/lesson-2/4-dbt-project-files)
   - [Verify dbt installation](/dagster-dbt/lesson-2/5-verify-dbt-installation)
+
 - Lesson 3: Connecting dbt to Dagster
   - [Overview](/dagster-dbt/lesson-3/1-overview)
   - [Constructing the dbt project](/dagster-dbt/lesson-3/2-constructing-the-dbt-project)
@@ -32,17 +34,20 @@ title: Dagster + dbt
   - [Speeding up the development cycle](/dagster-dbt/lesson-4/2-speeding-up-the-development-cycle)
   - [Debugging failed runs](/dagster-dbt/lesson-4/3-debugging-failed-runs)
   - [Customizing your execution](/dagster-dbt/lesson-4/4-customizing-your-execution)
+
 - Lesson 5: Adding dependencies and automation to dbt models
   - [Overview](/dagster-dbt/lesson-5/1-overview)
   - [Connecting dbt models to Dagster assets](/dagster-dbt/lesson-5/2-connecting-dbt-models-to-dagster-assets)
   - [Creating assets that depend on dbt models](/dagster-dbt/lesson-5/3-creating-assets-that-depend-on-dbt-models)
   - [Automating dbt models in Dagster](/dagster-dbt/lesson-5/4-automating-dbt-models-in-dagster)
   - [Practice: Grouping dbt models by layer](/dagster-dbt/lesson-5/coding-practice-grouping-models)
+
 - Lesson 6: Using Dagster to partition dbt models
   - [Overview](/dagster-dbt/lesson-6/1-overview)
   - [Creating an incremental model](/dagster-dbt/lesson-6/2-creating-a-simple-incremental-model)
   - [Creating a partitioned dbt asset](/dagster-dbt/lesson-6/3-creating-a-partitioned-dbt-asset)
   - [Lesson recap](/dagster-dbt/lesson-6/4-lesson-recap)
+
 - Lesson 7: Deploying to Production
   - [Overview](/dagster-dbt/lesson-7/1-overview)
   - [Pushing the project to GitHub](/dagster-dbt/lesson-7/2-pushing-the-project-to-github)

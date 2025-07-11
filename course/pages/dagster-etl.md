@@ -9,6 +9,9 @@ title: Dagster ETL
   - [Project preview](/dagster-etl/lesson-1/3-project-preview)
 
 - Lesson 2: Installation & setup
+  - [Requirements](/installation/requirements)
+  - [Set up local](/installation/set-up-local)
+  - [Set up Codespace](/installation/set-up-codespace)
 
 - Lesson 3: Loading static data
   - [Overview](/dagster-etl/lesson-3/0-overview)
@@ -45,8 +48,8 @@ title: Dagster ETL
   - [Managing Sling assets](/dagster-etl/lesson-6/5-managing-sling-assets)
 
 - Lesson 7: ETL with Components
-  - [Overview](/dagster-etl/extra-credit/0-overview)
-  - [Dagster Components](/dagster-etl/extra-credit/1-dagster-components)
-  - [Sling with Components](/dagster-etl/extra-credit/2-sling-with-components)
-  - [Using Components](/dagster-etl/extra-credit/3-using-components)
-  - [Organizing our project](/dagster-etl/extra-credit/4-organizing-our-project)
+  - [Overview](/dagster-etl/lesson-7/0-overview)
+  - [Dagster Components](/dagster-etl/lesson-7/1-dagster-components)
+  - [Sling with Components](/dagster-etl/lesson-7/2-sling-with-components)
+  - [Using Components](/dagster-etl/lesson-7/3-using-components)
+  - [Organizing our project](/dagster-etl/lesson-7/4-organizing-our-project)

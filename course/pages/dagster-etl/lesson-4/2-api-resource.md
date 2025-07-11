@@ -36,7 +36,7 @@ Now that we know the API endpoint and the parameters required to make a call, le
 
 We’ll create a resource called `NASAResource`, which is initialized from our API key. This resource will expose a single method: `get_near_earth_asteroids` with two parameters (start_date, end_date), which returns the parsed JSON response from the API.
 
-Here’s what that might look like:
+Here’s what that might look like added to the `resources.py`:
 
 ```python {% obfuscated="true" %}
 import dagster as dg
@@ -58,19 +58,21 @@ class NASAResource(dg.ConfigurableResource):
         return resp.json()["near_earth_objects"][start_date]
 ```
 
-Now that we have our resource defined, we can include it in the `Definitions` alongside the `DuckDBResource` resource:
+Now that we have our resource defined, we can include it in the `Definitions` alongside the `DuckDBResource` resource in the `resources.py`:
 
 ```python
-defs = dg.Definitions(
-    resources={
-        "nasa": NASAResource(
-            api_key=dg.EnvVar("NASA_API_KEY"),
-        ),
-        "database": DuckDBResource(
-            database="data/staging/data.duckdb",
-        ),
-    },
-)
+@dg.definitions
+def resources():
+    return dg.Definitions(
+        resources={
+            "nasa": NASAResource(
+                api_key=dg.EnvVar("NASA_API_KEY"),
+            ),
+            "database": DuckDBResource(
+                database="data/staging/data.duckdb",
+            ),
+        },
+    )
 ```
 
 **Note**: Remember you will need to set the environment variable `NASA_API_KEY` to the API key you created if you want to execute this pipeline.

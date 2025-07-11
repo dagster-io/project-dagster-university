@@ -19,6 +19,8 @@ In Dagster, one way to handle data validation is with asset checks. Asset checks
 Let’s start by writing an asset check to ensure the "share_price" column in the file contains only valid, non-zero values. Before we think about the asset check, what might that logic look like if we were just reading the file:
 
 ```python {% obfuscated="true" %}
+import csv
+
 with open("my_file.csv", mode="r", encoding="utf-8") as file:
     reader = csv.DictReader(file)
     data = (row for row in reader)
@@ -33,6 +35,8 @@ We would want to read the file, iterate through the rows and raise an exception 
 Here is that similar logic within an asset check:
 
 ```python {% obfuscated="true" %}
+import csv
+
 @dg.asset_check(
     asset=import_file,
     blocking=True,

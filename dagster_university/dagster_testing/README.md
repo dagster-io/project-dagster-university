@@ -20,11 +20,11 @@ The completed tests are located within a subdirectory `completed`.
 
 ```
 tests
-├── completed
-│   ├── test_lesson_3.py
-│   ├── test_lesson_4.py
-│   ├── test_lesson_5.py
-│   └── test_lesson_6.py
+└── completed
+    ├── test_lesson_3.py
+    ├── test_lesson_4.py
+    ├── test_lesson_5.py
+    └── test_lesson_6.py
 ```
 
 ## Dagster UI
@@ -32,7 +32,7 @@ tests
 You should not need to use the UI for this module but if you want to see Dagster objects you can execute.
 
 ```bash
-dagster dev
+dg dev
 ```
 
 Open http://localhost:3000 with your browser to see the project.

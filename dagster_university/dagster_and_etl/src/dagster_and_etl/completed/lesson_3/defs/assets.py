@@ -117,7 +117,7 @@ def duckdb_partition_table(
         """
         conn.execute(table_query)
         conn.execute(
-            f"DELETE FROM {table_name} WHERE date = '{context.partition_key}';"
+            f"delete from {table_name} where date = '{context.partition_key}';"
         )
         conn.execute(f"copy {table_name} from '{import_partition_file}';")
 
@@ -164,7 +164,7 @@ def duckdb_dynamic_partition_table(
         """
         conn.execute(table_query)
         conn.execute(
-            f"DELETE FROM {table_name} WHERE date = '{context.partition_key}';"
+            f"delete from {table_name} where date = '{context.partition_key}';"
         )
         conn.execute(f"copy {table_name} from '{import_dynamic_partition_file}'")
 

@@ -44,7 +44,6 @@ The core logic of the asset remains the same but now you can run the pipeline fo
 ```python
 @dg.asset(
     partitions_def=partitions_def,
-    group_name="static_etl",
 )
 def import_partition_file(context: dg.AssetExecutionContext) -> str:
     file_path = (
@@ -60,7 +59,6 @@ Finally we can create a new downstream asset that relies on the partitioned data
 @dg.asset(
     kinds={"duckdb"},
     partitions_def=partitions_def,
-    group_name="static_etl",
 )
 def duckdb_partition_table(
     context: dg.AssetExecutionContext,
@@ -80,13 +78,25 @@ def duckdb_partition_table(
             ) 
         """
         conn.execute(table_query)
-        conn.execute(f"delete from {table_name} where date = '{context.partition_key}';")
+        conn.execute(
+            f"delete from {table_name} where date = '{context.partition_key}';"
+        )
         conn.execute(f"copy {table_name} from '{import_partition_file}';")
 ```
 
 This is very similar to our original logic except for are two key differences:
 
 1. We now include the partition (`partitions_def`) in the `@dg.asset decorator`.
-2. We add a `DELETE FROM...` SQL statement targeting the table for the specific partition date. This ensures the pipeline is idempotent, allowing us to run backfills without the risk of data duplication.
+2. We add a `delete from...` SQL statement targeting the table for the specific partition date. This ensures the pipeline is idempotent, allowing us to run backfills without the risk of data duplication.
 
-A quick not that deleting from the table before loading new data is one strategy for achieving idempotence. Another approach is to import the incoming data into a staging location and then upsert the new data into the final table. This method has the advantage of preserving existing data in the final table in case an error occurs during the copy process. And while the staging strategy is generally more resilient, we will use the simpler `DELETE FROM...` method for the purposes of this course.
+A quick not that deleting from the table before loading new data is one strategy for achieving idempotence. Another approach is to import the incoming data into a staging location and then upsert the new data into the final table. This method has the advantage of preserving existing data in the final table in case an error occurs during the copy process. And while the staging strategy is generally more resilient, we will use the simpler `delete from...` method for the purposes of this course.
+
+## Executing partitions
+
+Similar to the file import, we can trigger executions for specific partitions. If we wanted to ingest the same data as previously, we would simply select the partition for "2018-01-22".
+
+![Partition execution](/images/dagster-etl/lesson-3/partition-execution.png)
+
+If we want to execute the assets again, we can see that the information is tracked.
+
+![Partition execution success](/images/dagster-etl/lesson-3/partition-execution-success.png)

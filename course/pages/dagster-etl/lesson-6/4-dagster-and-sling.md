@@ -89,6 +89,4 @@ def postgres_sling_assets(context, sling: SlingResource):
 
 That is everything we need. Now when we launch `dg dev` we will see six new assets in the asset graph.
 
-# TODO Include screenshot
-
 First there are the three source assets representing the raw tables that exist in our Postgres database (customers, products, orders). Connected to each of these sources are our Dagster assets. Each of these individually.

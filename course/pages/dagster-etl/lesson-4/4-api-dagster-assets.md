@@ -9,6 +9,8 @@ lesson: '4'
 Now that we have a better understanding of how we want to structure data extraction from the API, we can start laying out our Dagster code. Since we want the pipeline to be runnable for any given date, a good first step is to create a run configuration (as we did in the previous lesson) that allows us to specify the target date at execution time. This provides the flexibility to manually trigger runs, automate daily ingestion, or even backfill historical data when needed:
 
 ```python
+import dagster as dg
+
 class NasaDate(dg.Config):
     date: str
 ```
@@ -17,6 +19,9 @@ Since Dagster run configurations are built on top of Pydantic models, we can use
 
 
 ```python
+import datetime
+from pydantic import field_validator
+
 class NasaDate(dg.Config):
     date: str
 
@@ -37,21 +42,22 @@ With our run configuration in place, we can now define our Dagster assets. Our f
 To make the correct API call, we’ll need to compute both the start_date and end_date using that input date. The asset will return a list of dictionaries, each representing an asteroid observed during that time period:
 
 ```python {% obfuscated="true" %}
+from dagster_and_etl.defs.resources import NASAResource
+
 @dg.asset(
     kinds={"nasa"},
-    group_name="api_etl",
 )
 def asteroids(
     context: dg.AssetExecutionContext,
     config: NasaDate,
     nasa: NASAResource,
-):
+) -> list[dict]:
     anchor_date = datetime.datetime.strptime(config.date, "%Y-%m-%d")
-    end_date = (anchor_date - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+    start_date = (anchor_date - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
 
     return nasa.get_near_earth_asteroids(
-        start_date=config.date,
-        end_date=end_date,
+        start_date=start_date,
+        end_date=config.date,
     )
 ```
 
@@ -67,9 +73,7 @@ So, our next asset will take the list of dictionaries returned by the API and sa
 - is_potentially_hazardous_asteroid
 
 ```python {% obfuscated="true" %}
-@dg.asset(
-    group_name="api_etl",
-)
+@dg.asset
 def asteroids_file(
     context: dg.AssetExecutionContext,
     asteroids,
@@ -91,9 +95,9 @@ def asteroids_file(
         writer = csv.DictWriter(file, fieldnames=fields)
 
         writer.writeheader()
-        for row in asteroids:
-            filtered_row = {key: row[key] for key in fields if key in row}
-            writer.writerow(filtered_row)
+        writer.writerows(
+            {key: row[key] for key in fields if key in row} for row in asteroids
+        )
 
     return file_path
 ```
@@ -103,7 +107,6 @@ The final asset will look very similar to the one we built in the previous lesso
 ```python
 @dg.asset(
     kinds={"duckdb"},
-    group_name="api_etl",
 )
 def duckdb_table(
     context: dg.AssetExecutionContext,
@@ -121,7 +124,7 @@ def duckdb_table(
             ) 
         """
         conn.execute(table_query)
-        conn.execute(f"COPY {table_name} FROM '{asteroids_file}'")
+        conn.execute(f"copy {table_name} from '{asteroids_file}'")
 ```
 
 We can now execute the pipeline for a specific date.

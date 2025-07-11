@@ -19,6 +19,9 @@ Instead, we can use a [run configuration](https://docs.dagster.io/guides/operate
 First, we’ll define a run configuration so we can set the file path. In the `defs/assets.py` file add the code for the run configuration:
 
 ```python
+import dagster as dg
+from pathlib import Path
+
 class IngestionFileConfig(dg.Config):
     path: str
 ```
@@ -36,7 +39,7 @@ def import_file(context: dg.AssetExecutionContext, config: IngestionFileConfig) 
     return str(file_path.resolve())
 ```
 
-This asset will take in the run config and return the full file path string of a file in the `data/source` directory.
+This asset will take in the run config and return the full file path string of a file in the `dagster_and_etl/data/source` directory.
 
 ## Loading data
 
@@ -48,13 +51,15 @@ In order to use DuckDB we need to establish a connection with our database. In D
 import dagster as dg
 from dagster_duckdb import DuckDBResource
 
-defs = dg.Definitions(
-    resources={
-        "database": DuckDBResource(
-            database="data/staging/data.duckdb",
-        ),
-    },
-)
+@dg.definitions
+def resources():
+    return dg.Definitions(
+        resources={
+            "database": DuckDBResource(
+                database="data/staging/data.duckdb",
+            ),
+        }
+    )
 ```
 
 The code above does the following:
@@ -76,6 +81,8 @@ This can include additional parameters to specify things like file type and form
 As well as loading data into DuckDB, we need a destination table defined. We can design an asset that creates a table to match the schema of our file and load the file:
 
 ```python
+from dagster_duckdb import DuckDBResource
+
 @dg.asset(
     kinds={"duckdb"},
 )
@@ -106,19 +113,35 @@ The code above does the following:
 2. Uses the DuckDB connection to create a table `raw_data` if that tables does not already exist. We define the schema of the table ourselves, knowing the structure of the data.
 3. Runs a `COPY` for file path from the `import_file` asset into the `raw_data` table. `COPY` is an append command so if we run the command twice, the data will be loaded again.
 
-These two assets are all we need to ingest the data. We can execute these assets from the command line using `dg`:
+## Executing the assets
+
+These two assets are all we need to ingest the data and there are multiple ways to do so in Dagster.
+
+### Command line (`dg launch`)
 
 ```bash
-dg launch --assets import_file,duckdb_table --config-json "{\"config\":{\"ops\":{\"import_file\":\"2018-01-22.csv\"}}}"
+dg launch --assets import_file,duckdb_table --config-json "{\"resources\": {\"database\": {\"config\": {\"database\": \"data/staging/data.duckdb\"}}}, \"ops\": {\"import_file\": {\"config\": {\"path\": \"2018-01-22.csv\"}}}}"
 ```
-
-Or you can launch the assets in the Dagster UI using:
+### Web UI (`dg dev`)
 
 ```bash
 dg dev
 ```
 
-# TODO Include screenshot
+Within the UI, materialize the assets while providing the following run execution:
+
+```yaml
+resources:
+  database:
+    config:
+      database: data/staging/data.duckdb
+ops:
+  import_file:
+    config:
+      path: 2018-01-22.csv
+```
+
+![File import DAG](/images/dagster-etl/lesson-3/file-import-dag.png)
 
 In either case (whether using the CLI or the UI) remember that we need to provide a value for the file path as a run configuration in orders to execute the assets.
 
@@ -127,7 +150,7 @@ In either case (whether using the CLI or the UI) remember that we need to provid
 To check that everything has loaded correctly, we can connect to the DuckDB database using the [DuckDB CLI](https://duckdb.org/docs/stable/clients/cli/overview.html) and run a query for the table we just made.
 
 ```bash
-> duckdb data/staging/duckdb
+> duckdb data/staging/data.duckdb
 D SELECT * FROM raw_data;
 ┌────────────┬─────────────┬────────────┬────────┬──────────┬──────────┐
 │    date    │ share_price │   amount   │ spend  │  shift   │  spread  │

@@ -39,7 +39,7 @@ def asteroids(
     )
 
 
-@dg.asset()
+@dg.asset
 def asteroids_file(
     context: dg.AssetExecutionContext,
     asteroids,
@@ -87,7 +87,7 @@ def duckdb_table(
             ) 
         """
         conn.execute(table_query)
-        conn.execute(f"COPY {table_name} FROM '{asteroids_file}'")
+        conn.execute(f"copy {table_name} from '{asteroids_file}'")
 
 
 nasa_partitions_def = dg.DailyPartitionsDefinition(
