@@ -55,3 +55,13 @@ def population_file_partition(context: dg.AssetExecutionContext) -> list[dict]:
 @dg.asset
 def total_population_partition(population_file_partition: list[dict]) -> int:
     return sum([int(x["Population"]) for x in population_file_partition])
+
+
+@dg.asset
+def squared(number: int):
+    return number * number
+
+
+@dg.asset(key=["target", "main", "square_key"])
+def squared_key(number: int):
+    return number * number

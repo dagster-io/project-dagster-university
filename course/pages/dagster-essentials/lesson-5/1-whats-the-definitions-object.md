@@ -59,7 +59,7 @@ registry_modules = [
 ]
 ```
 
-In your project, open the `dagster_university/dagster_essentials/src/definitions.py` file. It should look like the following code:
+In your project, open the `dagster_university/dagster_essentials/src/dagster_essentials/definitions.py` file. It should look like the following code:
 
 ```python
 from pathlib import Path

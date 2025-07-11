@@ -3,8 +3,8 @@ import pandas as pd
 import requests
 from dagster_duckdb import DuckDBResource
 
-from src.dagster_essentials.completed.lesson_9.defs.assets import constants
-from src.dagster_essentials.completed.lesson_9.defs.partitions import monthly_partition
+from dagster_essentials.completed.lesson_9.defs.assets import constants
+from dagster_essentials.completed.lesson_9.defs.partitions import monthly_partition
 
 
 @dg.asset(

@@ -1,6 +1,6 @@
 import dagster as dg
 
-from src.dagster_and_dbt.completed.lesson_6.defs.assets import constants
+from dagster_and_dbt.completed.lesson_6.defs.assets import constants
 
 start_date = constants.START_DATE
 end_date = constants.END_DATE

@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from dagster._utils.backoff import backoff
 
-from src.dagster_essentials.completed.lesson_4.defs.assets import constants
+from dagster_essentials.completed.lesson_4.defs.assets import constants
 
 
 @dg.asset(deps=["taxi_trips"])

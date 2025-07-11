@@ -1,6 +1,6 @@
 import dagster as dg
 
-from src.dagster_essentials.completed.lesson_8.defs.partitions import (
+from dagster_essentials.completed.lesson_8.defs.partitions import (
     monthly_partition,
     weekly_partition,
 )

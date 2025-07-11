@@ -5,7 +5,7 @@ import dagster as dg
 from dagster_dbt import DbtCliResource
 from dagster_duckdb import DuckDBResource
 
-from src.dagster_and_dbt.completed.lesson_5.defs.project import dbt_project
+from dagster_and_dbt.completed.lesson_5.defs.project import dbt_project
 
 database_resource = DuckDBResource(
     database=dg.EnvVar("DUCKDB_DATABASE"),

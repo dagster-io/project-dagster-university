@@ -1,7 +1,7 @@
 import dagster as dg
 from dagster_dbt import DagsterDbtTranslator, DbtCliResource, dbt_assets
 
-from src.dagster_and_dbt.completed.lesson_5.defs.project import dbt_project
+from dagster_and_dbt.completed.lesson_5.defs.project import dbt_project
 
 
 class CustomizedDagsterDbtTranslator(DagsterDbtTranslator):

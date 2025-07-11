@@ -1,8 +1,8 @@
 import dagster as dg
 
-import src.dagster_and_dbt.completed.lesson_6.defs
+import dagster_and_dbt.completed.lesson_6.defs
 
 
 @dg.definitions
 def defs():
-    return dg.load_defs(defs_root=src.dagster_and_dbt.completed.lesson_6.defs)
+    return dg.load_defs(defs_root=dagster_and_dbt.completed.lesson_6.defs)
