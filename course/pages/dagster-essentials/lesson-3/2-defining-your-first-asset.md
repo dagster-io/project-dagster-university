@@ -16,6 +16,8 @@ Before we write our first asset, let's talk a little about project structures in
 
 However we can use `dg` to scaffold a file for our first asset. Run the following command to create the file that will contain our first asset.
 
+ **Note:** `dg` commands need to be run within the Dagster project specific for the course (In this case in `dagster_university/dagster_essentials`). Though the `dg` command can be executed from anywhere within the project.
+
 ```bash
 dg scaffold defs dagster.asset assets/trips.py
 ```
