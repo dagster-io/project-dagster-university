@@ -1,6 +1,7 @@
 import dagster as dg
 import pytest
 
+import dagster_and_etl.completed.lesson_6.defs
 from tests.fixtures import docker_compose  # noqa: F401
 
 
@@ -8,7 +9,7 @@ from tests.fixtures import docker_compose  # noqa: F401
 def test_sling_replication_config(docker_compose):  # noqa: F811
     import yaml
 
-    import src.dagster_and_etl.completed.lesson_6.defs.assets as assets
+    import dagster_and_etl.completed.lesson_6.defs.assets as assets
 
     with open(assets.replication_config, "r") as f:
         config = yaml.safe_load(f)
@@ -30,8 +31,8 @@ def test_sling_replication_config(docker_compose):  # noqa: F811
 
 @pytest.mark.integration
 def test_postgres_sling_assets(docker_compose):  # noqa: F811
-    import src.dagster_and_etl.completed.lesson_6.defs.assets as assets
-    from src.dagster_and_etl.completed.lesson_6.defs.resources import sling
+    import dagster_and_etl.completed.lesson_6.defs.assets as assets
+    from dagster_and_etl.completed.lesson_6.defs.resources import sling
 
     result = dg.materialize(
         assets=[
@@ -49,8 +50,8 @@ def test_postgres_sling_assets(docker_compose):  # noqa: F811
 
 @pytest.mark.integration
 def test_incremental_replication(docker_compose):  # noqa: F811
-    import src.dagster_and_etl.completed.lesson_6.defs.assets as assets
-    from src.dagster_and_etl.completed.lesson_6.defs.resources import sling
+    import dagster_and_etl.completed.lesson_6.defs.assets as assets
+    from dagster_and_etl.completed.lesson_6.defs.resources import sling
 
     result = dg.materialize(
         assets=[assets.postgres_sling_assets],
@@ -64,3 +65,10 @@ def test_incremental_replication(docker_compose):  # noqa: F811
         resources={"sling": sling},
     )
     assert result.success
+
+
+@pytest.mark.integration
+def test_defs():
+    assert dg.Definitions.merge(
+        dg.components.load_defs(dagster_and_etl.completed.lesson_6.defs)
+    )

@@ -5,7 +5,8 @@ import dagster as dg
 import pytest
 from dagster_duckdb import DuckDBResource
 
-import src.dagster_and_etl.completed.lesson_4.defs.assets as assets
+import dagster_and_etl.completed.lesson_4.defs
+import dagster_and_etl.completed.lesson_4.defs.assets as assets
 from tests.nasa_data import nasa_response
 
 
@@ -165,3 +166,9 @@ def test_asteroid_api_error_handling():
                 }
             ),
         )
+
+
+def test_defs():
+    assert dg.Definitions.merge(
+        dg.components.load_defs(dagster_and_etl.completed.lesson_4.defs)
+    )

@@ -9,15 +9,17 @@ Learn the basics of Dagster, a Python-based platform that enables you to build r
 If you are stuck you can reference the completed code for each lesson.
 
 ```
-dagster_essentials
-├── completed
-│   ├── lesson_3
-│   ├── lesson_4
-│   ├── lesson_5
-│   ├── lesson_6
-│   ├── lesson_7
-│   ├── lesson_8
-│   └── lesson_9
+src
+└── dagster_essentials
+    └── completed
+        ├── lesson_2
+        ├── lesson_3
+        ├── lesson_4
+        ├── lesson_5
+        ├── lesson_6
+        ├── lesson_7
+        ├── lesson_8
+        └── lesson_9
 ```
 
 ## Deploy on Dagster Cloud

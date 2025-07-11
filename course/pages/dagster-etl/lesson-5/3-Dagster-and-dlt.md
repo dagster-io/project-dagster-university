@@ -40,11 +40,14 @@ Next, we’ll update our `resources.py` file to include the `DagsterDltResource`
 import dagster as dg
 from dagster_dlt import DagsterDltResource
 
-defs = dg.Definitions(
-    resources={
-        "dlt": DagsterDltResource(),
-    },
-)
+
+@dg.definitions
+def resources():
+    return dg.Definitions(
+        resources={
+            "dlt": DagsterDltResource(),
+        },
+    )
 ```
 
 Back in `assets.py`, we can define our dlt assets. This will resemble the dlt.pipeline code we used earlier, but much of the logic will now be embedded in the `@dlt_assets` decorator. The function itself simply yields the result of running the `dlt pipeline`:

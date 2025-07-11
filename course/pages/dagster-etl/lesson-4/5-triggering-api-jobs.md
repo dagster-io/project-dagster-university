@@ -27,7 +27,9 @@ We’ll use the job we just defined in our schedule. The first question to answe
 
 We avoid running the pipeline too close to midnight to ensure the data has had time to fully populate. As with all API-based workflows, you’ll want to understand the behavior and latency of your specific source system before finalizing this timing.
 
-This schedule will be similar to those we’ve written previously, with one key difference: it needs to supply a run configuration to the job. Fortunately, Dagster provides access to the execution time of the schedule, which we can use to dynamically generate the date for the run configuration:
+This schedule will be similar to those we’ve written previously, with one key difference: it needs to supply a run configuration to the job. Fortunately, Dagster provides access to the execution time of the schedule, which we can use to dynamically generate the date for the run configuration.
+
+Add the following schedule to the `schedules.py`:
 
 ```python
 @dg.schedule(job=asteroid_job, cron_schedule="0 6 * * *")

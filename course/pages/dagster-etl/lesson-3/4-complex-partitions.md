@@ -31,12 +31,11 @@ Similar to our time based partition, let's create a new set of assets. Once agai
 ```python {% obfuscated="true" %}
 @dg.asset(
     partitions_def=dynamic_partitions_def,
-    group_name="static_etl",
 )
 def import_dynamic_partition_file(context: dg.AssetExecutionContext) -> str:
     file_path = (
         Path(__file__).absolute().parent
-        / f"../../../../data/source/{context.partition_key}.csv"
+        / f"../../../data/source/{context.partition_key}.csv"
     )
     return str(file_path.resolve())
 ```
@@ -48,15 +47,13 @@ Before we execute the pipeline, let’s define the downstream asset that loads d
 ```python {% obfuscated="true" %}
 @dg.asset(
     kinds={"duckdb"},
-    partitions_def=dynamic_partitions_def,
-    group_name="static_etl",
 )
 def duckdb_dynamic_partition_table(
     context: dg.AssetExecutionContext,
     database: DuckDBResource,
     import_dynamic_partition_file,
 ):
-    table_name = "raw_partition_data"
+    table_name = "raw_dynamic_partition_data"
     with database.get_connection() as conn:
         table_query = f"""
             create table if not exists {table_name} (
@@ -69,7 +66,10 @@ def duckdb_dynamic_partition_table(
             ) 
         """
         conn.execute(table_query)
-        conn.execute(f"COPY {table_name} FROM '{import_dynamic_partition_file}'")
+        conn.execute(
+            f"delete from {table_name} where date = '{context.partition_key}';"
+        )
+        conn.execute(f"copy {table_name} from '{import_dynamic_partition_file}'")
 ```
 
 This setup should look very similar to the daily partition we created earlier. But how does it play out in practice? To better understand the distinction, let’s dive into the differences in how partitioned pipelines are triggered. Each type requires a different approach to scheduling and orchestration, depending on how and when new data becomes available.

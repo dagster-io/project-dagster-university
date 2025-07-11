@@ -5,9 +5,10 @@ import dagster as dg
 import pytest
 from dagster_dlt import DagsterDltResource
 
-import src.dagster_and_etl.completed.lesson_5.defs.assets as assets
-import src.dagster_and_etl.completed.lesson_5.dlt_nasa as dlt_nasa
-import src.dagster_and_etl.completed.lesson_5.dlt_quick_start as dlt_quick_start
+import dagster_and_etl.completed.lesson_5.defs
+import dagster_and_etl.completed.lesson_5.defs.assets as assets
+import dagster_and_etl.completed.lesson_5.dlt_nasa as dlt_nasa
+import dagster_and_etl.completed.lesson_5.dlt_quick_start as dlt_quick_start
 from tests.nasa_data import nasa_response
 
 
@@ -161,4 +162,10 @@ def test_dlt_nasa_assets_partition(mock_get, asteroid_response):
             "end_date": "2015-09-07",
             "api_key": "DEMO_KEY",
         },
+    )
+
+
+def test_defs():
+    assert dg.Definitions.merge(
+        dg.components.load_defs(dagster_and_etl.completed.lesson_5.defs)
     )

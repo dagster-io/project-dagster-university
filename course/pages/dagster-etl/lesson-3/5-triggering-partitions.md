@@ -35,11 +35,8 @@ import dagster_and_etl.defs.jobs as jobs
 
 asset_partitioned_schedule = dg.build_schedule_from_partitioned_job(
     jobs.import_partition_job,
-    cron_schedule="0 6 * * *",
 )
 ```
-
-# TODO Include screenshot
 
 This makes it simple to set up reliable, automated ETL for any use case where data arrives on a regular schedule.
 
@@ -93,8 +90,6 @@ The code above does the following:
 4. Executes the `import_dynamic_partition_job` for any new files that have been added.
 
 Now if we enable this sensor, it will trigger executions for all three files in the `data/sources` directory.
-
-# TODO Include screenshot
 
 Event-driven pipelines like this can be more resilient and responsive, but they come with some important considerations.
 

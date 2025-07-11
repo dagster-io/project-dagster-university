@@ -4,7 +4,7 @@ from pathlib import Path
 
 import dagster as dg
 
-import src.dagster_and_etl.completed.lesson_3.defs.jobs as jobs
+import dagster_and_etl.completed.lesson_3.defs.jobs as jobs
 
 
 @dg.sensor(target=jobs.import_dynamic_partition_job)

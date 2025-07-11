@@ -8,11 +8,13 @@ title: Dagster Essentials
   - [Orchestration approaches](/dagster-essentials/lesson-1/2-orchestration-approaches)
   - [Why is asset-centric orchestration good for data engineering?](/dagster-essentials/lesson-1/3-why-is-asset-centric-orchestration-good-for-data-engineering)
   - [Project preview](/dagster-essentials/lesson-1/4-project-preview)
+
 - Lesson 2: Requirements & installation
   - [Requirements](/installation/requirements)
   - [Set up local](/installation/set-up-local)
   - [Set up Codespace](/installation/set-up-codespace)
   - [Project files](/dagster-essentials/lesson-2/3-project-files)
+
 - Lesson 3: SDAs
   - [Overview](/dagster-essentials/lesson-3/0-overview)
   - [What's an asset?](/dagster-essentials/lesson-3/1-whats-an-asset)
@@ -22,6 +24,7 @@ title: Dagster Essentials
   - [Troubleshooting failed runs](/dagster-essentials/lesson-3/5-troubleshooting-failed-runs)
   - [Coding practice: Create a taxi_zones_file asset](/dagster-essentials/lesson-3/6-coding-practice-taxi-zones-file-asset)
   - [Recap](/dagster-essentials/lesson-3/7-recap)
+
 - Lesson 4: Asset dependencies
   - [Overview](/dagster-essentials/lesson-4/0-overview)
   - [What's a dependency?](/dagster-essentials/lesson-4/1-whats-a-dependency)
@@ -30,11 +33,13 @@ title: Dagster Essentials
   - [Practice: Create a taxi_zones asset](/dagster-essentials/lesson-4/4-coding-practice-taxi-zones-asset)
   - [Assets with in-memory computations](/dagster-essentials/lesson-4/5-assets-with-in-memory-computations)
   - [Practice: Create a trips_by_week asset](/dagster-essentials/lesson-4/6-coding-practice-trips-by-week-asset)
+
 - Lesson 5: Definitions & code locations
   - [Overview](/dagster-essentials/lesson-5/0-overview)
   - [What's the Definitions object?](/dagster-essentials/lesson-5/1-whats-the-definitions-object)
   - [What's a code location?](/dagster-essentials/lesson-5/2-whats-a-code-location)
   - [Code locations in the Dagster UI](/dagster-essentials/lesson-5/3-code-locations-dagster-ui)
+
 - Lesson 6: Resources
   - [Overview](/dagster-essentials/lesson-6/0-overview)
   - [What's a resource?](/dagster-essentials/lesson-6/1-whats-a-resource)
@@ -43,6 +48,7 @@ title: Dagster Essentials
   - [Practice: Refactoring assets to use resources](/dagster-essentials/lesson-6/4-coding-practice-refactoring-assets)
   - [Analyzing resource usage using the Dagster UI](/dagster-essentials/lesson-6/5-analyzing-resources-dagster-ui)
   - [Lesson recap](/dagster-essentials/lesson-6/6-recap)
+
 - Lesson 7: Schedules
   - [Overview](/dagster-essentials/lesson-7/0-overview)
   - [What are schedules?](/dagster-essentials/lesson-7/1-what-are-schedules)
@@ -51,6 +57,7 @@ title: Dagster Essentials
   - [Practice: Create a weekly_update_schedule](/dagster-essentials/lesson-7/4-coding-practice-weekly-update-schedule)
   - [Updating the Definitions object](/dagster-essentials/lesson-7/5-updating-the-definitions-object)
   - [Jobs and schedules in the Dagster UI](/dagster-essentials/lesson-7/6-jobs-schedules-dagster-ui)
+
 - Lesson 8: Partitions and backfills
   - [Overview](/dagster-essentials/lesson-8/0-overview)
   - [What are partitions and backfills?](/dagster-essentials/lesson-8/1-what-are-partitions-and-backfills)
@@ -62,6 +69,7 @@ title: Dagster Essentials
   - [Practice: Partition the trips_by_week asset](/dagster-essentials/lesson-8/7-coding-practice-partition-trips-by-week)
   - [Partitions and backfills in the Dagster UI](/dagster-essentials/lesson-8/8-partitions-backfills-dagster-ui)
   - [Recap](/dagster-essentials/lesson-8/9-recap)
+
 - Lesson 9: Sensors
   - [Overview](/dagster-essentials/lesson-9/0-overview)
   - [What's a sensor?](/dagster-essentials/lesson-9/1-whats-a-sensor)
@@ -72,7 +80,9 @@ title: Dagster Essentials
   - [Updating the Definitions object](/dagster-essentials/lesson-9/6-updating-the-definitions-object)
   - [Sensors in the Dagster UI](/dagster-essentials/lesson-9/7-sensors-dagster-ui)
   - [Enabling the sensor](/dagster-essentials/lesson-9/8-enabling-the-sensor)
+
 - [Capstone](/dagster-essentials/capstone)
+
 - Extra credit: Metadata
   - [Overview](/dagster-essentials/extra-credit/0-overview)
   - [What's metadata?](/dagster-essentials/extra-credit/1-whats-metadata)

@@ -7,7 +7,8 @@ import dagster as dg
 import pytest
 from dagster_duckdb import DuckDBResource
 
-import src.dagster_and_etl.completed.lesson_3.defs.assets as assets
+import dagster_and_etl.completed.lesson_3.defs
+import dagster_and_etl.completed.lesson_3.defs.assets as assets
 
 
 @pytest.fixture()
@@ -145,3 +146,9 @@ def test_import_file_s3_assets(duckdb_mock_resource):
         ),
     )
     assert result.success
+
+
+def test_defs():
+    assert dg.Definitions.merge(
+        dg.components.load_defs(dagster_and_etl.completed.lesson_3.defs)
+    )

@@ -18,7 +18,7 @@ class FilePath(dg.Config):
 @dg.asset
 def import_file(context: dg.AssetExecutionContext, config: FilePath) -> str:
     file_path = (
-        Path(__file__).absolute().parent / f"../../../../data/source/{config.path}"
+        Path(__file__).absolute().parent / f"../../../data/source/{config.path}"
     )
     return str(file_path.resolve())
 ```

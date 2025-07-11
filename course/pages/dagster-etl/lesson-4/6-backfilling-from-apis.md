@@ -24,7 +24,6 @@ Next we can update the `asteroids` asset to use a partition instead of a run con
 ```python {% obfuscated="true" %}
 @dg.asset(
     kinds={"nasa"},
-    group_name="api_etl",
     partitions_def=nasa_partitions_def,
 )
 def asteroids_partition(

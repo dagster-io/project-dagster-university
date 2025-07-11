@@ -1,7 +1,7 @@
 import dagster as dg
 
-from src.dagster_and_etl.definitions import defs
+import dagster_and_etl.defs
 
 
-def test_def_can_load():
-    assert defs
+def test_defs():
+    assert dg.Definitions.merge(dg.components.load_defs(dagster_and_etl.defs))

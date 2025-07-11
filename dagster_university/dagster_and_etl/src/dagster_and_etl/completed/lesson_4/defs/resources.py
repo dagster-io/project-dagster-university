@@ -5,6 +5,22 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 
+# First iteration without retries
+class _NASAResource(dg.ConfigurableResource):
+    api_key: str
+
+    def get_near_earth_asteroids(self, start_date: str, end_date: str):
+        url = "https://api.nasa.gov/neo/rest/v1/feed"
+        params = {
+            "start_date": start_date,
+            "end_date": end_date,
+            "api_key": self.api_key,
+        }
+
+        resp = requests.get(url, params=params)
+        return resp.json()["near_earth_objects"][start_date]
+
+
 class NASAResource(dg.ConfigurableResource):
     api_key: str
 

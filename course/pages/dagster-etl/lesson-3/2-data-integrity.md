@@ -19,6 +19,8 @@ In Dagster, one way to handle data validation is with asset checks. Asset checks
 Let’s start by writing an asset check to ensure the "share_price" column in the file contains only valid, non-zero values. Before we think about the asset check, what might that logic look like if we were just reading the file:
 
 ```python {% obfuscated="true" %}
+import csv
+
 with open("my_file.csv", mode="r", encoding="utf-8") as file:
     reader = csv.DictReader(file)
     data = (row for row in reader)
@@ -33,6 +35,8 @@ We would want to read the file, iterate through the rows and raise an exception 
 Here is that similar logic within an asset check:
 
 ```python {% obfuscated="true" %}
+import csv
+
 @dg.asset_check(
     asset=import_file,
     blocking=True,
@@ -67,12 +71,12 @@ The code above does the following:
 
 When you launch `dg dev` to view the assets in our pipeline, you won’t see an additional node in the graph since the asset check is visually tied to the import_file asset.
 
-# TODO Include screenshot
+![Asset check](/images/dagster-etl/lesson-3/asset-check.png)
 
 Now, when you re-execute the pipeline, a green dot will appear on the `import_file` node if the asset check passes, indicating both successful materialization and validation.
 
-# TODO Include screenshot
+![Asset check pass](/images/dagster-etl/lesson-3/asset-check-pass.png)
 
 If the check fails, the dot will appear red, and the downstream asset will not run. This helps catch data issues early in the process.
 
-# TODO Include screenshot
+![Asset check page](/images/dagster-etl/lesson-3/asset-check-page.png)
