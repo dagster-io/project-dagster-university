@@ -10,7 +10,7 @@ To navigate including Components with Dagster, we will be using the Dagster `dg`
 
 We used `dg` before to lanuch the UI to view and execute our assets but now we will use it to scaffold our Component.
 
-## Create dlt Component
+## Create Sling Component
 
 To initialize our dlt Component, we will run the `dg` command to scaffold the Sling Component (`dagster_sling.SlingReplicationCollectionComponent`): 
 
