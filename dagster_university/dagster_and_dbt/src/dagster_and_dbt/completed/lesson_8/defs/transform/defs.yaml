@@ -1,0 +1,6 @@
+type: dagster_dbt.DbtProjectComponent
+
+attributes:
+  project: '{{ project_root }}/src/dagster_and_dbt/completed/lesson_8/analytics'
+  translation:
+    key:  "taxi_{{ node.name }}"

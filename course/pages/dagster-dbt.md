@@ -55,3 +55,9 @@ title: Dagster + dbt
   - [Creating the manifest during deployment](/dagster-dbt/lesson-7/4-creating-the-manifest-during-deployment)
   - [Preparing for a successful run](/dagster-dbt/lesson-7/5-preparing-for-a-successful-run)
 - [Capstone](/dagster-dbt/capstone)
+
+- Lesson 8: dbt Component
+  - [Overview](/dagster-dbt/lesson-8/1-overview)
+  - [dbt component](/dagster-dbt/lesson-8/2-dbt-component)
+  - [Component usage](/dagster-dbt/lesson-8/3-component-usage)
+
