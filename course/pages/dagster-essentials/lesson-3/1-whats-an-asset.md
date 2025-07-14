@@ -39,3 +39,20 @@ def cookie_dough(dry_ingredients, wet_ingredients):
 When naming assets, it’s best practice to use a **noun**, specifically **a descriptor of what is produced,** and not the steps required to produce it.
 
 For example, the example asset combines the `dry_ingredients` and `wet_ingredients` assets to create cookie dough. We named it `cookie_dough` because that’s what the asset produces, whereas a name like `combine_ingredients` focuses on an action and not the end result.
+
+---
+
+## Assets vs Dagster Components
+
+Introduced in Dagster 1.11, [Dagster Components](https://docs.dagster.io/guides/build/components/) provide a structured and modular way to:
+
+* Organize and scaffold Dagster projects efficiently.
+* Simplify configuration of common workflows using predefined or custom templates.
+* Enable reusable abstractions that make complex orchestration easier to manage and maintain.
+
+Components are an incredibly powerful abstraction in Dagster, and we’ll cover in detail how to use the [dg CLI](https://docs.dagster.io/api/dg) to scaffold and navigate your project. However, we won’t explore all the details of using components for integrations or custom workflows, as these will make more sense once you’re familiar with the foundational objects in a Dagster project. This course will focus primarily on those fundamentals.
+
+For more information on applying components in practice, explore the following resources:
+
+* [ETL Tutorial Pipeline](https://docs.dagster.io/etl-pipeline-tutorial/)
+* [Dagster & ETL](https://courses.dagster.io/courses/dagster-etl)
