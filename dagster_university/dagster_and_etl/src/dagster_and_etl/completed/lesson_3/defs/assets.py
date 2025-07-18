@@ -166,7 +166,9 @@ def duckdb_dynamic_partition_table(
         conn.execute(
             f"delete from {table_name} where date = '{context.partition_key}';"
         )
-        conn.execute(f"copy {table_name} from '{import_dynamic_partition_file}'")
+        conn.execute(
+            f"copy {table_name} from '{import_dynamic_partition_file[context.partition_key]}'"
+        )
 
 
 # Example 4 - Cloud Storage
