@@ -26,26 +26,6 @@ When adding assets to groups, keep the following in mind:
 
 ---
 
-## Grouping all assets in a submodule
-
-Asset groups can be defined in the `definitions.py`, where the `Definitions` object is defined. Within the `load_assets_from_modules`, a group name can be passed to load all the assets into that asset group. This is the recommended method for adding assets to groups in Dagster.
-
-For example:
-
-```python
-import dagster as dg
-from dagster_essentials.defs.assets import metrics
-
-metric_assets = dg.load_assets_from_modules(
-    modules=[metrics],
-    group_name="metrics",
-)
-```
-
-In this example, all assets in the `metrics` module (`metric_assets`) will be in the `metrics` asset group.
-
----
-
 ## Grouping individual assets using the asset decorator
 
 You can also specify groups on individual assets by using the `group_name` parameter in the asset decorator. For example:
