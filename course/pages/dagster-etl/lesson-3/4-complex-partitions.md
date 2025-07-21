@@ -69,7 +69,7 @@ def duckdb_dynamic_partition_table(
         conn.execute(
             f"delete from {table_name} where date = '{context.partition_key}';"
         )
-        conn.execute(f"copy {table_name} from '{import_dynamic_partition_file}'")
+        conn.execute(f"copy {table_name} from '{import_dynamic_partition_file}';")
 ```
 
 This setup should look very similar to the daily partition we created earlier. But how does it play out in practice? To better understand the distinction, let’s dive into the differences in how partitioned pipelines are triggered. Each type requires a different approach to scheduling and orchestration, depending on how and when new data becomes available.
