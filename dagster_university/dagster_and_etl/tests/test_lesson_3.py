@@ -1,7 +1,7 @@
 import csv
 import tempfile
 from pathlib import Path
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, Mock, patch
 
 import dagster as dg
 import pytest
@@ -9,6 +9,7 @@ from dagster_duckdb import DuckDBResource
 
 import dagster_and_etl.completed.lesson_3.defs
 import dagster_and_etl.completed.lesson_3.defs.assets as assets
+import dagster_and_etl.completed.lesson_3.defs.sensors as sensors
 
 
 @pytest.fixture()
@@ -80,6 +81,43 @@ def test_import_dynamic_partition_file_assets(duckdb_resource):
         instance=instance,
     )
     assert result.success
+
+
+def test_import_dynamic_partition_file_assets_query(duckdb_mock_resource):
+    instance = dg.DagsterInstance.ephemeral()
+    instance.add_dynamic_partitions("dynamic_partition", ["2018-01-22"])
+
+    _assets = [
+        assets.import_dynamic_partition_file,
+        assets.duckdb_dynamic_partition_table,
+    ]
+    dg.materialize(
+        assets=_assets,
+        resources=duckdb_mock_resource,
+        partition_key="2018-01-22",
+        instance=instance,
+    )
+
+    executed_query = duckdb_mock_resource[
+        "database"
+    ].get_connection.return_value.__enter__.return_value.execute.call_args[0][0]
+
+    assert executed_query.startswith("copy raw_dynamic_partition_data")
+    assert executed_query.endswith("2018-01-22.csv';")
+
+
+@patch(
+    "os.listdir",
+    return_value=["2018-01-22.csv"],
+)
+@patch(
+    "os.path.getmtime",
+    return_value=[1721142147.5879135],
+)
+def test_sensor_run(mock_check_new_files, mock_os_getmtime):
+    instance = dg.DagsterInstance.ephemeral()
+    context = dg.build_sensor_context(instance=instance)
+    assert sensors.dynamic_sensor(context)
 
 
 def test_invalid_share_price(config_file):
