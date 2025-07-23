@@ -34,13 +34,7 @@ cd dagster_university/dagster_essentials
 
 **uv**
 
-If you do not have [`uv`](https://docs.astral.sh/uv/) installed, you can do so with:
-
-```bash
-brew install uv
-```
-
-To install the python dependencies with `uv`. While in the course specific directory run the following:
+If you do not have [`uv`](https://docs.astral.sh/uv/) installed, you can do so in a [number of ways](https://docs.astral.sh/uv/getting-started/installation/). To install the python dependencies with `uv`. While in the course specific directory run the following:
 
 ```bash
 uv sync
