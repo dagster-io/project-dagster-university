@@ -5,6 +5,13 @@ import dagster_and_etl.completed.lesson_6.defs
 from tests.fixtures import docker_compose  # noqa: F401
 
 
+@pytest.fixture()
+def defs():
+    return dg.Definitions.merge(
+        dg.components.load_defs(dagster_and_etl.completed.lesson_6.defs)
+    )
+
+
 @pytest.mark.integration
 def test_sling_replication_config(docker_compose):  # noqa: F811
     import yaml
@@ -68,7 +75,23 @@ def test_incremental_replication(docker_compose):  # noqa: F811
 
 
 @pytest.mark.integration
-def test_defs():
-    assert dg.Definitions.merge(
-        dg.components.load_defs(dagster_and_etl.completed.lesson_6.defs)
-    )
+def test_job_postgres_refresh(defs, docker_compose):  # noqa: F811
+    import dagster_and_etl.completed.lesson_6.defs.assets as assets
+    from dagster_and_etl.completed.lesson_6.defs.resources import sling
+
+    my_job = defs.get_job_def("postgres_refresh")
+    my_job.execute_in_process()
+
+
+@pytest.mark.integration
+def test_job_orders_refresh(defs, docker_compose):  # noqa: F811
+    import dagster_and_etl.completed.lesson_6.defs.assets as assets
+    from dagster_and_etl.completed.lesson_6.defs.resources import sling
+
+    my_job = defs.get_job_def("orders_refresh")
+    my_job.execute_in_process()
+
+
+@pytest.mark.integration
+def test_defs(defs):
+    assert defs
