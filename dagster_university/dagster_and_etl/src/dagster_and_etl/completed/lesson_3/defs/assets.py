@@ -144,6 +144,7 @@ def import_dynamic_partition_file(context: dg.AssetExecutionContext) -> str:
 
 @dg.asset(
     kinds={"duckdb"},
+    partitions_def=dynamic_partitions_def,
 )
 def duckdb_dynamic_partition_table(
     context: dg.AssetExecutionContext,
