@@ -47,6 +47,7 @@ Before we execute the pipeline, let’s define the downstream asset that loads d
 ```python {% obfuscated="true" %}
 @dg.asset(
     kinds={"duckdb"},
+    partitions_def=dynamic_partitions_def,
 )
 def duckdb_dynamic_partition_table(
     context: dg.AssetExecutionContext,
