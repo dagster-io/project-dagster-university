@@ -7,6 +7,7 @@ pyvenv.cfg
 .ipynb_checkpoints/
 .bashrc
 .DS_STORE
+.env
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
