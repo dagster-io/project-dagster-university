@@ -14,6 +14,7 @@ dependencies = [
     "psycopg2-binary",
     "dlt[duckdb]",
     "pandas",
+    "duckdb>=1.3.1",
 ]
 
 [tool.uv]
@@ -46,3 +47,6 @@ fixable = ["ALL"]
 unfixable = [
     "F401", # dont remove unused imports
 ]
+
+[tool.dagster]
+module_name = "src.dagster_and_etl.defs.resources"
