@@ -11,5 +11,8 @@
         "3000": {
             "label": "Dagster"
         }
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     }
 }
