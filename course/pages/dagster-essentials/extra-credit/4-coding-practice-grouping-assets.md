@@ -32,9 +32,13 @@ def name_of_asset():
 
 ### For the asset submodule method:
 
-For the `adhoc_request` asset, your code should look like this:
+You can create a new file in the `defs` directory called `groups.py` and import the assets in the `requests` module, and apply a group using the `load_assets_from_modules`:
 
 ```python {% obfuscated="true" %}
+import dagster as dg
+
+from dagster_essentials.defs.assets import requests
+
 request_assets = dg.load_assets_from_modules(
     modules=[requests],
     group_name="requests",
