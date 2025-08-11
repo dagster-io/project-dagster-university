@@ -35,6 +35,7 @@ We would want to read the file, iterate through the rows and raise an exception 
 Here is that similar logic within an asset check:
 
 ```python {% obfuscated="true" %}
+# src/dagster_and_etl/defs/assets.py
 import csv
 
 @dg.asset_check(

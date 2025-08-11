@@ -56,6 +56,7 @@ We’ll assume your code looks like the following for the rest of the module. De
 **If there are differences**, compare what you wrote to the asset below, change it, and then re-materialize the asset to prepare for the next lesson.
 
 ```python {% obfuscated="true" %}
+# src/dagster_essentials/defs/assets/metrics.py
 from datetime import datetime, timedelta
 from dagster_essentials.defs.assets import constants
 

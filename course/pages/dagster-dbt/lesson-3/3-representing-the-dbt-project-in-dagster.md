@@ -8,9 +8,10 @@ lesson: '3'
 
 As you’ll frequently point your Dagster code to the `target/manifest.json` file and your dbt project in this course, it’ll be helpful to keep a reusable representation of the dbt project. This can be easily done using the `DbtProject` class.
 
-In the `dagster_university/dagster_and_dbt/dagster_and_dbt/project.py` file add the following imports:
+In the `defs/project.py` file add the following imports:
 
 ```python
+# src/dagster_and_dbt/defs/project.py
 from pathlib import Path
 
 from dagster_dbt import DbtProject

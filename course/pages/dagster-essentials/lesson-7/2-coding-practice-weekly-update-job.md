@@ -17,6 +17,7 @@ The job you built should look similar to the following code. Click **View answer
 **If there are differences**, compare what you wrote to the job below and change them, as this job will be used as-is in future lessons.
 
 ```python {% obfuscated="true" %}
+# src/dagster_essentials/defs/jobs.py
 import dagster as dg
 
 trips_by_week = dg.AssetSelection.assets(["trips_by_week"])

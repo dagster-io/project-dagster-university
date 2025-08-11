@@ -35,6 +35,7 @@ Example 3,1000000
 To test an asset with a run configuration, you will set the specific run configuration required by the asset as an input parameter. Here is what the test will look like. Click **View answer** to view it.
 
 ```python {% obfuscated="true" %}
+# tests/test_lesson_3.py
 def test_state_population_file_config():
     file_path = Path(__file__).absolute().parent / "data/test.csv"
 
@@ -66,6 +67,7 @@ tests/test_lesson_3.py .                                                        
 When testing with Dagster and `pytest` together, we can take advantage of some `pytest` functionality to make the testing code easier to reuse. If the `FilepathConfig` was used by multiple tests, we might benefit from creating a `pytest` fixture:
 
 ```python
+# tests/test_lesson_3.py
 @pytest.fixture()
 def config_file():
     file_path = Path(__file__).absolute().parent / "data/test.csv"
@@ -99,6 +101,7 @@ tests/test_lesson_3.py .                                                        
 Fixtures make testing code much easier to read and helps consolidate aspects that may be used by multiple tests. Tests can also use multiple fixtures. If we wanted to include an additional fixture for the output of the function.
 
 ```python
+# tests/test_lesson_3.py
 @pytest.fixture()
 def config_file():
     file_path = Path(__file__).absolute().parent / "data/test.csv"
@@ -138,6 +141,7 @@ tests/test_lesson_3.py .                                                        
 In order to provide the run configuration to the materialization run, we will need to specify an additional parameter called `run_config` within the call to `materialize()`. This parameter takes a `RunConfig` object that maps the specific run configuration to the asset that requires it:
 
 ```python
+# tests/test_lesson_3.py
 def test_assets_config(config_file, file_example_output):
     _assets = [
         lesson_3.state_population_file_config,
@@ -171,6 +175,7 @@ ops:
 Then we can update the `run_config` parameter to use that YAML file:
 
 ```python {% obfuscated="true" %}
+# tests/test_lesson_3.py
 def test_assets_config_yaml(file_example_output):
     _assets = [
         lesson_3.state_population_file_config,

@@ -49,6 +49,7 @@ Sensors in Dagster allow you to monitor external systems, like cloud storage, an
 Here’s an example of what a sensor might look like for a dynamically partitioned asset:
 
 ```python
+# src/dagster_and_etl/defs/sensors.py
 import json
 import os
 from pathlib import Path

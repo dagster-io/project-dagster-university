@@ -28,11 +28,16 @@ We’ll only create one `@dbt_assets` definition for now, but in a later lesson,
 
 ## Loading the models as assets
 
-1. Create a new file in the `assets` directory called `dbt.py`.
+1. Create a new file `dbt.py` using `dg`:
+
+   ```bash
+   dg scaffold defs dagster.asset assets/dbt.py
+   ```
 
 2. Add the following imports to the top of the file:
 
    ```python
+   # src/dagster_and_dbt/defs/assets/dbt.py
    import dagster as dg
    from dagster_dbt import dbt_assets, DbtCliResource
    
@@ -65,9 +70,10 @@ We’ll only create one `@dbt_assets` definition for now, but in a later lesson,
      - This is one of multiple ways to get the Dagster events, such as what models materialized or tests passed. We recommend starting with this and exploring other methods in the future as your use cases grow (such as fetching the run artifacts after a run). In this case, the above line will execute `dbt run`.
    - The results of the `stream` are a Python generator of what Dagster events happened. We used `yield from` (not just `yield`!) to have Dagster track asset materializations.
 
-At this point, `dbt.py` should look like this:
+At this point, `defs/assets/dbt.py` should look like this:
 
 ```python
+# src/dagster_and_dbt/defs/assets/dbt.py
 import dagster as dg
 from dagster_dbt import DbtCliResource, dbt_assets
 

@@ -15,6 +15,7 @@ def func_wrong_type() -> str:
 ```
 
 ```python
+# tests/test_lesson_3.py
 def test_func_wrong_type():
     assert lesson_3.func_wrong_type() == 2
 ```
@@ -27,12 +28,14 @@ A benefit of Dagster is that it enforces type checking when you annotate the fun
 Let's try the same example with Dagster:
 
 ```python
+# src/dagster_testing/defs/assets/lesson_3.py
 @dg.asset
 def wrong_type_annotation() -> str:
     return 2
 ```
 
 ```python
+# tests/test_lesson_3.py
 def test_wrong_type_annotation():
     assert lesson_3.wrong_type_annotation() == 2
 ```
@@ -58,12 +61,14 @@ While we will not need to write tests to ensure our data types, it can be benefi
 With `pytest`, handling exceptions within Dagster is the same as exception handling with other standard Python functions. If we wanted to write a test to ensure that the `wrong_type_annotation` asset would raise an error, it would look like this:
 
 ```python
+# src/dagster_testing/defs/assets/lesson_3.py
 @dg.asset
 def wrong_type_annotation() -> str:
     return 2
 ```
 
 ```python
+# tests/test_lesson_3.py
 def test_wrong_type_annotation_error():
     with pytest.raises(DagsterTypeCheckDidNotPass):
         lesson_3.wrong_type_annotation()

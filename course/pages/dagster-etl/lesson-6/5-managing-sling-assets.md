@@ -24,6 +24,7 @@ Creating a schedule for our Sling ETL assets is no different than defining any o
 We’d define two separate jobs:
 
 ```python
+# src/dagster_and_etl/defs/jobs.py
 import dagster as dg
 
 postgres_refresh_job = dg.define_asset_job(
@@ -46,6 +47,7 @@ orders_refresh_job = dg.define_asset_job(
 Then we can create two distinct schedules with different cron expressions:
 
 ```python
+# src/dagster_and_etl/defs/schedules.py
 postgres_refresh_schedule = dg.ScheduleDefinition(
     job=postgres_refresh_job,
     cron_schedule="0 6 * * *",

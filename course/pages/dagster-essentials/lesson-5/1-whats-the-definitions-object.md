@@ -62,6 +62,7 @@ registry_modules = [
 In your project, open the `dagster_university/dagster_essentials/src/dagster_essentials/definitions.py` file. It should look like the following code:
 
 ```python
+# src/dagster_essentials/definitions.py
 from pathlib import Path
 
 from dagster import definitions, load_from_defs_folder

@@ -31,6 +31,7 @@ When adding assets to groups, keep the following in mind:
 You can also specify groups on individual assets by using the `group_name` parameter in the asset decorator. For example:
 
 ```python
+# src/dagster_essentials/defs/assets/trips.py
 import dagster as dg
 
 @dg.asset(

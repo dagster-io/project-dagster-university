@@ -20,6 +20,7 @@ As you went through this course, you might have noticed that the assets all cont
 Docstrings are defined by including a string, surrounded by triple quotes (`"""`) as the first statement in an object’s definition. For example:
 
 ```python
+# src/dagster_essentials/defs/assets/trips.py
 import dagster as dg
 
 @dg.asset
@@ -44,6 +45,7 @@ Another way to add a description to an asset is to use the asset decorator with 
 For example:
 
 ```python
+# src/dagster_essentials/defs/assets/trips.py
 import dagster as dg
 
 @dg.asset(

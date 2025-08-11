@@ -64,6 +64,7 @@ With the files set we can now add our first asset.
 3. Below the imports, let's define a function that takes no inputs and returns nothing (type-annoted with `None`). Add the following code to create a function to do this named `taxi_trips_file`:
 
    ```python
+   # src/dagster_essentials/defs/assets/trips.py
    def taxi_trips_file() -> None:
        """
          The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal.
@@ -88,6 +89,7 @@ With the files set we can now add our first asset.
    2. Add the `@dg.asset` decorator before the `taxi_trips_file` function. At this point, your code should look like this:
 
       ```python
+      # src/dagster_essentials/defs/assets/trips.py
       import requests
       from dagster_essentials.defs.assets import constants
       import dagster as dg

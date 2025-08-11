@@ -19,6 +19,7 @@ The `@dg.definitions` decorator is lazily evaluated. This means it is not loaded
 We can now write a test to assert that the definition can load properly.
 
 ```python
+# tests/test_lesson_6.py
 import dagster_testing.defs
 
 def test_defs():
@@ -36,6 +37,7 @@ As simple as it may seem, this test will find many issues associated with your D
 We can also pull out loading the definition into a fixture if we want to run multiple tests against the definition.
 
 ```python
+# tests/test_lesson_6.py
 @pytest.fixture()
 def defs():
     return dg.Definitions.merge(dg.components.load_defs(dagster_testing.defs))
@@ -55,6 +57,7 @@ def test_defs(defs):
 The `Definitions` object includes additional methods for access various objects contained withi. For example rather than importing assets directly, you can access them from the definitions object. For example we can access the `squared` asset and test it from the definitions.
 
 ```python
+# tests/test_lesson_6.py
 def test_square_asset(defs):
     _asset = defs.get_assets_def("squared")
     assert _asset(5) == 25
@@ -69,6 +72,7 @@ tests/test_lesson_6.py .                                                        
 Be aware that access Dagster objects is different when they have named keys. For example the asset `squared_key`.
 
 ```python
+# src/dagster_testing/defs/assets/lesson_6.py
 @dg.asset(key=["target", "main", "square_key"])
 def squared_key(number: int):
     return number * number
@@ -77,6 +81,7 @@ def squared_key(number: int):
 In order to access this asset you must set the key with `dg.AssetKey`.
 
 ```python
+# tests/test_lesson_6.py
 def test_square_key_asset(defs):
     _asset = defs.get_assets_def(dg.AssetKey(["target", "main", "square_key"]))
     assert _asset(5) == 25
@@ -89,6 +94,7 @@ Accessing Dagster objects from the `definitions` object is especially useful whe
 Since components typically do not expose their underlying Dagster objects as directly importable code, you should load the `definitions` object and access the relevant objects from it when writing tests or performing operations involving component-generated assets or jobs.
 
 ```python
+# tests/test_lesson_6.py
 def test_materialize_partition(defs, duckdb_resource):
     result = dg.materialize(
         assets=[

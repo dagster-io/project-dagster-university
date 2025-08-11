@@ -42,6 +42,7 @@ Say we wanted to write a test to ensure that the number returned by `total_popul
 Now `total_population` can be used an input parameter for the function itself. This is what the asset check might look like. Click **View answer** to view it.
 
 ```python {% obfuscated="true" %}
+# src/dagster_testing/defs/assets/lesson_6.py
 @dg.asset_check(asset=total_population)
 def non_negative(total_population):
     return dg.AssetCheckResult(
@@ -58,6 +59,7 @@ You can also write unit tests for your asset check code. Depending on the level 
 Writing a test for our asset check is similar to writing a test for an asset. Our input parameter is the value we wish to check and then we can see if the asset did or did not pass validation.
 
 ```python
+# tests/test_lesson_6.py
 def test_non_negative():
     asset_check_pass = lesson_6.non_negative(10)
     assert asset_check_pass.passed

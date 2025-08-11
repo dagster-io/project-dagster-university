@@ -25,8 +25,7 @@ We’ll assume your code looks like the following for the rest of the module. If
 ### In assets/trips.py:
 
 ```python {% obfuscated="true" %}
-# assets/trips.py
-
+# src/dagster_essentials/defs/assets/trips.py
 @dg.asset(
     deps=["taxi_zones_file"],
 )
@@ -55,6 +54,7 @@ def taxi_zones(database: DuckDBResource) -> None:
 Update the imports in `defs/assets/metrics.py` to the following:
 
 ```python {% obfuscated="true" %}
+# src/dagster_essentials/defs/assets/metrics.py
 from datetime import datetime, timedelta
 
 import dagster as dg
@@ -69,8 +69,7 @@ from dagster_essentials.defs.assets import constants
 Update the `manhattan_stats` asset:
 
 ```python {% obfuscated="true" %}
-# assets/metrics.py
-
+# src/dagster_essentials/defs/assets/metrics.py
 @dg.asset(
     deps=["taxi_trips", "taxi_zones"]
 )
@@ -104,8 +103,7 @@ def manhattan_stats(database: DuckDBResource) -> None:
 Update the `trips_by_week` asset:
 
 ```python {% obfuscated="true" %}
-# assets/metrics.py
-
+# src/dagster_essentials/defs/assets/metrics.py
 @dg.asset(
     deps = ["taxi_trips"]
 )

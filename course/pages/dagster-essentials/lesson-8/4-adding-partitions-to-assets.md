@@ -11,6 +11,7 @@ In this section, you’ll update the assets in `src/dagster_essentials/defs/asse
 Starting with `taxi_trips_file`, the asset code should currently look like this:
 
 ```python
+# src/dagster_essentials/defs/assets/trips.py
 @dg.asset
 def taxi_trips_file() -> None:
     """
@@ -78,6 +79,7 @@ To add the partition to the asset:
 After following the steps above, the `taxi_trips_file` asset should look similar to the code snippet below:
 
 ```python
+# src/dagster_essentials/defs/assets/trips.py
 from dagster_essentials.defs.partitions import monthly_partition
 
 @dg.asset(

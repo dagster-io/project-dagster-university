@@ -13,6 +13,7 @@ Since everything we’ve built so far is time-based and revolves around daily ex
 Let’s start by creating a simple job that includes the three assets we’ve defined in this pipeline. Once the job is in place, we’ll attach a daily schedule to trigger it automatically:
 
 ```python
+# src/dagster_and_etl/defs/jobs.py
 asteroid_job = dg.define_asset_job(
     name="asteroid_job",
     selection=[
@@ -32,6 +33,7 @@ This schedule will be similar to those we’ve written previously, with one key 
 Add the following schedule to the `schedules.py`:
 
 ```python
+# src/dagster_and_etl/defs/schedules.py
 @dg.schedule(job=asteroid_job, cron_schedule="0 6 * * *")
 def date_range_schedule(context):
     scheduled_date = context.scheduled_execution_time.strftime("%Y-%m-%d")

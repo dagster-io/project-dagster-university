@@ -11,6 +11,7 @@ When defining assets with Sling, you will first have to define your source and t
 To define the source and destination, we will use the `SlingConnectionResource`. The source POstgres instance will use the connection details from our Docker Compose.
 
 ```python
+# src/dagster_and_etl/defs/resources.py
 import dagster as dg
 from dagster_sling import SlingConnectionResource, SlingResource
 
@@ -28,6 +29,7 @@ source = SlingConnectionResource(
 The destination has fewer attributes as it is just the file path to our local DuckDB database:
 
 ```python
+# src/dagster_and_etl/defs/resources.py
 destination = SlingConnectionResource(
     name="MY_DUCKDB",
     type="duckdb",
@@ -38,6 +40,7 @@ destination = SlingConnectionResource(
 With the source and destination defined, we can combine them together in the `SlingResource` and set it within the `dg.Definitions`:
 
 ```python
+# src/dagster_and_etl/definitions.py
 defs = dg.Definitions(
     resources={
         "sling": sling,
@@ -76,6 +79,7 @@ Now we can generate our Dagster assets. Since we have already done most of the w
 
 
 ```python
+# src/dagster_and_etl/defs/assets.py
 import dagster as dg
 from dagster_sling import SlingResource, sling_assets
 

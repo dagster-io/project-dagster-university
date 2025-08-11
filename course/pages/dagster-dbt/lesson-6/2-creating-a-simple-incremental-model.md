@@ -10,7 +10,7 @@ As mentioned, partitions don’t *replace* incremental models, but you’ll soon
 
 This model will be a series of stats about all New York taxi trips. It would be expensive to compute this every day because of the granularity of the metrics and the fact that some of the measures are computationally expensive to calculate. Therefore, this model will be incremental.
 
-In your dbt project, create a new file called `daily_metrics.sql`  in the `analytics/models/marts` directory. Copy and paste the following code into the file:
+In your dbt project, create a new file called `daily_metrics.sql`  in the `defs/analytics/models/marts` directory. Copy and paste the following code into the file:
 
 ```sql
 {{

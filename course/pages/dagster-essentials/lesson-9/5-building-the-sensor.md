@@ -48,6 +48,7 @@ Now that cursors have been explained, let’s start writing the sensor.
 3. Add the following imports to the top of the file:
 
    ```python
+   # src/dagster_essentials/defs/sensors.py
    import dagster as dg
    import os
    import json
@@ -161,6 +162,7 @@ Now that cursors have been explained, let’s start writing the sensor.
 Putting everything together, you should have the following code in `sensors.py`:
 
 ```python
+# src/dagster_essentials/defs/sensors.py
 import dagster as dg
 import os
 import json

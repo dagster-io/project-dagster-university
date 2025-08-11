@@ -35,6 +35,7 @@ Let’s write a new configuration that we can use to customize the asset materia
 The `requests.py` file should look like the code snippet below:
 
 ```python
+# src/dagster_essentials/defs/assets/requests.py
 import dagster as dg
 
 class AdhocRequestConfig(dg.Config):

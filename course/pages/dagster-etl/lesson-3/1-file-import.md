@@ -16,9 +16,10 @@ If we’re building a pipeline to load files into a data warehouse, we should st
 
 Instead, we can use a [run configuration](https://docs.dagster.io/guides/operate/configuration/run-configuration) to parameterize the process. This allows us to dynamically specify which file to load each time we execute the pipeline.
 
-First, we’ll define a run configuration so we can set the file path. In the `defs/assets.py` file add the code for the run configuration:
+First, we’ll define a run configuration so we can set the file path. In the `src/dagster_and_etl/defs/assets.py` file add the code for the run configuration:
 
 ```python
+# src/dagster_and_etl/defs/assets.py
 import dagster as dg
 from pathlib import Path
 
@@ -48,6 +49,7 @@ Now that we’ve identified the file we want to load, we can define the destinat
 In order to use DuckDB we need to establish a connection with our database. In Dagster we can do this with resources, so in the `resources.py` file, add the following:
 
 ```python
+# src/dagster_and_etl/defs/resources.py
 import dagster as dg
 from dagster_duckdb import DuckDBResource
 
@@ -81,6 +83,7 @@ This can include additional parameters to specify things like file type and form
 As well as loading data into DuckDB, we need a destination table defined. We can design an asset that creates a table to match the schema of our file and load the file:
 
 ```python
+# src/dagster_and_etl/defs/assets.py
 from dagster_duckdb import DuckDBResource
 
 @dg.asset(

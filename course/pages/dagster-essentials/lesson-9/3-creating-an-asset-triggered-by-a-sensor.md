@@ -11,6 +11,7 @@ Now that you’ve defined how the asset can be materialized, let’s create the 
 1. Add the following imports to `defs/assets/requests.py`:
 
    ```python
+   # src/dagster_essentials/defs/assets/requests.py
    import dagster as dg
    from dagster_duckdb import DuckDBResource
 
@@ -113,6 +114,7 @@ Now that you’ve defined how the asset can be materialized, let’s create the 
 Verify that `requests.py` file looks like the code below:
 
 ```python
+# src/dagster_essentials/defs/assets/requests.py
 import dagster as dg
 from dagster_duckdb import DuckDBResource
 

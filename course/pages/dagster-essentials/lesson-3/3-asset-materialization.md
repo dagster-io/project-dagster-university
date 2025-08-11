@@ -11,6 +11,7 @@ Now that you’ve defined an asset in code, the next step is to **materialize** 
 To better understand how materialization works, let’s take another look at the `taxi_trips_file` asset you created and what its function does:
 
 ```python
+# src/dagster_essentials/defs/assets/trips.py
 @dg.asset
 def taxi_trips_file() -> None:
     """The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal."""

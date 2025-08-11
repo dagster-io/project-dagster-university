@@ -72,6 +72,7 @@ The `ny.csv` file contains the population for three cities in New York. So what 
 So what would a good test look like? Click **View answer** to view it.
 
 ```python {% obfuscated="true" %}
+# tests/test_lesson_3.py
 def test_state_population_file():
     assert lesson_3.state_population_file() == [
         {

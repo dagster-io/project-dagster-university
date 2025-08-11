@@ -19,7 +19,7 @@ The updated asset and job should look similar to the following code. Click **Vie
 ### In assets/metrics.py:
 
 ```python {% obfuscated="true" %}
-# assets/metrics.py
+# src/dagster_essentials/defs/assets/metrics.py
 from dagster_essentials.defs.partitions import weekly_partition
 
 @dg.asset(
@@ -72,6 +72,7 @@ def trips_by_week(context: dg.AssetExecutionContext, database: DuckDBResource) -
 ### In `jobs.py`:
 
 ```python {% obfuscated="true" %}
+# src/dagster_essentials/defs/jobs.py
 import dagster as dg
 from dagster_essentials.defs.partitions import weekly_partition
 

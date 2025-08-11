@@ -18,6 +18,7 @@ The `DbtCliResource` is the main resource that you’ll be working with. In late
 Navigate to the `defs/resources.py`, which is where other resources are defined. Copy and paste the following code to their respective locations:
 
 ```python
+# src/dagster_and_dbt/defs/resources.py
 from dagster_dbt import DbtCliResource
 
 from dagster_and_dbt.defs.project import dbt_project

@@ -11,6 +11,7 @@ Next, you’ll create a job that materializes the new `adhoc_request` asset. Thi
 Navigate to the `defs/jobs.py` file and add the following lines above the `trip_update_job` to create a job for your ad-hoc requests
 
 ```python
+# src/dagster_essentials/defs/jobs.py
 adhoc_request = dg.AssetSelection.assets(["adhoc_request"])
 
 adhoc_request_job = dg.define_asset_job(
@@ -22,6 +23,7 @@ adhoc_request_job = dg.define_asset_job(
 You’ll also have to update an existing job, `trip_update_job`. The initial `AssetSelection.all()` this job uses will select the new `adhoc_request` asset, but we don’t want that. Just like how you omitted the `trips_by_week` asset in the asset selection, let’s also omit the `adhoc_request` asset, as shown below:
 
 ```python
+# src/dagster_essentials/defs/jobs.py
 trip_update_job = dg.define_asset_job(
     name="trip_update_job",
     partitions_def=monthly_partition,

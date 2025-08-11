@@ -41,7 +41,7 @@ We have a few changes to make to our dbt setup to get things working. In `defs/a
 
 Previously, we used the `@dbt_assets` decorator to say _“this function produces assets based on this dbt project”_. Now, we also want to say _“this function produces partitioned assets based on a selected set of models from this dbt project.”_ We’ll write an additional `@dbt_assets` -decorated function to express this.
 
-1. In `dagster_university/assets/dbt.py`, define another `@dbt_assets` function below the original one. Name it `dbt_incremental_models` and have it use the same manifest that we’ve been using:
+1. In `defs/assets/dbt.py`, define another `@dbt_assets` function below the original one. Name it `dbt_incremental_models` and have it use the same manifest that we’ve been using:
 
    ```python
    @dbt_assets(
@@ -58,6 +58,7 @@ Previously, we used the `@dbt_assets` decorator to say _“this function produce
 2. Next, add arguments to specify which models to select (`select`) and what partition (`partitions_def`) to use:
 
    ```python
+   # src/dagster_and_dbt/defs/assets/dbt.py
    @dbt_assets(
        manifest=dbt_project.manifest_path,
        dagster_dbt_translator=CustomizedDagsterDbtTranslator(),
@@ -109,6 +110,7 @@ Now that you have a dedicated `@dbt_assets` definition for the incremental model
 Modify the `dbt_analytics` definition to exclude the `INCREMENTAL_SELECTOR`:
 
 ```python
+# src/dagster_and_dbt/defs/assets/dbt.py
 @dbt_assets(
     manifest=dbt_project.manifest_path,
     dagster_dbt_translator=CustomizedDagsterDbtTranslator(),
@@ -176,7 +178,7 @@ def incremental_dbt_models(context: dg.AssetExecutionContext, dbt: DbtCliResourc
 
 Finally, we’ll modify the `daily_metrics.sql` file to reflect that dbt knows what partition range is being materialized. Since the partition range is passed in as variables at runtime, the dbt model can access them using the `var` dbt macro.
 
-In `analytics/models/marts/daily_metrics.sql`, update the contents of the model's incremental logic (`% if is_incremental %}`) to the following:
+In `defs/analytics/models/marts/daily_metrics.sql`, update the contents of the model's incremental logic (`% if is_incremental %}`) to the following:
 
 ```sql
 where date_of_business between '{{ var('min_date') }}' and '{{ var('max_date') }}'
