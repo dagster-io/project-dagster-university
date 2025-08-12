@@ -17,6 +17,7 @@ In Lesson 9, you created the `adhoc_request` asset. During materialization, the 
 2. At this point in the course, the `adhoc_request` asset should look like this:
 
    ```python
+   # src/dagster_essentials/defs/assets/requests.py
    import dagster as dg
    from dagster_duckdb import DuckDBResource
 
@@ -132,6 +133,7 @@ In Lesson 9, you created the `adhoc_request` asset. During materialization, the 
 At this point, the code for the `adhoc_request` asset should look like this:
 
 ```python
+# src/dagster_essentials/defs/assets/requests.py
 import dagster as dg
 from dagster_duckdb import DuckDBResource
 

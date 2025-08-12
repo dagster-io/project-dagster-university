@@ -15,6 +15,7 @@ Check it out in the Dagster UI by clicking **Jobs** in the top navigation bar, t
 Pretty cool, right? Let’s check out the code that made this happen. Open the `defs/jobs.py` and look at the definition for `trip_update_job`:
 
 ```python
+# src/dagster_and_dbt/defs/jobs.py
 trip_update_job = dg.define_asset_job(
     name="trip_update_job",
     partitions_def=monthly_partition,
@@ -39,7 +40,7 @@ This is where you’d lean on a function like [`build_dbt_asset_selection`](http
 
 The function will return an `AssetSelection` of the dbt models that match your dbt selector. Let’s put this into practice:
 
-1. At the top of `jobs.py`, import `dbt_analytics` from the `assets.dbt` module, along with the `build_dbt_asset_selection` function from `dagster_dbt`:
+1. At the top of `defs/jobs.py`, import `dbt_analytics` from the `assets.dbt` module, along with the `build_dbt_asset_selection` function from `dagster_dbt`:
     
     ```python
     from dagster_and_dbt.assets.dbt import dbt_analytics

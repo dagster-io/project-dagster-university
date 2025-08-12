@@ -18,6 +18,7 @@ Now we want to emulate `StatePopulation`. In terms of what functionality we need
 First we will create another `pytest.fixture` for an example response from `get_cities`.
 
 ```python
+# tests/test_lesson_4.py
 @pytest.fixture
 def fake_city():
     return {
@@ -36,6 +37,7 @@ mocked_resource.get_cities.return_value = [fake_city]
 This is everything we need to write a new test for the `state_population_api_resource` asset. Remember there is no need for the patch decorator anymore because `requests` is not needed. What would the test look like? Click **View answer** to view it.
 
 ```python {% obfuscated="true" %}
+# tests/test_lesson_4.py
 def test_state_population_api_mocked_resource(fake_city):
     mocked_resource = Mock()
     mocked_resource.get_cities.return_value = [fake_city]
@@ -50,7 +52,8 @@ def test_state_population_api_mocked_resource(fake_city):
 
 The mocked resource can also be used with `dg.materialize()` if we wanted to run multiple assets in a single test:
 
-```python 
+```python
+# tests/test_lesson_4.py
 def test_state_population_api_assets_mocked_resource(fake_city):
     mocked_resource = Mock()
     mocked_resource.get_cities.return_value = [fake_city]

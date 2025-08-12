@@ -22,7 +22,7 @@ If you’re familiar with New York City, you might know that there are three maj
 
 To answer these questions, let’s define a new dbt model that builds a series of metrics from the staging models you wrote earlier. 
 
-In the `dagster_university/dagster_and_dbt/dagster_and_dbt/analytics/models` directory:
+In the `src/dagster_and_dbt/analytics/models` directory:
 
 1. Create a new directory called `marts`.
 2. In the `marts` directory, create a new file called `location_metrics.sql`. 
@@ -72,7 +72,7 @@ Next, we’ll create an asset that uses some of the columns in the `location_met
 
 Let's start by adding a new string constant to reference when building the new asset. This will make it easier for us to reference the correct location of the chart in the asset.
 
-In the `assets/constants.py` file, add the following to the end of the file:
+In the `defs/assets/constants.py` file, add the following to the end of the file:
 
 ```python
 AIRPORT_TRIPS_FILE_PATH = get_path_for_env(os.path.join("data", "outputs", "airport_trips.png"))
@@ -84,7 +84,7 @@ This creates a path to where we want to save the chart. The `get_path_for_env` u
 
 Now we’re ready to create the asset!
 
-1. Open the `assets/metrics.py` file.
+1. Open the `defs/assets/metrics.py` file.
 2. At the end of the file, define a new asset called `airport_trips` with the existing `DuckDBResource` named `database` and it will return a `MaterializeResult`, indicating that we'll be returning some metadata:
     
     ```python
@@ -107,6 +107,7 @@ Now we’re ready to create the asset!
    At this point, the `airport_trips` asset should look like this:
     
    ```python
+   # src/dagster_and_dbt/defs/assets/metrics.py
    @dg.asset(
        deps=["location_metrics"],
    )

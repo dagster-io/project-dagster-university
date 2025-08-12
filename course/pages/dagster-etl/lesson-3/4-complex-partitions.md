@@ -29,6 +29,7 @@ This defines a dynamic partition set named "dynamic_partition", which you can co
 Similar to our time based partition, let's create a new set of assets. Once again the the logic of our asset will remain the same except it uses the dynamic partition:
 
 ```python {% obfuscated="true" %}
+# src/dagster_and_etl/defs/assets.py
 @dg.asset(
     partitions_def=dynamic_partitions_def,
 )
@@ -45,6 +46,7 @@ Now, if we attempted to execute this asset in Dagster, you’d notice that it ca
 Before we execute the pipeline, let’s define the downstream asset that loads data into DuckDB, using the values from our dynamic partition:
 
 ```python {% obfuscated="true" %}
+# src/dagster_and_etl/defs/assets.py
 @dg.asset(
     kinds={"duckdb"},
     partitions_def=dynamic_partitions_def,

@@ -11,6 +11,7 @@ There are a couple of key differences between our original CSV pipeline and the 
 We’ll start by reusing the existing run configuration and upstream asset, both of which can remain unchanged. This allows us to maintain the same flexible file-based interface while swapping in dlt to handle the data loading:
 
 ```python
+# src/dagster_and_etl/defs/assets.py
 class FilePath(dg.Config):
     path: str
 

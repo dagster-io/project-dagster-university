@@ -20,6 +20,7 @@ Now that you have a query that produces an asset, let’s use Dagster to manage 
 2. Copy and paste the code below into the bottom of the `trips.py` file. Note how this code looks similar to the asset definition code for the `taxi_trips_file` and the `taxi_zones` assets:
 
    ```python
+   # src/dagster_essentials/defs/assets/trips.py
    @dg.asset(
        deps=["taxi_trips_file"]
    )

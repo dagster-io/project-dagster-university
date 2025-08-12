@@ -19,6 +19,7 @@ Since Dagster run configurations are built on top of Pydantic models, we can use
 
 
 ```python
+# src/dagster_and_etl/defs/assets.py
 import datetime
 from pydantic import field_validator
 
@@ -42,6 +43,7 @@ With our run configuration in place, we can now define our Dagster assets. Our f
 To make the correct API call, we’ll need to compute both the start_date and end_date using that input date. The asset will return a list of dictionaries, each representing an asteroid observed during that time period:
 
 ```python {% obfuscated="true" %}
+# src/dagster_and_etl/defs/assets.py
 from dagster_and_etl.defs.resources import NASAResource
 
 @dg.asset(
@@ -73,6 +75,7 @@ So, our next asset will take the list of dictionaries returned by the API and sa
 - is_potentially_hazardous_asteroid
 
 ```python {% obfuscated="true" %}
+# src/dagster_and_etl/defs/assets.py
 @dg.asset
 def asteroids_file(
     context: dg.AssetExecutionContext,
@@ -105,6 +108,7 @@ def asteroids_file(
 The final asset will look very similar to the one we built in the previous lesson. We’ll create a table in DuckDB with the four selected fields and use a `COPY` statement to load the data from the file we just wrote. This approach takes advantage of DuckDB’s efficient bulk loading capabilities and keeps the asset clean and performant. By reusing the same pattern, we maintain consistency across our ETL pipelines, whether the source is a local file or an external API:
 
 ```python
+# src/dagster_and_etl/defs/assets.py
 @dg.asset(
     kinds={"duckdb"},
 )

@@ -9,6 +9,7 @@ lesson: '5'
 Next we can reconfigure our API pipeline with dlt. This is a much more custom implementation than loading data from a CSV so the `@dlt.source` will contain more code. However, we can simply reuse most of the logic from the previous lesson.
 
 ```python
+# src/dagster_and_etl/defs/assets.py
 @dlt.source
 def nasa_neo_source(start_date: str, end_date: str, api_key: str):
     @dlt.resource
@@ -41,6 +42,7 @@ def nasa_neo_source(start_date: str, end_date: str, api_key: str):
 This gives us the ability to pull in any date range from the NASA api using dlt. Rather than using the `dlt_assets` decorator. We can also nest this code directly in a dg asset. We can then update the `nasa_neo_source` function to use the values from the run configuration.
 
 ```python
+# src/dagster_and_etl/defs/assets.py
 @dg.asset
 def dlt_nasa(context: dg.AssetExecutionContext, config: NasaDate):
     anchor_date = datetime.datetime.strptime(config.date, "%Y-%m-%d")
@@ -90,6 +92,7 @@ def dlt_nasa(context: dg.AssetExecutionContext, config: NasaDate):
 Writing the function this way also makes it easy to include partitions as we would for any other asset.
 
 ```python
+# src/dagster_and_etl/defs/assets.py
 @dg.asset(
     partitions_def=nasa_partitions_def,
     automation_condition=dg.AutomationCondition.on_cron("@daily"),

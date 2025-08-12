@@ -9,6 +9,7 @@ lesson: '5'
 If we think about the `state_population_database` asset, we want to make sure it can execute a query and return the results, but we are not necessarily concerned with which database is used to execute the query. Instead of insisting that the `database` resource must be Snowflake, we can change the annotation so that it can take in any resource:
 
 ```python
+# src/dagster_testing/defs/assets/lesson_5.py
 @dg.asset
 def state_population_database(database: dg.ConfigurableResource) -> list[tuple]:
     query = """
@@ -31,6 +32,7 @@ For our purposes we will create a resource that provides similar functionality b
 Another benefit of using Postgres is that its Python client is a lot like the Snowflake Python client. Here is a resource to allow us to execute queries in Postgres. Click **View answer** to view it.
 
 ```python {% obfuscated="true" %}
+# tests/test_lesson_5.py
 class PostgresResource(dg.ConfigurableResource):
     user: str
     password: str

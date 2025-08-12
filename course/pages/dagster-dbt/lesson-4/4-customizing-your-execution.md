@@ -10,7 +10,7 @@ When looking at the asset catalog's page for a dbt model, you might notice the d
 
 Let's make some changes that allow you to see what dbt does under the hood. To do this, we'll update our code so we can see the SQL dbt executes at runtime and show you some ways to customize what happens in a `@dbt_assets` definition. We'll refactor the body of the `@dbt_assets` definition to fetch dbt's `run_results.json` artifact from the completed run and print the compiled SQL code for each model.
 
-In the `assets/dbt.py` file, make the following changes:
+In the `defs/assets/dbt.py` file, make the following changes:
 
 1. Right now, our code immediately yields all the results of the `dbt.cli()` execution. This execution contains a lot of context and metadata that we want, but it's currently inaccessible because we're not storing it. Let's refactor the `@dbt_assets` definition to store the `dbt.cli()` invocation in a variable called `dbt_build_invocation`:
 

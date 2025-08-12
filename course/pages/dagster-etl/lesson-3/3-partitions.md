@@ -42,6 +42,7 @@ Now that we’ve defined our partition, we can use the partition in a new asset 
 The core logic of the asset remains the same but now you can run the pipeline for each day between 2018-01-21 and 2018-01-23, with each partition corresponding to a file for that date. This allows you to scale execution, track progress per partition, and reprocess specific days as needed:
 
 ```python
+# src/dagster_and_etl/defs/assets.py
 @dg.asset(
     partitions_def=partitions_def,
 )
@@ -56,6 +57,7 @@ def import_partition_file(context: dg.AssetExecutionContext) -> str:
 Finally we can create a new downstream asset that relies on the partitioned data:
 
 ```python
+# src/dagster_and_etl/defs/assets.py
 @dg.asset(
     kinds={"duckdb"},
     partitions_def=partitions_def,

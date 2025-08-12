@@ -51,6 +51,7 @@ For more info on asset selection, refer to the [asset selection syntax guide in 
 2. In `src/dagster_essentials/defs/jobs.py`, let’s first define our asset selection. Copy and paste the following snippet into the file:
 
    ```python
+   # src/dagster_essentials/defs/jobs.py
    import dagster as dg
 
    trips_by_week = dg.AssetSelection.assets("trips_by_week")
@@ -72,6 +73,7 @@ For more info on asset selection, refer to the [asset selection syntax guide in 
 Your final code in `src/dagster_essentials/defs/jobs.py` should look like the following:
 
 ```python
+# src/dagster_essentials/defs/jobs.py
 import dagster as dg
 
 trips_by_week = dg.AssetSelection.assets("trips_by_week")

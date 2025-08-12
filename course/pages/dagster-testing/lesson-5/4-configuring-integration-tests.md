@@ -92,6 +92,7 @@ docker compose down
 With Docker running Postgres, we can define a test that initializes the `PostgresResource` resource.
 
 ```python
+# tests/test_lesson_5.py
 def test_state_population_database():
     postgres_resource = PostgresResource(
         host="localhost",
@@ -127,6 +128,7 @@ tests/test_lesson_5.py .                                                        
 Similar to the testing with resources, we can use `dg.materialize()` with our integration tests while testing multiple assets.
 
 ```python
+# tests/test_lesson_5.py
 @pytest.mark.integration
 def test_assets(docker_compose, postgres_resource, query_output_ny):  # noqa: F811
     result = dg.materialize(

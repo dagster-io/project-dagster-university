@@ -17,8 +17,7 @@ Let’s start by looking at the before and after.
 The following code shows what the `taxi_trips` asset currently looks like, without a resource:
 
 ```python
-# assets/trips.py
-
+# src/dagster_essentials/defs/assets/trips.py
 import requests
 import duckdb
 import os
@@ -66,8 +65,7 @@ def taxi_trips() -> None:
 And now, after adding a resource, the `taxi_trips` asset looks like the following code.
 
 ```python
-# assets/trips.py
-
+# src/dagster_essentials/defs/assets/trips.py
 import requests
 from dagster_duckdb import DuckDBResource
 from dagster_essentials.defs.assets import constants

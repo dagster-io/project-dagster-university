@@ -9,6 +9,7 @@ lesson: '6'
 Throughout this module, you’ve used DuckDB to store and transform your data. Each time you’ve used DuckDB in an asset, you’ve needed to make a connection to it. For example:
 
 ```python
+# src/dagster_essentials/defs/assets/trips.py
 @dg.asset(
     deps=["taxi_trips_file"],
 )
@@ -57,6 +58,7 @@ This adds a `resources.py` file within the `dagster_essentials` module.
 Within this newly created file, add the following code:
 
 ```python
+# src/dagster_essentials/defs/resources.py
 from dagster_duckdb import DuckDBResource
 
 
@@ -80,6 +82,7 @@ However, in this project, our `.env` file only contains one environment variable
 In `resources.py`, replace the value of the `database` with an `EnvVar` as shown below:
 
 ```python
+# src/dagster_essentials/defs/resources.py
 from dagster_duckdb import DuckDBResource
 import dagster as dg
 
@@ -106,6 +109,7 @@ You saw that using `dg` to scaffold our project, the `Definitions` will automati
 1. In the `resources.py` add the following line:
 
    ```python
+   # src/dagster_essentials/defs/resources.py
    ...
 
    @dg.definitions
@@ -118,6 +122,7 @@ You saw that using `dg` to scaffold our project, the `Definitions` will automati
    The `resources.py` file should now look like:
 
    ```python
+    # src/dagster_essentials/defs/resources.py
     from dagster_duckdb import DuckDBResource
     import dagster as dg
 

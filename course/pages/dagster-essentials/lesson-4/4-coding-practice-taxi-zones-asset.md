@@ -26,6 +26,7 @@ The asset you built should look similar to the following code. Click **View answ
 **If there are differences**, compare what you wrote to the asset below and change them, as this asset will be used as-is in future lessons.
 
 ```python {% obfuscated="true" %}
+# src/dagster_essentials/defs/assets/trips.py
 @dg.asset(
     deps=["taxi_zones_file"]
 )

@@ -37,6 +37,7 @@ Next, we’ll update our `resources.py` file to include the `DagsterDltResource`
 
 
 ```python
+# src/dagster_and_etl/defs/definitions.py
 import dagster as dg
 from dagster_dlt import DagsterDltResource
 
@@ -53,6 +54,7 @@ def resources():
 Back in `assets.py`, we can define our dlt assets. This will resemble the dlt.pipeline code we used earlier, but much of the logic will now be embedded in the `@dlt_assets` decorator. The function itself simply yields the result of running the `dlt pipeline`:
 
 ```python
+# src/dagster_and_etl/defs/assets.py
 @dlt_assets(
     dlt_source=simple_source(),
     dlt_pipeline=dlt.pipeline(

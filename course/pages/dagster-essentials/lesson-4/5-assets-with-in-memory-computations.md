@@ -46,6 +46,7 @@ Having all of your assets in one file becomes difficult to manage. Let’s separ
 4. Now, let’s add the logic to calculate `manhattan_stats`. Update the `manhattan_stats` asset definition to reflect the changes below:
 
    ```python
+   # src/dagster_essentials/defs/assets/metrics.py
    @dg.asset(
        deps=["taxi_trips", "taxi_zones"]
    )
@@ -96,6 +97,7 @@ In this section, you’ll create an asset that depends on `manhattan_stats`, loa
 1. At the bottom of `metrics.py` file, copy and paste the following:
 
    ```python
+   # src/dagster_essentials/defs/assets/metrics.py
    @dg.asset(
        deps=["manhattan_stats"],
    )

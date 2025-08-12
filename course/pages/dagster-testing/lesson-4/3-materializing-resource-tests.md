@@ -44,6 +44,7 @@ This uses the same patch and mocked object as before. The only difference is tha
 We can also materialize resources and configs together. We will make a slight modification to our `state_population_api_resource_config` so it can take in a run configuration.
 
 ```python
+# src/dagster_testing/defs/assets/lesson_4.py
 class StateConfig(dg.Config):
     name: str
 
@@ -60,6 +61,7 @@ Now it can be executed with the name of any state.
 If we wanted to make a test using this new asset, we will need to specify both the `resource` and the `run_config` in `dg.materialize()`.
 
 ```python
+# tests/test_lesson_4.py
 @patch("requests.get")
 def test_state_population_api_assets_config(mock_get, example_response, api_output):
     mock_response = Mock()

@@ -25,6 +25,7 @@ The code above defines an asset called `total_population`:
 The relationship of `state_population_file` and `total_population` is defined by the input parameter on `total_population`. What would a test look like for this asset? Click **View answer** to view it.
 
 ```python {% obfuscated="true" %}
+# tests/test_lesson_3.py
 def test_total_population():
     state_populations = [
         {
@@ -61,6 +62,7 @@ As your pipelines become more complex, it's a good idea to test materializing yo
 Since the `total_population` asset only relies on the output of  the `state_population_file` asset, we can materialize both of those assets together to ensure they are working as expected:
 
 ```python
+# tests/test_lesson_3.py
 def test_assets():
     _assets = [
         lesson_3.state_population_file,
@@ -79,6 +81,7 @@ tests/test_lesson_3.py .                                                        
 Confirming that the assets materialize without issue is a great start, but we still want to check the return values of each asset. Luckily `materialize()` allows us to access the output value with the `output_for_node()` method for each asset from the materialization:
 
 ```python
+# tests/test_lesson_3.py
 def test_assets():
     _assets = [
         lesson_3.state_population_file,

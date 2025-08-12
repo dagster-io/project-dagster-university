@@ -22,6 +22,7 @@ Next we can update the `asteroids` asset to use a partition instead of a run con
 
 
 ```python {% obfuscated="true" %}
+# src/dagster_and_etl/defs/assets.py
 @dg.asset(
     kinds={"nasa"},
     partitions_def=nasa_partitions_def,
@@ -50,6 +51,7 @@ While partitions don't eliminate rate limits, they make it much easier to track 
 If we wanted to include rate limiting functionality into our `NASAResource` what might it look like?
 
 ```python {% obfuscated="true" %}
+# src/dagster_and_etl/defs/resources.py
 import dagster as dg
 import requests
 from requests.adapters import HTTPAdapter

@@ -24,6 +24,7 @@ Let’s add metadata to the `taxi_trips_file` asset to demonstrate further. This
 2. Locate the `taxi_trips_file` asset. At this point in the course, the asset should look like this:
 
    ```python
+   # src/dagster_essentials/defs/assets/trips.py
    import dagster as dg
    import requests
    from dagster_essentials.defs.assets import constants
@@ -77,7 +78,6 @@ Let’s add metadata to the `taxi_trips_file` asset to demonstrate further. This
    def taxi_trips_file(context) -> dg.MaterializeResult:
    ```
 
-
    Let’s break down what’s happening here:
 
    - Rather than returning nothing, we'll return some information about the materialization that happened with the `MaterializeResult` class.
@@ -87,6 +87,7 @@ Let’s add metadata to the `taxi_trips_file` asset to demonstrate further. This
    At this point, the asset should look like this:
 
    ```python
+   # src/dagster_essentials/defs/assets/trips.py
    import pandas as pd
    import dagster as dg
 

@@ -6,11 +6,12 @@ lesson: '3'
 
 # Knowledge check
 
-1. Open the `dbt.py` file.
+1. Open the `defs/assets/dbt.py` file.
 
 2. Modify `dbt_analytics` to run `dbt build` instead of `dbt run`. The function should look like this afterward:
 
    ```python
+   # src/dagster_and_dbt/defs/assets/dbt.py
    @dbt_assets(
        manifest=dbt_project.manifest_path
    )

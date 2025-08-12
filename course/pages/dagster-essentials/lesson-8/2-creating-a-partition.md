@@ -21,6 +21,7 @@ Additionally, your Dagster project contains an `assets/constants.py` file. This 
 Now that you have all the info you need to start building partitions, let’s take a look at an example:
 
 ```python
+# src/dagster_essentials/defs/partitions.py
 import dagster as dg
 from dagster_essentials.defs.assets import constants
 

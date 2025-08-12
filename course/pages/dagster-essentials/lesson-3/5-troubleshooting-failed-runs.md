@@ -11,6 +11,7 @@ Now that you’re familiar with how assets are materialized and where to find de
 In the `assets/trips.py` file, comment out the `from dagster_essentials.defs.assets import constants` line so it looks like this:
 
 ```python
+# src/dagster_essentials/defs/assets/trips.py
 import requests
 # from dagster_essentials.defs.assets import constants # <---- Import commented out here
 import dagster as dg

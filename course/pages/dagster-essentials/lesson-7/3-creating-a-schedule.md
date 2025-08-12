@@ -17,6 +17,7 @@ dg scaffold defs dagster.schedule schedules.py
 This will create a file in `src/dagster_essentials/defs/schedules.py` where we can add the following schedule code:
 
 ```python
+# src/dagster_essentials/defs/schedules.py
 import dagster as dg
 from dagster_essentials.defs.jobs import trip_update_job
 

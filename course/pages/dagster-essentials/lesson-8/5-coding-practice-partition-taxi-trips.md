@@ -40,6 +40,7 @@ The updated asset should look similar to the following code. Click **View answer
 **If there are differences**, compare what you wrote to the asset below and change them, as this asset will be used as-is in future lessons.
 
 ```python {% obfuscated="true" %}
+# src/dagster_essentials/defs/assets/trips.py
 import dagster as dg
 from dagster_duckdb import DuckDBResource
 from dagster_essentials.defs.partitions import monthly_partition

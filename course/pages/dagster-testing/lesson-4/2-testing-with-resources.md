@@ -40,6 +40,7 @@ This code is almost unchanged from the `state_population_api` asset. It connects
 Since the resource now contains all the logic for connecting to the API, we can write a new asset that invokes the method:
 
 ```python
+# src/dagster_testing/defs/assets/lesson_4.py
 @dg.asset
 def state_population_api_resource(
     state_population_resource: StatePopulation,
@@ -58,6 +59,7 @@ assets.state_population_api_resource(assets.StatePopulation())
 But we left the core logic unchanged. So what needs to change in our test? Click **View answer** to view it.
 
 ```python {% obfuscated="true" %}
+# tests/test_lesson_4.py
 @patch("requests.get")
 def test_state_population_api_resource_mock(mock_get, example_response):
     mock_response = Mock()

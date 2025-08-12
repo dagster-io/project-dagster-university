@@ -9,6 +9,7 @@ lesson: '5'
 Because we always need Docker to run the Postgres integration test, we can create a pytest fixture to handle the management of Docker. We will take the CLI command we used before and write a fixture around them.
 
 ```python
+# tests/fixtures.py
 @pytest.fixture(scope="session", autouse=True)
 def docker_compose():
     # Start Docker Compose
@@ -46,6 +47,7 @@ The code above does the following:
 Now that fixture can be used within the parameters of the integration test and couple our test and the underlying services:
 
 ```python
+# tests/test_lesson_5.py
 def test_state_population_database(docker_compose):  # noqa: F811
     postgres_resource = PostgresResource(
         host="localhost",

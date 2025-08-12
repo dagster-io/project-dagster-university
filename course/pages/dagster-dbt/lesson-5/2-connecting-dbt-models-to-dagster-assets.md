@@ -26,7 +26,7 @@ However, you can override its methods by making a new class that inherits from a
 
 For now, we’ll customize how asset keys are defined by overriding the translator’s `get_asset_key` method.
 
-Open the `assets/dbt.py` file and do the following:
+Open the `defs/assets/dbt.py` file and do the following:
 
 1. Update the imports to include:
    - From the `dagster_dbt` module, import `DagsterDbtTranslator`
@@ -102,9 +102,10 @@ Open the `assets/dbt.py` file and do the following:
        yield from dbt.cli(["build"], context=context).stream()
    ```
 
-At this point, your `dbt.py` file should match the following:
+At this point, your `defs/assets/dbt.py` file should match the following:
 
 ```python
+# src/dagster_and_dbt/defs/assets/dbt.py
 import dagster as dg
 from dagster_dbt import DagsterDbtTranslator, DbtCliResource, dbt_assets
 

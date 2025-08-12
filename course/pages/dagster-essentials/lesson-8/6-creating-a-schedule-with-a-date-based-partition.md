@@ -13,6 +13,7 @@ Now that you’ve partitioned the relevant assets, the schedule can be changed t
 Currently, `trip_update_job` in `jobs.py` should look like this:
 
 ```python
+# src/dagster_essentials/defs/jobs.py
 trips_by_week = dg.AssetSelection.assets("trips_by_week")
 
 trip_update_job = dg.define_asset_job(
@@ -38,6 +39,7 @@ To add a partition to the job, make the following changes:
 The job should now look like this:
 
 ```python
+# src/dagster_essentials/defs/jobs.py
 import dagster as dg
 from dagster_essentials.defs.partitions import monthly_partition
 

@@ -28,6 +28,7 @@ def state_population_file_logging(context: dg.AssetExecutionContext) -> list[dic
 Now when we write a test for this asset, it must include the context object. The following test that worked for our asset that did not include `context` will now fail:
 
 ```python
+# tests/test_lesson_3.py
 def test_state_population_file_logging_no_context(file_output):
     result = lesson_3.state_population_file_logging()
     assert result == file_output
@@ -36,6 +37,7 @@ def test_state_population_file_logging_no_context(file_output):
 We can set the context object for testing by using the Dagster function `build_asset_context`. Using this function, we can set the `context` parameter:
 
 ```python
+# tests/test_lesson_3.py
 def test_state_population_file_logging(file_output):
     context = dg.build_asset_context()
     result = lesson_3.state_population_file_logging(context)
@@ -55,6 +57,7 @@ tests/test_lesson_3.py .                                                        
 You can also handle context with `materialize()`. We already saw that this executes the assets directly and supplies the necessary run information:
 
 ```python
+# tests/test_lesson_3.py
 def test_assets_context(file_output):
     result = dg.materialize(
         assets=[lesson_3.state_population_file_logging],
@@ -71,6 +74,7 @@ When using `dg.Materialize()`, context does not need to be explicitly passed in.
 Another situations where we may need to supply context is when testing partitioned asset. We will rewrite the `state_population_file` asset once again into a partitioned asset. We will define three different static partitions for the asset for each of the state files that exists in the `data` directory:
 
 ```python
+# src/dagster_testing/defs/assets/lesson_3.py
 file_partitions = dg.StaticPartitionsDefinition(["ca.csv", "mn.csv", "ny.csv"])
 
 
@@ -85,6 +89,7 @@ def state_population_file_partition(context: dg.AssetExecutionContext) -> list[d
 Now in order to execute this asset we need to provide one of the three partitions. We can use `build_asset_context()` to create the context object and set a partition key for testing:
 
 ```python
+# tests/test_lesson_3.py
 def test_state_population_file_partition(file_output):
     context = dg.build_asset_context(partition_key="ny.csv")
     assert lesson_3.state_population_file_partition(context) == file_output
@@ -99,6 +104,7 @@ tests/test_lesson_3.py .                                                        
 We can still use `materialize()` to execute our assets that use context, though we will need to set the specific partition:
 
 ```python
+# tests/test_lesson_3.py
 def test_assets_partition(file_output):
     result = dg.materialize(
         assets=[
@@ -120,6 +126,7 @@ tests/test_lesson_3.py .                                                        
 It's important to remember that when materializing multiple partitioned assets, just like when launching a run in the Dagster UI, you cannot use `materialize()` to execute multiple partitioned assets if they do not share the same partition. For example, if we try to run the following materialization with an additional asset, the test will fail:
 
 ```python
+# tests/test_lesson_3.py
 def test_assets_multiple_partition() -> None:
     result = dg.materialize(
         assets=[

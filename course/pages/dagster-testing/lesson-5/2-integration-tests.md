@@ -19,7 +19,6 @@ Assume a table exists in our production data warehouse, `data.city_population`, 
 We will hardcode our asset to look for the cities in New York and return the results from Snowflake using a resource.
 
 ```python
-# src/dagster_testing/defs/assets/lesson_5.py
 @dg.asset
 def state_population_database(database: SnowflakeResource) -> list[tuple]:
     query = """

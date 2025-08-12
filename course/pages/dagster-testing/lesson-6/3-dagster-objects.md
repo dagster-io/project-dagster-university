@@ -15,6 +15,7 @@ Jobs are a collection of assets grouped together in a specific way. Generally th
 Here are two jobs, both using the same subset of the asset graph though `my_job_configured` also supplies a run configuration.
 
 ```python
+# src/dagster_testing/defs/jobs.py
 my_job = dg.define_asset_job(
     name="jobs",
     selection=[
@@ -43,6 +44,7 @@ If we consider the aspects of our job we would like to test, most of it is the s
 To test our jobs, we can write tests around their configurations by accessing elements of the object. For example, the `my_job_configured` is configured by a yaml and we might want to ensure that the asset is always using a certain file path.
 
 ```python
+# tests/test_lesson_6.py
 def test_job_config():
     assert (
         jobs.my_job_configured.config["ops"]["population_file_config"]["config"]["path"]
@@ -63,6 +65,7 @@ Tests like this may not always be necessary but you may have Dagster projects wh
 Like jobs, schedules allow you to access the internals of the object. Given a schedule like the following.
 
 ```python
+# src/dagster_testing/defs/schedules.py
 my_schedule = dg.ScheduleDefinition(
     name="my_schedule",
     job=jobs.my_job,
@@ -80,6 +83,7 @@ my_schedule = dg.ScheduleDefinition(
 You can write tests to check the cron syntax is correct or make sure it is using the correct job.
 
 ```python
+# tests/test_lesson_6.py
 def test_schedule():
     assert schedules.my_schedule
     assert schedules.my_schedule.cron_schedule == "0 0 5 * *"
@@ -99,6 +103,7 @@ Custom sensors are one Dagster object were it might be worthwhile to include cus
 For our example we have a simple sensor that checks for new files (though it does so based on `random.random()` for the purposes of this lesson) and executes a run or skip based on the result.
 
 ```python
+# src/dagster_testing/defs/sensors.py
 def check_for_new_files() -> list[str]:
     if random.random() > 0.5:
         return ["file1", "file2"]
@@ -128,6 +133,7 @@ In order to write a reliable test for this sensor, we will go back to our lesson
 First we can set a test where our sensor will skip.
 
 ```python
+# tests/test_lesson_6.py
 @patch("dagster_testing.defs.sensors.check_for_new_files", return_value=[])
 def test_sensor_skip(mock_check_new_files):
     instance = dg.DagsterInstance.ephemeral()
@@ -151,6 +157,7 @@ The code above:
 What would it look like to write a test to ensure the sensor picks up a new file? Click **View answer** to view it.
 
 ```python {% obfuscated="true" %}
+# tests/test_lesson_6.py
 @patch(
     "dagster_testing.defs.sensors.check_for_new_files",
     return_value=["test_file"],
