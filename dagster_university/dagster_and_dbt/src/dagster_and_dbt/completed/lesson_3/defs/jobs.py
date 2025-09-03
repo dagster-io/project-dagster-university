@@ -1,4 +1,6 @@
 import dagster as dg
+from dagster_and_dbt.assets.dbt import dbt_analytics
+from dagster_dbt import build_dbt_asset_selection
 
 from dagster_and_dbt.completed.lesson_3.defs.partitions import (
     monthly_partition,

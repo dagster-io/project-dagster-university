@@ -1,3 +1,8 @@
+# src/dagster_and_dbt/defs/resources.py
+from dagster_dbt import DbtCliResource
+
+from dagster_and_dbt.defs.project import dbt_project
+
 import os
 
 import boto3
@@ -6,6 +11,10 @@ from dagster_duckdb import DuckDBResource
 
 database_resource = DuckDBResource(
     database=dg.EnvVar("DUCKDB_DATABASE"),
+)
+
+dbt_resource = DbtCliResource(
+    project_dir=dbt_project,
 )
 
 if os.getenv("DAGSTER_ENVIRONMENT") == "prod":
@@ -24,5 +33,6 @@ def resources():
     return dg.Definitions(
         resources={
             "database": database_resource,
+            "dbt": dbt_resource,
         },
     )

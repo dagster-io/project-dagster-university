@@ -38,6 +38,9 @@ REQUEST_DESTINATION_TEMPLATE_FILE_PATH = get_path_for_env(
     os.path.join("data", "outputs", "{}.png")
 )
 
+AIRPORT_TRIPS_FILE_PATH = get_path_for_env(os.path.join("data", "outputs", "airport_trips.png"))
+
+
 DATE_FORMAT = "%Y-%m-%d"
 
 START_DATE = "2023-01-01"

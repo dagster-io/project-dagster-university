@@ -125,3 +125,57 @@ def manhattan_map() -> dg.MaterializeResult:
     md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
 
     return dg.MaterializeResult(metadata={"preview": dg.MetadataValue.md(md_content)})
+
+
+# src/dagster_and_dbt/defs/assets/metrics.py
+@dg.asset(
+    deps=["location_metrics"],
+)
+def airport_trips(database: DuckDBResource) -> dg.MaterializeResult:
+    """
+        A chart of where trips from the airport go
+    """
+
+    query = """
+        select
+            zone,
+            destination_borough,
+            trips
+        from location_metrics
+        where from_airport
+    """
+    with database.get_connection() as conn:
+        airport_trips = conn.execute(query).fetch_df()
+
+    # Plot bars
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Group data by destination_borough and plot the bar chart
+    airport_trips.groupby(['zone', 'destination_borough']).sum()['trips'].unstack().plot(
+        kind='bar', stacked=True, ax=ax
+    )
+
+    # Customize the plot
+    ax.set_xlabel("Zone")
+    ax.set_ylabel("Number of Trips")
+    ax.set_title("Trips from Airport by Destination Borough")
+    ax.legend(title="Destination Borough")
+
+    # Save the image
+    plt.savefig(constants.AIRPORT_TRIPS_FILE_PATH, format="png", bbox_inches="tight")
+    plt.close(fig)
+
+    # Convert the image data to base64
+    with open(constants.AIRPORT_TRIPS_FILE_PATH, "rb") as file:
+        image_data = file.read()
+
+     # Convert the image data to base64
+    base64_data = base64.b64encode(image_data).decode('utf-8')
+    md_content = f"![Image](data:image/jpeg;base64,{base64_data})"
+
+    return dg.MaterializeResult(
+        metadata={
+            "preview": dg.MetadataValue.md(md_content)
+        }
+    )
+
