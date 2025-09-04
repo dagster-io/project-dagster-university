@@ -23,7 +23,7 @@ We can now write a test to assert that the definition can load properly.
 import dagster_testing.defs
 
 def test_defs():
-    assert dg.Definitions.merge(dg.components.load_defs(dagster_testing.defs))
+    assert dg.components.load_defs(dagster_testing.defs)
 ```
 
 ```bash
