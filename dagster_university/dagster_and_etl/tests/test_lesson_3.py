@@ -13,6 +13,11 @@ import dagster_and_etl.completed.lesson_3.defs.sensors as sensors
 
 
 @pytest.fixture()
+def defs():
+    return dg.components.load_defs(dagster_and_etl.completed.lesson_3.defs)
+
+
+@pytest.fixture()
 def config_file():
     return Path(__file__).absolute().parent / "../data/source/2018-01-22.csv"
 
@@ -186,7 +191,5 @@ def test_import_file_s3_assets(duckdb_mock_resource):
     assert result.success
 
 
-def test_defs():
-    assert dg.Definitions.merge(
-        dg.components.load_defs(dagster_and_etl.completed.lesson_3.defs)
-    )
+def test_defs(defs):
+    assert defs

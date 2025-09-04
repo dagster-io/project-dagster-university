@@ -13,6 +13,11 @@ from tests.nasa_data import nasa_response
 
 
 @pytest.fixture()
+def defs():
+    return dg.components.load_defs(dagster_and_etl.completed.lesson_5.defs)
+
+
+@pytest.fixture()
 def nasa_config():
     return assets.NasaDate(
         date="2015-09-07",
@@ -165,7 +170,5 @@ def test_dlt_nasa_assets_partition(mock_get, asteroid_response):
     )
 
 
-def test_defs():
-    assert dg.Definitions.merge(
-        dg.components.load_defs(dagster_and_etl.completed.lesson_5.defs)
-    )
+def test_defs(defs):
+    assert defs

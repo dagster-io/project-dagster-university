@@ -15,7 +15,7 @@ from dagster_testing.defs.assets import lesson_6
 
 @pytest.fixture()
 def defs():
-    return dg.Definitions.merge(dg.components.load_defs(dagster_testing.defs))
+    return dg.components.load_defs(dagster_testing.defs)
 
 
 @pytest.fixture()
