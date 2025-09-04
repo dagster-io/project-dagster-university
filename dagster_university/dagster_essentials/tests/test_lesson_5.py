@@ -16,6 +16,7 @@ def test_assets(defs):
         defs.get_assets_def(dg.AssetKey(["taxi_trips"])),
         defs.get_assets_def(dg.AssetKey(["taxi_zones"])),
         defs.get_assets_def(dg.AssetKey(["trips_by_week"])),
+        defs.get_assets_def(dg.AssetKey(["manhattan_stats"])),
         defs.get_assets_def(dg.AssetKey(["manhattan_map"])),
     ]
     result = dg.materialize(assets)
