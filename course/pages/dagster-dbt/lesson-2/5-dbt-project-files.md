@@ -35,7 +35,7 @@ Before we start working, you should know:
 
 Now you’re ready - let’s go!
 
-1. Navigate to the `dagster_university/dagster_and_dbt/dagster_and_dbt/analytics` directory.
+1. Navigate to the `dagster_university/dagster_and_dbt/src/dagster_and_dbt/analytics` directory.
 2. In this folder, create a `profiles.yml` file.
 3. Copy the following code into the file:
     
