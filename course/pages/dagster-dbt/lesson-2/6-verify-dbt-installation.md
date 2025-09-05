@@ -8,7 +8,7 @@ lesson: '2'
 
 Before continuing, let’s run the dbt project from the command line to confirm that everything is configured correctly.
 
-From the `dagster_university/dagster_and_dbt/dagster_and_dbt/analytics`  directory, run the following command:
+From the `dagster_university/dagster_and_dbt/src/dagster_and_dbt/analytics`  directory, run the following command:
 
 ```bash
 dbt build
