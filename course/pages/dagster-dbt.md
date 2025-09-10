@@ -5,6 +5,7 @@ title: Dagster + dbt
 # Dagster + dbt
 
 - Lesson 1: Introduction
+  - [Deprecation](/dagster-dbt/lesson-1/deprecation)
   - [About this course](/dagster-dbt/lesson-1/0-about-this-course)
   - [What's dbt?](/dagster-dbt/lesson-1/1-whats-dbt)
   - [Why use dbt and Dagster together?](/dagster-dbt/lesson-1/2-why-use-dbt-and-dagster-together)
