@@ -53,46 +53,6 @@ In this example, the `taxi_zones_file` asset is grouped into the `raw_files` ass
 
 ---
 
-## Grouping assets using the `DefsFolderComponent`
-
-Another option is to include the `group_name` at the directory level. Here, you can specify metadata for all of your assets using YAML. To do this, create a new file within the `src/dagster_essentials/defs/` directory called `defs.yaml`:
-
-```yaml
-# src/dagster_essentials/defs/defs.yaml
-type: dagster.DefsFolderComponent
-
-post_processing:
-  assets:
-    - target: "taxi_zones_file"
-      attributes:
-        group_name: "raw_files"
-```
-
-This allows you to name assets in your project and associate various metadata with them.
-
-With this approach, you can include multiple metadata attributes for your assets. For example, if you also want to add a tag for the course name to all assets in your project, you can extend the YAML as follows:
-
-```yaml
-# src/dagster_essentials/defs/defs.yaml
-type: dagster.DefsFolderComponent
-
-post_processing:
-  assets:
-    - target: "taxi_zones_file"
-      attributes:
-        group_name: "raw_files"
-    - target: "*"
-      attributes:
-        tags:
-          course: "dagster_essentials"
-```
-
-Adding the `defs.yaml` file is an example of a [Dagster Component](https://docs.dagster.io/guides/build/components). Components provide a way to intelligently manage your project layout by using YAML DSLs to dynamically generate Dagster code. In this case, we are using the `DefsFolderComponent`.
-
-**Note:** This course does not cover components in depth. For a more detailed example of using components, see the [Dagster & ETL course](https://courses.dagster.io/courses/dagster-etl).
-
----
-
 ## Asset groups in the Dagster UI
 
 When asset groups are defined, the **Global Asset Lineage** page will place group members into separate grey boxes. For example, the following image shows three asset groups:
