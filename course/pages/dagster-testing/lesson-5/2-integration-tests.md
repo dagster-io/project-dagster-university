@@ -39,7 +39,7 @@ When we run this asset, we need to supply a Snowflake resource. The connection t
 ```python
 @dg.definitions
 def resources():
-    return defs = dg.Definitions(
+    return dg.Definitions(
         resources={
             "database": snowflake_resource,
         },
