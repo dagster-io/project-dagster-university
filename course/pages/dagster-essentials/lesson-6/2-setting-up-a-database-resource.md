@@ -145,6 +145,6 @@ You saw that using `dg` to scaffold our project, the `Definitions` will automati
 
 6. Click **Resources** on the left side panel and select the resource named **database**.
 
-   Notice that the **Uses** tabe at the top is currently **0.** This is because while the resource has been defined and loaded, none of the assets in the code location are currently using it.
+   Notice that the **Uses** tab at the top is currently **0.** This is because while the resource has been defined and loaded, none of the assets in the code location are currently using it.
 
 Now that you've set up the resource, it's time to use it in your project. In the next section, you'll learn how to refactor your assets to use resources.
