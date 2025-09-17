@@ -12,7 +12,7 @@ As mentioned, we’ll start by loading a file into a data warehouse. While we’
 
 Let’s consider the first asset we need. As we discussed, the logical approach to designing ETL pipelines is to start as far left in the diagram as possible and follow the data as it progresses through our system.
 
-If we’re building a pipeline to load files into a data warehouse, we should start with the files we want to important. When we think about those files, it’s likely that we’ll have more than one file to ingest, with new files arriving over time. Because of this, we want to avoid hardcoding the pipeline for a single file.
+If we’re building a pipeline to load files into a data warehouse, we should start with the files we want to import. When we think about those files, it’s likely that we’ll have more than one file to ingest, with new files arriving over time. Because of this, we want to avoid hardcoding the pipeline for a single file.
 
 Instead, we can use a [run configuration](https://docs.dagster.io/guides/operate/configuration/run-configuration) to parameterize the process. This allows us to dynamically specify which file to load each time we execute the pipeline.
 
