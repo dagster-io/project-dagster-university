@@ -46,7 +46,24 @@ As mentioned earlier, event-driven pipelines are a bit more complex because they
 
 Sensors in Dagster allow you to monitor external systems, like cloud storage, and trigger pipeline runs when new data is detected. They are particularly useful when working with dynamic partitions, where the set of valid partition keys is not always known.
 
-Here’s an example of what a sensor might look like for a dynamically partitioned asset:
+Here’s an example of what a sensor might look like for a dynamically partitioned asset. First we will define the job:
+
+```python
+# src/dagster_and_etl/defs/jobs.py
+import dagster as dg
+
+import dagster_and_etl.defs.assets as assets
+
+import_dynamic_partition_job = dg.define_asset_job(
+    name="import_dynamic_partition_job",
+    selection=[
+        assets.import_dynamic_partition_file,
+        assets.duckdb_dynamic_partition_table,
+    ],
+)
+```
+
+Then we can define the sensor:
 
 ```python
 # src/dagster_and_etl/defs/sensors.py
