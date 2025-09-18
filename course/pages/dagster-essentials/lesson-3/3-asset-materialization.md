@@ -140,7 +140,35 @@ The page is empty for now, but it’ll look more interesting shortly. Let’s ge
 
 That’s it! You’ve successfully materialized your first asset! 🎉
 
-## When to use `dg launch` vs `dg dev`
+---
+
+## Materializing assets using `dg`
+
+You can also execute assets directly from the command line using `dg`. This is useful when you want to run an asset without starting the Dagster web server. For example:
+
+```
+dg launch --assets taxi_trips_file
+```
+
+This command will execute the taxi_trips_file asset and stream all run events to your terminal:
+
+```
+2025-09-17 14:19:03 -0500 - dagster - DEBUG - __ASSET_JOB - 865a6f54-7acd-4bb4-8d97-2949e149a1d5 - 83621 - RUN_START - Started execution of run for "__ASSET_JOB".
+2025-09-17 14:19:03 -0500 - dagster - DEBUG - __ASSET_JOB - 865a6f54-7acd-4bb4-8d97-2949e149a1d5 - 83621 - ENGINE_EVENT - Executing steps using multiprocess executor: parent process (pid: 83621)
+2025-09-17 14:19:03 -0500 - dagster - DEBUG - __ASSET_JOB - 865a6f54-7acd-4bb4-8d97-2949e149a1d5 - 83621 - taxi_trips_file - STEP_WORKER_STARTING - Launching subprocess for "taxi_trips_file".
+2025-09-17 14:19:04 -0500 - dagster - DEBUG - __ASSET_JOB - 865a6f54-7acd-4bb4-8d97-2949e149a1d5 - 83628 - taxi_trips_file - STEP_WORKER_STARTED - Executing step "taxi_trips_file" in subprocess.
+2025-09-17 14:19:05 -0500 - dagster - DEBUG - __ASSET_JOB - 865a6f54-7acd-4bb4-8d97-2949e149a1d5 - 83628 - taxi_trips_file - RESOURCE_INIT_STARTED - Starting initialization of resources [io_manager].
+2025-09-17 14:19:05 -0500 - dagster - DEBUG - __ASSET_JOB - 865a6f54-7acd-4bb4-8d97-2949e149a1d5 - 83628 - taxi_trips_file - RESOURCE_INIT_SUCCESS - Finished initialization of resources [io_manager].
+2025-09-17 14:19:05 -0500 - dagster - DEBUG - __ASSET_JOB - 865a6f54-7acd-4bb4-8d97-2949e149a1d5 - 83628 - LOGS_CAPTURED - Started capturing logs in process (pid: 83628).
+2025-09-17 14:19:05 -0500 - dagster - DEBUG - __ASSET_JOB - 865a6f54-7acd-4bb4-8d97-2949e149a1d5 - 83628 - taxi_trips_file - STEP_START - Started execution of step "taxi_trips_file".
+2025-09-17 14:19:13 -0500 - dagster - DEBUG - __ASSET_JOB - 865a6f54-7acd-4bb4-8d97-2949e149a1d5 - 83628 - taxi_trips_file - STEP_OUTPUT - Yielded output "result" of type "Any". (Type check passed).
+2025-09-17 14:19:13 -0500 - dagster - DEBUG - __ASSET_JOB - 865a6f54-7acd-4bb4-8d97-2949e149a1d5 - 83628 - taxi_trips_file - ASSET_MATERIALIZATION - Materialized value taxi_trips_file.
+2025-09-17 14:19:13 -0500 - dagster - DEBUG - __ASSET_JOB - 865a6f54-7acd-4bb4-8d97-2949e149a1d5 - 83628 - taxi_trips_file - STEP_SUCCESS - Finished execution of step "taxi_trips_file" in 8.9s.
+2025-09-17 14:19:14 -0500 - dagster - DEBUG - __ASSET_JOB - 865a6f54-7acd-4bb4-8d97-2949e149a1d5 - 83621 - ENGINE_EVENT - Multiprocess executor: parent process exiting after 10.68s (pid: 83621)
+2025-09-17 14:19:14 -0500 - dagster - DEBUG - __ASSET_JOB - 865a6f54-7acd-4bb4-8d97-2949e149a1d5 - 83621 - RUN_SUCCESS - Finished execution of run for "__ASSET_JOB".
+```
+
+## When to use `dg dev` vs `dg launch`
 
 You now know two different ways to launch your asset. You may be wondering which one to use. Luckily there is no wrong answer. You might find it easier to execute an asset with `dg launch` when you need to quickly test something out while you may want to use `dg dev` as your Dagster project becomes more sophisticated.
 
