@@ -14,6 +14,8 @@ Let’s start by creating a simple job that includes the three assets we’ve de
 
 ```python
 # src/dagster_and_etl/defs/jobs.py
+...
+
 asteroid_job = dg.define_asset_job(
     name="asteroid_job",
     selection=[
