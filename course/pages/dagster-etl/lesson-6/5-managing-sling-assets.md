@@ -25,8 +25,6 @@ We’d define two separate jobs:
 
 ```python
 # src/dagster_and_etl/defs/jobs.py
-import dagster as dg
-
 ...
 
 postgres_refresh_job = dg.define_asset_job(
