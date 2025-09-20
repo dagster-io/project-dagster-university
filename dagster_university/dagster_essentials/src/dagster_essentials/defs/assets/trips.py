@@ -1,5 +1,5 @@
 import requests
-#from dagster_essentials.defs.assets import constants
+from dagster_essentials.defs.assets import constants
 import dagster as dg
 
 @dg.asset
