@@ -7,7 +7,7 @@ trip_update_job = dg.define_asset_job(
     selection=dg.AssetSelection.all() - trips_by_week
 )
 
-trips_by_week_job = dg.define_asset_job(
-    name="trips_by_week_job",
+weekly_update_job = dg.define_asset_job(
+    name="weekly_update_job",
     selection=trips_by_week
 )
