@@ -1,15 +1,20 @@
 import dagster as dg
 from dagster_duckdb import DuckDBResource
 from dagster_essentials.defs.assets import constants
+from dagster_essentials.defs.partitions import monthly_partition
 
 import requests
 
-@dg.asset
-def taxi_trips_file() -> None:
+@dg.asset(
+    partitions_def=monthly_partition
+)
+def taxi_trips_file(context: dg.AssetExecutionContext) -> None:
     """
-      The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal.
+        The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal.
     """
-    month_to_fetch = '2023-03'
+
+    partition_date_str = context.partition_key
+    month_to_fetch = partition_date_str[:-3]
     raw_trips = requests.get(
         f"https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_{month_to_fetch}.parquet"
     )
@@ -20,7 +25,7 @@ def taxi_trips_file() -> None:
 @dg.asset
 def taxi_zones_file() -> None:
     """
-      The raw CSV files for the taxi zones dataset. Sourced from the NYC Open Data portal.
+        The raw CSV files for the taxi zones dataset. Sourced from the NYC Open Data portal.
     """
     raw_zones = requests.get(
         f"https://community-engineering-artifacts.s3.us-west-2.amazonaws.com/dagster-university/data/taxi_zones.csv"
@@ -34,7 +39,7 @@ def taxi_zones_file() -> None:
 )
 def taxi_trips(database: DuckDBResource) -> None:
     """
-      The raw taxi trips dataset, loaded into a DuckDB database
+        The raw taxi trips dataset, loaded into a DuckDB database
     """
     query = """
         create or replace table trips as (
@@ -61,7 +66,7 @@ def taxi_trips(database: DuckDBResource) -> None:
 )
 def taxi_zones(database: DuckDBResource) -> None:
     """
-      The raw taxi zones dataset, loaded into a DuckDB database
+        The raw taxi zones dataset, loaded into a DuckDB database
     """
     query = f"""
         create or replace table zones as (

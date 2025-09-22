@@ -12,7 +12,7 @@ import pandas as pd
 )
 def manhattan_stats(database: DuckDBResource) -> None:
     """
-    Stats for Manhattan trips
+        Stats for Manhattan trips
     """
     query = """
         select
@@ -57,7 +57,7 @@ def manhattan_map() -> None:
 )
 def trips_by_week_mine(database: DuckDBResource) -> None:
     """
-    Creates summarised asset for taxi trips aggregates by week.
+        Creates summarised asset for taxi trips aggregates by week.
     """
     query = """
         select
@@ -82,7 +82,7 @@ def trips_by_week_mine(database: DuckDBResource) -> None:
 )
 def trips_by_week(database: DuckDBResource) -> None:
     """
-    Weekly aggregation of Trips data
+        Weekly aggregation of Trips data
     """
 
     current_date = datetime.strptime("2023-03-01", constants.DATE_FORMAT)
