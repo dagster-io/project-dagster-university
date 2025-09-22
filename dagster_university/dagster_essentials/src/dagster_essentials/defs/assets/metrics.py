@@ -57,7 +57,7 @@ def manhattan_map() -> None:
 @dg.asset(
     deps=["taxi_trips"],
 )
-def trips_by_week_mine(database: DuckDBResource)) -> None:
+def trips_by_week_mine(database: DuckDBResource) -> None:
     """
     Creates summarised asset for taxi trips aggregates by week.
     """
@@ -82,7 +82,7 @@ def trips_by_week_mine(database: DuckDBResource)) -> None:
 @dg.asset(
     deps=["taxi_trips"]
 )
-def trips_by_week(database: DuckDBResource)) -> None:
+def trips_by_week(database: DuckDBResource) -> None:
     current_date = datetime.strptime("2023-03-01", constants.DATE_FORMAT)
     end_date = datetime.strptime("2023-04-01", constants.DATE_FORMAT)
 
