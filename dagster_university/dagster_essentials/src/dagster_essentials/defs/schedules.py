@@ -9,3 +9,4 @@ trip_update_schedule = dg.ScheduleDefinition(
 trip_update_schedule = dg.ScheduleDefinition(
     job=weekly_update_job,
     cron_schedule="0 0 * * 1", # every Monday at midnight
+)
