@@ -1,10 +1,8 @@
-import requests
-from dagster_essentials.defs.assets import constants
-import duckdb
-from dagster_duckdb import DuckDBResource
-import os
 import dagster as dg
-from dagster._utils.backoff import backoff
+from dagster_duckdb import DuckDBResource
+from dagster_essentials.defs.assets import constants
+
+import requests
 
 @dg.asset
 def taxi_trips_file() -> None:

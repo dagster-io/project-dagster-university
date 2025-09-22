@@ -1,21 +1,19 @@
 import dagster as dg
-from dagster._utils.backoff import backoff
+from dagster_duckdb import DuckDBResource
+from dagster_essentials.defs.assets import constants
 
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 import geopandas as gpd
 import pandas as pd
 
-from dagster_duckdb import DuckDBResource
-import duckdb
-import os
-
-from dagster_essentials.defs.assets import constants
-
 @dg.asset(
     deps=["taxi_trips", "taxi_zones"]
 )
 def manhattan_stats(database: DuckDBResource) -> None:
+    """
+    Stats for Manhattan trips
+    """
     query = """
         select
             zones.zone,
@@ -83,6 +81,10 @@ def trips_by_week_mine(database: DuckDBResource) -> None:
     deps=["taxi_trips"]
 )
 def trips_by_week(database: DuckDBResource) -> None:
+    """
+    Weekly aggregation of Trips data
+    """
+
     current_date = datetime.strptime("2023-03-01", constants.DATE_FORMAT)
     end_date = datetime.strptime("2023-04-01", constants.DATE_FORMAT)
 
@@ -94,13 +96,12 @@ def trips_by_week(database: DuckDBResource) -> None:
             select
                 vendor_id, total_amount, trip_distance, passenger_count
             from trips
-            where date_trunc('week', pickup_datetime) = date_trunc('week', '{current_date_str}'::date)
+            where pickup_datetime >= '{current_date_str}' and pickup_datetime < '{current_date_str}'::date + interval '1 week'
         """
 
         with database.get_connection() as conn:
             data_for_week = conn.execute(query).fetch_df()
         
-
         aggregate = data_for_week.agg({
             "vendor_id": "count",
             "total_amount": "sum",
