@@ -5,7 +5,7 @@ description = "Dagster ETL"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "dagster==1.11.8",
+    "dagster==1.11.12",
     "dagster-dg-cli",
     "dagster-webserver",
     "dagster-duckdb",
