@@ -1,7 +1,7 @@
 ---
 title: "Lesson 7: Using components"
 module: 'dagster_etl'
-lesson: 'extra-credit'
+lesson: '7'
 ---
 
 # Using components

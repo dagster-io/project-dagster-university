@@ -1,7 +1,7 @@
 ---
 title: "Lesson 7: Sling with Components"
 module: 'dagster_etl'
-lesson: 'extra-credit'
+lesson: '7'
 ---
 
 # Sling with Components

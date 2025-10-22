@@ -6,7 +6,7 @@ lesson: '5'
 
 # Dagster and dlt
 
-Dagster is built to integrate seamlessly with the best tools in the modern data ecosystem — using each tool where it makes the most sense within your pipeline. That’s why we created specialized integrations for libraries like dlt. This feature is called Embedded ETL, and it's designed to combine the simplicity and flexibility of lightweight ETL frameworks with the robustness and orchestration capabilities of Dagster.
+Dagster is built to integrate seamlessly with the best tools in the modern data ecosystem, using each tool where it makes the most sense within your pipeline. That’s why we created specialized integrations for libraries like dlt. This feature is called Embedded ETL, and it's designed to combine the simplicity and flexibility of lightweight ETL frameworks with the robustness and orchestration capabilities of Dagster.
 
 These lightweight services pair well with Dagster because they can leverage Dagster’s existing architecture. Many standalone ETL tools require setting up separate infrastructure, like databases and task queues, to handle state tracking and orchestration. With Dagster, those responsibilities are already built-in. Instead of duplicating that architecture, tools like dlt can integrate directly and let Dagster manage scheduling and focus on what it does best around orchestration and observability.
 
@@ -33,7 +33,7 @@ def simple_source():
     return load_dict
 ```
 
-Next, we’ll update our `resources.py` file to include the `DagsterDltResource`. This resource allows Dagster to execute dlt pipelines directly, bridging the gap between Dagster’s orchestration layer and dlt’s data loading capabilities. With this integration in place, we no longer need to define a separate `DuckDBResource` in Dagster — dlt will now be fully responsible for loading data into the database:
+Next, we’ll update our `resources.py` file to include the `DagsterDltResource`. This resource allows Dagster to execute dlt pipelines directly, bridging the gap between Dagster’s orchestration layer and dlt’s data loading capabilities. With this integration in place, we no longer need to define a separate `DuckDBResource` in Dagster, dlt will now be fully responsible for loading data into the database:
 
 
 ```python

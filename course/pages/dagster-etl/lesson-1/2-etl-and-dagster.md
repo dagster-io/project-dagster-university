@@ -26,6 +26,6 @@ Another reason an asset based approach tends to work well for ETL is that data s
 
 Each of these entities should be tracked as its own asset, so you can associate downstream processes with each one individually. That granularity gives you the ability to monitor, reason about, and recover from failures more effectively.
 
-For example, if one source table fails to ingest, an asset based approach allows you to quickly understand which downstream assets and applications are impacted. This level of observability and control is what makes asset-based orchestration so powerful — especially in the context of managing critical ETL pipelines.
+For example, if one source table fails to ingest, an asset based approach allows you to quickly understand which downstream assets and applications are impacted. This level of observability and control is what makes asset-based orchestration so powerful, especially in the context of managing critical ETL pipelines.
 
 ![ETL as assets 2](/images/dagster-etl/lesson-1/etl-as-assets-2.png)

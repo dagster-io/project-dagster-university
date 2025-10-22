@@ -1,7 +1,7 @@
 ---
 title: "Lesson 7: Overview"
 module: 'dagster_etl'
-lesson: 'extra-credit'
+lesson: '7'
 ---
 
 # Overview
