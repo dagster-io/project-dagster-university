@@ -96,3 +96,22 @@ def postgres_sling_assets(context, sling: SlingResource):
 That is everything we need. Now when we launch `dg dev` we will see six new assets in the asset graph.
 
 First there are the three source assets representing the raw tables that exist in our Postgres database (customers, products, orders). Connected to each of these sources are our Dagster assets. Each of these individually.
+
+## Confirm data
+
+To check that everything has loaded correctly, we can connect to the DuckDB database using the [DuckDB CLI](https://duckdb.org/docs/stable/clients/cli/overview.html) and run a query for the table we just made.
+
+```bash
+> duckdb data/staging/data.duckdb
+D SELECT * FROM data_customers;
+┌─────────────┬────────────┬───────────┬───────────────────────────┐
+│ customer_id │ first_name │ last_name │           email           │
+│    int32    │  varchar   │  varchar  │          varchar          │
+├─────────────┼────────────┼───────────┼───────────────────────────┤
+│           1 │ Alice      │ Johnson   │ alice.johnson@example.com │
+│           2 │ Bob        │ Smith     │ bob.smith@example.com     │
+│           3 │ Charlie    │ Lee       │ charlie.lee@example.com   │
+└─────────────┴────────────┴───────────┴───────────────────────────┘
+```
+
+You can also view the `data_products` or `data_orders` tables.

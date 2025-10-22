@@ -10,8 +10,6 @@ When working with dlt, you should think in terms of two main components: your so
 
 This setup allows us to explore the basics of how a dlt pipeline works without adding complexity. Once you're comfortable with the mechanics, you can easily scale up to dynamic sources like APIs or cloud storage.
 
-
-
 ```python
 import os
 

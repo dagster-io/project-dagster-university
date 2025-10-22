@@ -16,7 +16,7 @@ How could we handle this with partitions to ensure we can still track our inputs
 
 As well as time-based partitions, Dagster also supports dynamic partitions. These  allow for more flexibility. Unlike time-based partitions, dynamic partitions let you control exactly what values are included and grow the partition set as new data categories (like customer names) appear.
 
-Creating a dynamic partition is simple — all you need is a name:
+Creating a dynamic partition is simple. All you need is a name:
 
 ```python
 dynamic_partitions_def = dg.DynamicPartitionsDefinition(name="dynamic_partition")

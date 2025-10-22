@@ -28,7 +28,7 @@ Given this structure, a full API request might look like:
 https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY
 ```
 
-The API will return a large JSON response that includes various metadata fields. To keep things simple, we’ll focus only on the part we care about — the `near_earth_objects` field. This field contains the actual asteroid data, organized by date, and is all we need for our ETL pipeline.
+The API will return a large JSON response that includes various metadata fields. To keep things simple, we’ll focus only on the part we care about, the `near_earth_objects` field. This field contains the actual asteroid data, organized by date, and is all we need for our ETL pipeline.
 
 ## Coding our resource
 

@@ -132,3 +132,18 @@ def duckdb_table(
 ```
 
 We can now execute the pipeline for a specific date.
+
+## Confirm data
+
+To check that everything has loaded correctly, we can connect to the DuckDB database using the [DuckDB CLI](https://duckdb.org/docs/stable/clients/cli/overview.html) and run a query for the table we just made.
+
+```bash
+> duckdb data/staging/data.duckdb
+D SELECT * FROM raw_asteroid_data;
+┌─────────┬───────────────────────┬──────────────────────┬───────────────────────────────────┐
+│   id    │         name          │ absolute_magnitude_h │ is_potentially_hazardous_asteroid │
+│ varchar │        varchar        │        float         │              boolean              │
+├─────────┼───────────────────────┼──────────────────────┼───────────────────────────────────┤
+│ 2004034 │ 4034 Vishnu (1986 PA) │                18.49 │ true                              │
+└─────────┴───────────────────────┴──────────────────────┴───────────────────────────────────┘
+```
