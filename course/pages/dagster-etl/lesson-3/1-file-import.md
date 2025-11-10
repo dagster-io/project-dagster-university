@@ -123,8 +123,9 @@ These two assets are all we need to ingest the data and there are multiple ways 
 ### Command line (`dg launch`)
 
 ```bash
-dg launch --assets import_file,duckdb_table --config-json "{\"resources\": {\"database\": {\"config\": {\"database\": \"data/staging/data.duckdb\"}}}, \"ops\": {\"import_file\": {\"config\": {\"path\": \"2018-01-22.csv\"}}}}"
+dg launch --assets import_file,duckdb_table --config-json '{"resources": {"database": {"config": {"database": "data/staging/data.duckdb"}}}, "ops": {"import_file": {"config": {"path": "2018-01-22.csv"}}}}'
 ```
+
 ### Web UI (`dg dev`)
 
 ```bash

@@ -62,7 +62,7 @@ class NASAResource(dg.ConfigurableResource):
 Now that we have our resource defined, we can include it in the `Definitions` alongside the `DuckDBResource` resource in the `resources.py`:
 
 ```python
-# src/dagster_and_etl/defs/definitions.py
+# src/dagster_and_etl/definitions.py
 @dg.definitions
 def resources():
     return dg.Definitions(

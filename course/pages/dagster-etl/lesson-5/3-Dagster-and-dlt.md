@@ -37,7 +37,7 @@ Next, we’ll update our `resources.py` file to include the `DagsterDltResource`
 
 
 ```python
-# src/dagster_and_etl/defs/definitions.py
+# src/dagster_and_etl/definitions.py
 import dagster as dg
 from dagster_dlt import DagsterDltResource
 
