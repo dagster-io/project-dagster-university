@@ -122,17 +122,17 @@ You saw that using `dg` to scaffold our project, the `Definitions` will automati
    The `resources.py` file should now look like:
 
    ```python
-    # src/dagster_essentials/defs/resources.py
-    from dagster_duckdb import DuckDBResource
-    import dagster as dg
+   # src/dagster_essentials/defs/resources.py
+   from dagster_duckdb import DuckDBResource
+   import dagster as dg
 
-    database_resource = DuckDBResource(
-        database=dg.EnvVar("DUCKDB_DATABASE")
-    )
+   database_resource = DuckDBResource(
+       database=dg.EnvVar("DUCKDB_DATABASE")
+   )
 
-    @dg.definitions
-    def resources():
-        return dg.Definitions(resources={"database": database_resource})
+   @dg.definitions
+   def resources():
+       return dg.Definitions(resources={"database": database_resource})
    ```
 
 2. In the Dagster UI, click **Deployment.**
