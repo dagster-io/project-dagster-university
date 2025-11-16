@@ -12,7 +12,8 @@ defs = dg.Definitions(
     assets=[import_file, duckdb_table],
     resources={
         "database": DuckDBResource(
-            database=f"{duckdb_path}",
+            # database=f"{duckdb_path}",
+            database="data/staging/data.duckdb"
         )
     }
 )
