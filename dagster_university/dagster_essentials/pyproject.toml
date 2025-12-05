@@ -10,10 +10,12 @@ dependencies = [
     "dagster-webserver",
     "dagster-cloud",
     "dagster-duckdb",
-    "geopandas",
+    "geopandas>=1.0.1,<1.1.0",
     "pandas[parquet]",
-    "shapely",
+    "shapely>=2.0.0",
     "matplotlib",
+    # Pin pyproj to a version that works better with Python 3.13
+    "pyproj>=3.7.0",
 ]
 
 [tool.uv]

@@ -12,15 +12,17 @@ dependencies = [
     "dagster-duckdb",
     "dagster-dbt",
     "dbt-duckdb",
-    "geopandas",
+    "geopandas>=1.0.1,<1.1.0",
     "pandas[parquet]",
-    "shapely",
+    "shapely>=2.0.0",
     "matplotlib",
     "smart_open[s3]",
     "s3fs",
     "smart_open",
     "boto3",
     "pyarrow",
+    # Pin pyproj to a version that works better with Python 3.13
+    "pyproj>=3.7.0",
 ]
 
 [tool.uv]
