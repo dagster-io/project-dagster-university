@@ -3,7 +3,7 @@ name = "dagster-testing"
 version = "0.0.1"
 description = "Dagster Testing"
 readme = "README.md"
-requires-python = ">=3.10,<=3.13"
+requires-python = ">=3.10,<3.14"
 dependencies = [
     "dagster==1.12.4",
     "dagster-dg-cli",
