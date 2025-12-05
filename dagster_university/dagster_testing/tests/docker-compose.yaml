@@ -11,8 +11,3 @@ services:
       POSTGRES_PASSWORD: "test_pass"
     ports:
       - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-volumes:
-  pgdata:

@@ -26,10 +26,15 @@ jobs:
           - windows-latest
           - ubuntu-latest
         python-version:
-          - "3.9"
           - "3.10"
           - "3.11"
           - "3.12"
+          - "3.13"
+        exclude:
+          # Exclude Python 3.13 on Windows due to geopandas/numpy compatibility issues
+          # that cause access violations when importing numpy
+          - os: windows-latest
+            python-version: "3.13"
 
     steps:
 

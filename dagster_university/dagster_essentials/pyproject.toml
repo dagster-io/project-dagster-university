@@ -3,17 +3,19 @@ name = "dagster-essentials"
 version = "0.0.1"
 description = "Dagster Essentials"
 readme = "README.md"
-requires-python = ">=3.9,<3.13"
+requires-python = ">=3.10,<3.14"
 dependencies = [
-    "dagster==1.11.12",
+    "dagster==1.12.4",
     "dagster-dg-cli",
     "dagster-webserver",
     "dagster-cloud",
     "dagster-duckdb",
-    "geopandas",
+    "geopandas>=1.0.1,<1.1.0",
     "pandas[parquet]",
-    "shapely",
+    "shapely>=2.0.0",
     "matplotlib",
+    # Pin pyproj to a version that works better with Python 3.13
+    "pyproj>=3.7.0",
 ]
 
 [tool.uv]
