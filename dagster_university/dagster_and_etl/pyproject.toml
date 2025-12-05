@@ -3,9 +3,9 @@ name = "dagster-and-etl"
 version = "0.0.1"
 description = "Dagster ETL"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10,<=3.13"
 dependencies = [
-    "dagster==1.11.12",
+    "dagster==1.12.4",
     "dagster-dg-cli",
     "dagster-webserver",
     "dagster-duckdb",

@@ -39,8 +39,6 @@ services:
       POSTGRES_PASSWORD: "test_pass"
     ports:
       - "5432:5432"
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data
 ```
 
 If you are familiar with Docker you will notice that we give it build context directory rather than an image. That build context contains a Dockerfile file that contains the Postgres image and a initialization file.

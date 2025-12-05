@@ -63,7 +63,7 @@ In the following image, each dark purple box is a code location. By separating c
 Code locations can be used to separate code by categories, such as:
 
 - Teams (ex., marketing or product)
-- Python version (ex., legacy code using Python 3.9 and newer Python 3.11 code locations)
+- Python version (ex., legacy code using Python 3.10 and newer Python 3.12 code locations)
 - Dependency versions (ex., one model using PyTorch v1 and another using PyTorch v2)
 - Functions (ex., ETL, modeling, BI layer)
 - Compliance-sensitive datasets (ex., HIPAA)
