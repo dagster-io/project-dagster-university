@@ -78,8 +78,6 @@ Now that you understand how to define asset descriptions, let’s take a look at
 - {% width="60%" %}
   For each asset in the **Assets** tab, the description will display under each asset key.
 
-- ![The Assets page in the Dagster UI](/images/dagster-essentials/extra-credit/ui-assets-page.png) {% rowspan=2 %}
-
 {% /table %}
 
 {% table %}

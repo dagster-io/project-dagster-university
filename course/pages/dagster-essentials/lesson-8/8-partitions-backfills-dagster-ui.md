@@ -55,8 +55,6 @@ Now that you've created your partitions, used those partitions in the assets, an
 
   This allows you to choose which partitions you want to materialize or launch a backfill that can materialize several partitions at once.
 
-- ![A popup displaying an asset's partition information in the Dagster UI](/images/dagster-essentials/lesson-8/ui-asset-partition-info.png) {% rowspan=2 %}
-
 {% /table %}
 
 ---
@@ -74,7 +72,7 @@ Now that you've created your partitions, used those partitions in the assets, an
 
   Next, click **Overview > Backfills** to view the backfill’s information.
 
-- ![The Backfills tab in the Dagster UI](/images/dagster-essentials/lesson-8/ui-backfills-tab.png) {% rowspan=2 %}
+- ![A popup displaying an asset's partition information in the Dagster UI](/images/dagster-essentials/lesson-8/ui-asset-partition-info.png) {% rowspan=2 %}
 
 {% /table %}
 
@@ -86,8 +84,6 @@ Now that you've created your partitions, used those partitions in the assets, an
 
 - {% width="60%" %}
   Click on a backfill to open its details page. In this page, you’ll see each asset being materialized in the backfill, along with their status.
-
-- ![The Backfill details page in the Dagster UI](/images/dagster-essentials/lesson-8/ui-backfill-details-page.png) {% rowspan=2 %}
 
 {% /table %}
 
@@ -101,8 +97,6 @@ Now that you've created your partitions, used those partitions in the assets, an
   Navigate back to the **Global Asset Lineage** page (**Assets > Asset lineage).**
 
   In the asset graph, you’ll see the status of the partitioned and non-partitioned assets has been updated.
-
-- ![The Global Asset Lineage page with updated asset information after a backfill](/images/dagster-essentials/lesson-8/ui-updated-asset-graph.png) {% rowspan=2 %}
 
 {% /table %}
 
@@ -131,7 +125,5 @@ Now that you've created your partitions, used those partitions in the assets, an
 
 - {% width="60%" %}
   Select **2023-03-01** to view a specific partition. Here you can see information specific to that partition of the asset, including lineage to the source data. In this case, that’s `taxi_trips_file`.
-
-- ![Details for the 2023-03-01 partition in the Dagster UI](/images/dagster-essentials/lesson-8/ui-partition-details.png) {% rowspan=2 %}
 
 {% /table %}

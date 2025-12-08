@@ -56,8 +56,6 @@ As sensors are turned off by default, you'll need to enable the sensor to be abl
 - {% width="60%" %}
   When the test completes, the results will display. Click the **Open in Launchpad** button to navigate to the `adhoc_request_job`.
 
-- ![Results from the sensor evaluation in the Dagster UI](/images/dagster-essentials/lesson-9/ui-sensor-evaluation-results.png) {% rowspan=2 %}
-
 {% /table %}
 
 {% table %}
