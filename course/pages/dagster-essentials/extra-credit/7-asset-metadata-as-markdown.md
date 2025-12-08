@@ -31,8 +31,10 @@ In Lesson 9, you created the `adhoc_request` asset. During materialization, the 
      start_date: str
      end_date: str
 
-   @dg.asset
-   def adhoc_request(config: AdhocRequestConfig, taxi_zones, taxi_trips, database: DuckDBResource) -> None:
+   @dg.asset(
+       deps=["taxi_zones", "taxi_trips"]
+   )
+   def adhoc_request(config: AdhocRequestConfig, database: DuckDBResource) -> None:
        """
          The response to an request made in the `requests` directory.
          See `requests/README.md` for more information.
@@ -148,7 +150,9 @@ class AdhocRequestConfig(dg.Config):
     start_date: str
     end_date: str
 
-@dg.asset
+@dg.asset(
+    deps=["taxi_zones", "taxi_trips"]
+)
 def adhoc_request(config: AdhocRequestConfig, database: DuckDBResource) -> dg.MaterializeResult:
     """
       The response to an request made in the `requests` directory.
@@ -236,6 +240,4 @@ To display the chart, click **\[Show Markdown]** :
 
 ![The chart rendered as a result of materializing the adhoc_request asset](/images/dagster-essentials/extra-credit/ui-markdown-chart.png)
 
-You can also click **View in Asset Catalog** to view the chart:
-
-![The adhoc_request asset in the Asset Catalog page in the Dagster UI](/images/dagster-essentials/extra-credit/ui-asset-catalog.png)
+You can also click **View in Asset Catalog** to view the chart.
