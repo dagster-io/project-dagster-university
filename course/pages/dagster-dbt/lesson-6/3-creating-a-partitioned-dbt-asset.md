@@ -21,7 +21,7 @@ We have a few changes to make to our dbt setup to get things working. In `defs/a
 1. Add the following imports to the top of the file:
 
    ```python
-   from dagster_and_dbt.partitions import daily_partition
+   from dagster_and_dbt.defs.partitions import daily_partition
    import json
    ```
 
