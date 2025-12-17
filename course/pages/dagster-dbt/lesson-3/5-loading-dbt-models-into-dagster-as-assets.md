@@ -28,13 +28,18 @@ We’ll only create one `@dbt_assets` definition for now, but in a later lesson,
 
 ## Loading the models as assets
 
-1. Create a new file `dbt.py` using `dg`:
+1. Create a new file `dbt.py` in the `defs/assets/` directory. You can create this file manually or use `dg`:
 
    ```bash
    dg scaffold defs dagster.asset assets/dbt.py
    ```
 
-2. Add the following imports to the top of the file:
+   {% callout %}
+
+   > ⚠️ **Note:** The scaffold command creates a basic `@dg.asset` template as a starting point. We'll be **replacing** the scaffolded content entirely with dbt-specific code below, since we need to use the specialized `@dbt_assets` decorator instead of the standard `@dg.asset` decorator.
+   > {% /callout %}
+
+2. Replace the contents of `dbt.py` with the following imports:
 
    ```python
    # src/dagster_and_dbt/defs/assets/dbt.py
