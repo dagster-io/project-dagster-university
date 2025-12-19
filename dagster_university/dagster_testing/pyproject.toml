@@ -13,9 +13,9 @@ dependencies = [
     "pytest",
 ]
 
-[tool.uv]
-dev-dependencies = [
-    "ruff",
+[dependency-groups]
+dev = [
+    "ruff"
 ]
 
 [build-system]
