@@ -145,8 +145,6 @@ ops:
       path: 2018-01-22.csv
 ```
 
-![File import DAG](/images/dagster-etl/lesson-3/file-import-dag.png)
-
 In either case (whether using the CLI or the UI) remember that we need to provide a value for the file path as a run configuration in orders to execute the assets.
 
 ## Confirm data

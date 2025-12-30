@@ -72,12 +72,6 @@ The code above does the following:
 
 When you launch `dg dev` to view the assets in our pipeline, you won’t see an additional node in the graph since the asset check is visually tied to the import_file asset.
 
-![Asset check](/images/dagster-etl/lesson-3/asset-check.png)
-
 Now, when you re-execute the pipeline, a green dot will appear on the `import_file` node if the asset check passes, indicating both successful materialization and validation.
 
-![Asset check pass](/images/dagster-etl/lesson-3/asset-check-pass.png)
-
 If the check fails, the dot will appear red, and the downstream asset will not run. This helps catch data issues early in the process.
-
-![Asset check page](/images/dagster-etl/lesson-3/asset-check-page.png)

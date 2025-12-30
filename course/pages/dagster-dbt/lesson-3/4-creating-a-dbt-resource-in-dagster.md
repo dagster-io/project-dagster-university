@@ -10,15 +10,11 @@ Our next step is to define a Dagster resource as the entry point used to run dbt
 
 The `DbtCliResource` is the main resource that you’ll be working with. In later sections, we’ll walk through some of the resource’s methods and how to customize what Dagster does when dbt runs.
 
-{% callout %}
-
 > 💡 **Resource refresher:** Resources are Dagster’s recommended way of connecting to other services and tools, such as dbt, your data warehouse, or a BI tool.
-> {% /callout %}
 
 Navigate to `defs/resources.py`, which is where other resources are defined. You'll be adding to this existing file, not replacing it.
 
 > ⚠️ **Important:** The `resources.py` file already contains code for `database_resource`, `smart_open_config`, and other imports. Do not delete this existing code! You'll be adding the dbt-related imports and resource definition to the file.
-> {% /callout %}
 
 1. First, add the following imports to the **top of the file**, alongside the existing imports:
 
