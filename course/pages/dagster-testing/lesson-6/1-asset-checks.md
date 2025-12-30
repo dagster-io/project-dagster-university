@@ -12,12 +12,6 @@ When designing data validation steps, it is best to keep that code separate from
 
 In order to solve the problem of data quality, Dagster offers asset checks which validate assets when they execute. Asset checks are part of your Dagster project and are set in the definitions like any other Dagster object. When looking in the asset graph you will not see them directly but will see them associated with the asset.
 
-![Asset checks](/images/dagster-testing/lesson-6/asset-check.png)
-
-When the asset runs, we can see that its associated asset checks also run and validate.
-
-![Asset checks success](/images/dagster-testing/lesson-6/asset-check-success.png)
-
 # Defining asset checks
 
 To define an asset check we first need an asset. `total_population` is a slightly modified version of the asset we have used throughout the course. Now it will take in the output of several assets and sums their populations.

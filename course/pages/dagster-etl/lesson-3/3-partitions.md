@@ -96,9 +96,3 @@ A quick not that deleting from the table before loading new data is one strategy
 ## Executing partitions
 
 Similar to the file import, we can trigger executions for specific partitions. If we wanted to ingest the same data as previously, we would simply select the partition for "2018-01-22".
-
-![Partition execution](/images/dagster-etl/lesson-3/partition-execution.png)
-
-If we want to execute the assets again, we can see that the information is tracked.
-
-![Partition execution success](/images/dagster-etl/lesson-3/partition-execution-success.png)
