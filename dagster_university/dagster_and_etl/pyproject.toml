@@ -16,8 +16,8 @@ dependencies = [
     "pandas",
 ]
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "ruff",
     "pytest",
 ]

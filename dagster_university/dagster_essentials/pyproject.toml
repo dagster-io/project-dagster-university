@@ -18,8 +18,8 @@ dependencies = [
     "pyproj>=3.7.0",
 ]
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "ruff",
     "pytest",
 ]
