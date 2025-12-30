@@ -7,5 +7,5 @@ select
     zone as zone_name,
     borough,
     zone_name like '%Airport' as is_airport,
-    -- zone_population ## new column
+    -- zone_population -- new column
 from raw_zones

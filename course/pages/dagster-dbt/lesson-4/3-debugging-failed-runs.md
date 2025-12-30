@@ -22,7 +22,7 @@ To demonstrate, we’re going to intentionally make a bug in our dbt model code,
        zone as zone_name,
        borough,
        zone_name like '%Airport' as is_airport,
-       zone_population ## new column
+       zone_population -- new column
    from raw_zones
    ```
 
@@ -38,8 +38,6 @@ To demonstrate, we’re going to intentionally make a bug in our dbt model code,
 
 6. On the run’s details page, click the `dbt_analytics` step.
 
-7. To view the logs, click the `stdout` button on the top-left of the pane. You’ll see the logs that typically come from executing `dbt`:
-
    ![stdout logs showing failure for std_zones materialization in the Dagster UI](/images/dagster-dbt/lesson-4/stg-zones-stdout-failure.png)
 
 In these logs, we can see that DuckDB can’t find the `zone_population` column in `stg_zones`. That’s because this column doesn’t exist!
@@ -49,6 +47,4 @@ Now that we know what the problem is, let’s fix it:
 1. Remove the `zone_population` column from the `stg_zones` model
 2. In the Dagster UI, reload the code location to allow Dagster to pick up the changes.
 
-At this point, if you materialize the  `stg_zones` asset again, the run should be successful:
-
-![Successful materialization of std_zones asset](/images/dagster-dbt/lesson-4/std-zones-success.png)
+At this point, if you materialize the  `stg_zones` asset again, the run should be successful.
