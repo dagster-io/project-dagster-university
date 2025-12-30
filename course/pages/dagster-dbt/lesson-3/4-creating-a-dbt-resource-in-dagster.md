@@ -17,8 +17,6 @@ The `DbtCliResource` is the main resource that you’ll be working with. In late
 
 Navigate to `defs/resources.py`, which is where other resources are defined. You'll be adding to this existing file, not replacing it.
 
-{% callout %}
-
 > ⚠️ **Important:** The `resources.py` file already contains code for `database_resource`, `smart_open_config`, and other imports. Do not delete this existing code! You'll be adding the dbt-related imports and resource definition to the file.
 > {% /callout %}
 

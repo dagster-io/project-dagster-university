@@ -34,10 +34,7 @@ We’ll only create one `@dbt_assets` definition for now, but in a later lesson,
    dg scaffold defs dagster.asset assets/dbt.py
    ```
 
-   {% callout %}
-
    > ⚠️ **Note:** The scaffold command creates a basic `@dg.asset` template as a starting point. We'll be **replacing** the scaffolded content entirely with dbt-specific code below, since we need to use the specialized `@dbt_assets` decorator instead of the standard `@dg.asset` decorator.
-   > {% /callout %}
 
 2. Replace the contents of `dbt.py` with the following imports:
 
