@@ -94,7 +94,7 @@ Now that you've created your partitions, used those partitions in the assets, an
 ---
 
 - {% width="60%" %}
-  Navigate back to the **Global Asset Lineage** page (**Assets > Asset lineage).**
+  Navigate back to the **Global Asset Lineage** page (**Catalog > View global asset lineage**, or **Assets > Asset lineage** in older versions).
 
   In the asset graph, you’ll see the status of the partitioned and non-partitioned assets has been updated.
 

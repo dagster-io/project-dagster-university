@@ -65,7 +65,7 @@ The page is empty for now, but it’ll look more interesting shortly. Let’s ge
 ---
 
 - {% width="60%" %}
-  Click **Assets** in the top navigation bar. The page that opens should look like the one to the right.
+  Click **Catalog** (or **Assets** in older versions) in the left sidebar. The page that opens should look like the one to the right.
 
   **Note:** If this page is empty when you open it, click **Reload definitions**. We’ll discuss what this does in more detail in a later lesson.
 

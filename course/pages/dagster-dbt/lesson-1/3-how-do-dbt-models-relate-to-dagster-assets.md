@@ -14,10 +14,6 @@ How can Dagster do this? Each component of a Dagster asset has an equivalent cou
 - The **upstream dependencies** of a dbt model are defined with **`ref`** or **`source`** calls within the model's definition
 - The **computation** required to compute the asset from its upstream dependencies is the SQL within the model's definition
 
-These similarities make it natural to interact with dbt models as Dagster assets. Using dbt with Dagster, you can create an asset graph like the following:
-
-![Dagster graph with dbt, Fivetran, and TensorFlow](/images/dagster-dbt/lesson-1/example-asset-graph.png)
-
 From code like this:
 
 ```python

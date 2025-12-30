@@ -10,7 +10,7 @@ To confirm everything works:
 
 1. Run `dagster dev`  from the directory `dagster_university/dagster_and_dbt`.
 2. Navigate to the Dagster UI ([`http://localhost:3000`](http://localhost:3000/)) in your browser.
-3. Open the asset graph by clicking **Assets > View global asset lineage** and confirm the asset graph you see matches the graph below.
+3. Open the asset graph by clicking **Catalog** (or **Assets** in older versions) in the left sidebar, then click **View global asset lineage**. Confirm the asset graph you see matches the graph below.
 
    ![The Asset Graph in the Dagster UI](/images/dagster-dbt/lesson-2/asset-graph.png)
 
