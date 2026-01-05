@@ -17,4 +17,4 @@ Welcome to [Dagster University](https://courses.dagster.io/). This contains all 
 |------------------|--------------|--------------|--------------|--------------|-------|
 | **Linux/Ubuntu** | ✅ | ✅ | ✅ | ✅ | Full support |
 | **macOS** | ✅ | ✅ | ✅ | ✅ | Full support |
-| **Windows** | ✅ | ✅ | ✅ | ❌ | Python 3.13 has compatibility issues with geopandas/numpy |
+| **Windows** | ✅ | ✅ | ✅ | ✅ | Full support |
