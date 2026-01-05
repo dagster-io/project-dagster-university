@@ -16,6 +16,9 @@ dependencies = [
     "matplotlib",
     # Pin pyproj to a version that works better with Python 3.13
     "pyproj>=3.7.0",
+    # numpy 2.1.0+ required for Python 3.13 compatibility (especially on Windows)
+    "numpy>=2.1.0; python_version>='3.13'",
+    "numpy>=1.26.0; python_version<'3.13'",
 ]
 
 [dependency-groups]
