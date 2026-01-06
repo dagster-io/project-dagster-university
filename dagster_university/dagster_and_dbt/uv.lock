@@ -485,6 +485,12 @@ dependencies = [
     { name = "smart-open", extra = ["s3"] },
 ]
 
+[package.optional-dependencies]
+dev = [
+    { name = "pytest" },
+    { name = "ruff" },
+]
+
 [package.dev-dependencies]
 dev = [
     { name = "pytest" },
@@ -508,6 +514,8 @@ requires-dist = [
     { name = "pandas", extras = ["parquet"] },
     { name = "pyarrow" },
     { name = "pyproj", specifier = ">=3.7.0" },
+    { name = "pytest", marker = "extra == 'dev'" },
+    { name = "ruff", marker = "extra == 'dev'" },
     { name = "s3fs" },
     { name = "shapely", specifier = ">=2.0.0" },
     { name = "smart-open" },

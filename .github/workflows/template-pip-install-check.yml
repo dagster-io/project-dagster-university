@@ -1,0 +1,43 @@
+name: pip-install-check
+
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        required: true
+        type: string
+      module_name:
+        required: true
+        type: string
+
+jobs:
+  pip-install:
+    name: pip install (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+          - macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install with pip
+        working-directory: ${{ inputs.working_directory }}
+        run: pip install -e ".[dev]"
+
+      - name: Verify installation
+        working-directory: ${{ inputs.working_directory }}
+        run: |
+          python -c "import ${{ inputs.module_name }}; print('Import successful')"
+          pip show ruff
+

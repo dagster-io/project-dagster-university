@@ -28,6 +28,12 @@ dependencies = [
     "numpy>=1.26.0; python_version<'3.13'",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "pytest",
+]
+
 [dependency-groups]
 dev = [
     "ruff",

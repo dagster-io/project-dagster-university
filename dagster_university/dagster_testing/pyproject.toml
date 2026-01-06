@@ -13,9 +13,14 @@ dependencies = [
     "pytest",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "ruff",
+]
+
 [dependency-groups]
 dev = [
-    "ruff"
+    "ruff",
 ]
 
 [build-system]

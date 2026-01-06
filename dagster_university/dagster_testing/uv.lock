@@ -507,6 +507,11 @@ dependencies = [
     { name = "pytest" },
 ]
 
+[package.optional-dependencies]
+dev = [
+    { name = "ruff" },
+]
+
 [package.dev-dependencies]
 dev = [
     { name = "ruff" },
@@ -520,6 +525,7 @@ requires-dist = [
     { name = "dagster-webserver" },
     { name = "psycopg2-binary" },
     { name = "pytest" },
+    { name = "ruff", marker = "extra == 'dev'" },
 ]
 
 [package.metadata.requires-dev]

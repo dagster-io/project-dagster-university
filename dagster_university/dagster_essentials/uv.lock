@@ -517,6 +517,12 @@ dependencies = [
     { name = "shapely" },
 ]
 
+[package.optional-dependencies]
+dev = [
+    { name = "pytest" },
+    { name = "ruff" },
+]
+
 [package.dev-dependencies]
 dev = [
     { name = "pytest" },
@@ -536,6 +542,8 @@ requires-dist = [
     { name = "numpy", marker = "python_full_version >= '3.13'", specifier = ">=2.1.0" },
     { name = "pandas", extras = ["parquet"] },
     { name = "pyproj", specifier = ">=3.7.0" },
+    { name = "pytest", marker = "extra == 'dev'" },
+    { name = "ruff", marker = "extra == 'dev'" },
     { name = "shapely", specifier = ">=2.0.0" },
 ]
 
