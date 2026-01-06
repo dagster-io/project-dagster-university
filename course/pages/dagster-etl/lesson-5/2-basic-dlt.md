@@ -36,7 +36,7 @@ pipeline = dlt.pipeline(
     dataset_name="mydata",
 )
 
-load_info = pipeline.run(simple_source())
+load_info = pipeline.run(simple_source(), write_disposition="replace")
 ```
 
 The code above does the following:
@@ -78,4 +78,93 @@ dlt also takes care of:
 
 This dramatically reduces boilerplate code and makes your ETL pipelines more maintainable, reliable, and adaptable.
 
-Finally, while we’re building a custom API integration here, it's worth noting that dlt also provides out-of-the-box support for [many common verified sources](https://dlthub.com/docs/dlt-ecosystem/verified-sources/).
+Finally, while we're building a custom API integration here, it's worth noting that dlt also provides out-of-the-box support for [many common verified sources](https://dlthub.com/docs/dlt-ecosystem/verified-sources/).
+
+## Write Dispositions in Practice
+
+In our simple example above, we used `write_disposition="replace"`. Let's understand when to use each option:
+
+```python
+# Replace: Good for dimension tables or full refreshes
+load_info = pipeline.run(simple_source(), write_disposition="replace")
+
+# Append: Good for event logs or fact tables
+load_info = pipeline.run(simple_source(), write_disposition="append")
+
+# Merge: Good for upserts based on primary key
+load_info = pipeline.run(
+    simple_source(),
+    write_disposition="merge",
+    primary_key="id"
+)
+```
+
+The `merge` disposition is particularly powerful for maintaining data integrity. When you specify a `primary_key`, dlt will update existing records if they match, and insert new ones if they don't. This is essential for maintaining accurate, deduplicated data.
+
+## Incremental Loading
+
+For sources that continuously produce new data (like APIs or event streams), you don't want to reload everything on each run. dlt supports incremental loading using the `dlt.sources.incremental` helper:
+
+```python
+@dlt.resource
+def load_events(
+    last_timestamp=dlt.sources.incremental("timestamp", initial_value="2024-01-01")
+):
+    # Only fetch records newer than last_timestamp.last_value
+    for event in fetch_events_since(last_timestamp.last_value):
+        yield event
+```
+
+dlt automatically tracks the highest value seen for the incremental column and stores it in pipeline state. On the next run, it will only process records with values greater than the stored state.
+
+## State Management
+
+dlt manages pipeline state automatically in a `_dlt_pipeline_state` table in your destination. This state includes:
+
+- Last values for incremental columns
+- Schema versions and migrations
+- Load package metadata
+
+This means you can safely restart pipelines, and they'll pick up right where they left off—no manual bookkeeping required.
+
+## Error Handling and Troubleshooting
+
+When things go wrong, dlt provides helpful tools for debugging:
+
+### Viewing Load Information
+
+The `load_info` object returned by `pipeline.run()` contains detailed information about what happened:
+
+```python
+load_info = pipeline.run(source)
+
+# Check for errors
+if load_info.has_failed_jobs:
+    for job in load_info.load_packages[0].jobs["failed_jobs"]:
+        print(f"Failed: {job.file_path}, Error: {job.failed_message}")
+
+# View load statistics
+print(load_info)  # Prints a summary of loaded tables and row counts
+```
+
+### Common Issues
+
+| Problem | Likely Cause | Solution |
+|---------|--------------|----------|
+| Duplicate records | Wrong write_disposition | Use `merge` with `primary_key` |
+| Missing recent data | State not advancing | Check `_dlt_pipeline_state` table |
+| Schema errors | Incompatible type changes | Use `replace` disposition for clean reload |
+| Memory issues | Large batch sizes | Use generators (`yield`) instead of lists |
+
+### Resetting Pipeline State
+
+If you need to start fresh, you can reset the pipeline state:
+
+```python
+pipeline = dlt.pipeline(pipeline_name="my_pipeline", destination="duckdb")
+pipeline.drop()  # Removes all state and destination tables
+```
+
+{% callout type="warning" title="State Reset Warning" %}
+Dropping pipeline state will cause the next run to reload all data from scratch. For incremental sources, this may result in duplicate processing if you're using `append` mode.
+{% /callout %}

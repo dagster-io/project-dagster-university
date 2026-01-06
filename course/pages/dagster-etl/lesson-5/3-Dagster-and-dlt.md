@@ -68,6 +68,13 @@ def dlt_assets(context: dg.AssetExecutionContext, dlt: DagsterDltResource):
     yield from dlt.run(context=context)
 ```
 
+You can also pass `write_disposition` and other dlt options when calling `dlt.run()`:
+
+```python
+def dlt_assets(context: dg.AssetExecutionContext, dlt: DagsterDltResource):
+    yield from dlt.run(context=context, write_disposition="merge", primary_key="id")
+```
+
 Just like that, the same dlt pipeline we previously built can now be executed and tracked by Dagster! This integration doesn’t just improve maintainability, it also cleans up our code and reduces boilerplate, making our ETL pipelines more modular and production-ready.
 
 This works well for our simple example, but the real power comes next, we’ll refactor our earlier CSV and API pipelines to use dlt for extraction and loading, while continuing to orchestrate and monitor them through Dagster and represent each dlt resource as an asset.

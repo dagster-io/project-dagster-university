@@ -17,7 +17,8 @@ class _NASAResource(dg.ConfigurableResource):
             "api_key": self.api_key,
         }
 
-        resp = requests.get(url, params=params)
+        resp = requests.get(url, params=params, timeout=30)
+        resp.raise_for_status()
         return resp.json()["near_earth_objects"][start_date]
 
 
@@ -43,7 +44,8 @@ class NASAResource(dg.ConfigurableResource):
         adapter = HTTPAdapter(max_retries=retries)
         session.mount("https://", adapter)
 
-        resp = session.get(url, params=params)
+        resp = session.get(url, params=params, timeout=30)
+        resp.raise_for_status()  # Raise exception for 4xx/5xx errors
         return resp.json()["near_earth_objects"][start_date]
 
 

@@ -40,10 +40,13 @@ pipeline = dlt.pipeline(
 )
 
 if __name__ == "__main__":
+    # Use merge with primary_key to handle re-runs without creating duplicates
     load_info = pipeline.run(
         nasa_neo_source(
             start_date="2015-09-07",
             end_date="2015-09-08",
             api_key="DEMO_KEY",
-        )
+        ),
+        write_disposition="merge",
+        primary_key="id",
     )
