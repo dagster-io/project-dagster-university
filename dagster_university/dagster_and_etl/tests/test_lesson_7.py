@@ -13,7 +13,6 @@ def defs():
 
 
 @pytest.mark.integration
-@pytest.mark.integration
 def test_postgres_component_sling_assets(defs, docker_compose):  # noqa: F811
     result = dg.materialize(
         assets=[

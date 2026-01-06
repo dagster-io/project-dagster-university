@@ -131,7 +131,10 @@ def dlt_nasa(context: dg.AssetExecutionContext, config: NasaDate):
         dataset_name="nasa_neo",
     )
 
-    load_info = pipeline.run(nasa_neo_source())
+    # Use merge to upsert based on the NEO id, avoiding duplicates on re-runs
+    load_info = pipeline.run(
+        nasa_neo_source(), write_disposition="merge", primary_key="id"
+    )
 
     return load_info
 
@@ -185,7 +188,10 @@ def dlt_nasa_partition(context: dg.AssetExecutionContext):
         dataset_name="nasa_neo",
     )
 
-    load_info = pipeline.run(nasa_neo_source())
+    # Use merge with primary_key to handle re-runs of the same partition
+    load_info = pipeline.run(
+        nasa_neo_source(), write_disposition="merge", primary_key="id"
+    )
 
     return load_info
 

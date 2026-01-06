@@ -29,12 +29,6 @@ def asteroid_response():
     return {"near_earth_objects": {"2015-09-07": nasa_response}}
 
 
-# dlt pipelines
-# def test_dlt_quick_start():
-#     load_info = dlt_quick_start.pipeline.run(dlt_quick_start.simple_source())
-#     assert load_info is not None
-
-
 def test_simple_dlt_source():
     source = dlt_quick_start.simple_source()
     data = list(source.load_dict())
@@ -75,20 +69,6 @@ def test_dlt_nasa(mock_get, asteroid_response):
             "api_key": "DEMO_KEY",
         },
     )
-
-
-# TODO: Enable multiple dlt assets
-# dlt assets
-# def test_dlt_quick_start_assets():
-#     result = dg.materialize(
-#         assets=[
-#             assets.dlt_assets,
-#         ],
-#         resources={
-#             "dlt": DagsterDltResource(),
-#         },
-#     )
-#     assert result.success
 
 
 def test_dlt_csv_assets():
