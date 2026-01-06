@@ -339,6 +339,12 @@ dependencies = [
     { name = "psycopg2-binary" },
 ]
 
+[package.optional-dependencies]
+dev = [
+    { name = "pytest" },
+    { name = "ruff" },
+]
+
 [package.dev-dependencies]
 dev = [
     { name = "pytest" },
@@ -356,6 +362,8 @@ requires-dist = [
     { name = "dlt", extras = ["duckdb"] },
     { name = "pandas" },
     { name = "psycopg2-binary" },
+    { name = "pytest", marker = "extra == 'dev'" },
+    { name = "ruff", marker = "extra == 'dev'" },
 ]
 
 [package.metadata.requires-dev]

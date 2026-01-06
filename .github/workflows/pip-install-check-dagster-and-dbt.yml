@@ -1,0 +1,19 @@
+name: pip-install-check-dagster-and-dbt
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - dagster_university/dagster_and_dbt/pyproject.toml
+
+jobs:
+  check:
+    if: github.event.pull_request.draft == false
+    uses: ./.github/workflows/template-pip-install-check.yml
+    with:
+      working_directory: ./dagster_university/dagster_and_dbt
+      module_name: dagster_and_dbt
+

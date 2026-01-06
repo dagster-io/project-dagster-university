@@ -16,6 +16,12 @@ dependencies = [
     "pandas",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "pytest",
+]
+
 [dependency-groups]
 dev = [
     "ruff",
