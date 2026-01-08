@@ -74,7 +74,7 @@ The page is empty for now, but it’ll look more interesting shortly. Let’s ge
   - The Code location and Asset group the asset belongs to, which we’ll cover in a later lesson
   - The asset’s status, which in the case of `taxi_trips_file`, is **Never materialized**
 
-  Next, click the **View global asset lineage** link. This opens the global asset graph, which is where you can view your DAG.
+  Next, click the **View lineage** link. This opens the global asset graph, which is where you can view your DAG.
 
 - ![The Asset overview page in the Dagster UI](/images/dagster-essentials/lesson-3/assets-overview.png) {% rowspan=2 %}
 
@@ -88,8 +88,6 @@ The page is empty for now, but it’ll look more interesting shortly. Let’s ge
 
 - {% width="60%" %}
   It looks pretty empty right now, as there’s only one asset. But once you start adding more assets and dependencies, it’ll get more interesting.
-
-  Additionally, notice that the asset’s description, pulled from its docstring, displays within the asset!
 
 - ![The Global Asset Lineage page in the Dagster UI](/images/dagster-essentials/lesson-3/global-asset-view.png) {% rowspan=2 %}
 
@@ -115,7 +113,7 @@ The page is empty for now, but it’ll look more interesting shortly. Let’s ge
 ---
 
 - {% width="60%" %}
-  After you click **Materialize**, a purple box will display at the top of the page like in the image on the right. This indicates that the run started successfully.
+  After you click **Materialize**, a purple box will display at the bottom of the page like in the image on the right. This indicates that the run started successfully.
 
   A **run** is an instance of execution that materializes one or more assets.
 

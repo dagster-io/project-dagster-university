@@ -19,7 +19,7 @@ Now that you've created your partitions, used those partitions in the assets, an
 ---
 
 - {% width="60%" %}
-  Navigate to **Assets**, then **Asset lineage**. As you’ll see in the asset graph, the `taxi_trips` assets now have partition information.
+  Navigate to **Lineage**. As you’ll see in the asset graph, the `taxi_trips` assets now have partition information.
 
 - ![Assets with partitions in the Dagster UI](/images/dagster-essentials/lesson-8/ui-assets-with-partitions.png) {% rowspan=2 %}
 
@@ -94,9 +94,7 @@ Now that you've created your partitions, used those partitions in the assets, an
 ---
 
 - {% width="60%" %}
-  Navigate back to the **Global Asset Lineage** page (**Catalog > View global asset lineage**, or **Assets > Asset lineage** in older versions).
-
-  In the asset graph, you’ll see the status of the partitioned and non-partitioned assets has been updated.
+  Navigate back to the **Global Asset Lineage** page. In the asset graph, you’ll see the status of the partitioned and non-partitioned assets has been updated.
 
 {% /table %}
 

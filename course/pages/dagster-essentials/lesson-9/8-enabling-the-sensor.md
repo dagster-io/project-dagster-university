@@ -41,7 +41,7 @@ As sensors are turned off by default, you'll need to enable the sensor to be abl
 
   2. On this page, click the **Preview tick result** button near the top-right of the page. This allows you to produce a single tick without turning the sensor on.
 
-  3. Click **Continue**, then click **Launch all & commit tick result** to begin the test.
+  3. Click **Continue**, then click **Apply requests & commit tick result** to begin the test.
 
 - ![The Test Sensor dialog in the Dagster UI](/images/dagster-essentials/lesson-9/ui-test-sensor-dialog.png) {% rowspan=2 %}
 
