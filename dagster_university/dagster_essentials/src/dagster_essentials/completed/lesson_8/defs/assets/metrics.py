@@ -32,10 +32,10 @@ def trips_by_week(context: dg.AssetExecutionContext, database: DuckDBResource):
     """
 
     with database.get_connection() as conn:
-        data_for_month = conn.execute(query).fetch_df()
+        data_for_week = conn.execute(query).fetch_df()
 
     aggregate = (
-        data_for_month.agg(
+        data_for_week.agg(
             {
                 "vendor_id": "count",
                 "total_amount": "sum",
