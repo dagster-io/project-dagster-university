@@ -27,7 +27,7 @@ After cloning the Dagster University project, navigate to the specific course di
 For example, if you are completing "Dagster Essentials", change into that directory:
 
 ```bash
-cd dagster_university/dagster_essentials
+cd project-dagster-university/dagster_university/dagster_essentials
 ```
 
 ## Install the dependencies
