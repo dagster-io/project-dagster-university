@@ -38,19 +38,20 @@ Historically, many teams have tried multiple deployments to solve these problems
 
 Dagster uses code locations to solve these problems. With code locations, users isolate their codebases without requiring multiple deployments.
 
-Let’s go back to the cookies for a moment. If your home cookie baking takes off, you might want to expand to becoming a fully-fledged bakery. In the real world, this could be a deployment of Dagster.
+Let’s go back to the cookies for a moment. If your home cookie baking takes off, you might want to expand and become a full-fledged bakery.
 
-As you expand, you may use a kitchen for different purposes:
+As you expand, you may need to use the kitchen for different purposes:
 
-- A test kitchen
+- Commercial production
+- Testing new recipes
 - Packaging
 - Decorating
 
-To ensure things run smoothly, you’d want each purpose to have its own location in the bakery. By giving each purpose its own location, you reduce the likelihood of locations negatively impacting each other. For example, a fire in the test kitchen wouldn’t impact the core business in the commercial kitchen.
+To ensure things run smoothly, you’d want each purpose to have its own kitchen because that reduces the likelihood of what's happening in one kitchen negatively impacting another. For example, a fire in the test kitchen wouldn’t impact the core business in the commercial kitchen. However, you wouldn't want a whole separate bakery for each purpose because that would be more difficult to maintain and oversee. While you were working in the test bakery, you wouldn't be able to keep an eye on the commerical bakery.
 
 ![Different bakery functions, like packaging and decorating, contained within a Bakery location](/images/dagster-essentials/lesson-5/bakery-locations.png)
 
-However, despite all locations being independent of each other, they’re still in the same building. This allows you to always know what’s happening with all aspects of your bakery.
+We want separate kitchens within the same bakery so that even though all kitchens are independent, they’re still in the same building. This allows you to always know what’s happening with all aspects of your bakery.
 
 ---
 
