@@ -113,7 +113,7 @@ You saw that using `dg` to scaffold our project, the `Definitions` will automati
    ...
 
    @dg.definitions
-   def resources():
+   def resources() -> dg.Definitions:
        return dg.Definitions(resources={"database": database_resource})
    ```
 
@@ -131,7 +131,7 @@ You saw that using `dg` to scaffold our project, the `Definitions` will automati
    )
 
    @dg.definitions
-   def resources():
+   def resources() -> dg.Definitions:
        return dg.Definitions(resources={"database": database_resource})
    ```
 
