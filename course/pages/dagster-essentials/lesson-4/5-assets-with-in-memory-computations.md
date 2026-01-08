@@ -108,8 +108,8 @@ In this section, you’ll create an asset that depends on `manhattan_stats`, loa
        trips_by_zone.plot(column="num_trips", cmap="plasma", legend=True, ax=ax, edgecolor="black")
        ax.set_title("Number of Trips per Taxi Zone in Manhattan")
 
-       ax.set_xlim([-74.05, -73.90])  # Adjust longitude range
-       ax.set_ylim([40.70, 40.82])  # Adjust latitude range
+       ax.set_xlim(-74.05, -73.90)  # Adjust longitude range
+       ax.set_ylim(40.70, 40.82)  # Adjust latitude range
        
        # Save the image
        plt.savefig(constants.MANHATTAN_MAP_FILE_PATH, format="png", bbox_inches="tight")
