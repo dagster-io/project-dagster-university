@@ -76,19 +76,6 @@ Now that you understand how to define asset descriptions, let’s take a look at
 ---
 
 - {% width="60%" %}
-  For each asset in the **Assets** tab, the description will display under each asset key.
-
-{% /table %}
-
-{% table %}
-
-- Global Asset Lineage
-
----
-
-- {% width="60%" %}
-  In the **Global Asset Lineage** page, the description will be included in each of the asset boxes in the DAG.
-
-- ![The Global Asset Lineage page in the Dagster UI](/images/dagster-essentials/extra-credit/ui-global-asset-lineage.png) {% rowspan=2 %}
+  For each asset in the **Lineage** tab, the description will display under each asset key.
 
 {% /table %}
