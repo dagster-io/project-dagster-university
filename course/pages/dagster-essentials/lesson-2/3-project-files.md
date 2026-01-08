@@ -11,6 +11,7 @@ Let’s talk a bit about the files in the Dagster Essentials course. The `dagste
 ```bash
 dagster_university/dagster_essentials
 .
+├── .env
 ├── dagster_cloud.yaml
 ├── data
 ├── Makefile
@@ -18,17 +19,15 @@ dagster_university/dagster_essentials
 ├── pytest.ini
 ├── README.md
 ├── src
-│   ├── __init__.py
-│   └── dagster_essentials
-│       ├── __init__.py
-│       ├── completed
-│       └── defs
-│           ├── __init__.py
-│           ├── assets
-│           │   └── constants.py
-│           ├── jobs.py
-│           ├── partitions.py
-│           └── resources.py
+│   └── dagster_essentials
+│       ├── __init__.py
+│       ├── completed
+│       ├── definitions.py
+│       └── defs
+│           ├── __init__.py
+│           └── assets
+│               ├── __init__.py
+│               └── constants.py
 ├── tests
 └── uv.lock
 ```
