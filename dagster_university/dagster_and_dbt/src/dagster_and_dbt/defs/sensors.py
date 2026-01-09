@@ -7,7 +7,7 @@ from dagster_and_dbt.defs.jobs import adhoc_request_job
 
 
 @dg.sensor(job=adhoc_request_job)
-def adhoc_request_sensor(context: dg.SensorEvaluationContext):
+def adhoc_request_sensor(context: dg.SensorEvaluationContext) -> dg.SensorResult:
     PATH_TO_REQUESTS = os.path.join(
         os.path.dirname(__file__),
         "../../../",
@@ -47,5 +47,6 @@ def adhoc_request_sensor(context: dg.SensorEvaluationContext):
                 )
 
     return dg.SensorResult(
-        run_requests=runs_to_request, cursor=json.dumps(current_state)
+        run_requests=runs_to_request,
+        cursor=json.dumps(current_state),
     )

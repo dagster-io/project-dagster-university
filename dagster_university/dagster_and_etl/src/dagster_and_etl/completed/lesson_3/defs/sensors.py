@@ -9,7 +9,7 @@ from dagster_and_etl.completed.lesson_3.defs.assets import dynamic_partitions_de
 
 
 @dg.sensor(target=jobs.import_dynamic_partition_job)
-def dynamic_sensor(context: dg.SensorEvaluationContext):
+def dynamic_sensor(context: dg.SensorEvaluationContext) -> dg.SensorResult:
     file_path = Path(__file__).absolute().parent / "../../../../../data/source/"
 
     previous_state = json.loads(context.cursor) if context.cursor else {}
