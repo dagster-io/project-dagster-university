@@ -127,7 +127,7 @@ Next, let’s view the metadata in the Dagster UI. This is a good way to survey 
 
 1. Navigate to the **Global Asset Lineage** page.
 2. Click **Reload definitions.**
-3. When the definitions are finished loading, select the `taxi_trips_file` asset and materialization all its partitions.
+3. When the definitions are finished loading, select the `taxi_trips_file` asset and materialize all its partitions.
 
 After the asset has finished materializing, you’ll be able to view the plots associated with the asset. The X-axis of the plot is each partition, labeled with the month. The Y-axis is the number of records for that partition.
 

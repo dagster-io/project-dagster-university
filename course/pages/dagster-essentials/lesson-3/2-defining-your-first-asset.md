@@ -42,7 +42,7 @@ Using `dg` to scaffold your project will ensure that files are placed in the cor
 
 ```bash
 > dg check defs
-All components validated successfully.
+All component YAML validated successfully.
 All definitions loaded successfully.
 ```
 
@@ -114,7 +114,7 @@ We can use `dg` again to check our asset:
 
 ```bash
 > dg check defs
-All components validated successfully.
+All component YAML validated successfully.
 All definitions loaded successfully.
 ```
 
