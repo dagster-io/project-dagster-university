@@ -10,4 +10,4 @@ In the previous lesson, you learned about schedules and running your pipelines r
 
 Therefore, you batch your orders by the day they’re expected to be picked up. Every morning, you look at the orders to be fulfilled that day and only make the cookies for those orders.
 
-By looking at each day at a time, you are **partitioning** the orders. In this lesson, you’ll learn why to partition your data assets and how to do it in Dagster by partitioning the taxi trip data.
+By looking at each day at a time, you are **partitioning** the orders. In this lesson, you’ll learn why you should partition your data assets and how to do it in Dagster by partitioning the taxi trip data.

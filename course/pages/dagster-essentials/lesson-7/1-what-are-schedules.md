@@ -38,7 +38,7 @@ As you might have noticed while defining assets and resources, Dagster’s best 
 To select only the assets you want to include, you’ll use the `AssetSelection` class. This class lets you look up and reference assets across your code location. In particular, there will be two methods that you’ll be using:
 
 - `AssetSelection.all()` gives you a list of all asset definitions in the code location
-- `AssetSelection.assets([<string>, ...])` which gives you a list of assets that match the asset keys provided
+- `AssetSelection.assets(<string>, ...)` which gives you a list of assets that match the asset keys provided
 
 For more info on asset selection, refer to the [asset selection syntax guide in the Dagster docs](https://docs.dagster.io/concepts/assets/asset-selection-syntax).
 
