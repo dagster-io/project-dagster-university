@@ -85,3 +85,14 @@ tests/test_lesson_4.py .                                                        
 You might be wondering when you should mock a resource as opposed to mocking the functions used within the resource. Generally you should mock the methods used by the resource if you are more concerned about testing the functionality of the resource and can mock the methods of the resource if you are more concerned with testing the functionality of the assets.
 
 Mocking the resource itself can also help give you more control over the specific output expected for certain functions. This will make it easier when writing tests for assets that use multiple resources or resources that maintain state.
+
+Use this table as a quick reference:
+
+| Mock Functions When | Mock Resources When |
+| ------------------- | ------------------- |
+| Testing resource implementation | Testing asset logic |
+| Need to verify call parameters | Testing asset graph |
+| Resource has simple interface | Resource has multiple methods |
+| Testing error handling | Testing happy path |
+
+In practice, mocking resources is often the cleaner approach for asset tests because it keeps the test focused on what the asset does, not how the resource works internally.

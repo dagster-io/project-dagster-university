@@ -36,6 +36,42 @@ def test_non_negative():
     pass
 
 
+# Blocking Asset Checks
+def test_validate_schema_pass():
+    pass
+
+
+def test_validate_schema_fail():
+    pass
+
+
+# Asset Checks with Severity
+def test_row_count_check_error():
+    pass
+
+
+def test_row_count_check_warn():
+    pass
+
+
+def test_row_count_check_pass():
+    pass
+
+
+# Multi-Asset Checks
+def test_population_data_checks():
+    pass
+
+
+# Factory Pattern Asset Checks
+def test_city_not_null_check():
+    pass
+
+
+def test_population_not_null_check():
+    pass
+
+
 # Jobs
 def test_jobs():
     pass
