@@ -23,7 +23,7 @@ def state_population_file_config(config: FilepathConfig) -> list[dict]:
         return [row for row in reader]
 ```
 
-Now let's write a new test for this asset. Since we can now provide any file. we will use the `test.csv` file in the `tests/data` directory. This file has the same schema as our ny.csv file but includes some test data.
+Now let's write a new test for this asset. Since we can now provide any file. we will use the `test.csv` file in the `tests/data` directory. This file has the same schema as our `ny.csv` file but includes some test data.
 
 ```
 City,Population
