@@ -100,6 +100,120 @@ def test_non_negative():
     assert not asset_check_fail.passed
 
 
+# Blocking Asset Checks
+def test_validate_schema_pass():
+    """Test that schema validation passes with correct columns."""
+    valid_data = [{"City": "New York", "Population": "8804190"}]
+    result = lesson_6.validate_schema(valid_data)
+    assert result.passed
+    assert "City" in result.metadata["actual_columns"].value
+    assert "Population" in result.metadata["actual_columns"].value
+
+
+def test_validate_schema_fail():
+    """Test that schema validation fails with missing columns."""
+    invalid_data = [{"Name": "New York", "Count": "8804190"}]
+    result = lesson_6.validate_schema(invalid_data)
+    assert not result.passed
+
+
+# Asset Checks with Severity
+def test_row_count_check_error():
+    """Test that empty data returns ERROR severity."""
+    result = lesson_6.row_count_check([])
+    assert not result.passed
+    assert result.severity == dg.AssetCheckSeverity.ERROR
+    assert result.metadata["row_count"].value == 0
+
+
+def test_row_count_check_warn():
+    """Test that low row count returns WARN severity but still passes."""
+    low_data = [{"City": "A", "Population": "1"}, {"City": "B", "Population": "2"}]
+    result = lesson_6.row_count_check(low_data)
+    assert result.passed  # Warning still passes
+    assert result.severity == dg.AssetCheckSeverity.WARN
+    assert result.metadata["row_count"].value == 2
+
+
+def test_row_count_check_pass():
+    """Test that sufficient row count passes without warning."""
+    good_data = [
+        {"City": "A", "Population": "1"},
+        {"City": "B", "Population": "2"},
+        {"City": "C", "Population": "3"},
+    ]
+    result = lesson_6.row_count_check(good_data)
+    assert result.passed
+    assert result.metadata["row_count"].value == 3
+
+
+# Multi-Asset Checks
+def test_population_data_checks():
+    """Test multi-asset check runs multiple validations."""
+    test_data = [
+        {"City": "New York", "Population": "8804190"},
+        {"City": "Buffalo", "Population": "278349"},
+    ]
+
+    results = list(lesson_6.population_data_checks(test_data))
+
+    assert len(results) == 2
+
+    # Check has_cities result
+    cities_result = next(r for r in results if r.check_name == "has_cities")
+    assert cities_result.passed
+    assert cities_result.metadata["missing_count"].value == 0
+
+    # Check has_populations result
+    pop_result = next(r for r in results if r.check_name == "has_populations")
+    assert pop_result.passed
+    assert pop_result.metadata["missing_count"].value == 0
+
+
+def test_population_data_checks_missing_data():
+    """Test multi-asset check detects missing data."""
+    test_data = [
+        {"City": "New York", "Population": "8804190"},
+        {"City": "", "Population": "278349"},  # Empty city
+    ]
+
+    results = list(lesson_6.population_data_checks(test_data))
+
+    # has_cities should fail (empty string is falsy)
+    cities_result = next(r for r in results if r.check_name == "has_cities")
+    assert not cities_result.passed
+    assert cities_result.metadata["missing_count"].value == 1
+
+
+# Factory Pattern Asset Checks
+def test_city_not_null_check():
+    """Test factory-generated City not-null check."""
+    # Test passing case
+    valid_data = [{"City": "New York", "Population": "8804190"}]
+    result = lesson_6.city_not_null_check(valid_data)
+    assert result.passed
+    assert result.metadata["null_count"].value == 0
+
+    # Test failing case
+    invalid_data = [{"City": None, "Population": "8804190"}]
+    result = lesson_6.city_not_null_check(invalid_data)
+    assert not result.passed
+    assert result.metadata["null_count"].value == 1
+
+
+def test_population_not_null_check():
+    """Test factory-generated Population not-null check."""
+    # Test passing case
+    valid_data = [{"City": "New York", "Population": "8804190"}]
+    result = lesson_6.population_not_null_check(valid_data)
+    assert result.passed
+
+    # Test failing case
+    invalid_data = [{"City": "New York", "Population": None}]
+    result = lesson_6.population_not_null_check(invalid_data)
+    assert not result.passed
+
+
 # Jobs
 def test_jobs():
     assert jobs.my_job
