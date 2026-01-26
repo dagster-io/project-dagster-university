@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/python:1-3.12-bullseye
+FROM mcr.microsoft.com/devcontainers/python:3.12-bookworm
 ENV PYTHONUNBUFFERED 1
 
 COPY --from=ghcr.io/astral-sh/uv:0.6.10 /uv /bin/uv
