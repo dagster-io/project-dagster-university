@@ -99,7 +99,7 @@ def example_response():
 }
 ```
 
-Now we need to set the `get` function in `requests` to return our example response.  We will use [Mock](https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock) to set this behavior behavior:
+Now we need to set the `get` function in `requests` to return our example response.  We will use [Mock](https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock) to set this behavior:
 
 ```python
 mock_response = Mock()

@@ -96,7 +96,7 @@ def test_state_population_file_config_fixture_1(config_file):
 tests/test_lesson_3.py .                                                          [100%]
 ```
 
-## Multiple pytext fixtures
+## Multiple pytest fixtures
 
 Fixtures make testing code much easier to read and helps consolidate aspects that may be used by multiple tests. Tests can also use multiple fixtures. If we wanted to include an additional fixture for the output of the function.
 

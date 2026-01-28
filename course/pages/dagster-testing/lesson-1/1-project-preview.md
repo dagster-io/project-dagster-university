@@ -1,6 +1,6 @@
 ---
 title: "Lesson 1: Project preview"
-module: 'dbt_testing'
+module: 'dagster_testing'
 lesson: '1'
 ---
 

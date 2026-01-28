@@ -49,7 +49,7 @@ FROM postgres:17-alpine
 COPY postgres_bootstrap.sql /docker-entrypoint-initdb.d/
 ```
 
-This two step build does two things. Uses the `postgres:17-alpine` image and copies ane executes the `postgres_bootstrap.sql` file which will seed the database. This SQL file creates the schema, table and inserts a few sample records.
+This two step build does two things. Uses the `postgres:17-alpine` image and copies and executes the `postgres_bootstrap.sql` file which will seed the database. This SQL file creates the schema, table and inserts a few sample records.
 
 ```sql
 CREATE SCHEMA data;

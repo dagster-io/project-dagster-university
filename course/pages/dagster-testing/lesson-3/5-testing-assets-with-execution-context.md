@@ -67,7 +67,7 @@ def test_assets_context(file_output):
     assert result.output_for_node("state_population_file_logging") == file_output
 ```
 
-When using `dg.Materialize()`, context does not need to be explicitly passed in.
+When using `dg.materialize()`, context does not need to be explicitly passed in.
 
 ### Supplying context for partitioned assets
 

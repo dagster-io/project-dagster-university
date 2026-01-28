@@ -54,7 +54,7 @@ def test_defs(defs):
 
 ## Definition objects
 
-The `Definitions` object includes additional methods for access various objects contained withi. For example rather than importing assets directly, you can access them from the definitions object. For example we can access the `squared` asset and test it from the definitions.
+The `Definitions` object includes additional methods for accessing various objects contained within. For example rather than importing assets directly, you can access them from the definitions object. For example we can access the `squared` asset and test it from the definitions.
 
 ```python
 # tests/test_lesson_6.py
