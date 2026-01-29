@@ -45,8 +45,8 @@ def state_population_file() -> list[dict]:
 
 The code above:
 
-1. Determines the directory of the Python script being executed and appends `../data/ny.txt`.
-2. Opens the `ny.txt` file.
+1. Determines the directory of the Python script being executed and appends `../data/ny.csv`.
+2. Opens the `ny.csv` file.
 3. Parses each row of the csv into dictionaries with `csv.DictReader`.
 4. Returns the contents of that file as a `list[dict]`.
 

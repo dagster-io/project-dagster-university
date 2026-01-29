@@ -49,7 +49,7 @@ FROM postgres:17-alpine
 COPY postgres_bootstrap.sql /docker-entrypoint-initdb.d/
 ```
 
-This two step build does two things. Uses the `postgres:17-alpine` image and copies ane executes the `postgres_bootstrap.sql` file which will seed the database. This SQL file creates the schema, table and inserts a few sample records.
+This two step build does two things. Uses the `postgres:17-alpine` image and copies and executes the `postgres_bootstrap.sql` file which will seed the database. This SQL file creates the schema, table and inserts a few sample records.
 
 ```sql
 CREATE SCHEMA data;
@@ -71,7 +71,7 @@ INSERT INTO data.city_population VALUES
 That is all the configuration required for Docker. We can now spin up the Postgres database with the Docker CLI:
 
 ```bash 
-> docker compose up -d
+> docker compose -f tests/docker-compose.yaml up -d
 [+] Running 2/2
  ✔ Network tests_default  Created                                                   0.0s
  ✔ Container postgresql                   Started                                                   0.2s
@@ -82,7 +82,7 @@ The `-d` flag will run the resource in the background. If this is the first time
 If we need to stop the Docker service we can run:
 
 ```bash
-docker compose down
+docker compose -f tests/docker-compose.yaml down
 ```
 
 ## Running Docker tests

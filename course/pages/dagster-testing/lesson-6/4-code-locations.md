@@ -8,7 +8,7 @@ lesson: '6'
 
 We have covered how to test everything within a definition. Now we will zoom out and discuss how to test the multiple definitions that make up a platform.
 
-Each definition has will be tied to a unique code location and will have its own Python dependencies. It is important that your tests are tailored to that code location. Part of a mature Dagster deployment is configuring your CI (continuous integration) process to run your tests. How to properly configure that will depend on how the code is organized and if you are using a single repository for all of your code locations (monorepo) or a repository for each code location (multi repo).
+Each definition will be tied to a unique code location and will have its own Python dependencies. It is important that your tests are tailored to that code location. Part of a mature Dagster deployment is configuring your CI (continuous integration) process to run your tests. How to properly configure that will depend on how the code is organized and if you are using a single repository for all of your code locations (monorepo) or a repository for each code location (multi repo).
 
 ## Monorepo
 

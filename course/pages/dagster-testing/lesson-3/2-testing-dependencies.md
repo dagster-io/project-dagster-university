@@ -104,7 +104,7 @@ def test_assets():
             "Population": "211569",
         },
     ]
-    assert result.output_for_node("state_population_file") == state_population
+    assert result.output_for_node("state_population_file") == state_populations
     assert result.output_for_node("total_population") == 9294108
 ```
 

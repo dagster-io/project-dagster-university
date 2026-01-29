@@ -27,7 +27,7 @@ def total_population(
     return sum([int(x["Population"]) for x in all_assets])
 ```
 
-Say we wanted to write a test to ensure that the number returned by `total_population` is always positive. We would define an asset check using the `dg.asset _check` decorator. Within the decorator we link it to the `total_population`.
+Say we wanted to write a test to ensure that the number returned by `total_population` is always positive. We would define an asset check using the `dg.asset_check` decorator. Within the decorator we link it to the `total_population`.
 
 ```python
 @dg.asset_check(asset=total_population)
