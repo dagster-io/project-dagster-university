@@ -71,7 +71,7 @@ INSERT INTO data.city_population VALUES
 That is all the configuration required for Docker. We can now spin up the Postgres database with the Docker CLI:
 
 ```bash 
-> docker compose up -d
+> docker compose -f tests/docker-compose.yaml up -d
 [+] Running 2/2
  ✔ Network tests_default  Created                                                   0.0s
  ✔ Container postgresql                   Started                                                   0.2s
@@ -82,7 +82,7 @@ The `-d` flag will run the resource in the background. If this is the first time
 If we need to stop the Docker service we can run:
 
 ```bash
-docker compose down
+docker compose -f tests/docker-compose.yaml down
 ```
 
 ## Running Docker tests
