@@ -11,6 +11,10 @@ dependencies = [
     "dagster-snowflake",
     "psycopg2-binary",
     "pytest",
+    "pandas",
+    # numpy 2.1.0+ required for Python 3.13 compatibility (especially on Windows)
+    "numpy>=2.1.0; python_version>='3.13'",
+    "numpy>=1.26.0; python_version<'3.13'",
 ]
 
 [project.optional-dependencies]

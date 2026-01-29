@@ -1,8 +1,8 @@
 from pathlib import Path  # noqa: F401
 
+import dagster as dg
 import pytest
 import yaml  # noqa: F401
-import dagster as dg
 from dagster._core.errors import DagsterTypeCheckDidNotPass  # noqa: F401
 
 from dagster_testing.defs.assets import lesson_3

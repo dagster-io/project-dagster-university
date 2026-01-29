@@ -35,6 +35,7 @@ title: Testing with Dagster
   - [Integration resources](/dagster-testing/lesson-5/3-integration-resources)
   - [Configuring integration tests](/dagster-testing/lesson-5/4-configuring-integration-tests)
   - [Integration fixtures](/dagster-testing/lesson-5/5-integration-fixtures)
+  - [Smoke tests](/dagster-testing/lesson-5/6-smoke-tests)
 
 - Lesson 6: Dagster Best Practices
   - [Overview](/dagster-testing/lesson-6/0-overview)

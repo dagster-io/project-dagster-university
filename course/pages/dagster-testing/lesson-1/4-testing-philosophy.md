@@ -106,7 +106,13 @@ def test_asset_graph_with_mocked_resource():
 
 **Purpose**: Validate real resource connections, external system behavior, and end-to-end workflows.
 
-**When to use**: For critical paths where mock behavior might diverge from reality, and for smoke testing complete workflows.
+**When to use**: For critical paths where mock behavior might diverge from reality.
+
+{% callout %}
+
+> 💡 **Smoke Tests**: There's a complementary technique called **smoke testing** that runs all transformations on empty or synthetic data to catch structural errors quickly. Smoke tests are covered in detail in Lesson 5. They fill the gap between fast unit tests and slower integration tests.
+
+> {% /callout %}
 
 **Why**: Catches issues that mocks miss (actual SQL syntax, API quirks, authentication, real system interactions).
 
