@@ -35,7 +35,7 @@ title: Dagster ETL
   - [Overview](/dagster-etl/lesson-5/0-overview)
   - [dlt](/dagster-etl/lesson-5/1-dlt)
   - [Basic dlt](/dagster-etl/lesson-5/2-basic-dlt)
-  - [Dagster and dlt](/dagster-etl/lesson-5/3-dagster-and-dlt)
+  - [Dagster and dlt](/dagster-etl/lesson-5/3-Dagster-and-dlt)
   - [Refactoring static data with dlt](/dagster-etl/lesson-5/4-refactoring-static-data-with-dlt)
   - [Refactoring APIs with dlt](/dagster-etl/lesson-5/5-refactoring-apis-with-dlt)
 
@@ -43,7 +43,7 @@ title: Dagster ETL
   - [Overview](/dagster-etl/lesson-6/0-overview)
   - [Database replication](/dagster-etl/lesson-6/1-database-replication)
   - [Sling](/dagster-etl/lesson-6/2-sling)
-  - [Sling database replication set up](/dagster-etl/lesson-6/3-sling-database-repication-set-up)
+  - [Sling database replication set up](/dagster-etl/lesson-6/3-sling-database-replication-set-up)
   - [Dagster and Sling](/dagster-etl/lesson-6/4-dagster-and-sling)
   - [Managing Sling assets](/dagster-etl/lesson-6/5-managing-sling-assets)
 

@@ -7,6 +7,7 @@ title: Testing with Dagster
   - [Project preview](/dagster-testing/lesson-1/1-project-preview)
   - [Testing](/dagster-testing/lesson-1/2-testing)
   - [Testing data applications](/dagster-testing/lesson-1/3-testing-data-applications)
+  - [Testing philosophy](/dagster-testing/lesson-1/4-testing-philosophy)
 
 - Lesson 2: Requirements & installation
   - [Requirements](/installation/requirements)
@@ -35,6 +36,7 @@ title: Testing with Dagster
   - [Integration resources](/dagster-testing/lesson-5/3-integration-resources)
   - [Configuring integration tests](/dagster-testing/lesson-5/4-configuring-integration-tests)
   - [Integration fixtures](/dagster-testing/lesson-5/5-integration-fixtures)
+  - [Smoke tests](/dagster-testing/lesson-5/6-smoke-tests)
 
 - Lesson 6: Dagster Best Practices
   - [Overview](/dagster-testing/lesson-6/0-overview)
@@ -42,5 +44,5 @@ title: Testing with Dagster
   - [Definitions](/dagster-testing/lesson-6/2-definitions)
   - [Dagster objects](/dagster-testing/lesson-6/3-dagster-objects)
   - [Code locations](/dagster-testing/lesson-6/4-code-locations)
-  - [Anti-patterns to avoid](/dagster-testing/lesson-6/5-anti-patterns)
+  - [Anti-patterns](/dagster-testing/lesson-6/5-anti-patterns)
   - [AI-generated tests with Dagster Skills](/dagster-testing/lesson-6/6-ai-generated-tests)

@@ -78,3 +78,11 @@ def test_total_population_database():
 
 def test_assets():
     pass
+
+
+# Smoke tests
+
+
+@pytest.mark.smoke
+def test_smoke_pipeline():
+    pass

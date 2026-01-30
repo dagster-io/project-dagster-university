@@ -100,3 +100,20 @@ def test_assets(docker_compose, postgres_resource, query_output_ny):  # noqa: F8
 
     assert result.output_for_node("state_population_database") == query_output_ny
     assert result.output_for_node("total_population_database") == 9082539
+
+
+# Smoke tests
+
+
+@pytest.mark.smoke
+def test_smoke_pipeline():
+    result = dg.materialize(
+        assets=[
+            lesson_5.raw_country_populations,
+            lesson_5.country_populations,
+            lesson_5.continent_stats,
+        ],
+        resources={"io_manager": lesson_5.SmokeIOManager()},
+    )
+
+    assert result.success

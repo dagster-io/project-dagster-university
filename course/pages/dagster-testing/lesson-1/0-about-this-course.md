@@ -14,7 +14,7 @@ By the end of the course, you will:
 
 - Know how to test your Dagster assets
 - Understand mocking external dependencies
-- Manage integration testing
+- Manage integration and smoke testing
 - Recognize best practices for testing in Dagster
 
 ---
