@@ -7,6 +7,7 @@ title: Testing with Dagster
   - [Project preview](/dagster-testing/lesson-1/1-project-preview)
   - [Testing](/dagster-testing/lesson-1/2-testing)
   - [Testing data applications](/dagster-testing/lesson-1/3-testing-data-applications)
+  - [Testing philosophy](/dagster-testing/lesson-1/4-testing-philosophy)
 
 - Lesson 2: Requirements & installation
   - [Requirements](/installation/requirements)
@@ -43,3 +44,4 @@ title: Testing with Dagster
   - [Definitions](/dagster-testing/lesson-6/2-definitions)
   - [Dagster objects](/dagster-testing/lesson-6/3-dagster-objects)
   - [Code locations](/dagster-testing/lesson-6/4-code-locations)
+  - [Anti-patterns](/dagster-testing/lesson-6/5-anti-patterns)

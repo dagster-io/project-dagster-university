@@ -16,10 +16,10 @@ title: Dagster + dbt
   - [Requirements](/installation/requirements)
   - [Set up local](/installation/set-up-local)
   - [Set up Codespace](/installation/set-up-codespace)
-  - [Set up the Dagster project](/dagster-dbt/lesson-2/3-set-up-the-dagster-project)
-  - [Set up the dbt project](/dagster-dbt/lesson-2/3-set-up-the-dbt-project)
-  - [dbt project files](/dagster-dbt/lesson-2/4-dbt-project-files)
-  - [Verify dbt installation](/dagster-dbt/lesson-2/5-verify-dbt-installation)
+  - [Set up the Dagster project](/dagster-dbt/lesson-2/3-set-up-dagster-project)
+  - [Set up the dbt project](/dagster-dbt/lesson-2/4-set-up-the-dbt-project)
+  - [dbt project files](/dagster-dbt/lesson-2/5-dbt-project-files)
+  - [Verify dbt installation](/dagster-dbt/lesson-2/6-verify-dbt-installation)
 
 - Lesson 3: Connecting dbt to Dagster
   - [Overview](/dagster-dbt/lesson-3/1-overview)
