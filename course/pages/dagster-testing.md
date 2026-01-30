@@ -45,3 +45,4 @@ title: Testing with Dagster
   - [Dagster objects](/dagster-testing/lesson-6/3-dagster-objects)
   - [Code locations](/dagster-testing/lesson-6/4-code-locations)
   - [Anti-patterns](/dagster-testing/lesson-6/5-anti-patterns)
+  - [AI-generated tests with Dagster Skills](/dagster-testing/lesson-6/6-ai-generated-tests)
