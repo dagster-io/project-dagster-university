@@ -26,10 +26,13 @@ When writing a test, use this decision tree to determine the appropriate testing
 ├─ RESOURCE BEHAVIOR (configs, partitions, IO managers)
 │  └─> Asset graph test with build_asset_context()
 │
+├─ STRUCTURAL ERRORS across all assets (typos, missing columns)
+│  └─> Smoke test with empty/synthetic data (covered in Lesson 5)
+│
 └─ REAL SERVICE CONNECTION or CRITICAL E2E WORKFLOW
    └─> Integration test (use sparingly)
 ```
 
-**Default**: Start with a direct function test. Only use `dg.materialize()` when you need to test Dagster-specific behavior. Only use integration tests for critical paths where mock behavior might diverge from reality.
+**Default**: Start with a direct function test. Only use `dg.materialize()` when you need to test Dagster-specific behavior. Use smoke tests to catch structural errors across your entire pipeline quickly. Only use integration tests for critical paths where mock behavior might diverge from reality.
 
 This lesson will cover direct function tests and asset graph tests. Integration tests are covered in Lesson 5.
