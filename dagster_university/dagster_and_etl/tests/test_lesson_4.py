@@ -1,5 +1,5 @@
 import datetime
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 import dagster as dg
 import pytest
@@ -7,6 +7,7 @@ from dagster_duckdb import DuckDBResource
 
 import dagster_and_etl.completed.lesson_4.defs
 import dagster_and_etl.completed.lesson_4.defs.assets as assets
+from dagster_and_etl.completed.lesson_4.defs.resources import NASAResource
 from tests.nasa_data import nasa_response
 
 
@@ -175,3 +176,53 @@ def test_asteroid_api_error_handling():
 
 def test_defs(defs):
     assert defs
+
+
+# Resource tests
+def test_nasa_resource_initialization():
+    """Test that NASA resource initializes correctly with API key."""
+    resource = NASAResource(api_key="test_key")
+    assert resource.api_key == "test_key"
+
+
+@pytest.fixture()
+def mock_session():
+    """Create a mock requests session for testing retries."""
+    with patch("requests.Session") as mock_session_class:
+        mock_session_instance = Mock()
+        mock_session_class.return_value = mock_session_instance
+        yield mock_session_instance
+
+
+def test_nasa_resource_api_call(mock_session, asteroid_response):
+    """Test that NASA resource makes correct API calls."""
+    mock_response = Mock()
+    mock_response.json.return_value = {
+        "near_earth_objects": {"2025-04-01": asteroid_response}
+    }
+    mock_response.raise_for_status.return_value = None
+    mock_session.get.return_value = mock_response
+
+    resource = NASAResource(api_key="test_key")
+    result = resource.get_near_earth_asteroids("2025-04-01", "2025-04-02")
+
+    assert result == asteroid_response
+    mock_session.get.assert_called_once()
+    mock_response.raise_for_status.assert_called_once()
+
+
+def test_nasa_resource_api_error():
+    """Test that NASA resource raises errors for failed requests."""
+    from requests.exceptions import HTTPError
+
+    with patch("requests.Session") as mock_session_class:
+        mock_session_instance = Mock()
+        mock_session_class.return_value = mock_session_instance
+
+        mock_response = Mock()
+        mock_response.raise_for_status.side_effect = HTTPError("404 Not Found")
+        mock_session_instance.get.return_value = mock_response
+
+        resource = NASAResource(api_key="test_key")
+        with pytest.raises(HTTPError):
+            resource.get_near_earth_asteroids("2025-04-01", "2025-04-02")

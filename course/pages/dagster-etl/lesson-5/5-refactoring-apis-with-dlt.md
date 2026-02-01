@@ -84,10 +84,13 @@ def dlt_nasa(context: dg.AssetExecutionContext, config: NasaDate):
         dataset_name="nasa_neo",
     )
 
-    load_info = pipeline.run(nasa_neo_source())
+    # Use merge to upsert based on the NEO id, avoiding duplicates
+    load_info = pipeline.run(nasa_neo_source(), write_disposition="merge", primary_key="id")
 
     return load_info
 ```
+
+Notice we're using `write_disposition="merge"` with `primary_key="id"`. This ensures that if we run the pipeline multiple times for the same date, we won't create duplicate records—dlt will update existing records based on the `id` field.
 
 Writing the function this way also makes it easy to include partitions as we would for any other asset.
 
@@ -137,7 +140,12 @@ def dlt_nasa_partition(context: dg.AssetExecutionContext):
         dataset_name="nasa_neo",
     )
 
-    load_info = pipeline.run(nasa_neo_source())
+    # Use merge with primary_key to handle re-runs of the same partition
+    load_info = pipeline.run(nasa_neo_source(), write_disposition="merge", primary_key="id")
 
     return load_info
 ```
+
+{% callout type="note" title="Choosing the Right Write Disposition" %}
+For partitioned data, `merge` is often the safest choice because it handles re-runs gracefully. If a partition fails and needs to be re-run, `merge` will update existing records rather than creating duplicates (which `append` would do) or losing other partitions' data (which `replace` at the table level would do).
+{% /callout %}
