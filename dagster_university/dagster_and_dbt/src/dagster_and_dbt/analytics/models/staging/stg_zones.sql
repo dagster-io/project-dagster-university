@@ -8,3 +8,5 @@ select
     borough,
     zone_name like '%Airport' as is_airport,
 from raw_zones
+
+-- select * from pg_catalog.pg_namespace
