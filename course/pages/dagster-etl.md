@@ -53,3 +53,6 @@ title: Dagster ETL
   - [Sling with Components](/dagster-etl/lesson-7/2-sling-with-components)
   - [Using Components](/dagster-etl/lesson-7/3-using-components)
   - [Organizing our project](/dagster-etl/lesson-7/4-organizing-our-project)
+
+- Lesson 8: Dagster Skills
+  - [Dagster Skills](/shared/dagster-skills.md)

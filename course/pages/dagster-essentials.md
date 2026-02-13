@@ -81,6 +81,9 @@ title: Dagster Essentials
   - [Sensors in the Dagster UI](/dagster-essentials/lesson-9/7-sensors-dagster-ui)
   - [Enabling the sensor](/dagster-essentials/lesson-9/8-enabling-the-sensor)
 
+- Lesson 10: Dagster Skills
+  - [Dagster Skills](/shared/dagster-skills.md)
+
 - [Capstone](/dagster-essentials/capstone)
 
 - Extra credit: Metadata

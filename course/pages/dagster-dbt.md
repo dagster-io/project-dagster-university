@@ -55,4 +55,8 @@ title: Dagster + dbt
   - [Setting up Dagster+](/dagster-dbt/lesson-7/3-setting-up-dagster-cloud)
   - [Creating the manifest during deployment](/dagster-dbt/lesson-7/4-creating-the-manifest-during-deployment)
   - [Preparing for a successful run](/dagster-dbt/lesson-7/5-preparing-for-a-successful-run)
+
+- Lesson 8: Dagster Skills
+  - [Dagster Skills](/shared/dagster-skills.md)
+
 - [Capstone](/dagster-dbt/capstone)
