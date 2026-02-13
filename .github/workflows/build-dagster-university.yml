@@ -26,6 +26,7 @@ jobs:
         with:
           node-version: "20"
           cache: "yarn"
+          cache-dependency-path: "course/yarn.lock"
 
       - name: Enable Corepack
         run: corepack enable
