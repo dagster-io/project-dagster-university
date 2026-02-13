@@ -2,7 +2,9 @@
   "ignorePatterns": [
     { "pattern": "^/" },
     { "pattern": "^#" },
-    { "pattern": "^http://localhost:3000" }
+    { "pattern": "^http://localhost:3000" },
+    { "pattern": "^https://courses\\.dagster\\.io" },
+    { "pattern": "^https://duckdb\\.org" }
   ],
   "timeout": "10s",
   "retryOn429": true,
