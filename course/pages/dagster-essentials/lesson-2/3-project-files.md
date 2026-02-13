@@ -105,4 +105,4 @@ The columns in the following table are as follows:
 
 {% /table %}
 
-For more info about the other files in your Dagster project, check out the [Project file reference in the Dagster Docs](https://docs.dagster.io/guides/understanding-dagster-project-files).
+For more info about the other files in your Dagster project, check out the [Project file reference in the Dagster Docs](https://docs.dagster.io/guides/build/projects/project-structure/project-overview).

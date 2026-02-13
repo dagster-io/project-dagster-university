@@ -24,6 +24,16 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+### Checking links
+
+To verify that internal and external links in the course markdown are valid:
+
+```bash
+yarn linkcheck
+```
+
+This runs an internal-link check (that Next.js routes resolve to existing pages) and [markdown-link-check](https://www.npmjs.com/package/markdown-link-check) for external URLs. Internal links starting with `/` and image paths are validated against the `pages/` tree; external links are HTTP-checked. Configuration is in `.markdown-link-check.json`.
+
 ---
 
 ## Authoring

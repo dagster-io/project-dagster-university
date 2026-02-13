@@ -8,7 +8,8 @@
     "ts": "tsc -p .",
     "prettier": "prettier . --write",
     "md-format": "remark --rc-path ./.remarkrc.js \"./pages/**/*.md\" --output --silent",
-    "md-transform": "ts-node -O '{\"module\": \"commonjs\"}' scripts/md-transform.ts && yarn md-format"
+    "md-transform": "ts-node -O '{\"module\": \"commonjs\"}' scripts/md-transform.ts && yarn md-format",
+    "linkcheck": "ts-node -O '{\"module\": \"commonjs\"}' scripts/check-internal-links.ts && node scripts/linkcheck-external.js"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
@@ -38,6 +39,7 @@
     "eslint": "8.57.0",
     "eslint-config-next": "13.4.19",
     "eslint-config-prettier": "^9.0.0",
+    "markdown-link-check": "^3.11.2",
     "postcss": "^8.4.29",
     "prettier": "^3.0.3",
     "remark-cli": "^9.0.0",
