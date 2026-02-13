@@ -35,7 +35,7 @@ title: Dagster ETL
   - [Overview](/dagster-etl/lesson-5/0-overview)
   - [dlt](/dagster-etl/lesson-5/1-dlt)
   - [Basic dlt](/dagster-etl/lesson-5/2-basic-dlt)
-  - [Dagster and dlt](/dagster-etl/lesson-5/3-dagster-and-dlt)
+  - [Dagster and dlt](/dagster-etl/lesson-5/3-Dagster-and-dlt)
   - [Refactoring static data with dlt](/dagster-etl/lesson-5/4-refactoring-static-data-with-dlt)
   - [Refactoring APIs with dlt](/dagster-etl/lesson-5/5-refactoring-apis-with-dlt)
 
