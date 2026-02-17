@@ -50,7 +50,7 @@ Introduced in Dagster 1.11, [Dagster Components](https://docs.dagster.io/guides/
 * Simplify configuration of common workflows using predefined or custom templates.
 * Enable reusable abstractions that make complex orchestration easier to manage and maintain.
 
-Components are an incredibly powerful abstraction in Dagster, and we’ll cover in detail how to use the [dg CLI](https://docs.dagster.io/api/dg) to scaffold and navigate your project. However, we won’t explore all the details of using components for integrations or custom workflows, as these will make more sense once you’re familiar with the foundational objects in a Dagster project. This course will focus primarily on those fundamentals.
+Components are an incredibly powerful abstraction in Dagster, and we’ll cover in detail how to use the [dg CLI](https://docs.dagster.io/api/clis/dg-cli/dg-cli-reference) to scaffold and navigate your project. However, we won’t explore all the details of using components for integrations or custom workflows, as these will make more sense once you’re familiar with the foundational objects in a Dagster project. This course will focus primarily on those fundamentals.
 
 For more information on applying components in practice, explore the following resources:
 

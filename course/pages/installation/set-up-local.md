@@ -9,7 +9,7 @@ This will set up Dagster for you local machine. If you would prefer to do this c
 
 - **To install git.** Refer to the [Git documentation](https://github.com/git-guides/install-git) if you don’t have this installed.
 - **To have Python installed.**  Dagster supports Python 3.10 - 3.13 (3.12 recommended).
-- **To install a package manager**. To manage the python packages, we recommend [`uv`]((https://docs.astral.sh/uv/)) which Dagster uses internally.
+- **To install a package manager**. To manage the python packages, we recommend [`uv`](https://docs.astral.sh/uv/) which Dagster uses internally.
 
 ---
 
