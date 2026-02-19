@@ -10,6 +10,7 @@ Welcome to [Dagster University](https://courses.dagster.io/). This contains all 
 | [`Dagster & dbt`](dagster_university/dagster_and_dbt/README.md) | [Dagster + dbt Course](https://courses.dagster.io/courses/dagster-dbt) |
 | [`Dagster & ETL`](dagster_university/dagster_and_etl/README.md) | [Dagster + ETL Course](https://courses.dagster.io/courses/dagster-etl) |
 | [`Testing with Dagster`](dagster_university/dagster_testing/README.md) | [Testing with Dagster Course](https://courses.dagster.io/courses/dagster-testing) |
+| [`AI-driven Data Engineering`](dagster_university/ai_driven_data_engineering/README.md) | [AI-driven Data Engineering Course](https://courses.dagster.io/courses/ai-driven-data-engineering) |
 
 ## Platform Support
 

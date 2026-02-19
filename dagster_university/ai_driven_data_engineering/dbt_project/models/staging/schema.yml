@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: stg_customers
+    columns:
+      - name: customer_id
+        data_tests:
+          - not_null
+
+  - name: stg_orders
+    columns:
+      - name: order_id
+        data_tests:
+          - not_null
+
+  - name: stg_payments
+    columns:
+      - name: payment_id
+        data_tests:
+          - not_null

@@ -1,0 +1,17 @@
+type: dagster_sling.SlingReplicationCollectionComponent
+
+attributes:
+  connections:
+    DUCKDB:
+      type: duckdb
+      instance: '{{ context.project_root }}/data/jaffle_shop.duckdb'
+    S3:
+      type: s3
+      connection_string: "s3://minioadmin:minioadmin@?region=us-east-1"
+
+  replications:
+    - path: replication.yaml
+      translation:
+        group_name: export
+        deps:
+          - fct_orders

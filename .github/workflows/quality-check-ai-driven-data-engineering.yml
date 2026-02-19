@@ -1,0 +1,17 @@
+name: quality-check-ai-driven-data-engineering
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - dagster_university/ai_driven_data_engineering/**
+
+jobs:
+  check:
+    if: github.event.pull_request.draft == false
+    uses: ./.github/workflows/template-quality-check.yml
+    with:
+      working_directory: ./dagster_university/ai_driven_data_engineering

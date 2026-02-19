@@ -1,0 +1,54 @@
+[project]
+name = "ai-driven-data-engineering"
+version = "0.0.1"
+description = "AI-driven Data Engineering"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "boto3>=1.42.53",
+    "dagster==1.12.14",
+    "dagster-dg-cli",
+    "dagster-webserver",
+    "dagster-aws>=0.28.14",
+    "dagster-dbt>=0.28.14",
+    "dagster-duckdb>=0.28.14",
+    "dagster-sling>=0.28.14",
+    "dbt-duckdb>=1.10.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "pytest",
+]
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "pytest",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ai_driven_data_engineering"]
+
+[tool.dg]
+directory_type = "project"
+
+[tool.dg.project]
+root_module = "ai_driven_data_engineering"
+registry_modules = [
+    "ai_driven_data_engineering.components.*",
+]
+
+[tool.ruff.lint]
+ignore = [
+    "ERA001",
+    "E501",
+    "F401",
+]
+fixable = ["ALL"]
+unfixable = ["F401"]
