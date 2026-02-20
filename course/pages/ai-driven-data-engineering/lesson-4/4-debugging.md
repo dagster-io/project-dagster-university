@@ -6,7 +6,9 @@ lesson: '4'
 
 # Debugging
 
-The skill isn’t only for greenfield builds. You can use it to **debug** when something goes wrong. The agent may not get everything right on the first try; `dg check defs` confirms that definitions load, but runtime errors (e.g. missing files, wrong paths) can still appear when you run assets.
+The skill isn't only useful for greenfield builds. It's also your first line of defense when something breaks. And things will break—`dg check defs` confirms that definitions load correctly, but runtime errors (missing files, wrong paths, misconfigured resources) only surface when you actually run assets.
+
+When that happens, the skill's understanding of Dagster's abstractions means the agent looks in the right place rather than trying random fixes.
 
 ---
 
@@ -18,31 +20,27 @@ Suppose you run the three raw assets and see:
 _duckdb.IOException: IO Error: Cannot open file "/data/jaffle_shop.duckdb": No such file or directory
 ```
 
-The code assumed a DuckDB path like `/data/jaffle_shop.duckdb`, but that path doesn’t exist on your machine (e.g. it was written for a different environment). You need to fix the path and ensure the directory exists.
+The code assumed a DuckDB path that doesn't exist on your machine. The agent may have written an absolute path that worked in its context but not in yours (a common failure mode for AI-generated path handling). You need to fix the path and ensure the parent directory gets created.
 
 ---
 
 ## Debugging with the skill
 
-Ask the agent to debug with the skill:
+Ask the agent to debug with the skill active:
 
-```bash
-/dagster-expert Debug the 3 raw assets
+```bash {% obfuscated="true" %}
+> /dagster-expert Debug the 3 raw assets
 ```
 
-The skill gives the agent a better picture of Dagster’s abstractions (resources, definitions, where config lives). The agent can:
+The skill gives the agent a better picture of Dagster's abstractions—in particular, that connection configuration lives in **resources**, not inline in asset functions. Rather than searching every file for a path string, the agent goes directly to the DuckDB resource, identifies the misconfigured database path, and fixes it in the right place.
 
-- Launch the assets and tail logs to see the error.
-- Identify that the DuckDB **resource** is configured with a bad path.
-- Update the resource configuration so the database path is valid and the parent directory is created if needed.
-
-So the agent doesn’t just “try random fixes”—it knows to look at the DuckDB resource and the file path it uses.
+It can also launch the assets and tail logs to confirm the error before fixing it, so it's working from evidence rather than guessing.
 
 ---
 
 ## Example fix
 
-The agent might update the resource definition to use a path relative to the project and ensure the directory exists:
+The agent updates the resource definition to use a path relative to the project and ensures the parent directory exists at startup:
 
 ```python
 from pathlib import Path
@@ -63,10 +61,10 @@ def resources():
     )
 ```
 
-Previously the resource might have used `database="data/jaffle_shop.duckdb"` or an absolute path like `/data/jaffle_shop.duckdb`. With the skill, the agent is more likely to fix the **right** place (the resource) and use a robust path pattern.
+Previously the resource might have used `database="data/jaffle_shop.duckdb"` (relative to wherever the process runs) or an absolute path like `/data/jaffle_shop.duckdb`. The fix uses `Path(__file__).parents[4]` to anchor the path to the project directory regardless of where the process is invoked. With the skill, the agent is more likely to fix the **right place** (the resource) and use a robust path pattern rather than patching the asset function directly.
 
 ---
 
 ## Building and testing in isolated environments
 
-When you work in a team or with CI, you often want to try changes in an **isolated** environment before merging. [Dagster+](https://docs.dagster.io/deployment/dagster-plus/deploying-code/branch-deployments) supports **branch deployments**: each branch can get its own deployment so you can run and debug pipelines (e.g. after the agent adds or changes assets) without affecting production. This workflow—build with the skill and `dg`, validate with `dg check defs`, run and debug in a branch deployment—fits well with AI-driven iteration.
+When you work in a team or with CI, you often want to try changes in an isolated environment before merging. [Dagster+](https://docs.dagster.io/deployment/dagster-plus/deploying-code/branch-deployments) supports **branch deployments**: each branch gets its own deployment so you can run and debug pipelines after the agent makes changes without affecting production. The workflow—build with the skill and `dg`, validate with `dg check defs`, run and debug in a branch deployment—fits naturally with AI-driven iteration where you're making frequent, incremental changes.

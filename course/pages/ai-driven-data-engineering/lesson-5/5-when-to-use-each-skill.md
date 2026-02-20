@@ -1,65 +1,72 @@
 ---
-title: "Lesson 5: When to use each skill"
+title: "Lesson 5: Skill chaining"
 module: 'ai_driven_data_engineering'
 lesson: '5'
 ---
 
-# When to use the Dagster Expert vs Dagster Integrations skill
+# Skill chaining
 
-Sometimes the right skill isn’t obvious. For example, say you want to add an **asset check** for the Sling Parquet asset to ensure the file exists in S3. The check touches an external service (S3), which might suggest `dagster-integrations`, but the task is really about **adding an asset check**—a core Dagster concept—so **`dagster-expert`** is the better choice.
+If you look back at everything you've built in this lesson, you'll notice something: you didn't use just one skill. You used `/dagster-integrations` to set up dbt and Sling, and somewhere in the process you probably switched to `/dagster-expert` to handle definitions, dependencies, and debugging. That back-and-forth is intentional, and it has a name: skill chaining.
 
-Here’s how to think about when to use each skill, then we’ll add that asset check and refine it with both skills.
+Skill chaining is the practice of switching between skills as the nature of your task shifts. It's one of the most important habits you can develop for AI-driven Dagster work, because the two main skills have genuinely different knowledge domains that complement each other.
 
 ---
 
-## When to use each skill
+## How to think about it
 
-**`/dagster-expert`** — Use for core Dagster questions:
+The distinction isn't always obvious at first, but a simple rule covers most cases:
+
+**Use `/dagster-expert`** when you're working with Dagster itself—its core abstractions, project structure, and CLI:
 
 - Creating or scaffolding assets, schedules, sensors, jobs
 - Understanding project structure and definitions
-- Running or materializing assets (`dg launch`, `dg list`, etc.)
+- Running or materializing assets (`dg launch`, `dg list`)
 - Debugging failed runs
 - Automation: conditions, partitions, backfills
-- Any general Dagster concept (including asset checks)
+- Any general Dagster concept, including asset checks
 
-**`/dagster-integrations`** — Use when connecting Dagster to an external tool:
+**Use `/dagster-integrations`** when you're connecting Dagster to something external:
 
 - Working with a specific `dagster-*` library (e.g. `dagster-dbt`, `dagster-sling`, `dagster-fivetran`)
-- Questions about how an integration or component is configured
+- Configuring or troubleshooting a Component
 - Setting up a new integration for the first time
+- Questions about how a specific external tool maps into Dagster
 
-In practice the two skills often **chain together**. In this course:
-
-1. **`/dagster-integrations`** guided setting up the dagster-sling and dagster-dbt components (external tools).
-2. **`/dagster-expert`** handled scaffolding, the `dg` CLI, asset dependencies, and group names (core Dagster).
-
-**Rule of thumb:** If the question mentions a specific external technology (dbt, S3, Fivetran, Snowflake, etc.), reach for **`/dagster-integrations`**. If it’s about Dagster itself—structure, definitions, checks, automation—use **`/dagster-expert`**.
+**Rule of thumb:** if the question mentions a specific external technology (dbt, S3, Fivetran, Snowflake, Sling), reach for `/dagster-integrations`. If it's about Dagster itself—structure, definitions, checks, automation—use `/dagster-expert`.
 
 ---
 
-## Adding the asset check with dagster-expert
+## The chaining pattern in this lesson
 
-Ask the expert skill to add the check:
+Look at what happened as we built this lesson's project:
+
+1. **`/dagster-integrations`** handled setting up the dbt Component—installing dependencies, scaffolding the Component layout with `dg`, building the dbt models, and validating with `dbt parse`. This is integration territory: the skill knows how `DbtProjectComponent` works, what YAML config it expects, and how dbt projects map to Dagster assets.
+
+2. **`/dagster-expert`** handled wiring assets together, setting group names, and the `dg` workflow around it. Once the dbt Component existed as a Dagster entity, questions like "which group should these assets be in?" or "how do I connect the raw assets to the dbt models?" are core Dagster questions, not dbt questions.
+
+3. **`/dagster-integrations`** came back for the Sling component—same pattern as dbt: scaffold the Component, configure the replication, wire the dependency.
+
+4. **`/dagster-expert`** again for the asset check in the next section. Adding an asset check is a core Dagster concept even though the check touches S3.
+
+5. **`/dagster-integrations`** one more time to refine the asset check to use the S3 resource rather than raw boto3—because now the question is specifically about the `dagster-aws` integration pattern.
+
+That's five skill switches over a single lesson. Each one happens at a natural seam: when the task shifts from "configure this external tool" to "wire this into Dagster" and back again.
+
+---
+
+## A worked example: adding an asset check
+
+The asset check is a good illustration because it sits right on the boundary between the two skills.
+
+You want to verify that the Parquet file the Sling export produces actually exists in S3. The check touches an external service (S3), which might suggest `/dagster-integrations`. But the task is fundamentally about adding an asset check, a core Dagster concept—so start with `/dagster-expert`:
 
 ```bash
-/dagster-expert Include an asset check for the parquet asset to ensure that file exists in the S3 bucket
+> /dagster-expert Include an asset check for the parquet asset to ensure that file exists in the S3 bucket
 ```
 
-The agent creates an asset check that verifies the Parquet file exists in S3. The check runs and passes. The code makes sense, but if you know Dagster you may spot a small anti-pattern: the check builds its own S3 connection (e.g. with `boto3`) instead of using a Dagster **resource**. That works, but it’s cleaner to use the S3 resource so credentials and config live in one place and the check stays focused on the assertion.
+The agent creates a working asset check. The code makes sense, but if you look closely you'll spot a small anti-pattern: the check builds its own S3 connection using `boto3` instead of using a Dagster resource. That works, but it means credentials and endpoint config are embedded in the check rather than living in one shared place.
 
-Example of what the agent might generate (connection inside the check):
-
-```python
-import os
-
-import boto3
-import dagster as dg
-from botocore.exceptions import ClientError
-
-BUCKET = "test-bucket"
-KEY = "fct_orders.parquet"
-
+```python {% obfuscated="true" %}
 @dg.asset_check(asset=dg.AssetKey(["target", "s3_test_bucket_fct_orders", "parquet"]))
 def fct_orders_parquet_exists(context: dg.AssetCheckExecutionContext) -> dg.AssetCheckResult:
     s3 = boto3.client(
@@ -82,21 +89,17 @@ def fct_orders_parquet_exists(context: dg.AssetCheckExecutionContext) -> dg.Asse
         raise
 ```
 
----
-
-## Refining with dagster-integrations: use the S3 resource
-
-Switch to the integrations skill and ask it to use the Dagster S3 resource instead of boto3 directly:
+This is where you chain to `/dagster-integrations`. The next task is specifically about the S3 integration—using the Dagster S3 resource instead of boto3 directly:
 
 ```bash
-/dagster-integrations Rewrite the fct_orders_parquet_exists to use the Dagster S3 resource instead of boto3 directly
+> /dagster-integrations Rewrite the fct_orders_parquet_exists to use the Dagster S3 resource instead of boto3 directly
 ```
 
-The agent makes two changes.
+The integrations skill knows the `dagster-aws` S3 resource pattern and makes two changes.
 
-**1. Add an S3 resource to your definitions** (e.g. in `resources()`):
+First, it adds an S3 resource to your definitions:
 
-```python
+```python {% obfuscated="true" %}
 @dg.definitions
 def resources():
     return dg.Definitions(
@@ -113,9 +116,9 @@ def resources():
     )
 ```
 
-**2. Update the asset check to use the resource** so it receives the S3 client via dependency injection:
+Second, it updates the asset check to receive the S3 client via dependency injection instead of building its own:
 
-```python
+```python {% obfuscated="true" %}
 @dg.asset_check(asset=dg.AssetKey(["target", "s3_test_bucket_fct_orders", "parquet"]))
 def fct_orders_parquet_exists(context: dg.AssetCheckExecutionContext, s3: S3Resource) -> dg.AssetCheckResult:
     client = s3.get_client()
@@ -133,4 +136,12 @@ def fct_orders_parquet_exists(context: dg.AssetCheckExecutionContext, s3: S3Reso
         raise
 ```
 
-The behavior is the same, but credentials and endpoint config live in the resource, and the check is simpler and more consistent with Dagster’s resource pattern. Using **`/dagster-expert`** for the asset check and **`/dagster-integrations`** for the S3 resource is a good example of chaining the two skills for the right outcome.
+The behavior is identical, but credentials and endpoint config now live in the resource, and the check itself is simpler and consistent with how Dagster expects resource-backed checks to look.
+
+---
+
+## Why this matters
+
+Skill chaining isn't overhead—it's how you get the most out of both skills. Each one has deep context about its domain, and neither one has deep context about the other's. When you're working on dbt models, the integrations skill knows far more about `DbtProjectComponent` than the expert skill does. When you're debugging a failed run, the expert skill knows far more about Dagster's execution model.
+
+The seam between the two skills usually corresponds to a natural seam in the work itself: configuring an external tool versus wiring it into Dagster. Recognizing that seam is the skill.

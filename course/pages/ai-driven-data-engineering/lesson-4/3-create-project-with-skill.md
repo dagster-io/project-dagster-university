@@ -15,7 +15,7 @@ Now we’ll do the same thing using the **Dagster Expert** skill. Same goal—sc
 Use the skill-prefixed prompt:
 
 ```bash
-/dagster-expert create a new Dagster project called university
+> dagster-expert create a new Dagster project called university
 ```
 
 ![Prompt with the Dagster Expert skill](/images/ai-driven-data-engineering/lesson-4/prompt-agent-dg-skill.png)
@@ -35,7 +35,7 @@ So you get a modern layout (e.g. `src/university/`, `pyproject.toml`, `uv`) inst
 Ask for the same three assets, again with the skill:
 
 ```bash
-/dagster-expert create 3 assets in the university Dagster project that load data into DuckDB tables for the following external files:
+> dagster-expert create 3 assets in the university Dagster project that load data into DuckDB tables for the following external files:
 
 https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/refs/heads/main/seeds/raw_customers.csv
 https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/refs/heads/main/seeds/raw_orders.csv
@@ -48,7 +48,7 @@ Here the benefit of **AI + CLI** shows up clearly.
 
 ## How the skill and `dg` work together
 
-The skill steers the agent toward `dg` and an opinionated project layout. Dagster works with any package manager, but the skill and this course assume **uv** for dependency management.
+The skill steers the agent toward `dg` and an opinionated project layout. Dagster works with any package manager, but the skill and this course assume `uv` for dependency management.
 
 1. **Dependencies** — The agent sees that DuckDB is needed and adds it via the project’s package manager, e.g.:
 
@@ -97,4 +97,4 @@ tree university/src/university
 
 ![Project layout with the skill](/images/ai-driven-data-engineering/lesson-4/project-with-skills.png)
 
-So you get a **defs-based layout**: assets under `defs/assets/`, shared resources in `defs/resources.py`, and a single `definitions.py` that wires everything together. This matches how `dg` and the Dagster Expert skill expect a project to be structured and makes it easier to add more assets, jobs, and schedules later.
+So you get a defs-based layout: assets under `defs/assets/`, shared resources in `defs/resources.py`, and a single `definitions.py` that wires everything together. This matches how `dg` and the Dagster Expert skill expect a project to be structured and makes it easier to add more assets, jobs, and schedules later.

@@ -6,17 +6,17 @@ lesson: '6'
 
 # Dignified Python vs linters
 
-How is **dignified-python** different from a linter like **Ruff**? And can you use both? Yes—internally we use both, for different reasons.
+How is dignified-python different from a linter like `ruff`? And can you use both? Yes—internally we use both, for different reasons.
 
 ---
 
 ## How they differ
 
-**Ruff** (and linters like it) is **deterministic**. Given the same code and config, it always reports the same issues. It runs quickly, fits into CLI and CI pipelines, and catches a well-defined set of problems: style (e.g. line length, quotes), common bugs (unused imports, undefined names), and rule-based patterns. It doesn’t “understand” higher-level design or narrative best practices; it applies fixed rules.
+* `ruff` (and linters like it) is deterministic. Given the same code and config, it always reports the same issues. It runs quickly, fits into CLI and CI pipelines, and catches a well-defined set of problems: style (e.g. line length, quotes), common bugs (unused imports, undefined names), and rule-based patterns. It doesn’t “understand” higher-level design or narrative best practices; it applies fixed rules.
 
-**Dignified-python** is an **AI skill**. The agent reads the skill’s rules and your code, then suggests changes based on those patterns. It can address structure (e.g. “move this side effect inside a function”), repetition (“factor these three functions into one helper”), and design choices that are hard to encode as linter rules. The output can vary slightly between runs or agents, and it requires an AI assistant in the loop.
+* Dignified-python is an AI skill. The agent reads the skill’s rules and your code, then suggests changes based on those patterns. It can address structure (e.g. “move this side effect inside a function”), repetition (“factor these three functions into one helper”), and design choices that are hard to encode as linter rules. The output can vary slightly between runs or agents, and it requires an AI assistant in the loop.
 
-So: **Ruff** = deterministic, fast, great for pipelines and consistent style. **Dignified-python** = broader, design- and structure-oriented, used with an agent to improve code quality beyond what a linter checks.
+So: `ruff` = deterministic, fast, great for pipelines and consistent style. Dignified-python = broader, design- and structure-oriented, used with an agent to improve code quality beyond what a linter checks.
 
 ---
 

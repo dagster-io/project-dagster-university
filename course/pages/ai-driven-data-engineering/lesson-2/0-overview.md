@@ -12,7 +12,7 @@ This lesson gets you ready to follow the rest of the course. You’ll choose an 
 
 ## Works with any AI coding agent
 
-The course should work with **any AI coding agent** that supports skills. The only requirement is that your agent can load and use the [Dagster skills](https://github.com/dagster-io/skills) from the `dagster-io/skills` repository. Those skills give the agent the right context to build Dagster projects with `dg`, follow best practices, and use our integrations.
+The course should work with any AI coding agent that supports skills. The only requirement is that your agent can load and use the [Dagster skills](https://github.com/dagster-io/skills) from the `dagster-io/skills` repository. Those skills give the agent the right context to build Dagster projects with `dg`, follow best practices, and use our integrations.
 
 We provide short setup pages for the main options:
 
@@ -27,7 +27,7 @@ Pick the page that matches your agent and follow the steps to ensure the Dagster
 
 ## Non-deterministic behavior
 
-Coding with an AI agent is **non-deterministic**. The code and commands you get may differ slightly from the examples in this course depending on:
+Coding with an AI agent is non-deterministic. The code and commands you get may differ slightly from the examples in this course depending on:
 
 - The agent and model you use (e.g. Claude Code with Sonnet 4.5, Cursor with a different model)
 - The version of the Dagster skills

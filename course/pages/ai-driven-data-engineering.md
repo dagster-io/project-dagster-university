@@ -5,8 +5,8 @@ title: AI Driven Data Engineering
 - Lesson 1: Introduction
   - [About this course](/ai-driven-data-engineering/lesson-1/0-about-this-course)
   - [AI Driven vs AI Pipelines](/ai-driven-data-engineering/lesson-1/1-ai-driven-vs-ai-pipelines)
-  - [Benefits of AI Driven](/ai-driven-data-engineering/lesson-1/2-benefits-of-ai-driven)
   - [Project preview](/ai-driven-data-engineering/lesson-1/3-project-preview)
+  - [Thinking in assets](/ai-driven-data-engineering/lesson-1/4-thinking-in-assets)
 
 - Lesson 2: Project setup
   - [Overview](/ai-driven-data-engineering/lesson-2/0-overview)
@@ -21,7 +21,6 @@ title: AI Driven Data Engineering
   - [The dg CLI](/ai-driven-data-engineering/lesson-3/2-dg-cli)
   - [CLI vs MCPs](/ai-driven-data-engineering/lesson-3/3-cli-vs-mcps)
   - [Dagster Skills](/ai-driven-data-engineering/lesson-3/4-dagster-skills)
-  - [How we evaluate our skills](/ai-driven-data-engineering/lesson-3/5-how-we-evaluate-our-skills)
 
 - Lesson 4: Starting a Dagster project with and without skills
   - [Overview](/ai-driven-data-engineering/lesson-4/0-overview)
@@ -45,3 +44,7 @@ title: AI Driven Data Engineering
   - [Our patterns](/ai-driven-data-engineering/lesson-6/1-our-patterns)
   - [Cleaning up our code](/ai-driven-data-engineering/lesson-6/2-cleaning-up-our-code)
   - [Dignified Python vs linters](/ai-driven-data-engineering/lesson-6/3-dignified-python-vs-linters)
+
+- Extra credit
+  - [Overview](/ai-driven-data-engineering/extra-credit/0-overview)
+  - [How we evaluate our skills](/ai-driven-data-engineering/extra-credit/1-how-we-evaluate-our-skills)

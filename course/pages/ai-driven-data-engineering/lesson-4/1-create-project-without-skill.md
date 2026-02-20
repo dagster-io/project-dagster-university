@@ -15,7 +15,7 @@ First we’ll create a Dagster project **without** using the Dagster Expert skil
 Use a generic prompt such as:
 
 ```bash
-/create a new Dagster project called university
+> create a new Dagster project called university
 ```
 
 ![Generic prompt to the agent](/images/ai-driven-data-engineering/lesson-4/prompt-agent.png)
@@ -35,7 +35,7 @@ That uses the older `dagster project scaffold` CLI, which produces a flat layout
 Next, ask the agent to add assets that load data into DuckDB from external CSV URLs:
 
 ```bash
-/create 3 assets in the university Dagster project that load data into DuckDB tables for the following external files:
+> create 3 assets in the university Dagster project that load data into DuckDB tables for the following external files:
 
 https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/refs/heads/main/seeds/raw_customers.csv
 https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/refs/heads/main/seeds/raw_orders.csv
@@ -61,4 +61,4 @@ university/university
 
 ![Project layout without the skill](/images/ai-driven-data-engineering/lesson-4/project-without-skills.png)
 
-So you end up with a **flat, minimal layout**: a single `assets.py` and a single `definitions.py`. It works, but there’s no standard `defs/` structure, no `dg`-driven scaffolding, and no built-in habit of running `dg check defs` to validate. In the next sections we’ll redo the same workflow **with** the Dagster Expert skill and compare.
+So you end up with a flat, minimal layout: a single `assets.py` and a single `definitions.py`. It works, but there’s no standard `defs/` structure, no `dg`-driven scaffolding, and no built-in habit of running `dg check defs` to validate. In the next sections we’ll redo the same workflow with the Dagster Expert skill and compare.

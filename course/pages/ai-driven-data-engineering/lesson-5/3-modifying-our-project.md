@@ -6,31 +6,31 @@ lesson: '5'
 
 # Modifying our project
 
-Once the dbt Component and models are in place, you can refine the project with follow-up prompts. The **`dagster-integrations`** skill knows how to wire dependencies, set asset metadata (like group names), and add dbt tests.
+The dbt Component and models are in place, but the project isn't quite right yet. The dbt assets aren't connected to the raw assets in the graph, they're not organized into a group, and we don't have any data quality checks. Each of these is a follow-up prompt, and the `dagster-integrations` skill knows how to handle all of them.
 
 ---
 
 ## Connect dbt assets to the raw assets
 
-First, make sure the dbt assets are correctly dependent on the raw assets so that materializing the dbt models runs after the raw tables are populated:
+The most important fix is wiring the dependency: dbt models should only materialize after the raw assets have run. Without this connection, Dagster doesn't know the order things need to happen in. Ask the skill to make the connection:
 
-```bash
-/dagster-integrations Connect the dbt assets to the raw assets
+```bash {% obfuscated="true" %}
+> /dagster-integrations Connect the dbt assets to the raw assets
 ```
 
-The agent will ensure the Dagster asset graph has the right edges: raw assets → dbt staging (and downstream) models. That might involve updating the Component config or the definitions that load the dbt project.
+The agent updates the asset graph so the dbt staging models depend on the corresponding raw assets. After this change, materializing `stg_customers` will automatically trigger `raw_customers` first if it's stale. That's the lineage working as intended.
 
 ---
 
 ## Set a group name for dbt assets
 
-To keep the UI organized, put the dbt-derived assets in a group (e.g. `transformation`):
+With multiple layers of assets in the catalog—raw tables, staging models, a facts table, eventually an S3 export—organization matters. Putting the dbt-derived assets in a `transformation` group makes the asset graph easier to read and the catalog easier to navigate:
 
-```bash
-/dagster-integrations The dbt assets should have a group name of "transformation"
+```bash {% obfuscated="true" %}
+> /dagster-integrations The dbt assets should have a group name of "transformation"
 ```
 
-The agent will update the Component configuration. With YAML-based config, the change often looks like adding a `translation` block that sets the group name for assets produced by the Component. For example, in the component’s config (e.g. in `defs.yaml` or the equivalent):
+The agent updates the Component configuration. With YAML-based config, this typically means adding a `translation` block that sets the group name for all assets produced by the Component:
 
 ```yaml
 attributes:
@@ -39,18 +39,22 @@ attributes:
     group_name: transformation
 ```
 
-So all dbt assets show up under the **transformation** group in the Dagster UI.
+Once applied, all dbt assets appear under the **transformation** group in the Dagster UI, visually separated from the raw ingestion layer.
 
 ![Asset graph with dbt assets in the transformation group](/images/ai-driven-data-engineering/lesson-5/project-dbt-translator.png)
 
 ---
 
-## Include dbt tests
+## Add dbt tests
 
-Add dbt tests so you can catch bad data (e.g. NULLs in id columns) as part of your pipeline:
+Data quality checks catch problems before they propagate downstream. Adding `not_null` and `unique` tests on id columns is a good starting point—they're low effort and catch a large class of real problems:
 
-```bash
-/dagster-integrations Include some dbt tests to ensure that there are not NULLs for the id columns
+```bash {% obfuscated="true" %}
+> /dagster-integrations Include some dbt tests to ensure that there are not NULLs for the id columns
 ```
 
-The agent will add the appropriate dbt tests (e.g. `unique` and `not_null` on id columns) in your dbt project. When the dbt Component is configured to expose tests as Dagster assets or as check ops, those tests will run as part of your graph and show up in the UI. You get both dbt’s semantics and Dagster’s visibility and dependency tracking.
+The agent adds the appropriate dbt tests to your models. When the dbt Component is configured to expose tests as Dagster asset checks, those tests run as part of your graph and show up in the UI alongside the assets they validate. You get dbt's semantics and Dagster's visibility and dependency tracking at the same time.
+
+---
+
+After these three changes, open the asset catalog and take stock of what you've built. You should see the raw assets and dbt models connected with the right dependencies, the dbt group organized separately, and test checks associated with the staging models. If anything looks off, that's a prompt away from being fixed.

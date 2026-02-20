@@ -32,13 +32,13 @@ So **integrations** (the libraries and patterns that map these tools into Dagste
 
 ## Why Components work well with agents
 
-Like `dg`, **Components reduce the surface area** the agent interacts with when generating code. Instead of the agent inferring:
+Like `dg`, Components reduce the surface area the agent interacts with when generating code. Instead of the agent inferring:
 
 - Where to put dbt config
 - How to wire dbt models to Dagster assets
 - How to add replication (e.g. DuckDB → S3) and where that config lives
 
-…the agent can **scaffold a Component** with `dg` and then fill in the integration-specific bits (dbt models, Sling YAML, etc.). That means:
+…the agent can scaffold a Component with `dg` and then fill in the integration-specific bits (dbt models, Sling YAML, etc.). That means:
 
 - **Less ambiguity** — The layout and patterns are fixed; the agent follows them.
 - **Best practices by default** — Components encode how we recommend using each integration with Dagster.

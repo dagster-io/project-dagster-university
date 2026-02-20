@@ -12,7 +12,7 @@ We maintain a collection of **AI skills** that give coding agents the right cont
 
 ## What are AI skills?
 
-**AI skills** started as an [Anthropic concept](https://docs.anthropic.com/en/docs/build-with-claude/skills) for giving Claude structured, task-relevant guidance. The idea has since been adopted by other coding agents (e.g. Cursor, Windsurf, Codex) via formats like [Agent Skills](https://agentskills.io/home). A skill is essentially a bundle of instructions and references that tell the agent *when* to use *what* context so it stays on task and follows your preferred patterns.
+AI skills started as an [Anthropic concept](https://docs.anthropic.com/en/docs/build-with-claude/skills) for giving Claude structured, task-relevant guidance. The idea has since been adopted by other coding agents (e.g. Cursor, Windsurf, Codex) via formats like [Agent Skills](https://agentskills.io/home). A skill is essentially a bundle of instructions and references that tell the agent *when* to use *what* context so it stays on task and follows your preferred patterns.
 
 ---
 

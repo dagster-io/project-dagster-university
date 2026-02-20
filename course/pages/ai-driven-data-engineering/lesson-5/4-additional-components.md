@@ -6,16 +6,18 @@ lesson: '5'
 
 # Additional components
 
-Most likely dbt isn’t the only integration in your Dagster project. You might not even know what options exist. The **`dagster-integrations`** skill can suggest integrations and then scaffold the right Component so you stay within best practices.
+The transformation layer is in place, but dbt rarely tells the whole story. You also need to get data out of DuckDB and into the systems downstream consumers actually use. In this case, you want to export `fct_orders` to S3 as a Parquet file.
+
+You could write a one-off asset that runs a DuckDB query and uploads the result to S3. It would work. But you'd rather use a proper replication path that handles the mechanics cleanly and gives you a Component layout that's consistent with the rest of the project. The `dagster-integrations` skill can help you figure out what that looks like.
 
 ---
 
 ## Asking the agent for options
 
-Suppose you want to export the results of one of your dbt models (e.g. `fct_orders`) to S3. You could do it with a DuckDB query in an asset, but you’d prefer a proper replication path. You also want to avoid paid services and stick with open-source tools. Ask the agent:
+When you're not sure which integration to use, just ask:
 
 ```bash
-/dagster-integrations I would like to export the data from the fct_orders model to S3. What are some good open-source tools that can handle this with Dagster?
+> /dagster-integrations I would like to export the data from the fct_orders model to S3. What are some good open-source tools that can handle this with Dagster?
 ```
 
 ```
@@ -75,48 +77,40 @@ For exporting from DuckDB to S3, there are two strong open-source options with f
   Would you like to implement one of these?
 ```
 
+This is the integrations skill doing what it's designed for: you described the goal, and it narrowed the decision space to two well-supported options with a concrete recommendation. You didn't have to know that Sling existed.
+
 ---
 
 ## Setting up the Sling component
 
-Once you’ve chosen Sling, ask the agent to add it:
+Once you've chosen Sling, ask the agent to add it:
 
-```bash
-/dagster-integrations Setup a Sling component that exports the DuckDB data from fct_orders to S3 (assume the bucket is called test-bucket).
+```bash {% obfuscated="true" %}
+> /dagster-integrations Setup a Sling component that exports the DuckDB data from fct_orders to S3 (assume the bucket is called test-bucket).
 ```
 
-The flow is similar to adding dbt:
+The flow mirrors what happened with dbt. The agent installs the dependency, scaffolds the Component, and configures the replication:
 
-1. **Install the dependency:**
+```bash
+uv add dagster-sling
 
-   ```bash
-   uv add dagster-sling
-   ```
+dg scaffold defs dagster_sling.SlingReplicationCollectionComponent fct_orders_s3_export
+```
 
-2. **Scaffold the Component** — The agent uses `dg` to add a Sling replication component (e.g. `SlingReplicationCollectionComponent`) with a sensible name:
-
-   ```bash
-   dg scaffold defs dagster_sling.SlingReplicationCollectionComponent fct_orders_s3_export
-   ```
-
-3. **Configure replication** — The agent fills in the replication config (source: DuckDB, target: S3, stream for `fct_orders` → e.g. `s3://test-bucket/exports/fct_orders.parquet`). You may need small tweaks (bucket name, path, format).
+It then fills in the replication config: source DuckDB, target S3, stream `main.fct_orders` to `s3://test-bucket/exports/fct_orders.parquet`. You may need to tweak the bucket name or file path, but the scaffolding handles the structure.
 
 ---
 
 ## Wiring the dependency
 
-So that the Sling export runs only after `fct_orders` is materialized, add an asset dependency:
+The Sling export should only run after `fct_orders` is materialized. Without the dependency, Dagster doesn't know to wait, and you could end up exporting stale data. A single prompt adds the edge:
 
-```bash
-/dagster-integrations The parquet asset should have a dependency on the fct_orders asset.
+```bash {% obfuscated="true" %}
+> /dagster-integrations The parquet asset should have a dependency on the fct_orders asset.
 ```
 
-The agent will wire the Sling-produced asset (e.g. the Parquet file in S3) to depend on the `fct_orders` asset. Then the graph is correct: raw → staging → fct_orders → S3 export, and you can run or schedule the full pipeline with the right order.
+The agent wires the dependency. Now the full graph is correct: raw assets → dbt staging → `fct_orders` → S3 Parquet export. You can run the entire pipeline with one command and everything materializes in the right order.
 
 ![Asset graph with dbt and Sling export to S3](/images/ai-driven-data-engineering/lesson-5/project-dbt-sling.png)
 
----
-
-## Why this fits the lesson
-
-You didn’t have to memorize Sling vs dlt or Component names. You described the **goal** (export fct_orders to S3, open-source), and the integration skill suggested options and then implemented one with a Component. Same pattern as dbt: **skill + `dg` + Component** keeps the agent on a narrow, well-defined path so your project stays consistent and maintainable as you add more integrations.
+Open the asset catalog and look at what you've built. This is the complete ELT pipeline from the project preview—built from prompts, without writing a project scaffold or reading the Sling documentation.

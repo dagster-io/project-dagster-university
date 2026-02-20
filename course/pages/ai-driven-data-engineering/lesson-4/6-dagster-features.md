@@ -14,8 +14,8 @@ Once the project and assets are in place, you can use the skill to add **automat
 
 Ask the agent with the skill:
 
-```bash
-/dagster-expert Include scheduling for the assets for every day at 8am EST
+```bash {% obfuscated="true" %}
+> /dagster-expert Include scheduling for the assets for every day at 8am EST
 ```
 
 The skill directs the agent to use Dagster’s scheduling abstractions (a job that selects the assets, plus a schedule) and to place them in the right files under `defs/`.
@@ -31,7 +31,7 @@ The agent will typically:
 
 For 8:00 AM EST, the cron expression is `0 8 * * *` when the scheduler’s time zone is set to America/New_York (or the equivalent in your deployment). The code might look like this:
 
-```python
+```python {% obfuscated="true" %}
 # defs/schedules.py (or similar)
 import dagster as dg
 

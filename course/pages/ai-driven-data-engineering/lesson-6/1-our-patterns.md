@@ -6,7 +6,7 @@ lesson: '6'
 
 # Our patterns
 
-The **dignified-python** skill encodes a set of Python best practices and philosophies we use at Dagster. The rules cover types, exceptions, API design, naming, and structure—things that make code easier to read, maintain, and reason about. They’re not Dagster-specific; you can apply them to any Python project.
+The dignified-python skill encodes a set of Python best practices and philosophies we use at Dagster. The rules cover types, exceptions, API design, naming, and structure—things that make code easier to read, maintain, and reason about. They’re not Dagster-specific; you can apply them to any Python project.
 
 ---
 
@@ -32,4 +32,4 @@ Typical themes in dignified-python include:
 - **Exceptions** — Handle errors explicitly; don’t swallow or ignore them.
 - **APIs and naming** — Prefer clear, consistent names and small, focused functions.
 
-When you invoke the **`/dignified-python`** skill and point the agent at your code, it uses these patterns to suggest improvements. Next we’ll run it on the project we’ve built so far.
+When you invoke the `/dignified-python` skill and point the agent at your code, it uses these patterns to suggest improvements. Next we’ll run it on the project we’ve built so far.
