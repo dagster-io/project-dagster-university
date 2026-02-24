@@ -1,7 +1,7 @@
 ---
-title: "Lesson 7: Extension ideas"
+title: "Lesson 9: Extension ideas"
 module: 'ai_driven_data_engineering'
-lesson: '7'
+lesson: '9'
 ---
 
 # Extension ideas

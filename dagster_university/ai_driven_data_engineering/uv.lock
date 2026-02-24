@@ -39,6 +39,7 @@ dependencies = [
     { name = "dagster-sling" },
     { name = "dagster-webserver" },
     { name = "dbt-duckdb" },
+    { name = "eventregistry" },
 ]
 
 [package.optional-dependencies]
@@ -64,6 +65,7 @@ requires-dist = [
     { name = "dagster-sling", specifier = ">=0.28.14" },
     { name = "dagster-webserver" },
     { name = "dbt-duckdb", specifier = ">=1.10.1" },
+    { name = "eventregistry", specifier = ">=8.13" },
     { name = "pytest", marker = "extra == 'dev'" },
     { name = "ruff", marker = "extra == 'dev'" },
 ]
@@ -859,6 +861,17 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/a4/f0/620323fd87062ea43e527a2d5ed9e55b525e0847c17d3b307094ddab98a2/duckdb-1.4.4-cp313-cp313-win_amd64.whl", hash = "sha256:6fb1225a9ea5877421481d59a6c556a9532c32c16c7ae6ca8d127e2b878c9389", size = 12268083, upload-time = "2026-01-26T11:49:54.615Z" },
     { url = "https://files.pythonhosted.org/packages/e5/07/a397fdb7c95388ba9c055b9a3d38dfee92093f4427bc6946cf9543b1d216/duckdb-1.4.4-cp313-cp313-win_arm64.whl", hash = "sha256:f28a18cc790217e5b347bb91b2cab27aafc557c58d3d8382e04b4fe55d0c3f66", size = 13006123, upload-time = "2026-01-26T11:49:57.092Z" },
 ]
+
+[[package]]
+name = "eventregistry"
+version = "9.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytz" },
+    { name = "requests" },
+    { name = "six" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d5/71/8e2e8229d4b4ac37a8d64fa219ed9826b2ab05404f00f1a484966d4fd932/eventregistry-9.1.tar.gz", hash = "sha256:6c9e37852e5e16a02f0ba4321ef36ea7c3fd2a7dbcad35d1e9a520915b3e63d5", size = 59066, upload-time = "2023-06-23T08:39:11.206Z" }
 
 [[package]]
 name = "exceptiongroup"

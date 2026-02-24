@@ -16,3 +16,7 @@ sources:
         meta:
           dagster:
             asset_key: ["raw_payments"]
+      - name: trending_events
+        meta:
+          dagster:
+            asset_key: ["trending_events"]

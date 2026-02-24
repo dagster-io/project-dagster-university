@@ -18,6 +18,7 @@ def test_defs_has_raw_assets(defs):
     assert dg.AssetKey("raw_customers") in asset_keys
     assert dg.AssetKey("raw_orders") in asset_keys
     assert dg.AssetKey("raw_payments") in asset_keys
+    assert dg.AssetKey("trending_events") in asset_keys
 
 
 def test_defs_has_job(defs):

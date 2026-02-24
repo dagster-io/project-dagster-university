@@ -18,3 +18,15 @@ models:
       - name: payment_id
         data_tests:
           - not_null
+
+  - name: stg_trending_events
+    columns:
+      - name: event_uri
+        data_tests:
+          - not_null
+      - name: event_date
+        data_tests:
+          - not_null
+      - name: partition_date
+        data_tests:
+          - not_null
