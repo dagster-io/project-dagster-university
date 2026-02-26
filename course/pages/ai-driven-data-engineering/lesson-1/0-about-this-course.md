@@ -16,7 +16,6 @@ Here you'll get an overview of the AI tool landscape, why Dagster has chosen to 
 
 By the end of this course, you will:
 
-- Understand the difference between AI-driven development and AI pipelines (e.g., RAG, ML infrastructure)
 - See how AI can accelerate and improve how you build Dagster applications
 - Use the correct AI tools and patterns so you can be productive without memorizing every Dagster abstraction
 - Jumpstart your developer workflow and take advantage of the AI tools Dagster maintains
@@ -25,7 +24,7 @@ By the end of this course, you will:
 
 ## Required experience
 
-Dagster knowledge is not necessary to complete this course—the AI tools we cover can help you build Dagster applications even as you learn. **If you'd like to learn more about Dagster first**, check out the [Dagster Essentials course](https://courses.dagster.io/courses/dagster-essentials).
+Dagster knowledge is not necessary to complete this course—the AI tools we cover can help you build Dagster applications even as you learn. If you'd like to learn more about Dagster first, check out the [Dagster Essentials course](https://courses.dagster.io/courses/dagster-essentials).
 
 ---
 

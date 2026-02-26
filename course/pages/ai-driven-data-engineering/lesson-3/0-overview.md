@@ -4,7 +4,7 @@ module: 'ai_driven_data_engineering'
 lesson: '3'
 ---
 
-# Overview of AI tools in the Dagster ecosystem
+# Overview
 
 Dagster provides a set of tools and patterns to support AI-driven development. Together they help you scaffold projects, stay within best practices, and work effectively with coding agents—without drowning the model in context or letting it drift off-spec.
 

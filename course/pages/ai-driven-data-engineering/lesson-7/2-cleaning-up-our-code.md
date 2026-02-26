@@ -1,14 +1,12 @@
 ---
-title: "Lesson 6: Cleaning up our code"
+title: "Lesson 7: Cleaning up our code"
 module: 'ai_driven_data_engineering'
-lesson: '6'
+lesson: '7'
 ---
 
 # Cleaning up our code
 
 Let’s apply the **dignified-python** skill to the code we’ve written in this course. Prompts for this skill can be general or very specific. We’ll start with a general question so the agent reviews the codebase against the dignified-python rules.
-
----
 
 ## Ask the skill to review
 
@@ -19,8 +17,6 @@ Point the agent at your project (e.g. the raw assets and resources) and ask:
 ```
 
 The agent loads the dignified-python context and analyzes the code. It may report several issues and suggest concrete changes.
-
----
 
 ## Example improvements it finds
 
@@ -37,8 +33,6 @@ The skill suggests moving the `mkdir()` call inside the function that builds the
 The three raw assets (`raw_customers`, `raw_orders`, `raw_payments`) might be defined as three almost identical functions that differ only by URL, table name, and asset name. That repetition violates the “don’t repeat yourself” idea and makes the file longer and harder to change.
 
 The skill suggests introducing a single helper (e.g. `_make_raw_asset()`) that takes the URL, table name, and asset name as arguments and returns an asset. The three assets are still registered under the same names and group as before; they’re just defined via the helper so there’s no duplicated logic.
-
----
 
 ## Result
 

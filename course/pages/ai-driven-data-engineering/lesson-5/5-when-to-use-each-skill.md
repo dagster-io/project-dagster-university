@@ -10,13 +10,11 @@ If you look back at everything you've built in this lesson, you'll notice someth
 
 Skill chaining is the practice of switching between skills as the nature of your task shifts. It's one of the most important habits you can develop for AI-driven Dagster work, because the two main skills have genuinely different knowledge domains that complement each other.
 
----
-
 ## How to think about it
 
 The distinction isn't always obvious at first, but a simple rule covers most cases:
 
-**Use `/dagster-expert`** when you're working with Dagster itself—its core abstractions, project structure, and CLI:
+Use `/dagster-expert` when you're working with Dagster itself—its core abstractions, project structure, and CLI:
 
 - Creating or scaffolding assets, schedules, sensors, jobs
 - Understanding project structure and definitions
@@ -25,34 +23,30 @@ The distinction isn't always obvious at first, but a simple rule covers most cas
 - Automation: conditions, partitions, backfills
 - Any general Dagster concept, including asset checks
 
-**Use `/dagster-integrations`** when you're connecting Dagster to something external:
+Use `/dagster-integrations` when you're connecting Dagster to something external:
 
 - Working with a specific `dagster-*` library (e.g. `dagster-dbt`, `dagster-sling`, `dagster-fivetran`)
 - Configuring or troubleshooting a Component
 - Setting up a new integration for the first time
 - Questions about how a specific external tool maps into Dagster
 
-**Rule of thumb:** if the question mentions a specific external technology (dbt, S3, Fivetran, Snowflake, Sling), reach for `/dagster-integrations`. If it's about Dagster itself—structure, definitions, checks, automation—use `/dagster-expert`.
-
----
+Rule of thumb: if the question mentions a specific external technology (dbt, S3, Fivetran, Snowflake, Sling), reach for `/dagster-integrations`. If it's about Dagster itself—structure, definitions, checks, automation—use `/dagster-expert`.
 
 ## The chaining pattern in this lesson
 
 Look at what happened as we built this lesson's project:
 
-1. **`/dagster-integrations`** handled setting up the dbt Component—installing dependencies, scaffolding the Component layout with `dg`, building the dbt models, and validating with `dbt parse`. This is integration territory: the skill knows how `DbtProjectComponent` works, what YAML config it expects, and how dbt projects map to Dagster assets.
+1. `/dagster-integrations` handled setting up the dbt Component—installing dependencies, scaffolding the Component layout with `dg`, building the dbt models, and validating with `dbt parse`. This is integration territory: the skill knows how `DbtProjectComponent` works, what YAML config it expects, and how dbt projects map to Dagster assets.
 
-2. **`/dagster-expert`** handled wiring assets together, setting group names, and the `dg` workflow around it. Once the dbt Component existed as a Dagster entity, questions like "which group should these assets be in?" or "how do I connect the raw assets to the dbt models?" are core Dagster questions, not dbt questions.
+2. `/dagster-expert` handled wiring assets together, setting group names, and the `dg` workflow around it. Once the dbt Component existed as a Dagster entity, questions like "which group should these assets be in?" or "how do I connect the raw assets to the dbt models?" are core Dagster questions, not dbt questions.
 
-3. **`/dagster-integrations`** came back for the Sling component—same pattern as dbt: scaffold the Component, configure the replication, wire the dependency.
+3. `/dagster-integrations` came back for the Sling component—same pattern as dbt: scaffold the Component, configure the replication, wire the dependency.
 
-4. **`/dagster-expert`** again for the asset check in the next section. Adding an asset check is a core Dagster concept even though the check touches S3.
+4. `/dagster-expert` again for the asset check in the worked example below. Adding an asset check is a core Dagster concept even though the check touches S3.
 
-5. **`/dagster-integrations`** one more time to refine the asset check to use the S3 resource rather than raw boto3—because now the question is specifically about the `dagster-aws` integration pattern.
+5. `/dagster-integrations` one more time to refine the asset check to use the S3 resource rather than raw boto3—because now the question is specifically about the `dagster-aws` integration pattern.
 
 That's five skill switches over a single lesson. Each one happens at a natural seam: when the task shifts from "configure this external tool" to "wire this into Dagster" and back again.
-
----
 
 ## A worked example: adding an asset check
 

@@ -6,9 +6,7 @@ lesson: '2'
 
 # Project setup
 
-This lesson gets you ready to follow the rest of the course. You’ll choose an AI coding agent, install the **Dagster skills**, and confirm they’re enabled. The course is designed to work with any of the main agent options—only the setup steps differ slightly.
-
----
+This lesson gets you ready to follow the rest of the course. You’ll choose an AI coding agent, install the [Dagster skills](https://github.com/dagster-io/skills), and confirm they’re enabled. The course is designed to work with any of the main agent options—only the setup steps differ slightly.
 
 ## Works with any AI coding agent
 
@@ -29,8 +27,8 @@ Pick the page that matches your agent and follow the steps to ensure the Dagster
 
 Coding with an AI agent is non-deterministic. The code and commands you get may differ slightly from the examples in this course depending on:
 
-- The agent and model you use (e.g. Claude Code with Sonnet 4.5, Cursor with a different model)
+- The agent and model you use (e.g. Claude Code with Sonnet 4.6, Cursor with a different model)
 - The version of the Dagster skills
 - How you phrase your prompts
 
-The course examples use **Claude Code with Sonnet 4.5**. If you use another agent or model, you should still have a similar experience—the workflow (use the skill, use `dg`, follow the prompts) stays the same even if the exact output varies a bit. Once your agent has the Dagster skills enabled, you’re ready to move on to Lesson 3.
+The course examples use Claude Code with Sonnet 4.6. If you use another agent or model, you should still have a similar experience—the workflow (use the skill, use `dg`, follow the prompts) stays the same even if the exact output varies a bit. Once your agent has the Dagster skills enabled, you’re ready to move on to Lesson 3.

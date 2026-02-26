@@ -1,14 +1,12 @@
 ---
-title: "Lesson 6: Dignified Python vs linters"
+title: "Lesson 7: Dignified Python vs linters"
 module: 'ai_driven_data_engineering'
-lesson: '6'
+lesson: '7'
 ---
 
 # Dignified Python vs linters
 
 How is dignified-python different from a linter like `ruff`? And can you use both? Yes—internally we use both, for different reasons.
-
----
 
 ## How they differ
 
@@ -17,8 +15,6 @@ How is dignified-python different from a linter like `ruff`? And can you use bot
 * Dignified-python is an AI skill. The agent reads the skill’s rules and your code, then suggests changes based on those patterns. It can address structure (e.g. “move this side effect inside a function”), repetition (“factor these three functions into one helper”), and design choices that are hard to encode as linter rules. The output can vary slightly between runs or agents, and it requires an AI assistant in the loop.
 
 So: `ruff` = deterministic, fast, great for pipelines and consistent style. Dignified-python = broader, design- and structure-oriented, used with an agent to improve code quality beyond what a linter checks.
-
----
 
 ## Using them together
 

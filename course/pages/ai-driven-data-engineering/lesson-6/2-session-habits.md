@@ -1,14 +1,12 @@
 ---
-title: "Lesson 8: Session habits"
+title: "Lesson 6: Session habits"
 module: 'ai_driven_data_engineering'
-lesson: '8'
+lesson: '6'
 ---
 
 # Session habits
 
 These habits keep sessions productive by preventing the accumulation patterns that degrade recall. They're not rules—they're the cost-benefit reasoning behind each decision.
-
----
 
 ## One task per session
 
@@ -16,9 +14,7 @@ The most effective habit: finish one task, validate it, commit it, then start fr
 
 A session that starts with "add the `trending_events` asset" should end when `dg check defs` is passing and the changes are committed. The next task—adding a sensor, extending the dbt project, fixing a failing test—belongs in a new session.
 
-This isn't about being rigid. It's about avoiding the accumulated noise that builds when a session spans multiple tasks: the stack trace from a debug that's now resolved, the file reads for a task that's long done, the revised decisions that don't apply to the current work. None of that helps the current task. It only occupies context that the current task needs.
-
----
+This isn't about being rigid. It's about avoiding the accumulated noise that builds when a session spans multiple tasks: the stack trace from a debug that's now resolved, the file reads for a task that's long done, the revised decisions that don't apply to the current work. None of that helps the current task. It only occupies context that the current task needs. Starting a new session also keeps token usage lower than continuing a long, noisy one—so the habit helps both quality and cost.
 
 ## Keep validation loops short
 
@@ -30,8 +26,6 @@ If the validation fails and the fix is straightforward, stay in the session—th
 
 If the validation fails and the debugging has been going on for several exchanges without resolution, consider whether starting fresh with a focused prompt ("this specific `dg check defs` error...") would be faster than continuing in a session that's accumulated noise.
 
----
-
 ## Avoid backtracking in long sessions
 
 Backtracking—reversing a decision made several exchanges ago—is expensive in a long session. The earlier decision is in context, the reversal is in context, and the new approach is building on top of both. That layering makes it harder for the agent to track which version of the decision is current.
@@ -39,8 +33,6 @@ Backtracking—reversing a decision made several exchanges ago—is expensive in
 If you catch a bad decision early (within a few exchanges), reversal is clean. The session hasn't built much on top of the wrong choice.
 
 If you're reversing a decision from many exchanges ago, ask: is it cleaner to reverse in this session, or to start fresh and bring only the correct approach forward? Starting fresh doesn't lose progress—it loses noise.
-
----
 
 ## When to start fresh
 
@@ -50,11 +42,9 @@ This is a cost-benefit decision, not a rule. Start fresh when:
 
 **You're reversing an early decision.** If the approach from exchange 5 is being undone in exchange 25, the session has accumulated 20 exchanges of context built on a foundation that's being replaced. Starting fresh with the correct approach is usually cleaner.
 
-**The agent has shown inconsistent recall.** If you've seen two or three of the degradation signals from the previous page—hedging, regressions, inconsistent descriptions—the session has accumulated enough noise that continuing is likely to produce more of the same. The cost of starting fresh is small; the cost of unreliable output is higher.
+**The agent has shown inconsistent recall.** If you've seen two or three of the degradation signals from the first page of this lesson ("What is context")—hedging, regressions, inconsistent descriptions—the session has accumulated enough noise that continuing is likely to produce more of the same. The cost of starting fresh is small; the cost of unreliable output is higher.
 
 **Debugging has generated significant noise.** Stack traces, failed attempts, dead ends. If the debugging session produced a lot of irrelevant history and the issue is now resolved, starting fresh for the fix (rather than applying it in the noisy session) gives the agent a cleaner context for the actual change.
-
----
 
 ## Carrying context forward: the handoff pattern
 
@@ -71,8 +61,6 @@ Before we close, produce a session handoff summary:
 ```
 
 Open the new session with that summary as your first message. The new session starts with exactly the context it needs—no noise, no dead ends, no debugging history.
-
----
 
 ### Example handoff summary
 
@@ -108,8 +96,6 @@ Next task:
 ```
 
 The new session opens with this and immediately has the full picture: what exists, what decisions were made (and which ones were corrected), the current state, and what to do next. No re-reading files to reconstruct project state, no re-explaining conventions.
-
----
 
 ## The handoff is a compressed state snapshot
 

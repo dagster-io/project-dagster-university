@@ -6,9 +6,7 @@ lesson: '4'
 
 # Create a new project (without the skill)
 
-First we’ll create a Dagster project **without** using the Dagster Expert skill. This gives you a baseline: what a capable agent does when it has no Dagster-specific guidance.
-
----
+First we’ll create a Dagster project without using the Dagster Expert skill. This gives you a baseline: what a capable agent does when it has no Dagster-specific guidance.
 
 ## Scaffold the project
 
@@ -18,8 +16,6 @@ Use a generic prompt such as:
 > create a new Dagster project called university
 ```
 
-![Generic prompt to the agent](/images/ai-driven-data-engineering/lesson-4/prompt-agent.png)
-
 The agent will look up how to create a Dagster project and typically run something like:
 
 ```bash
@@ -27,8 +23,6 @@ dagster project scaffold --name university
 ```
 
 That uses the older `dagster project scaffold` CLI, which produces a flat layout (e.g. `university/university/` with `__init__.py`, `assets.py`, `definitions.py`). No `dg` or Components-style layout is implied.
-
----
 
 ## Generate assets
 
@@ -43,8 +37,6 @@ https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/refs/heads/main/s
 ```
 
 The agent will add code (often in `assets.py` or similar) and may or may not use `dagster-duckdb`, correct project layout, or `dg` for validation. You get a working pipeline, but structure and tooling are whatever the model infers.
-
----
 
 ## What you get
 

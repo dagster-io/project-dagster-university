@@ -8,8 +8,6 @@ lesson: '3'
 
 MCP stands for Model Context Protocol. It’s an open protocol that lets AI assistants (e.g. Claude, Cursor) talk to external tools and data sources through a standard interface.
 
----
-
 ## What an MCP server does
 
 An **MCP server** is a process that speaks the MCP protocol. It exposes to the model:
@@ -19,8 +17,6 @@ An **MCP server** is a process that speaks the MCP protocol. It exposes to the m
 - **Prompts** (in some setups) — Predefined prompt templates the client can call.
 
 The AI client (IDE, chatbot, or agent framework) connects to one or more MCP servers. When you ask the model to do something, it can call the server’s tools and read its resources instead of only using the context you pasted into the chat.
-
----
 
 ## Why MCP got attention
 

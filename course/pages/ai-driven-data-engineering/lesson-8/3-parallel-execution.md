@@ -1,14 +1,12 @@
 ---
-title: "Lesson 7: Parallel execution in practice"
+title: "Lesson 8: Parallel execution in practice"
 module: 'ai_driven_data_engineering'
-lesson: '7'
+lesson: '8'
 ---
 
 # Parallel execution in practice
 
 The best way to see what plan mode produces is to look at a concrete example. Adding a NewsAPI integration to the project involved changes across 8 files.
-
----
 
 ## The scope
 
@@ -27,8 +25,6 @@ The full change set for the integration:
 
 Eight files, spanning Python, dbt SQL, dbt YAML, and project config.
 
----
-
 ## Why all 8 can be written simultaneously
 
 Because the plan was complete before any file was written, the design was fully known at write time:
@@ -39,7 +35,7 @@ Because the plan was complete before any file was written, the design was fully 
 
 None of these files needed to wait for another to be written first. A resource definition doesn't depend on the asset file being complete; the dbt source registration doesn't depend on the Python asset existing yet. All 8 can be written in a single message.
 
----
+![Agent flow 4](/images/ai-driven-data-engineering/lesson-8/agent-flow-4.png)
 
 ## Validation as the final sequential step
 
@@ -54,8 +50,6 @@ dbt compile --select stg_trending_events     # validates the SQL model
 `dg check defs` is particularly useful here because it validates the full integration in one command: `NewsApiResource` is correctly defined, `trending_events` loads without import errors, and the schedule referencing both is valid. If any of the parallel writes had an error, `dg check` surfaces it immediately.
 
 The total sequence—plan, 8 parallel writes, 3 sequential validation steps—is faster than writing and validating each file one at a time, and it's easier to debug because there's a clear boundary between "writing phase" and "checking phase."
-
----
 
 ## Applying this pattern yourself
 

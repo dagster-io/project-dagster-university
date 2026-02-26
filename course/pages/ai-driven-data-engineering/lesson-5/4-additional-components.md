@@ -10,8 +10,6 @@ The transformation layer is in place, but dbt rarely tells the whole story. You 
 
 You could write a one-off asset that runs a DuckDB query and uploads the result to S3. It would work. But you'd rather use a proper replication path that handles the mechanics cleanly and gives you a Component layout that's consistent with the rest of the project. The `dagster-integrations` skill can help you figure out what that looks like.
 
----
-
 ## Asking the agent for options
 
 When you're not sure which integration to use, just ask:
@@ -79,8 +77,6 @@ For exporting from DuckDB to S3, there are two strong open-source options with f
 
 This is the integrations skill doing what it's designed for: you described the goal, and it narrowed the decision space to two well-supported options with a concrete recommendation. You didn't have to know that Sling existed.
 
----
-
 ## Setting up the Sling component
 
 Once you've chosen Sling, ask the agent to add it:
@@ -99,8 +95,6 @@ dg scaffold defs dagster_sling.SlingReplicationCollectionComponent fct_orders_s3
 
 It then fills in the replication config: source DuckDB, target S3, stream `main.fct_orders` to `s3://test-bucket/exports/fct_orders.parquet`. You may need to tweak the bucket name or file path, but the scaffolding handles the structure.
 
----
-
 ## Wiring the dependency
 
 The Sling export should only run after `fct_orders` is materialized. Without the dependency, Dagster doesn't know to wait, and you could end up exporting stale data. A single prompt adds the edge:
@@ -111,6 +105,6 @@ The Sling export should only run after `fct_orders` is materialized. Without the
 
 The agent wires the dependency. Now the full graph is correct: raw assets → dbt staging → `fct_orders` → S3 Parquet export. You can run the entire pipeline with one command and everything materializes in the right order.
 
-![Asset graph with dbt and Sling export to S3](/images/ai-driven-data-engineering/lesson-5/project-dbt-sling.png)
+![Asset graph with dbt and Sling export to S3](/images/ai-driven-data-engineering/lesson-6/project-dbt-sling.png)
 
 Open the asset catalog and look at what you've built. This is the complete ELT pipeline from the project preview—built from prompts, without writing a project scaffold or reading the Sling documentation.

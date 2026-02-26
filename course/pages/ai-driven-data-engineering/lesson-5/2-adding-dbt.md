@@ -10,15 +10,11 @@ The raw assets are working: three DuckDB tables with customer, order, and paymen
 
 Most of the time you'd integrate an *existing* dbt project into Dagster—your team already has models, and you're connecting them to an orchestration layer. Here we're generating the entire dbt project from scratch alongside the Dagster integration, which gives you a useful demonstration: with a single prompt, the agent scaffolds both sides of the connection, wired together correctly from the start.
 
----
-
 ## Why switch to `/dagster-integrations`
 
 Up to this point you've been using `/dagster-expert` for everything—project structure, assets, resources, the `dg` workflow. That's the right skill for Dagster's core abstractions. But adding dbt is primarily an integration question: how does `dagster-dbt` work, what does the dbt Component expect, how does a dbt project get wired to Dagster assets? That's the domain of `/dagster-integrations`.
 
 This is the first example of skill chaining in this lesson—switching from the expert skill to the integrations skill at the natural seam between "Dagster structure" and "connecting an external tool." The integrations skill has deep context on `DbtProjectComponent` that the expert skill doesn't; using the right one here is what makes the agent's output trustworthy.
-
----
 
 ## The prompt
 
@@ -29,8 +25,6 @@ Give the agent a clear goal in terms of data products—what models you want, wh
 ```
 
 Notice the prompt describes the asset graph you want, not the code. Staging models for each raw table, with the dependency wiring explicit. The agent figures out the mechanics.
-
----
 
 ## What the agent does
 
@@ -54,19 +48,15 @@ dbt parse --project-dir dbt_project --profiles-dir dbt_project
 
 When `dbt parse` succeeds, the project compiles cleanly and Dagster can load it as assets.
 
----
-
 ## What you see in the UI
 
 Open the asset catalog. The three raw assets you built in Lesson 4 are still there—and now there are three new assets sitting downstream of them: `stg_customers`, `stg_orders`, `stg_payments`.
 
-![Asset graph with raw assets and dbt models](/images/ai-driven-data-engineering/lesson-5/project-dbt.png)
+![Asset graph with raw assets and dbt models](/images/ai-driven-data-engineering/lesson-6/project-dbt.png)
 
 This is the lineage the prompt described, now visible in the graph. The raw assets feed into the staging models exactly as you asked. A new team member looking at this catalog would immediately understand the pipeline's shape—not from reading the code, but from looking at the graph.
 
 There's still some cleanup to do: the dbt assets and raw assets share the same unlabeled space in the catalog, and the dependency wiring between them could be made more explicit. That's what the next section covers.
-
----
 
 ## If something goes wrong
 
