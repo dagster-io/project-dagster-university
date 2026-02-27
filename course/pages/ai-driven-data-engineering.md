@@ -12,7 +12,6 @@ title: AI Driven Data Engineering
   - [Claude Code](/ai-driven-data-engineering/lesson-2/1-claude)
   - [Codex](/ai-driven-data-engineering/lesson-2/2-codex)
   - [Cursor](/ai-driven-data-engineering/lesson-2/3-cursor)
-  - [Other agents (Windsurf and more)](/ai-driven-data-engineering/lesson-2/4-opencode)
 
 - Lesson 3: AI tools in the Dagster ecosystem
   - [Overview](/ai-driven-data-engineering/lesson-3/0-overview)
