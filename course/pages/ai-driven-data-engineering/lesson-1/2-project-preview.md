@@ -8,15 +8,15 @@ lesson: '1'
 
 Over the course of these lessons, you'll build a complete end-to-end ELT pipeline for a fictional e-commerce company. The pipeline has three stages:
 
-**Extract and load** — Raw assets pull data from the web and load it into DuckDB tables.
-
-**Transform** — A dbt project takes those raw tables and builds staging models final models.
-
-**Export** — A Sling component that reads the finished model from DuckDB and exports it to S3 as a Parquet file, ready for downstream consumption by BI tools or other pipelines.
+Extract and load — Raw assets pull data from the web and load it into DuckDB tables.
+Transform — A dbt project takes those raw tables and builds staging models and final models.
+Export — A Sling component that reads the finished model from DuckDB and exports it to S3 as a Parquet file, ready for downstream consumption by BI tools or other pipelines.
 
 By the end, your asset graph will look like this:
 
 [Final Asset Graph](/images/ai-driven-data-engineering/lesson-3/final-dag.png)
+
+But you will also know enough about how to use AI and Dagster to easily extend it to do just about anything.
 
 ## How we'll build it
 

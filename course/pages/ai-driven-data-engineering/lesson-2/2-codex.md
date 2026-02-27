@@ -6,24 +6,25 @@ lesson: '2'
 
 # Codex
 
-If you’re using **Codex** as your AI coding agent, you need to install and enable the Dagster skills so the agent has the right context for building with Dagster. The steps below assume Codex’s skill system (e.g. `/learn` or skills in `~/.codex/skills/`); adjust if your Codex version uses a different flow.
+If you’re using **Codex** as your AI coding agent, follow these steps so the Dagster skills are available. Once they’re installed and enabled, you can use prompts like `/dagster-expert` or `/dagster-integrations` in later lessons.
 
 ---
 
 ## 1. Install Codex
 
-Install Codex from the official setup guide for your environment and sign in.
+Install [Codex](https://openai.com/codex/) from the official setup guide for your environment and sign in.
 
 ---
 
 ## 2. Add the Dagster skills
 
-Codex can load skills from a repository or from a local skills directory. To use the Dagster skills:
+Install using the `npx skills` command-line:
 
-- **From the skill registry:** If Codex supports adding skills by name, add `dagster-io/skills` (or the individual skills such as `dagster-expert`, `dagster-integrations`) so the agent can load them when you invoke the skill in a prompt.
-- **Manual install:** Clone or copy the [Dagster skills](https://github.com/dagster-io/skills) repository (or the relevant skill folders containing `SKILL.md`) into your Codex skills directory (often `~/.codex/skills/`). Restart or refresh Codex so it picks up the new skills.
+```
+npx skills add dagster-io/skills
+```
 
-Check Codex’s current documentation for the exact command or path (e.g. `/learn @dagster-io/skills` or a settings-based install).
+![npx install](/images/ai-driven-data-engineering/lesson-2/npx-install.png)
 
 ---
 
@@ -31,11 +32,13 @@ Check Codex’s current documentation for the exact command or path (e.g. `/lear
 
 In Codex settings or the skill list, confirm that the Dagster-related skills are **enabled**. You want at least:
 
-- **dagster-expert** — for project structure, `dg` CLI, and Dagster patterns  
-- **dagster-integrations** — for adding and configuring Dagster integrations (e.g. dbt, Sling)  
-- **dignified-python** (optional) — for general Python quality
+- `dagster-expert` — for project structure, `dg` CLI, and Dagster patterns  
+- `dagster-integrations` — for adding and configuring Dagster integrations (e.g. dbt, Sling)  
+- `dignified-python` — for general Python quality
 
 Once they’re enabled, you can invoke them in your prompts (e.g. by name or with the `$skill-name` syntax if your version supports it).
+
+![Codex skill](/images/ai-driven-data-engineering/lesson-2/codex-skill.png)
 
 ---
 

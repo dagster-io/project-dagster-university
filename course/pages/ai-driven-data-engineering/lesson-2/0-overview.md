@@ -17,7 +17,6 @@ We provide short setup pages for the main options:
 - **Claude Code** — Install the Dagster skill via the plugin marketplace and confirm it’s enabled.
 - **Cursor** — Add the Dagster skills (e.g. via Cursor’s skills/plugins) and ensure they’re enabled.
 - **Codex** — Install skills via Codex’s skill system and enable the Dagster skills.
-- **Other agents** — For Windsurf and other Agent Skills–compatible tools, install from the Dagster skills repo and enable the skills in your agent’s settings.
 
 Pick the page that matches your agent and follow the steps to ensure the Dagster skill is enabled before you continue to Lesson 3.
 

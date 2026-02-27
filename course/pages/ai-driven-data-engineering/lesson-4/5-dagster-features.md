@@ -13,7 +13,7 @@ Once the project and assets are in place, you can use the skill to add automatio
 Ask the agent to include a automation for the assets created so they execute every day at 8am EST:
 
 ```bash {% obfuscated="true" %}
-> /dagster-expert Include scheduling for the assets for every day at 8am EST
+> /dagster-expert Add a daily schedule that runs the raw assets every day at 8am EST.
 ```
 
 The skill directs the agent to use Dagster’s scheduling abstractions (a job that selects the assets, plus a schedule) and to place them in the right files under `defs/`.

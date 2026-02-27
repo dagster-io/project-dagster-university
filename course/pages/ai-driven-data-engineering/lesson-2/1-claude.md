@@ -12,9 +12,7 @@ If you’re using **Claude Code** as your AI coding agent, follow these steps so
 
 ## 1. Install Claude Code
 
-Install and sign in to Claude Code from the setup guide:
-
-[Claude Code setup](https://code.claude.com/docs/en/setup)
+Install and sign in to [Claude Code](https://code.claude.com/docs/en/setup) from the setup guide.
 
 ---
 
@@ -25,6 +23,8 @@ In Claude Code, add the Dagster skills from the plugin marketplace:
 ```
 /plugin marketplace add dagster-io/skills
 ```
+
+![Claude marketplace](/images/ai-driven-data-engineering/lesson-2/claude-marketplace.png)
 
 This installs the Dagster skill pack (including `dagster-expert`, `dagster-integrations`, and `dignified-python`) so the agent has the right context for building with Dagster.
 
@@ -46,8 +46,10 @@ Switch to the **Installed** tab and verify that the Dagster skills show as enabl
 
 If any are disabled, enable them so the agent can use Dagster best practices and the `dg` CLI when you invoke the skill in your prompts.
 
+![Claude plugin](/images/ai-driven-data-engineering/lesson-2/claude-plugin.png)
+
 ---
 
 ## You’re set
 
-Once the Dagster skills are installed and enabled, you can proceed to Lesson 3. In later lessons you’ll use prompts such as `/dagster-expert create a new Dagster project called university` to get behavior that follows our recommended project layout and tooling.
+With the Dagster skills installed and enabled, you’re ready for Lesson 3. In later lessons you’ll use the skills so the agent follows Dagster best practices and uses `dg` for scaffolding and validation.

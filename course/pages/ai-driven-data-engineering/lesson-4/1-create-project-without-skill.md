@@ -16,6 +16,8 @@ Use a generic prompt such as:
 > create a new Dagster project called university
 ```
 
+![Without 1](/images/ai-driven-data-engineering/lesson-4/without-1.png)
+
 The agent will look up how to create a Dagster project and typically run something like:
 
 ```bash
@@ -53,4 +55,6 @@ university/university
 
 ![Project layout without the skill](/images/ai-driven-data-engineering/lesson-4/project-without-skills.png)
 
-So you end up with a flat, minimal layout: a single `assets.py` and a single `definitions.py`. It works, but there’s no standard `defs/` structure, no `dg`-driven scaffolding, and no built-in habit of running `dg check defs` to validate. In the next sections we’ll redo the same workflow with the Dagster Expert skill and compare.
+So you end up with a flat, minimal layout: a single `assets.py` and a single `definitions.py`. It works, but there’s no standard `defs/` structure, no `dg`-driven scaffolding, and no built-in habit of running `dg check defs` to validate.
+
+In the next sections we’ll redo the same workflow with the Dagster Expert skill and compare.

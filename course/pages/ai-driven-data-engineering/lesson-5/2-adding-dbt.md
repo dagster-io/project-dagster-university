@@ -63,7 +63,7 @@ There's still some cleanup to do: the dbt assets and raw assets share the same u
 The `dagster-integrations` skill handles setting up the integration; the `dagster-expert` skill handles debugging. If a materialization fails, switch skills:
 
 ```bash {% obfuscated="true" %}
-> /dagster-expert Help me debug my failed materialization
+> /dagster-expert Help me debug my failed materialization. Share the error and logs, then fix the issue.
 ```
 
 The agent can inspect logs, definitions, and resource config to fix path issues, dependency wiring, or dbt profile problems. That handoff—integrations to configure, expert to debug—is itself an example of skill chaining, and a preview of the pattern you'll use throughout this lesson.

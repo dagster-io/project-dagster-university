@@ -13,7 +13,7 @@ Let’s apply the **dignified-python** skill to the code we’ve written in this
 Point the agent at your project (e.g. the raw assets and resources) and ask:
 
 ```bash
-> /dignified-python Is this good Python code?
+> /dignified-python Review defs/assets/raw_data.py and defs/resources.py. Does this follow Python best practices?
 ```
 
 The agent loads the dignified-python context and analyzes the code. It may report several issues and suggest concrete changes.

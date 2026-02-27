@@ -13,28 +13,34 @@ Now we’ll do the same thing using the `dagster-expert` skill. Same goal—scaf
 Use the skill-prefixed prompt:
 
 ```bash
-> dagster-expert create a new Dagster project called university
+> /dagster-expert create a new Dagster project called university
 ```
 
-With the skill, the agent uses the latest recommended project creation command. For example as you watch the agent working this time you will see that the [newest project creation](https://docs.dagster.io/guides/build/projects/creating-projects) method is used.
+![With 1](/images/ai-driven-data-engineering/lesson-4/with-1.png)
+
+With the skill, the agent uses the latest recommended project creation command. For example, as you watch the agent working this time you will see that the [newest project creation](https://docs.dagster.io/guides/build/projects/creating-projects) method is used.
 
 ```bash
 uvx create-dagster project university --uv-sync
 ```
 
-This time you will you get a modern layout (e.g. `src/university/`, `pyproject.toml`, `uv`) instead of the older `dagster project scaffold` flat layout. At first glance the result may look similar to “a new project,” but the structure and tooling are the ones Dagster recommends today. And using `dg` this way will help ensure that our subsequent steps can be executed within the context of a structured Dagster project.
+![With 2](/images/ai-driven-data-engineering/lesson-4/with-2.png)
+
+This time you will get a modern layout (e.g. `src/university/`, `pyproject.toml`, `uv`) instead of the older `dagster project scaffold` flat layout. At first glance the result may look similar to “a new project,” but the structure and tooling are the ones Dagster recommends today. And using `dg` this way will help ensure that our subsequent steps can be executed within the context of a structured Dagster project.
 
 ## Add the three assets with the skill
 
-Next we will ask for the same three assets as before but this time we will use the `dagster-expert`.
+Next we'll ask for the same three assets as before, but this time we'll use the `dagster-expert`.
 
 ```bash
-> dagster-expert create 3 assets in the university Dagster project that load data into DuckDB tables for the following external files:
+> /dagster-expert create 3 assets in the university Dagster project that load data into DuckDB tables for the following external files:
 
 https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/refs/heads/main/seeds/raw_customers.csv
 https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/refs/heads/main/seeds/raw_orders.csv
 https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/refs/heads/main/seeds/raw_payments.csv
 ```
+
+![With 3](/images/ai-driven-data-engineering/lesson-4/with-3.png)
 
 The skill again steers the agent toward `dg` and an opinionated project layout. Dagster works with any package manager, but the skill and this course assume `uv` for dependency management.
 
@@ -44,11 +50,15 @@ The skill again steers the agent toward `dg` and an opinionated project layout. 
    uv add dagster-duckdb
    ```
 
+   ![With 4](/images/ai-driven-data-engineering/lesson-4/with-4.png)
+
 2. Scaffolding in the right place — Instead of inventing file locations, the agent uses `dg` so files land where the project expects:
 
    ```bash
    dg scaffold defs dagster.asset assets/raw_data.py
    ```
+
+   ![With 5](/images/ai-driven-data-engineering/lesson-4/with-5.png)
 
    That keeps definitions in the right place and reduces the context the agent needs to guess.
 
@@ -58,13 +68,11 @@ The skill again steers the agent toward `dg` and an opinionated project layout. 
    dg check defs
    ```
 
+   ![With 6](/images/ai-driven-data-engineering/lesson-4/with-6.png)
+
    These quick checks make it easier to do larger changes in small, verifiable steps.
 
-4. Next steps — When checks pass, the skill often suggests the logical next action. For new assets, that might be running them:
-
-   ```bash
-   dg launch --assets "raw_customers,raw_orders,raw_payments"
-   ```
+4. Next steps — When checks pass, the skill often suggests the logical next action. For new assets, that might be running them.
 
 ## How this works with skills
 
@@ -77,7 +85,6 @@ Use the `dg` CLI to create projects and scaffold Dagster objects. For detailed s
 
 **Quick reference:**
 
-```bash
 # Create new project
 uvx create-dagster my_project
 
@@ -87,7 +94,6 @@ dg scaffold defs dagster.asset assets/new_asset.py
 # Validate and run
 dg check defs
 dg dev
-```
 ```
 
 This is minimal but provides the context to the agent on correct order of steps. Notice what the agent doesn't have to load: no full schema, no API docs, no project layout docs. Each command returns a compact response — an exit code and a few lines of output. This is the CLI efficiency from Lesson 3 in practice: the agent gets exactly what it needs, when it needs it, rather than pulling in broad context upfront.

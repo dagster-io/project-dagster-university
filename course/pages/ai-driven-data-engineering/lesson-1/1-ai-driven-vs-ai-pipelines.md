@@ -28,7 +28,7 @@ In this model, AI assists you as a developer: it can help you write assets, defi
 
 This course is focused on **AI-driven workflows**: how you use AI tools to develop and operate Dagster applications. We'll cover the AI tooling Dagster provides and the patterns that help you write better code and get to production sooner. If you're interested in building AI/ML pipelines inside Dagster, you can combine those with what you learn here—but here we're optimizing for how you build with Dagster, not for building RAG or model pipelines themselves.
 
-# Benefits of AI Driven
+## Benefits of AI Driven
 
 Data engineering can be overwhelming. There are many concepts to learn, patterns to follow, and details to get right. Dagster is built to be the best tool for building and operating data platforms—and AI-driven workflows help you take advantage of it without having to know everything upfront.
 

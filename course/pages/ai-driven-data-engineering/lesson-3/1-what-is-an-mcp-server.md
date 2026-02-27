@@ -10,7 +10,7 @@ MCP stands for Model Context Protocol. It’s an open protocol that lets AI assi
 
 ## What an MCP server does
 
-An **MCP server** is a process that speaks the MCP protocol. It exposes to the model:
+An MCP server is a process that speaks the MCP protocol. It exposes to the model:
 
 - **Tools** — Actions the model can invoke (e.g. “run this query”, “fetch that resource”). Each tool has a name, description, and parameters, and the server runs the action and returns a result.
 - **Resources** — Data or context the model can read (e.g. file contents, API responses, database schema).

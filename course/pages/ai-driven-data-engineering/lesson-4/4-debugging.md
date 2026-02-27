@@ -25,7 +25,9 @@ The code assumed a DuckDB database path that doesn't exist on your machine. The 
 Ask the agent to debug with the skill active:
 
 ```bash {% obfuscated="true" %}
-> /dagster-expert Debug the 3 raw assets
+> /dagster-expert The raw assets are failing with this error:
+_duckdb.IOException: IO Error: Cannot open file "/data/jaffle_shop.duckdb": No such file or directory
+Debug and fix the issue.
 ```
 
 The skill gives the agent a better picture of Dagster's abstractions—in particular, that connection configuration lives in `resources`, not inline in asset functions. Rather than searching every file for a path string, the agent goes directly to the DuckDB resource, identifies the misconfigured database path, and fixes it in the right place.

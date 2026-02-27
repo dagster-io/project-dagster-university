@@ -59,9 +59,9 @@ backfill the last 12 months without running everything in one big job. How do I 
 ```
 
 **If you know the term:**
-```
-/dagster-expert Add monthly partitions to the three raw assets and update the schedule
-to run the current month's partition daily
+```bash
+> /dagster-expert Add monthly partitions to the three raw assets and update the schedule
+to run the current month's partition daily.
 ```
 
 After adding partitions, open the asset catalog and look at how the partition slice view changes the way the assets are represented. Upstream partitions automatically propagate to downstream assets—your dbt models and Sling export can be made partition-aware too.
@@ -77,15 +77,15 @@ The pipeline currently runs on a fixed schedule. But what if you want it to trig
 **Skill:** `/dagster-expert`
 
 **If you don't know the term:**
-```
-/dagster-expert Instead of running on a schedule, I want the pipeline to start automatically
+```bash
+> /dagster-expert Instead of running on a schedule, I want the pipeline to start automatically
 whenever a new CSV file appears in an S3 bucket. What's the Dagster way to do this?
 ```
 
 **If you know the term:**
-```
-/dagster-expert Replace the daily schedule with a sensor that watches an S3 prefix and
-triggers a run when a new file appears
+```bash
+> /dagster-expert Replace the daily schedule with a sensor that watches an S3 prefix and
+triggers a run when a new file appears.
 ```
 
 ---
@@ -96,15 +96,15 @@ The pipeline currently pulls from three static CSV URLs. A natural extension is 
 
 This is a good place to use `/dagster-integrations` to discover what's available before committing to anything. Start by asking what options exist for your source:
 
-```
-/dagster-integrations I want to pull data from Postgres into DuckDB as an additional
+```bash
+> /dagster-integrations I want to pull data from Postgres into DuckDB as an additional
 raw asset. What's the best way to set this up with Dagster?
 ```
 
 Or if you're not sure what tools fit:
 
-```
-/dagster-integrations I want to add another data source to the pipeline. What are good
+```bash 
+> /dagster-integrations I want to add another data source to the pipeline. What are good
 open-source options for pulling data from REST APIs with Dagster?
 ```
 
@@ -118,15 +118,15 @@ Instead of (or in addition to) S3, export the `fct_orders` model somewhere else:
 
 **Skill:** `/dagster-integrations`
 
-```
-/dagster-integrations I want to export fct_orders to BigQuery instead of (or in addition to) S3.
+``` bash
+> /dagster-integrations I want to export fct_orders to BigQuery instead of (or in addition to) S3.
 What's the recommended way to do this with Dagster?
 ```
 
 If you're not sure what destination fits your use case, describe the constraint:
 
-```
-/dagster-integrations I need to get fct_orders into something a BI tool can query directly.
+``` bash
+> /dagster-integrations I need to get fct_orders into something a BI tool can query directly.
 What are my options with open-source Dagster integrations?
 ```
 
@@ -138,16 +138,16 @@ The pipeline works, but the asset catalog could tell a richer story. Asset descr
 
 **Skill:** `/dagster-expert`
 
-```
-/dagster-expert Add descriptions and owner tags to all three raw assets and the dbt
-staging models so the asset catalog is self-documenting
+```bash
+> /dagster-expert Add descriptions and owner tags to all three raw assets and the dbt
+staging models so the asset catalog is self-documenting.
 ```
 
 You can also add **materialization metadata**—row counts, file sizes, timestamps—so each asset run records what it produced:
 
 ```
-/dagster-expert Update the raw assets to emit row counts as materialization metadata
-after each run
+> /dagster-expert Update the raw assets to emit row counts as materialization metadata
+after each run.
 ```
 
 ---
@@ -159,8 +159,8 @@ The current dbt project has staging models and a single facts table. A natural n
 **Skill:** `/dagster-integrations`
 
 ```
-/dagster-integrations Add a dbt model called monthly_revenue that aggregates fct_orders
-by month and customer, and expose it as a Dagster asset dependent on fct_orders
+> /dagster-integrations Add a dbt model called monthly_revenue that aggregates fct_orders
+by month and customer, and expose it as a Dagster asset dependent on fct_orders.
 ```
 
 This is also a good opportunity to add more dbt tests—not just `not_null` but referential integrity checks, accepted values, or custom tests for your business rules.

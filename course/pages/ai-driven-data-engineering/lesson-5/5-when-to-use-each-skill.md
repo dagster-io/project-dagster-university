@@ -54,8 +54,8 @@ The asset check is a good illustration because it sits right on the boundary bet
 
 You want to verify that the Parquet file the Sling export produces actually exists in S3. The check touches an external service (S3), which might suggest `/dagster-integrations`. But the task is fundamentally about adding an asset check, a core Dagster concept—so start with `/dagster-expert`:
 
-```bash
-> /dagster-expert Include an asset check for the parquet asset to ensure that file exists in the S3 bucket
+```bash {% obfuscated="true" %}
+> /dagster-expert Include an asset check for the parquet asset to ensure that file exists in the S3 bucket.
 ```
 
 The agent creates a working asset check. The code makes sense, but if you look closely you'll spot a small anti-pattern: the check builds its own S3 connection using `boto3` instead of using a Dagster resource. That works, but it means credentials and endpoint config are embedded in the check rather than living in one shared place.
@@ -85,8 +85,8 @@ def fct_orders_parquet_exists(context: dg.AssetCheckExecutionContext) -> dg.Asse
 
 This is where you chain to `/dagster-integrations`. The next task is specifically about the S3 integration—using the Dagster S3 resource instead of boto3 directly:
 
-```bash
-> /dagster-integrations Rewrite the fct_orders_parquet_exists to use the Dagster S3 resource instead of boto3 directly
+```bash {% obfuscated="true" %}
+> /dagster-integrations Rewrite the fct_orders_parquet_exists to use the Dagster S3 resource instead of boto3 directly.
 ```
 
 The integrations skill knows the `dagster-aws` S3 resource pattern and makes two changes.
