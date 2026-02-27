@@ -1,74 +1,74 @@
 ---
-title: "Lesson 8: Subagents and context isolation"
+title: "Lesson 8: Parallel sessions and context isolation"
 module: 'ai_driven_data_engineering'
 lesson: '8'
 ---
 
-# Subagents and context isolation
+# Parallel sessions and context isolation
 
-Every Claude conversation has a context window—a limit on how much it can hold in active memory at once. For a long, complex session, earlier details get compressed as the conversation grows. This is fine for most work, but it means that in a large implementation, the agent's recall of decisions made early in the session may be less precise by the end.
+Every AI agent conversation has a context window -- a limit on how much it can hold in active memory at once. For a long, complex session, earlier details get compressed as the conversation grows. This is fine for most work, but it means that in a large implementation, the agent's recall of decisions made early in the session may be less precise by the end.
 
-Subagents solve a different problem than plan mode does. Plan mode handles complexity within a single task. Subagents handle situations where two genuinely independent workstreams would otherwise be sequential: you'd finish one completely before starting the other.
+Parallel sessions solve a different problem than plan mode does. Plan mode handles complexity within a single task. Parallel sessions handle situations where two genuinely independent workstreams would otherwise be sequential: you'd finish one completely before starting the other.
 
-## What a subagent is
+## What a parallel session is
 
-A subagent is an isolated agent process that runs concurrently with the main conversation. It starts fresh—no prior conversation history—and works on its assigned task independently. Its output is returned to the main agent when complete.
+A parallel session is a separate agent conversation you start alongside your main one. It begins fresh (no prior conversation history) and works on its assigned task independently. When it finishes, you bring the output back into the main session manually.
 
 This has two practical benefits:
 
-**Context isolation** — the subagent's work doesn't consume the main context window. If the subagent reads 20 files and writes detailed test code, none of that occupies space in the main conversation.
+**Context isolation**: the parallel session's work doesn't consume the main context window. If it reads 20 files and writes detailed test code, none of that occupies space in the main conversation.
 
-**Parallelism** — the subagent runs concurrently. Work that would otherwise be sequential—finish implementation, then write tests—becomes simultaneous.
+**Parallelism**: while the main session is writing implementation files, the parallel session can work simultaneously. Work that would otherwise be sequential becomes concurrent.
 
-## When subagents are worth using
+## When parallel sessions are worth using
 
-The right time to launch a subagent is when a workstream is:
+The right time to open a parallel session is when a workstream is:
 
 - Large enough to meaningfully consume context (reading many files, writing substantial code)
-- Independent enough that it doesn't need the main agent's in-progress output
+- Independent enough that it doesn't need the main session's in-progress output
 
-If a task is small or tightly coupled to the main agent's current work, a subagent adds overhead without benefit. The value is specifically in separating workstreams that are genuinely independent.
+If a task is small or tightly coupled to what the main session is doing, a second session adds switching overhead without much benefit. The value is specifically in separating workstreams that are genuinely independent.
 
 ## Example: Implementation and testing in parallel
 
-Consider asking for the NewsAPI integration *and* tests at the same time:
+Consider asking for the NewsAPI integration *and* tests at the same time. Rather than finishing the implementation and then writing tests sequentially, you can run both simultaneously.
 
+Open your main session and a parallel session at the same time. Give the main session the full implementation task. Give the parallel session a focused prompt:
+
+```text
+Write pytest tests for `NewsApiResource.get_client()` and the `trending_events` asset,
+following the existing test patterns in `tests/`. The resource will have an `api_key`
+field and a `get_client()` method returning an `EventRegistry` instance. The asset will
+write to a `trending_events` table in DuckDB with daily partitions.
 ```
-Implement the NewsAPI integration and write tests for the new resource and asset in parallel.
-```
 
-From a single message:
-
-1. **Main agent** — begins implementation: writes all 8 files, runs `uv sync`, validates with `dg check defs`
-2. **Background subagent** — launched simultaneously with a focused prompt: "Write pytest tests for `NewsApiResource.get_client()` and the `trending_events` asset, following the existing test patterns in `tests/`"
-
-The subagent only needs the *design* to write tests—the interface for `NewsApiResource` and the asset contract—not the implementation files themselves. It can start immediately, from a clean context, in parallel with the main agent's writes.
+The parallel session only needs the *design* to write tests: the interface for `NewsApiResource` and the asset contract, not the implementation files themselves. It can start from the same planning output the main session is working from.
 
 What each context holds:
 
-```
-Main agent context                  Subagent context
+```text
+Main session context                Parallel session context
 ─────────────────────────────────   ─────────────────────────────────
-Full conversation history           Fresh start — design brief only
+Full conversation history           Fresh start -- design brief only
 8 file writes                       Test file research + writing
 uv sync output                      Existing test patterns
 dg check defs output                pytest fixtures and mocks
                                     Final test file
 ```
 
-By the time the main agent finishes validation, the subagent returns a complete test file. The main agent reviews it, places it in `tests/`, and runs `pytest`—no sequential waiting required.
+By the time the main session finishes validation, the parallel session has returned a complete test file. You review it, place it in `tests/`, and run `pytest`. No sequential waiting required.
 
 ## The core value
 
-Implementation and testing are normally sequential phases: you finish the code, then you write tests for it. With a subagent, they become parallel workstreams with isolated contexts. Neither pollutes the other, and the total time is closer to the longer of the two rather than their sum.
+Implementation and testing are normally sequential phases: you finish the code, then you write tests for it. With a parallel session, they become concurrent workstreams with isolated contexts. Neither pollutes the other, and the total time is closer to the longer of the two rather than their sum.
 
-This is the same principle as parallel file writes within a single plan, scaled up to entire workstreams. When you can describe the interface clearly enough that another agent can work from the design alone, the two workstreams can proceed simultaneously.
+This is the same principle as parallel file writes within a single plan, scaled up to entire workstreams. When you can describe the interface clearly enough that a second session can work from the design alone, the two workstreams can proceed simultaneously.
 
 ## The writer/reviewer pattern
 
-Subagents are also useful for a different kind of isolation: code review that carries no bias toward the code being reviewed.
+Parallel sessions are also useful for a different kind of isolation: code review that carries no bias toward the code being reviewed.
 
-When the agent that wrote the code also reviews it, it tends to find what it was looking for—validation of the approach it already chose. A fresh agent, given the same file and no prior involvement, reads it without anchoring to the original intent. It's more likely to catch convention violations, unexpected patterns, or decisions that looked reasonable in context but read strangely from the outside.
+When the agent that wrote the code also reviews it, it tends to find what it was looking for: validation of the approach it already chose. A fresh session, given the same file and no prior involvement, reads it without anchoring to the original intent. It's more likely to catch convention violations, unexpected patterns, or decisions that looked reasonable in context but read strangely from the outside.
 
 The pattern is straightforward:
 
@@ -76,7 +76,7 @@ The pattern is straightforward:
 
 **Session B (reviewer):** starts fresh, receives the relevant files and a focused review prompt:
 
-```
+```text
 Review defs/assets/trending_events.py and defs/resources.py for the following:
 - Does the asset use the _make_raw_asset() factory (not a direct function definition)?
 - Are there any hardcoded values that should come from environment variables or resources?
@@ -86,6 +86,6 @@ Review defs/assets/trending_events.py and defs/resources.py for the following:
 
 The reviewer has no memory of the implementation session, no attachment to any particular approach, and no context noise from debugging rounds. Its only job is to read the code against explicit criteria.
 
-This is also how you use a subagent as a reviewer without stopping the main implementation thread. While Session A finishes validation, a background subagent can review the already-written files in parallel—returning findings by the time the main agent is ready to commit.
+You can also run a reviewer in parallel with the end of an implementation session: while Session A finishes validation, open Session B to review the already-written files. By the time the main session is ready to commit, the review is complete.
 
-The writer/reviewer split is particularly useful in Dagster projects because convention violations are subtle: a raw asset that works correctly but skips the factory pattern, a resource that's structured correctly but uses a different naming convention than the rest. Those won't surface in `dg check defs`—they require deliberate review against project conventions.
+The writer/reviewer split is particularly useful in Dagster projects because convention violations are subtle: a raw asset that works correctly but skips the factory pattern, a resource that's structured correctly but uses a different naming convention than the rest. Those won't surface in `dg check defs`. They require deliberate review against project conventions.

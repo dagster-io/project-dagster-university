@@ -6,7 +6,7 @@ lesson: '1'
 
 # About this course
 
-This course is devoted to getting the most out of Dagster through AI-driven workflows. You'll learn how to use AI tools to write better code that adheres to Dagster best practices, ship features faster, and build data applications with confidence—even as you're still learning the fundamentals.
+This course is devoted to getting the most out of Dagster through AI-driven workflows. You'll learn how to use AI tools to write better code that adheres to Dagster best practices, ship features faster, and build data applications with confidence, even as you're still learning the fundamentals.
 
 Here you'll get an overview of the AI tool landscape, why Dagster has chosen to invest in the AI tools we provide, and how those tools can assist you day to day.
 
@@ -24,10 +24,10 @@ By the end of this course, you will:
 
 ## Required experience
 
-Dagster knowledge is not necessary to complete this course—the AI tools we cover can help you build Dagster applications even as you learn. If you'd like to learn more about Dagster first, check out the [Dagster Essentials course](https://courses.dagster.io/courses/dagster-essentials).
+Dagster knowledge is not necessary to complete this course. The AI tools we cover can help you build Dagster applications even as you learn. If you'd like to learn more about Dagster first, check out the [Dagster Essentials course](https://courses.dagster.io/courses/dagster-essentials).
 
 ---
 
 ## Getting help
 
-If you'd like assistance while working through this course, reach out to the Dagster community on [Slack](https://dagster.io/slack) in the `#dagster-university` channel. **Note**: The Dagster team is generally available during US business hours.
+If you'd like assistance while working through this course, reach out to the Dagster community on [Slack](https://dagster.io/community) in the `#dagster-university` channel. **Note**: The Dagster team is generally available during US business hours.

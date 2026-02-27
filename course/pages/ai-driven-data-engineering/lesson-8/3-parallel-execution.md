@@ -49,7 +49,7 @@ dbt compile --select stg_trending_events     # validates the SQL model
 
 `dg check defs` is particularly useful here because it validates the full integration in one command: `NewsApiResource` is correctly defined, `trending_events` loads without import errors, and the schedule referencing both is valid. If any of the parallel writes had an error, `dg check` surfaces it immediately.
 
-The total sequence—plan, 8 parallel writes, 3 sequential validation steps—is faster than writing and validating each file one at a time, and it's easier to debug because there's a clear boundary between "writing phase" and "checking phase."
+The total sequence (plan, 8 parallel writes, 3 sequential validation steps) is faster than writing and validating each file one at a time, and it's easier to debug because there's a clear boundary between "writing phase" and "checking phase."
 
 ## Applying this pattern yourself
 
@@ -59,4 +59,4 @@ When you're about to start a task that touches multiple files, ask:
 2. If yes, can all the files be written simultaneously once the design is settled?
 3. What validation steps run after, and in what order?
 
-If you can answer those three questions, you have the structure of a plan. Giving the agent this framing—"design first, then write everything, then validate"—produces more consistent results than letting it discover the design file-by-file as it writes.
+If you can answer those three questions, you have the structure of a plan. Giving the agent this framing ("design first, then write everything, then validate") produces more consistent results than letting it discover the design file-by-file as it writes.
