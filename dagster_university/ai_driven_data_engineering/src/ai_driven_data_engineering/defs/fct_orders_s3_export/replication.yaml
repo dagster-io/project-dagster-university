@@ -1,0 +1,7 @@
+source: DUCKDB
+target: S3
+
+streams:
+  "main.fct_orders":
+    object: "s3://test-bucket/fct_orders.parquet"
+    mode: full-refresh
