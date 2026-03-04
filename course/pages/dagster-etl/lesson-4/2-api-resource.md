@@ -39,7 +39,7 @@ We’ll create a resource called `NASAResource`, which is initialized from our A
 Here’s what that might look like added to the `resources.py`:
 
 ```python {% obfuscated="true" %}
-# src/dagster_and_etl/defs/assets.py
+# src/dagster_and_etl/defs/resources.py
 import dagster as dg
 import requests
 
