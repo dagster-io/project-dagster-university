@@ -14,9 +14,15 @@ If you're using **GitHub Copilot** as your AI coding agent, follow these steps s
 
 Install the [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) in VS Code and sign in with your GitHub account. Make sure you also have the [GitHub Copilot Chat extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) installed, which provides the agent interface.
 
+### Enable agent mode
+
+This course expects the agent to run terminal commands and write files autonomously — not just suggest them. In Copilot Chat, switch to **Agent mode** using the mode selector in the chat input bar (look for the dropdown that says "Ask" or "Edit" and change it to "Agent"). Without agent mode, Copilot will suggest commands for you to run manually rather than executing them itself.
+
 ---
 
 ## 2. Add the Dagster skills
+
+The `npx` command comes with Node.js. If you don't have it installed, [install Node.js](https://nodejs.org) first.
 
 Install using the `npx skills` command-line:
 
@@ -35,7 +41,13 @@ In the Copilot Chat panel, confirm that the Dagster skills are **enabled**. You 
 - `dagster-expert`: for project structure, `dg` CLI, and Dagster patterns
 - `dignified-python`: for Python best practices
 
-Skills are invoked by typing `/` in the Copilot Chat input and selecting the skill, or by including the skill name directly in your prompt.
+Skills are invoked by typing the skill name prefixed with `/` in the Copilot Chat input:
+
+```text
+/dagster-expert create a new Dagster project called university
+```
+
+You'll use this pattern throughout the rest of the course.
 
 ![GitHub Copilot skill](/images/ai-driven-data-engineering/lesson-3/copilot-skill.png)
 

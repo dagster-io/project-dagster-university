@@ -6,7 +6,7 @@ lesson: '5'
 
 # Additional components
 
-The transformation layer is in place, but dbt likely not the only integration you use in your data platform. Suppose you also need to get data out of DuckDB and into the systems downstream consumers actually use. In this case, you want to export the data from `fct_orders` to S3 as a Parquet file.
+The transformation layer is in place, but dbt is likely not the only integration you use in your data platform. Suppose you also need to get data out of DuckDB and into the systems downstream consumers actually use. In this case, you want to export the data from `fct_orders` to S3 as a Parquet file.
 
 You could write a one-off asset that runs a DuckDB query and uploads the result to S3. It would work. But you'd rather use a proper replication path that handles the mechanics cleanly and gives you a Component layout that's consistent with the rest of the project. The `dagster-expert` skill can help you figure out what that looks like.
 
@@ -103,6 +103,8 @@ dg check defs
 
 The Sling Component is similar to the dbt Component but both have their own specific configurations. One difference is that the Sling component requires an additional configuration file for defining the `source` and `target` information. However the agent handles all of this for us and injects the information in the correct places from our prompt.
 
+Before materializing, the Sling asset needs either real AWS credentials or a local S3-compatible store. See [Testing locally with MinIO](#testing-locally-with-minio) at the end of this page if you don't have an AWS account.
+
 ```yaml
 # /src/university/defs/fct_orders_s3_export/replication.yaml
 source: DUCKDB
@@ -127,3 +129,19 @@ The agent wires the dependency. Now the full graph is correct: raw assets → db
 ![Asset graph with dbt and Sling export to S3](/images/ai-driven-data-engineering/lesson-5/project-dbt-sling.png)
 
 Open the asset catalog and look at what you've built. This is the complete ELT pipeline from the project preview, built from prompts, without writing a project scaffold or reading the Sling documentation.
+
+## Testing locally with MinIO
+
+Materializing the Sling asset requires real AWS credentials and a real S3 bucket. If you want to test locally without an AWS account, the course repository includes a MinIO-based local S3 setup. MinIO is an S3-compatible object store that runs in Docker.
+
+Get the `docker-compose.yaml` from the course repository: `dagster_university/ai_driven_data_engineering/docker-compose.yaml` ([view on GitHub](https://github.com/dagster-io/project-dagster-university/blob/main/dagster_university/ai_driven_data_engineering/docker-compose.yaml)). Place it in a convenient directory and run:
+
+```bash
+docker compose up -d
+```
+
+This creates a `test-bucket` bucket at `http://localhost:9000` with credentials `minioadmin` / `minioadmin`. Configure your Sling component to use this endpoint instead of real AWS. Ask the agent to update the resource config:
+
+```text
+/dagster-expert Update the Sling resource to use a local MinIO endpoint at http://localhost:9000 with access key minioadmin and secret key minioadmin.
+```

@@ -49,6 +49,18 @@ If any are disabled, enable them so the agent can use Dagster best practices and
 
 ---
 
+## How to invoke skills
+
+In Claude Code, skills are invoked as slash commands. Type the skill name prefixed with `/` at the start of your prompt:
+
+```text
+/dagster-expert create a new Dagster project called university
+```
+
+Claude Code loads that skill’s context before responding. You’ll use this pattern throughout the rest of the course.
+
+---
+
 ## You’re set
 
 With the Dagster skills installed and enabled, you’re ready for Lesson 4. In later lessons you’ll use the skills so the agent follows Dagster best practices and uses `dg` for scaffolding and validation.

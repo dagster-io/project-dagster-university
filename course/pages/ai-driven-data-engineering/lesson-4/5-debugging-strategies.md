@@ -26,15 +26,17 @@ Before suggesting any fixes, explain what could cause it and where to look.
 
 Getting the agent to explain the problem first, rather than jumping to a fix, often surfaces the real cause. Fixes to the wrong place don't surface the right cause.
 
-## Rewind when an approach makes things worse
+## Revert when an approach makes things worse
 
-Every change Claude Code makes creates a checkpoint automatically. If the agent takes an approach that introduces new problems or makes the original problem harder to diagnose, you can revert the conversation and the code together rather than manually undoing each file.
+If the agent takes an approach that introduces new problems or makes the original problem harder to diagnose, revert to the last known-good state rather than continuing to build on a broken foundation. Different tools handle this differently:
 
-**In Claude Code:** press `Escape` twice, or type `/rewind`
+**Claude Code:** press `Escape` twice, or type `/rewind`. This restores both the conversation history and the file state to before the last action. It only covers changes made within the current session; use `git` to revert across sessions.
 
-This restores both the conversation history and the file state to before the last action. The practical use case: the agent made a change that seemed reasonable, the error changed but didn't resolve, and now you're not sure what's current. Rather than trying to piece together what changed, rewind to the last known state and give a better-framed prompt.
+**Cursor:** use `Ctrl+Z` / `Cmd+Z` to undo file changes, or open the file's timeline in the Explorer panel to restore a previous version. Start a new chat to clear the conversation history.
 
-Rewind is faster than manual reversion and cleaner than trying to correct the agent mid-flight. It doesn't replace git; it only covers changes made within the current Claude session. Rewind to revert a bad attempt; use `git` to revert across sessions.
+**Copilot / Codex:** undo file edits with `Ctrl+Z` / `Cmd+Z` in the editor. Use `git checkout -- <file>` to revert a file to its last committed state, or `git stash` to shelve all uncommitted changes and return to the last clean commit.
+
+The practical use case in any tool: the agent made a change that seemed reasonable, the error changed but didn't resolve, and you're not sure what's current. Rather than trying to piece together what changed, revert to the last known state and give a better-framed prompt.
 
 ## Debugging and session state
 

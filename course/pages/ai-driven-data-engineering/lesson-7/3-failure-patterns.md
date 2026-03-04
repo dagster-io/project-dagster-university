@@ -26,7 +26,9 @@ Good session habits prevent degradation. But degradation can also develop becaus
 
 **The tell:** You've written "like I mentioned earlier" or "again, please use the factory pattern" more than once in the same session.
 
-**Reset:** Stop correcting in-session. Use `/clear` to drop the conversation history (keeping the current file state), or start a fresh session and lead with the correction as a standing constraint in the opening prompt. If the correction is structural, lead with it as a constraint in the opening prompt of every new session rather than correcting it repeatedly mid-session.
+**Reset:** Stop correcting in-session. Start a fresh session and lead with the correction as a standing constraint in the opening prompt. If the correction is structural, lead with it as a constraint in the opening prompt of every new session rather than correcting it repeatedly mid-session.
+
+To drop conversation history while keeping file state: in Claude Code type `/clear`; in Cursor start a new chat; in Copilot or Codex open a new conversation window.
 
 ## Trust-then-verify gap
 

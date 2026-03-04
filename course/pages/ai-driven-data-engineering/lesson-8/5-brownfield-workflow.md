@@ -18,11 +18,18 @@ In a brownfield project, the project has its own conventions that may differ fro
 
 The agent will follow the skill's defaults unless you give it project-specific context. Getting that context in front of the agent before it writes anything is what makes brownfield work productive.
 
-## Start with a CLAUDE.md (or equivalent)
+## Start with a context file
 
-The most effective thing you can do before prompting in a brownfield project is write down the conventions. Lesson 3 covered CLAUDE.md for new projects; in brownfield work it's even more critical.
+The most effective thing you can do before prompting in a brownfield project is write down the conventions in a file your agent reads automatically. In brownfield work this is even more critical than in a new project.
 
-A good brownfield CLAUDE.md covers:
+Each agent has its own convention for this file:
+
+- **Claude Code**: `CLAUDE.md` in the project root
+- **Cursor**: `.cursorrules` in the project root
+- **GitHub Copilot**: `.github/copilot-instructions.md`
+- **Codex**: `AGENTS.md` in the project root
+
+The content is the same regardless of tool. A good context file covers:
 
 - Package manager and how to add dependencies
 - Project structure (where assets, resources, schedules live)
@@ -92,7 +99,7 @@ Not all brownfield work benefits equally. The highest-value applications:
 
 **Migrating patterns**: don't prompt the agent to "update all assets to use the new factory pattern" in a single session. The blast radius is large, the agent will read many files, and context degradation (Lesson 7) will affect the later files in the session. Break pattern migrations into one asset at a time, each in its own session, each validated before the next begins.
 
-**Files not covered by CLAUDE.md**: if a part of the project has conventions the CLAUDE.md doesn't mention, the agent will invent something. Before prompting in an unfamiliar area, read a representative file and add the relevant conventions to CLAUDE.md.
+**Files not covered by your context file**: if a part of the project has conventions your context file doesn't mention, the agent will invent something. Before prompting in an unfamiliar area, read a representative file and add the relevant conventions to your context file.
 
 ## The brownfield onboarding prompt
 

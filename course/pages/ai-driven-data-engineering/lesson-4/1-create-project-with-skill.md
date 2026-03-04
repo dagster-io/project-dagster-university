@@ -6,6 +6,8 @@ lesson: '4'
 
 # Create a new project (with the skill)
 
+Before you start, open your AI coding agent in an **empty folder** where you want the project to live. The agent will scaffold the `university/` directory inside it. If you followed along in Lesson 2 and created a `university/` project there, delete that folder first — Lesson 4 creates a fresh one with the skill active.
+
 We’ll start by using the same prompts as before but now we will use the `dagster-expert` skill. Our goal is the same, scaffold a project and add three assets that load CSVs into DuckDB, but with skill-driven behavior and `dg` at the center.
 
 ## Scaffold the project with the skill
