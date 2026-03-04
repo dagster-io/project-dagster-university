@@ -16,13 +16,13 @@ Use this table to look up course metadata for `$ARGUMENTS`.
 | `dagster_and_dbt` | `dagster_university/dagster_and_dbt` | `course/pages/dagster-dbt` | 2–7 | completed_model |
 | `dagster_and_etl` | `dagster_university/dagster_and_etl` | `course/pages/dagster-etl` | 3–7 | completed_model |
 | `dagster_testing` | `dagster_university/dagster_testing` | `course/pages/dagster-testing` | 3–6 | defs_model |
-| `ai_driven_data_engineering` | — | — | — | skip |
+| `ai_driven_data_engineering` | `dagster_university/ai_driven_data_engineering` | `course/pages/ai-driven-data-engineering` | 4, 5, 8 | skip |
 
 **Verification modes:**
 
 - `completed_model` — student writes code in `defs/`; tests import from `completed/lesson_N/` to validate env health. Assets are in `defs/assets/` (a subdirectory), except `dagster_and_etl` which uses flat files directly in `defs/` (`assets.py`, `jobs.py`, etc.).
 - `defs_model` — applies to `dagster_testing` only. Assets are pre-populated in `defs/`; student work is writing tests. Tests import from `defs/` directly, so per-lesson pytest validates the agent's test-writing.
-- `skip` — not suitable for the instruction runner (e.g., course teaches AI prompting workflows).
+- `skip` — not suitable for the instruction runner. `ai_driven_data_engineering` teaches AI prompting workflows; lesson pages describe what to prompt an agent to build rather than containing code to write directly. Completed reference code exists at `completed/lesson_N/` and per-lesson tests exist, but the instruction loop cannot be followed mechanically.
 
 If `verification` is `skip`, stop immediately and explain why.
 
@@ -121,3 +121,4 @@ List all `.md` files in `<repo_root>/<pages_dir>/lesson-N/`. Sort by numeric fil
 - Always run commands from within `<repo_root>/<project_dir>`, not from the repo root.
 - If a page's instructions are ambiguous (unclear which file to write to, conflicting code snippets), make a reasonable choice, proceed, and log the ambiguity in the result file.
 - Do not modify anything under `completed/` — it is read-only reference material.
+- The `ai_driven_data_engineering` course is non-deterministic by design: students prompt an AI agent to generate code, so their output will not match `completed/` exactly. Treat `completed/lesson_N/` as a reference implementation showing one valid outcome, not a ground truth diff target.

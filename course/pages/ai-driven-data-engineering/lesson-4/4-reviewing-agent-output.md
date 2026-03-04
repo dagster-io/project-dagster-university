@@ -35,3 +35,13 @@ Because the agent will launch everything from `dg`, it will have access to all o
 If there is an error while executing the code, it can take the same iterative approach of editing code, ensuring `dg check defs` and executing the code until the run is successful.
 
 ![Agent flow 3](/images/ai-driven-data-engineering/lesson-4/agent-flow-3.png)
+
+## Comparing against the reference implementation
+
+If you want to see one way the lesson code can look, the course repository includes a completed reference implementation for each lesson with code:
+
+```
+dagster_university/ai_driven_data_engineering/src/ai_driven_data_engineering/completed/lesson_4/
+```
+
+Because AI-generated code is non-deterministic, your output will not match the reference exactly. The agent may choose different variable names, structure files differently, or use slightly different patterns. That is expected. The reference is a sanity check, not a specification. What matters is that `dg check defs` passes, the assets materialize, and the code does what you asked for.
