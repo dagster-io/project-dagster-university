@@ -1,0 +1,105 @@
+{
+  "dagster_essentials": {
+    "project_dir": "dagster_university/dagster_essentials",
+    "pages_dir": "course/pages/dagster-essentials",
+    "lessons": [3, 4, 5, 6, 7, 8, 9],
+    "test_pattern": "test_lesson_{N}.py",
+    "verification": "completed_model",
+    "env_vars": {
+      "DUCKDB_DATABASE": "data/staging/data.duckdb"
+    },
+    "preserve_on_reset": [
+      "src/dagster_essentials/defs/assets/constants.py",
+      "src/dagster_essentials/defs/assets/__init__.py",
+      "src/dagster_essentials/defs/__init__.py"
+    ],
+    "reset_delete": {
+      "defs_glob": "src/dagster_essentials/defs/assets/*.py",
+      "defs_preserve": ["constants.py", "__init__.py"],
+      "data_paths": [
+        "data/raw/*.parquet",
+        "data/raw/*.csv",
+        "data/staging/data.duckdb",
+        "data/outputs"
+      ]
+    }
+  },
+  "dagster_and_dbt": {
+    "project_dir": "dagster_university/dagster_and_dbt",
+    "pages_dir": "course/pages/dagster-dbt",
+    "lessons": [2, 3, 4, 5, 6, 7],
+    "test_pattern": "test_lesson_{N}.py",
+    "verification": "completed_model",
+    "env_vars": {
+      "DUCKDB_DATABASE": "data/staging/data.duckdb"
+    },
+    "preserve_on_reset": [
+      "src/dagster_and_dbt/defs/assets/constants.py",
+      "src/dagster_and_dbt/defs/assets/__init__.py",
+      "src/dagster_and_dbt/defs/__init__.py"
+    ],
+    "reset_delete": {
+      "defs_glob": "src/dagster_and_dbt/defs/assets/*.py",
+      "defs_preserve": ["constants.py", "__init__.py"],
+      "data_paths": [
+        "data/raw/*.parquet",
+        "data/raw/*.csv",
+        "data/staging/data.duckdb",
+        "data/outputs"
+      ]
+    }
+  },
+  "dagster_and_etl": {
+    "project_dir": "dagster_university/dagster_and_etl",
+    "pages_dir": "course/pages/dagster-etl",
+    "lessons": [3, 4, 5, 6, 7],
+    "test_pattern": "test_lesson_{N}.py",
+    "verification": "completed_model",
+    "env_vars": {
+      "DUCKDB_DATABASE": "data/staging/data.duckdb"
+    },
+    "preserve_on_reset": [
+      "src/dagster_and_etl/defs/__init__.py"
+    ],
+    "reset_delete": {
+      "defs_top_level": [
+        "src/dagster_and_etl/defs/assets.py",
+        "src/dagster_and_etl/defs/jobs.py",
+        "src/dagster_and_etl/defs/resources.py",
+        "src/dagster_and_etl/defs/schedules.py",
+        "src/dagster_and_etl/defs/sensors.py"
+      ],
+      "defs_restore_from_git": true,
+      "data_paths": [
+        "data/raw/*.parquet",
+        "data/raw/*.csv",
+        "data/staging/data.duckdb",
+        "data/outputs"
+      ]
+    },
+    "notes": "defs/ uses flat files (assets.py, jobs.py, etc.) rather than an assets/ subdirectory."
+  },
+  "dagster_testing": {
+    "project_dir": "dagster_university/dagster_testing",
+    "pages_dir": "course/pages/dagster-testing",
+    "lessons": [3, 4, 5, 6],
+    "test_pattern": "test_lesson_{N}.py",
+    "verification": "defs_model",
+    "env_vars": {},
+    "reset_delete": {
+      "test_stubs": [
+        "tests/test_lesson_3.py",
+        "tests/test_lesson_4.py",
+        "tests/test_lesson_5.py",
+        "tests/test_lesson_6.py"
+      ]
+    },
+    "notes": "Assets are pre-populated in defs/; the student's work is writing tests. Tests import from defs/ directly. Reset restores test files to their pass-stub state via git checkout."
+  },
+  "ai_driven_data_engineering": {
+    "project_dir": null,
+    "pages_dir": "course/pages/ai-driven-data-engineering",
+    "verification": "skip",
+    "notes": "Course teaches AI agent prompting workflows; not suitable for instruction runner."
+  }
+}

@@ -1,3 +1,4 @@
+course/course_runner/results/*.md
 .venv/
 .vscode/
 bin/
