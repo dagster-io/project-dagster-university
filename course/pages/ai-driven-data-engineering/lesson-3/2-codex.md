@@ -18,6 +18,8 @@ Install [Codex](https://openai.com/codex/) from the official setup guide for you
 
 ## 2. Add the Dagster skills
 
+The `npx` command comes with Node.js. If you don't have it installed, [install Node.js](https://nodejs.org) first.
+
 Install using the `npx skills` command-line:
 
 ```bash
@@ -35,7 +37,13 @@ In Codex settings or the skill list, confirm that the Dagster-related skills are
 - `dagster-expert`: for project structure, `dg` CLI, and Dagster patterns
 - `dignified-python`: for general Python quality
 
-Once they’re enabled, you can invoke them in your prompts (e.g. by name or with the `$skill-name` syntax if your version supports it).
+Once they’re enabled, you can invoke them in your prompts. Type the skill name prefixed with `/` at the start of your message:
+
+```text
+/dagster-expert create a new Dagster project called university
+```
+
+You’ll use this pattern throughout the rest of the course.
 
 ![Codex skill](/images/ai-driven-data-engineering/lesson-3/codex-skill.png)
 

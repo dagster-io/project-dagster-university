@@ -18,6 +18,8 @@ Install Cursor from [cursor.com](https://cursor.com) and sign in.
 
 ## 2. Add the Dagster skills
 
+The `npx` command comes with Node.js. If you don't have it installed, [install Node.js](https://nodejs.org) first.
+
 Install using the `npx skills` command-line:
 
 ```bash
@@ -38,6 +40,18 @@ Confirm that the Dagster skills are **enabled**. You want at least:
 Skills are often invoked by typing `/` in the chat and selecting the skill, or by including the skill name in your prompt.
 
 ![Cursor skill](/images/ai-driven-data-engineering/lesson-3/cursor-skill.png)
+
+---
+
+## How to invoke skills
+
+In Cursor’s Agent panel, skills installed via `npx skills` are available as slash commands. Type the skill name prefixed with `/` at the start of your prompt in the Agent chat:
+
+```text
+/dagster-expert create a new Dagster project called university
+```
+
+Cursor loads that skill’s context before responding. You’ll use this pattern throughout the rest of the course.
 
 ---
 

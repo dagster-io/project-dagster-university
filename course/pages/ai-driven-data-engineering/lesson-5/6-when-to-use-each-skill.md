@@ -35,7 +35,7 @@ Rule of thumb: if the task is about dbt (models, schema, dbt commands), use the 
 
 Look at the switches that happened as we built this lesson:
 
-1. `/dbt:using-dbt-for-analytics-engineering` scaffolded the dbt project, created the staging models, and validated with `dbt parse`. This is dbt territory: the skill knows how `DbtProjectComponent` expects the project to be laid out and how to write models that read from DuckDB.
+1. `/dagster-expert` scaffolded the dbt project, created the staging models, and validated with `dbt parse`. This is a case where the Dagster skill is enough: creating the `DbtProjectComponent`, scaffolding the project layout, and wiring it into Dagster are all Dagster questions. The dbt skill adds value when you're writing or modifying dbt models directly — that comes later in the chaining sequence.
 
 2. `/dagster-expert` handled wiring the dbt assets to the raw assets, setting group names, and validating with `dg check defs`. Once the dbt project existed as a Dagster entity, questions like "which group should these assets be in?" or "how do I make the raw assets upstream of the dbt models?" are core Dagster questions.
 

@@ -10,6 +10,8 @@ First we’ll create a Dagster project without using any additional skills or co
 
 ## Scaffold the project
 
+This section uses the same project name (`university`) as Lesson 4. If you follow along here, delete the folder before starting Lesson 4 so there's no conflict.
+
 Use a generic prompt such as:
 
 ```text
