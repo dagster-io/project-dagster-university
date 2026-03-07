@@ -23,5 +23,10 @@ pipeline = dlt.pipeline(
     dataset_name="mydata",
 )
 
+# Run with write_disposition to control how data is loaded:
+# - "replace": Replace the entire table (default for fresh loads)
+# - "append": Add records to existing data
+# - "merge": Upsert based on primary_key (requires primary_key parameter)
+
 if __name__ == "__main__":
     load_info = pipeline.run(simple_source())
