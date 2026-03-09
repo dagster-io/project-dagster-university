@@ -80,14 +80,24 @@ my_schedule = dg.ScheduleDefinition(
 )
 ```
 
-You can write tests to check the cron syntax is correct or make sure it is using the correct job.
+You can write tests to verify the schedule fires at the correct times and is using the correct job. Asserting against the cron string directly only checks the value you typed — it will pass even if the cron expression fires on the wrong day. Using `croniter` to generate actual fire times catches that class of bug.
 
 ```python
 # tests/test_lesson_6.py
+from croniter import croniter
+from datetime import datetime
+
 def test_schedule():
     assert schedules.my_schedule
-    assert schedules.my_schedule.cron_schedule == "0 0 5 * *"
     assert schedules.my_schedule.job == jobs.my_job
+
+    cron = schedules.my_schedule.cron_schedule
+    # From Jan 1, the first trigger should be Jan 5 at midnight
+    base = datetime(2024, 1, 1, 0, 0)
+    it = croniter(cron, base)
+    assert it.get_next(datetime) == datetime(2024, 1, 5, 0, 0)
+    # The run after that should be Feb 5 at midnight
+    assert it.get_next(datetime) == datetime(2024, 2, 5, 0, 0)
 ```
 
 ```bash
@@ -95,6 +105,8 @@ def test_schedule():
 ...
 tests/test_lesson_6.py .                                                          [100%]
 ```
+
+If the cron expression were accidentally written as `"0 0 6 * *"` (6th instead of 5th), `croniter` would compute a fire time of `datetime(2024, 1, 6, 0, 0)` and the assertion would fail — a bug that string comparison would miss entirely.
 
 ## Sensors
 

@@ -238,9 +238,20 @@ def test_job_config():
 
 # Schedules
 def test_schedule():
+    from datetime import datetime
+
+    from croniter import croniter
+
     assert schedules.my_schedule
-    assert schedules.my_schedule.cron_schedule == "0 0 5 * *"
     assert schedules.my_schedule.job == jobs.my_job
+
+    cron = schedules.my_schedule.cron_schedule
+    # From Jan 1, the first trigger should be Jan 5 at midnight
+    base = datetime(2024, 1, 1, 0, 0)
+    it = croniter(cron, base)
+    assert it.get_next(datetime) == datetime(2024, 1, 5, 0, 0)
+    # The run after that should be Feb 5 at midnight
+    assert it.get_next(datetime) == datetime(2024, 2, 5, 0, 0)
 
 
 # Sensors
