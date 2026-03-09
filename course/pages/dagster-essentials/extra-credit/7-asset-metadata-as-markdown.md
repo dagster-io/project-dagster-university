@@ -190,6 +190,9 @@ def adhoc_request(config: AdhocRequestConfig, database: DuckDBResource) -> dg.Ma
         order by 1, 2 asc
     """
 
+    with database.get_connection() as conn:
+        results = conn.execute(query).fetch_df()
+
     fig, ax = plt.subplots(figsize=(10, 6))
     
     # Pivot data for stacked bar chart
