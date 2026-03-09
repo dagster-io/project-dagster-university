@@ -11,6 +11,7 @@ dependencies = [
     "dagster-snowflake",
     "psycopg2-binary",
     "pytest",
+    "croniter",
 ]
 
 [project.optional-dependencies]
