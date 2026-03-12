@@ -6,7 +6,7 @@ lesson: '5'
 
 # Skill chaining
 
-If you look back at this lesson, you'll notice you didn't use just one skill. You used the `dagster-expert` skill to scaffold and build the dbt project and Dagster Component, and you switched to dbt skill for more detailed work with the actual dbt project.
+If you look back at this lesson, you'll notice you didn't use just one skill. You used the `dagster-expert` skill to scaffold and build the dbt project and Dagster Component, and you switched to the dbt skill for more detailed work with the actual dbt project.
 
 This is skill chaining: switching skills as the nature of your task shifts. Each skill has a different knowledge domain. Using the right one at the right time is what keeps the agent's output trustworthy.
 
@@ -53,4 +53,14 @@ The seam between the two skills usually corresponds to a real boundary in the wo
 
 Skill chaining isn't overhead. Each skill has deep context about its domain, and shallow context about the other's. When you're writing dbt models, the dbt skill knows far more about dbt conventions than the expert skill does. When you're debugging a failed Dagster run, the expert skill knows far more about Dagster's execution model.
 
-The agent doesn't switch on its own. You switch it by invoking a different skill at the start of your prompt. The habit is: pause at seam points, name the skill explicitly, and the agent will follow.
+## Invocation cadence
+
+Invoke a skill once at the start of a task or at a natural seam point. You don't need to prefix every subsequent message with the skill name — the agent carries the context forward through the session.
+
+Repeatedly invoking the same skill within a session doesn't improve output. Each invocation adds another copy of the skill's instructions to the conversation. The first invocation is what primes the agent's behavior; after that, re-invoking is redundant.
+
+The pattern is: invoke once when the domain shifts, then work until the next shift.
+
+## Explicit vs. implicit invocation
+
+You don't always have to invoke skills explicitly. The trigger language in the `dagster-expert` skill is intentionally broad — the agent will often load it automatically when the prompt is clearly about Dagster. Being explicit (with `/dagster-expert`) is what the course examples show because it makes the skill boundary visible and ensures the right skill is active. In practice, a clear Dagster-focused prompt will usually trigger the skill on its own.
