@@ -56,8 +56,31 @@ class NASAResource(dg.ConfigurableResource):
         }
 
         resp = requests.get(url, params=params)
+        resp.raise_for_status()  # Raises exception for 4xx/5xx errors
         return resp.json()["near_earth_objects"][start_date]
 ```
+
+{% callout type="note" title="Production Error Handling" %}
+In production, you'd want more robust error handling:
+
+```python
+import time
+from requests.exceptions import RequestException
+
+def get_near_earth_asteroids(self, start_date: str, end_date: str, retries: int = 3):
+    for attempt in range(retries):
+        try:
+            resp = requests.get(url, params=params, timeout=30)
+            resp.raise_for_status()
+            return resp.json()["near_earth_objects"][start_date]
+        except RequestException as e:
+            if attempt == retries - 1:
+                raise
+            time.sleep(2 ** attempt)  # Exponential backoff
+```
+
+This handles timeouts, rate limiting (429 errors), and transient failures with exponential backoff.
+{% /callout %}
 
 Now that we have our resource defined, we can include it in the `Definitions` alongside the `DuckDBResource` resource in the `resources.py`:
 
