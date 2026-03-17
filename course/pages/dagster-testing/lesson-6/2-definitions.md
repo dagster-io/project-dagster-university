@@ -14,7 +14,7 @@ Luckily this is a very easy test to write.
 
 ## Loading the Definition object
 
-The `@dg.definitions` decorator is lazily evaluated. This means it is not loaded until it is needed. In order to load the definition we can use the `load_defs` function.
+The `@dg.definitions` decorator is lazily evaluated. This means it is not loaded until it is needed. In order to load the definition we can use `dg.components.load_defs`.
 
 We can now write a test to assert that the definition can load properly.
 
