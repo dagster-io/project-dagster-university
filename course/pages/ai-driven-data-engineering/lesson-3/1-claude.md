@@ -12,7 +12,7 @@ If you’re using **Claude Code** as your AI coding agent, follow these steps so
 
 ## 1. Install Claude Code
 
-Install and sign in to [Claude Code](https://code.claude.com/docs/en/setup) from the setup guide.
+Install and sign in to [Claude Code](https://docs.anthropic.com/en/docs/claude-code/setup) using the setup guide.
 
 ---
 
@@ -25,6 +25,12 @@ In Claude Code, add the Dagster skills from the plugin marketplace:
 ```
 
 ![Claude marketplace](/images/ai-driven-data-engineering/lesson-3/claude-marketplace.png)
+
+Then install the `dagster-expert` skill from the plugin:
+
+```text
+/plugin install dagster-expert@dagster-skills
+```
 
 This installs the Dagster skill pack (including `dagster-expert` and `dignified-python`) so the agent has the right context for building with Dagster.
 
