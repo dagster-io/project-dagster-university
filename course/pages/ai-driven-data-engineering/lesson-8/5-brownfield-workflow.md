@@ -91,7 +91,7 @@ Not all brownfield work benefits equally. The highest-value applications:
 
 **Adding tests**: existing assets often have no tests. The TDD approach from Lesson 6 works on existing assets: write a test that describes the expected behavior, prompt the agent to run it and confirm it passes (or fix it if it doesn't).
 
-**Writing schema and documentation**: the `/dbt` skill can add tests, descriptions, and column documentation to existing dbt models without changing the SQL.
+**Writing schema and documentation**: the dbt skill can add tests, descriptions, and column documentation to existing dbt models without changing the SQL. Prompt it with a dbt-focused request (e.g. "add `not_null` tests to all id columns in schema.yml") and it activates automatically.
 
 ## Where to be careful
 
