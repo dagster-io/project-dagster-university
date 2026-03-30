@@ -41,12 +41,14 @@ Once applied, all dbt assets appear under the **transformation** group in the Da
 
 ## Extend the dbt project
 
-With our dbt project successfully configured in Dagster we can switch to the dbt skill to modify our dbt project. At this point changes in the dbt project will be automatically reflected in Dagster so we can use more specific dbt skills.
+With our dbt project successfully configured in Dagster we can work on the dbt project directly. At this point changes in the dbt project will be automatically reflected in Dagster.
+
+The dbt skill activates automatically when your prompt is clearly about dbt work -- model SQL, `schema.yml`, dbt tests -- so there's no slash command to prefix. Just describe what you want.
 
 Let's add another model that uses the data from our staging models.
 
 ```text {% obfuscated="true" %}
-/dbt:using-dbt-for-analytics-engineering Add a new model called fct_orders that uses the data from the staging models.
+Add a new dbt model called fct_orders that uses the data from the staging models.
 ```
 
 This will add an additional model to the dbt project, which will be reflected when we reload the Dagster catalog (`dg dev`).
@@ -55,7 +57,7 @@ This will add an additional model to the dbt project, which will be reflected wh
 Next we can add some data quality checks such as adding `not_null` and `unique` tests on id columns for our dbt models. These are low effort and catch a large class of real problems:
 
 ```text {% obfuscated="true" %}
-/dbt:using-dbt-for-analytics-engineering Include some dbt tests to ensure that there are not NULLs for the id columns.
+Add dbt tests to the schema.yml to ensure that there are not NULLs for the id columns.
 ```
 
 The agent adds the appropriate dbt tests to your models and since our Dagster dbt Component is configured to expose tests as Dagster [asset checks](https://docs.dagster.io/guides/test/asset-checks), those tests run as part of your asset graph and show up in the UI alongside the assets they validate. You get dbt's semantics and Dagster's visibility and dependency tracking at the same time.

@@ -19,7 +19,7 @@ Installation is the same regardless of which AI coding agent you use and should 
 In Claude Code, install the dbt skill from the plugin marketplace:
 
 ```text
-/plugin marketplace add dbt-labs/dbt-mcp
+/plugin marketplace add dbt-labs/dbt-agent-skills
 ```
 
 Once installed, confirm it's enabled:
@@ -40,7 +40,7 @@ Switch to the **Installed** tab and verify that the dbt skills show as enabled. 
 Install using the `npx skills` command:
 
 ```bash
-npx skills add dbt-labs/dbt-mcp
+npx skills add dbt-labs/dbt-agent-skills
 ```
 
 Confirm the dbt skills appear in your skill list and are enabled. You want at least `dbt:using-dbt-for-analytics-engineering` available.
@@ -49,4 +49,4 @@ Confirm the dbt skills appear in your skill list and are enabled. You want at le
 
 ## You're set
 
-Once the dbt skill is installed, you'll invoke it directly in your prompts. In the next section you'll use it to scaffold the dbt project alongside the Dagster integration.
+Once the dbt skill is installed, it activates automatically when your prompt is about dbt work -- writing models, updating `schema.yml`, running dbt commands. You don't invoke it with a slash command; it loads based on what you ask. In the next section you'll see it activate as you scaffold the dbt project alongside the Dagster integration.

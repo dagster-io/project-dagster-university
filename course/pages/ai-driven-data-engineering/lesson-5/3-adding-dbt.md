@@ -10,11 +10,11 @@ The raw assets are working: three DuckDB tables with `customer`, `order`, and `p
 
 Most of the time you'd integrate an *existing* dbt project into Dagster. Your team already has models, and you're connecting them to an orchestration layer. Here we're generating the entire dbt project from scratch alongside the Dagster integration, which gives you a useful demonstration: with a single prompt, the agent scaffolds both sides of the connection, wired together correctly from the start.
 
-## Why switch to the dbt skill
+## The dbt skill in this lesson
 
-Up to this point you've been using `/dagster-expert` for everything: project structure, assets, resources, the `dg` workflow. That's the right skill for Dagster's core abstractions. But adding dbt is primarily a dbt question: what do the models look like, how does the `DbtProjectComponent` expect the project to be laid out, how does `dbt parse` confirm the project is valid? That's the domain of the dbt skill.
+Up to this point you've been using `/dagster-expert` for everything: project structure, assets, resources, the `dg` workflow. That's the right skill for Dagster's core abstractions. But adding dbt introduces dbt-specific questions: what do the models look like, how does the `DbtProjectComponent` expect the project to be laid out, how does `dbt parse` confirm the project is valid?
 
-This is the first example of skill chaining in this lesson: switching from the Dagster expert skill to the dbt skill at the natural seam between "Dagster structure" and "dbt project." The dbt skill has deep context on `DbtProjectComponent`, dbt model patterns, and `dbt_project.yml` layout that the expert skill doesn't; using the right one here is what makes the agent's output trustworthy.
+The dbt skill has deep context on `DbtProjectComponent`, dbt model patterns, and `dbt_project.yml` layout. Unlike `dagster-expert`, you don't invoke the dbt skill with a slash command -- it activates automatically when the prompt is clearly about dbt work. This is the first example of skill chaining in this lesson: the agent switches between skills at the natural seam between "Dagster structure" and "dbt project."
 
 ## The prompt
 
@@ -32,7 +32,16 @@ Note that the prompt describes the asset graph you want, not the code. Staging m
 
 The workflow for the dbt integration is very similar to our first workflow when defining our assets.
 
-1. Dependencies: the dbt skill steers the agent toward the `DbtProjectComponent` rather than hand-rolling dbt wiring in Python. So it knows that the `dagster-dbt` library will be necessary:
+1. Dependencies: the dbt skill steers the agent toward the `DbtProjectComponent` rather than hand-rolling dbt wiring in Python. So it knows that the `dagster-dbt` library will be necessary.
+
+`dagster-dbt` does not support Python 3.14. If your project was scaffolded with Python 3.14 (common if Homebrew manages your system Python), pin the version before installing:
+
+```bash
+uv python pin 3.13
+uv sync
+```
+
+Then install the dependency:
 
 ```bash
 uv add dagster-dbt
