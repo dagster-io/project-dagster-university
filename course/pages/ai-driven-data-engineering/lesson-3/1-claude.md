@@ -26,17 +26,29 @@ In Claude Code, add the Dagster skills from the plugin marketplace:
 
 ![Claude marketplace](/images/ai-driven-data-engineering/lesson-3/claude-marketplace.png)
 
-Then install the `dagster-expert` skill from the plugin:
+Then install both Dagster skills:
 
 ```text
 /plugin install dagster-expert@dagster-skills
 ```
 
-This installs the Dagster skill pack (including `dagster-expert` and `dignified-python`) so the agent has the right context for building with Dagster.
+```text
+/plugin install dignified-python@dagster-skills
+```
 
 ---
 
-## 3. Ensure the Dagster skills are enabled
+## 3. Reload plugins
+
+After installing, reload the plugin registry so Claude Code picks up the new skills:
+
+```text
+/reload-plugins
+```
+
+---
+
+## 4. Ensure the Dagster skills are enabled
 
 Open the plugin list and confirm the Dagster skills are enabled:
 
@@ -49,7 +61,19 @@ Switch to the **Installed** tab and verify that the Dagster skills show as enabl
 - **dagster-expert**: enabled
 - **dignified-python**: enabled
 
-If any are disabled, enable them so the agent can use Dagster best practices and the `dg` CLI when you invoke the skill in your prompts.
+If a skill is missing from the list, install it individually:
+
+```text
+/plugin install dagster-expert@dagster-skills
+```
+
+```text
+/plugin install dignified-python@dagster-skills
+```
+
+Then run `/reload-plugins` again before continuing.
+
+If a skill is listed but disabled, enable it so the agent can use Dagster best practices and the `dg` CLI when you invoke the skill in your prompts.
 
 ![Claude plugin](/images/ai-driven-data-engineering/lesson-3/claude-plugin.png)
 

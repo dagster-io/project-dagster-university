@@ -91,6 +91,8 @@ The skill again steers the agent toward `dg` and our opinionated project layout 
 
    These checks are fast and inexpensive. This makes it easier to do larger changes in small, verifiable steps and provide a much easier feedback loop for the agent.
 
+   Your agent may use a different validation command, such as `uv run dg list defs`. If it does, ask it explicitly to run `dg check defs` -- that command is the most reliable way to confirm definitions load correctly.
+
 ## How this works with skills
 
 But how is the skill influencing all of this? Since skills are structured documents that explain how work should be accomplished, we can find this bit of information within the skill library (`skills/dagster-expert/skills/dagster-expert/references/project-structure.md`)
