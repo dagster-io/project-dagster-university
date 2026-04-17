@@ -16,10 +16,20 @@ Installation is the same regardless of which AI coding agent you use and should 
 
 ## Claude Code
 
-In Claude Code, install the dbt skill from the plugin marketplace:
+In Claude Code, add the dbt skills from the plugin marketplace and then install the plugin:
 
 ```text
 /plugin marketplace add dbt-labs/dbt-agent-skills
+```
+
+```text
+/plugin install dbt@dbt-agent-marketplace
+```
+
+Then reload the plugin registry:
+
+```text
+/reload-plugins
 ```
 
 Once installed, confirm it's enabled:

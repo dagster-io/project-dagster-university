@@ -69,11 +69,11 @@ dg check defs
 
 ## What you see in the UI
 
-Open the asset catalog (you can either ask the agent to do this or run `dg dev` from your Dagster project). The three raw assets you built are still there, and now there are three new assets downstream of them: `stg_customers`, `stg_orders`, `stg_payments`.
+Open the asset catalog (you can either ask the agent to do this or run `dg dev` from your Dagster project). You should now see six assets total: the three raw assets on the left (`raw_customers`, `raw_orders`, `raw_payments`) with arrows pointing right to the three dbt staging models (`stg_customers`, `stg_orders`, `stg_payments`).
 
 ![Asset graph with raw assets and dbt models](/images/ai-driven-data-engineering/lesson-5/project-dbt.png)
 
-This is the lineage the prompt described, now visible in the graph. The raw assets feed into the staging models exactly as you asked. A new team member looking at this catalog would immediately understand the pipeline's shape, not from reading the code, but from looking at the graph.
+Each arrow represents a dependency: a staging model can only run after its corresponding raw asset has loaded data. This is the lineage the prompt described, now visible in the graph. A new team member looking at this catalog would immediately understand the pipeline's shape, not from reading the code, but from looking at the graph.
 
 There's still some cleanup to do: the dbt assets and raw assets share the same unlabeled space in the catalog, and the dependency wiring between them could be made more explicit. That's what the next section covers.
 
