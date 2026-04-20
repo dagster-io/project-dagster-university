@@ -6,6 +6,8 @@ lesson: '3'
 
 # Knowledge check
 
+`dbt run` executes your models, but `dbt build` does more: it runs your models **and** your dbt tests in the correct order, failing early if a test fails. Using `dbt build` is the recommended default because it gives you data quality checks alongside execution at no extra cost.
+
 1. Open the `defs/assets/dbt.py` file.
 
 2. Modify `dbt_analytics` to run `dbt build` instead of `dbt run`. The function should look like this afterward:

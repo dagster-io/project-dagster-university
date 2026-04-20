@@ -163,3 +163,30 @@ Now we’re ready to create the asset!
 5. Reload your code location to see the new `airport_trips` asset within the `metrics` group. Notice how the asset graph links the dependency between the `location_metrics` dbt asset and the new `airport_trips` chart asset:
 
    ![The airport_trips asset in the Asset Graph of the Dagster UI](/images/dagster-dbt/lesson-5/airport-trips-asset.png)
+
+---
+
+## Common MaterializeResult metadata patterns
+
+The `airport_trips` asset returned a chart preview, but `MaterializeResult` accepts any metadata that's useful for observability. The table below covers the most common patterns:
+
+| Use case | MetadataValue type | Example |
+|---|---|---|
+| Row count | `MetadataValue.int()` | `{"row_count": dg.MetadataValue.int(n_rows)}` |
+| Preview table (markdown) | `MetadataValue.md()` | `{"preview": dg.MetadataValue.md(df.to_markdown())}` |
+| Chart or image | `MetadataValue.md()` | base64 data URI (shown above) |
+| Output file path | `MetadataValue.path()` | `{"output": dg.MetadataValue.path(file_path)}` |
+| External link | `MetadataValue.url()` | `{"dashboard": dg.MetadataValue.url(url)}` |
+
+You can combine multiple entries in one `metadata` dict:
+
+```python
+return dg.MaterializeResult(
+    metadata={
+        "row_count": dg.MetadataValue.int(n_rows),
+        "preview": dg.MetadataValue.md(df.head(10).to_markdown()),
+    }
+)
+```
+
+Note that dbt assets themselves don't use `MaterializeResult`. When you call `yield from dbt.cli([...]).stream()`, the `dagster-dbt` integration yields materialization events automatically for each dbt model. `MaterializeResult` is for the downstream Dagster Python assets (like `airport_trips`) that you write yourself.

@@ -18,11 +18,25 @@ Many Dagster projects may only need one `@dbt_assets`-decorated function that ma
 
 - You have multiple dbt projects
 - You want to exclude certain dbt models
-- You want to only execute `dbt run` and not `dbt build` on specific models
+- You want to run different dbt commands on specific model groups (for example, `dbt build` for most models and `dbt run --no-version-check` for others)
 - You want to customize what happens after certain models finish, such as sending a notification
-- You need to configure some sets of models differently
+- You need to configure some sets of models differently (for example, partitioned vs. non-partitioned)
 
 We’ll only create one `@dbt_assets` definition for now, but in a later lesson, we’ll encounter a use case for needing another `@dbt_assets` definition.
+
+---
+
+## Decorator arguments vs function parameters
+
+When writing a `@dbt_assets` definition, configuration appears in two places. Understanding why helps you decide where new config belongs.
+
+**Decorator arguments** (`manifest`, `select`, `exclude`, `partitions_def`, `dagster_dbt_translator`) are static configuration. Dagster reads them at load time to build the asset graph — before any run starts. They define _which assets exist_ and _how they relate to each other_.
+
+**Function parameters** (`context: dg.AssetExecutionContext`, `dbt: DbtCliResource`) are injected at runtime, once per execution. `context` carries run-specific state (the active partition key, run ID, logger). `dbt` is the resource used to actually invoke dbt commands.
+
+A useful rule of thumb: if Dagster needs to know it before a run starts, it’s a decorator argument. If it’s only meaningful during a run, it’s a function parameter.
+
+This also explains command flexibility. The dbt command (`dbt run`, `dbt build`, etc.) lives inside the function body — not the decorator. A single `@dbt_assets` function issues one command for all its models. To run different commands for different model groups, you create multiple `@dbt_assets` definitions using `select` and `exclude` to split the models, each with its own command. Lesson 6 demonstrates this pattern.
 
 ---
 
