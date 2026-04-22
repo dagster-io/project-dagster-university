@@ -62,7 +62,7 @@ class NASAResource(dg.ConfigurableResource):
 Now that we have our resource defined, we can include it in the `Definitions` alongside the `DuckDBResource` resource in the `resources.py`:
 
 ```python
-# src/dagster_and_etl/definitions.py
+# src/dagster_and_etl/defs/resources.py
 @dg.definitions
 def resources():
     return dg.Definitions(
@@ -77,4 +77,10 @@ def resources():
     )
 ```
 
-**Note**: Remember you will need to set the environment variable `NASA_API_KEY` to the API key you created if you want to execute this pipeline.
+**Note**: To run this pipeline you need to set the `NASA_API_KEY` environment variable. The simplest way is to create a `.env` file in the root of the `dagster_and_etl` project directory with the following content:
+
+```bash
+NASA_API_KEY=your_api_key_here
+```
+
+Dagster automatically loads `.env` files when you start the development server. If the server is already running, restart it after creating the file.
