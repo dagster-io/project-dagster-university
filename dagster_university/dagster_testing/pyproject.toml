@@ -37,6 +37,15 @@ registry_modules = [
     "dagster_testing.components.*",
 ]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: these tests require external services (deselect with '-m \"not integration\"')",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+
 [tool.ruff.lint]
 ignore = [
     "ERA001", # comments are fine for a learning environment

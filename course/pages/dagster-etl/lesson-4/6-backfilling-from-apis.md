@@ -40,7 +40,7 @@ def asteroids_partition(
     )
 ```
 
-All of the downstream assets we've already built can remain unchanged, so for this example, we’ll focus on a single partitioned asset to demonstrate how backfilling works with partitions.
+This asset returns the raw asteroid data for its partition date. In a complete pipeline you would add downstream assets that accept `asteroids_partition` as an input and write the data to a file and then to DuckDB, mirroring the `asteroids_file` and `duckdb_table` assets from earlier in the lesson. For now we focus on a single partitioned asset to demonstrate how backfilling and retry work with partitions.
 
 ## Rate limits
 

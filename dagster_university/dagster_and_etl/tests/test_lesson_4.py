@@ -1,13 +1,19 @@
 import datetime
+from pathlib import Path
 from unittest.mock import Mock
 
 import dagster as dg
 import pytest
 from dagster_duckdb import DuckDBResource
+from dotenv import dotenv_values
 
 import dagster_and_etl.completed.lesson_4.defs
 import dagster_and_etl.completed.lesson_4.defs.assets as assets
+from dagster_and_etl.completed.lesson_4.defs.resources import NASAResource
 from tests.nasa_data import nasa_response
+
+_env_path = Path(__file__).parent.parent / ".env"
+_real_api_key = dotenv_values(_env_path).get("NASA_API_KEY", "")
 
 
 @pytest.fixture()
@@ -175,3 +181,59 @@ def test_asteroid_api_error_handling():
 
 def test_defs(defs):
     assert defs
+
+
+@pytest.fixture()
+def real_nasa_resource():
+    if not _real_api_key or _real_api_key == "DEMO_KEY":
+        pytest.skip("Real NASA_API_KEY not found in .env")
+    return NASAResource(api_key=_real_api_key)
+
+
+@pytest.mark.integration
+def test_nasa_resource_returns_asteroids(real_nasa_resource):
+    data = real_nasa_resource.get_near_earth_asteroids(
+        start_date="2025-04-01",
+        end_date="2025-04-02",
+    )
+    assert isinstance(data, list)
+    assert len(data) > 0
+    expected_fields = {
+        "id",
+        "name",
+        "absolute_magnitude_h",
+        "is_potentially_hazardous_asteroid",
+    }
+    assert expected_fields.issubset(data[0].keys())
+
+
+@pytest.mark.integration
+def test_full_pipeline_end_to_end(real_nasa_resource, tmp_path):
+    test_db = str(tmp_path / "test.duckdb")
+
+    result = dg.materialize(
+        assets=[assets.asteroids, assets.asteroids_file, assets.duckdb_table],
+        resources={
+            "nasa": real_nasa_resource,
+            "database": DuckDBResource(database=test_db),
+        },
+        run_config=dg.RunConfig({"asteroids": assets.NasaDate(date="2025-04-02")}),
+    )
+    assert result.success
+
+    with DuckDBResource(database=test_db).get_connection() as conn:
+        count = conn.execute("SELECT COUNT(*) FROM raw_asteroid_data").fetchone()[0]
+        assert count > 0
+
+
+@pytest.mark.integration
+def test_partitioned_asset_end_to_end(real_nasa_resource):
+    result = dg.materialize(
+        assets=[assets.asteroids_partition],
+        resources={"nasa": real_nasa_resource},
+        partition_key="2025-04-02",
+    )
+    assert result.success
+    output = result.output_for_node("asteroids_partition")
+    assert isinstance(output, list)
+    assert len(output) > 0
