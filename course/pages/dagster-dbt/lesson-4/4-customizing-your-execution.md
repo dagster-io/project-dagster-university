@@ -12,7 +12,7 @@ Let's make some changes that allow you to see what dbt does under the hood. To d
 
 In the `defs/assets/dbt.py` file, make the following changes:
 
-1. Right now, our code immediately yields all the results of the `dbt.cli()` execution. This execution contains a lot of context and metadata that we want, but it's currently inaccessible because we're not storing it. Let's refactor the `@dbt_assets` definition to store the `dbt.cli()` invocation in a variable called `dbt_build_invocation`:
+1. Right now, our code immediately yields all the results of the `dbt.cli()` execution with `yield from`. Once a generator is consumed by `yield from`, it's exhausted — you can't go back and call `.get_artifact()` on it afterward. To access artifacts after the run, we need to store the invocation object first and stream it separately. Let's refactor to store the `dbt.cli()` invocation in a variable called `dbt_build_invocation`:
 
    ```python
     dbt_build_invocation = dbt.cli(["build"], context=context)

@@ -6,6 +6,24 @@ lesson: '5'
 
 # Connecting dbt models to Dagster assets
 
+## Do you need a custom translator?
+
+The short answer: it depends on whether your dbt source names already match your existing Dagster asset key names.
+
+The `DagsterDbtTranslator` class controls how Dagster interprets every node in your dbt project — turning each model, source, seed, and snapshot into an asset with a key, group, tags, and metadata. By default it uses simple rules: a model named `stg_trips` gets an asset key of `stg_trips`, and a source named `trips` in schema `raw_taxis` gets a key of `raw_taxis/trips`.
+
+**The default translator is sufficient** if your dbt project is standalone and your source names naturally match the asset keys Dagster will generate — which is common for greenfield projects where Dagster and dbt are set up together.
+
+**A custom translator is needed** when:
+
+- Your dbt source names don't match existing Dagster asset keys. This is the case we'll fix in this lesson: Dagster created a `taxi_trips` asset, but the dbt source defaults to `raw_taxis/trips`.
+- You want to group dbt models into Dagster asset groups by dbt folder, tag, or materialization type (shown in the coding practice at the end of this lesson).
+- You want to attach consistent tags or metadata to all dbt assets.
+
+When you do need one, you only override the specific methods that require custom logic and call `super()` for everything else. The [API reference](https://docs.dagster.io/_apidocs/libraries/dagster-dbt#dagster_dbt.DagsterDbtTranslator) lists all overridable methods: `get_asset_key`, `get_group_name`, `get_tags`, `get_metadata`, and more.
+
+---
+
 With where we left off, you may have noticed that the sources for your dbt projects are not just tables that exist in DuckDB, but also *assets* that Dagster created. However, the staging models (`stg_trips`, `stg_zones`) that use those sources aren’t linked to the Dagster assets (`taxi_trips`, `taxi_zones`) that produced them:
 
 ![dbt models unconnected to Dagster assets](/images/dagster-dbt/lesson-5/unconnected-sources-assets.png)
