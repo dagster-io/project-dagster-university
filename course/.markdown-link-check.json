@@ -5,7 +5,9 @@
     { "pattern": "^http://localhost:3000" },
     { "pattern": "^https://courses\\.dagster\\.io" },
     { "pattern": "^https://duckdb\\.org" },
-    { "pattern": "^https://openai\\.com" }
+    { "pattern": "^https://openai\\.com" },
+    { "pattern": "^https://dagster\\.io/slack" },
+    { "pattern": "^https://join\\.slack\\.com" }
   ],
   "timeout": "10s",
   "retryOn429": true,
