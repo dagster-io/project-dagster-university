@@ -31,7 +31,7 @@ title: Dagster ETL
   - [Triggering API jobs](/dagster-etl/lesson-4/5-triggering-api-jobs)
   - [Backfilling from APIs](/dagster-etl/lesson-4/6-backfilling-from-apis)
 
-- Lesson 5: Embedded ETL
+- Lesson 5: ETL with dlt
   - [Overview](/dagster-etl/lesson-5/0-overview)
   - [dlt](/dagster-etl/lesson-5/1-dlt)
   - [Basic dlt](/dagster-etl/lesson-5/2-basic-dlt)

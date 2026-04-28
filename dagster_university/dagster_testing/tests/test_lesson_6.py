@@ -63,6 +63,15 @@ def test_population_data_checks():
     pass
 
 
+# Partitioned Asset Checks
+def test_partition_has_data():
+    pass
+
+
+def test_partition_has_data_empty():
+    pass
+
+
 # Factory Pattern Asset Checks
 def test_city_not_null_check():
     pass
