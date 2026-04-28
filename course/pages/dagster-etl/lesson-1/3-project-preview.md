@@ -12,7 +12,7 @@ By the end of the course, you will:
 
 - Create scheduled and event-driven pipelines to ingest files
 - Build a custom resource to pull data from an external API
-- Use Embedded ETL (with dlt) to build more resilient applications
+- Use the dlt integration to build more resilient ingestion pipelines
 - Replicate data across databases
 - Refactor your code using Dagster Components for better modularity and reuse
 
