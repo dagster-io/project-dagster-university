@@ -41,6 +41,18 @@ With the source and destination defined, we can combine them together in the `Sl
 
 ```python
 # src/dagster_and_etl/defs/resources.py
+sling = SlingResource(
+    connections=[
+        source,
+        destination,
+    ]
+)
+```
+
+Finally, expose `sling` through the `Definitions` object:
+
+```python
+# src/dagster_and_etl/defs/resources.py
 @dg.definitions
 def resources():
     return dg.Definitions(

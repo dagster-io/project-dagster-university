@@ -24,20 +24,20 @@ def import_file(context: dg.AssetExecutionContext, config: FilePath) -> str:
     return str(file_path.resolve())
 ```
 
-Next, we need to define the `dlt.source` function for our CSV pipeline. This will look very similar to the `simple_source` function we used earlier, but with a few changes: it will read from a CSV file and take a file path as an input parameter. This allows us to dynamically pass in the file we want to process, while letting dlt handle the parsing and schema inference:
+Next, we need to define the `dlt.source` function for our CSV pipeline. This will look very similar to the `simple_source` function we used earlier, but with a few changes: it will read from a CSV file and take a file path as an input parameter. This allows us to dynamically pass in the file we want to process, while letting dlt handle schema inference:
 
 ```python {% obfuscated="true" %}
 @dlt.source
 def csv_source(file_path: str = None):
     def load_csv():
-        with open(file_path, mode="r", encoding="utf-8") as file:
-            reader = csv.DictReader(file)
-            data = [row for row in reader]
-
-        yield data
+        import pandas as pd
+        df = pd.read_csv(file_path)
+        yield df.to_dict(orient="records")
 
     return load_csv
 ```
+
+Using `pandas.read_csv()` here is important: unlike Python's built-in `csv.DictReader`, pandas infers column types from the data, giving dlt the typed values it needs to write the correct schema to DuckDB.
 
 This is very helpful. Before our pipelines had to be hardcoded to define the schema for the destination table. Offloading your schema management to a framework can make your pipelines much less error prone. Though it is still good to be aware of what data types it has selected. Just because a zip code looks like an integer does not mean that is how we want the data represented.
 

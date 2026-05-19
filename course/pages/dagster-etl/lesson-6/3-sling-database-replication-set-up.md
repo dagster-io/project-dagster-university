@@ -13,7 +13,7 @@ One of the easiest ways to spin up a temporary database is with [Docker](https:/
 To get started, run the following command:
 
 ```bash
-docker compose -f dagster_and_etl_tests/docker-compose.yaml up -d
+docker compose -f tests/docker-compose.yaml up -d
 ```
 
 **Note:** The first time you run this command, Docker may need to download the required image, so it could take a few minutes.
