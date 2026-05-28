@@ -1,10 +1,10 @@
-import csv
 import datetime
 import os
 from pathlib import Path
 
 import dagster as dg
 import dlt
+import pandas as pd
 import requests
 from dagster_dlt import DagsterDltResource, DagsterDltTranslator, dlt_assets
 from dagster_dlt.translator import DltResourceTranslatorData
@@ -53,11 +53,8 @@ def import_file(context: dg.AssetExecutionContext, config: FilePath) -> str:
 @dlt.source
 def csv_source(file_path: str = None):
     def load_csv():
-        with open(file_path, mode="r", encoding="utf-8") as file:
-            reader = csv.DictReader(file)
-            data = [row for row in reader]
-
-        yield data
+        df = pd.read_csv(file_path)
+        yield df.to_dict(orient="records")
 
     return load_csv
 
