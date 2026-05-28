@@ -65,7 +65,7 @@ def test_defs_load():
 
 
 def test_defs_has_raw_assets(defs):
-    asset_specs = list(defs.get_all_asset_specs())
+    asset_specs = list(defs.resolve_all_asset_specs())
     asset_keys = [spec.key for spec in asset_specs]
     assert dg.AssetKey("raw_customers") in asset_keys
     assert dg.AssetKey("raw_orders") in asset_keys

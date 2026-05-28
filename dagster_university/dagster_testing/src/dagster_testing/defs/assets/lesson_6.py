@@ -148,6 +148,15 @@ def population_file_partition(context: dg.AssetExecutionContext) -> list[dict]:
         return [row for row in reader]
 
 
+@dg.asset_check(asset=population_file_partition, partitions_def=file_partitions)
+def partition_has_data(population_file_partition: list[dict]) -> dg.AssetCheckResult:
+    row_count = len(population_file_partition)
+    return dg.AssetCheckResult(
+        passed=row_count > 0,
+        metadata={"row_count": row_count},
+    )
+
+
 @dg.asset
 def total_population_partition(population_file_partition: list[dict]) -> int:
     return sum([int(x["Population"]) for x in population_file_partition])

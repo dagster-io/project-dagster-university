@@ -161,6 +161,45 @@ def customer_data_checks(customer_data: list[dict]):
 - Loading the asset is expensive
 - Checks share computation logic
 
+# Partitioned asset checks
+
+When assets are partitioned, a single asset check validates the entire asset regardless of which partition triggered the materialization. If you want to validate each partition independently — catching issues in a specific date range or region without affecting others — use a partitioned asset check.
+
+Add `partitions_def` to `@dg.asset_check` with the same `PartitionsDefinition` as the asset:
+
+```python
+file_partitions = dg.StaticPartitionsDefinition(["ca.csv", "mn.csv", "ny.csv"])
+
+@dg.asset_check(asset=population_file_partition, partitions_def=file_partitions)
+def partition_has_data(population_file_partition: list[dict]) -> dg.AssetCheckResult:
+    row_count = len(population_file_partition)
+    return dg.AssetCheckResult(
+        passed=row_count > 0,
+        metadata={"row_count": row_count},
+    )
+```
+
+Dagster runs this check once per partition. The function receives only that partition's data, so the logic stays simple — no partition filtering required.
+
+Testing a partitioned check follows the same pattern as any other check: call the function directly with representative data.
+
+```python
+def test_partition_has_data(file_output):
+    result = lesson_6.partition_has_data(file_output)
+    assert result.passed
+    assert result.metadata["row_count"].value == 3
+
+def test_partition_has_data_empty():
+    result = lesson_6.partition_has_data([])
+    assert not result.passed
+```
+
+```bash
+> pytest tests/test_lesson_6.py::test_partition_has_data tests/test_lesson_6.py::test_partition_has_data_empty
+...
+tests/test_lesson_6.py ..                                                         [100%]
+```
+
 # Factory pattern for asset checks
 
 When you need to apply the same check logic to multiple assets or columns, use a factory function to generate checks programmatically.

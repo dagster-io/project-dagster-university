@@ -185,6 +185,19 @@ def test_population_data_checks_missing_data():
     assert cities_result.metadata["missing_count"].value == 1
 
 
+# Partitioned Asset Checks
+def test_partition_has_data(file_output):
+    result = lesson_6.partition_has_data(file_output)
+    assert result.passed
+    assert result.metadata["row_count"].value == 3
+
+
+def test_partition_has_data_empty():
+    result = lesson_6.partition_has_data([])
+    assert not result.passed
+    assert result.metadata["row_count"].value == 0
+
+
 # Factory Pattern Asset Checks
 def test_city_not_null_check():
     """Test factory-generated City not-null check."""
