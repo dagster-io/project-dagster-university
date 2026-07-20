@@ -34,3 +34,39 @@ def staging_orders(): ...
 ```
 
 Use tags to filter by team, environment, data domain, or any dimension that makes sense for your project. Groups and tags compose: you can narrow the graph to a group and then filter further by tag.
+
+## Grouping assets hierarchically
+
+As the number of groups grows, a flat list of names becomes hard to scan. Group names can use `/` as a separator to express hierarchy, so related groups nest under a common prefix:
+
+```python
+@dg.asset(group_name="ingestion/postgres")
+def raw_orders(): ...
+
+@dg.asset(group_name="ingestion/apis")
+def raw_nasa_neo(): ...
+
+@dg.asset(group_name="transforms")
+def orders_by_customer(): ...
+```
+
+Each segment may contain only letters, numbers, and underscores, and a separator cannot lead, trail, or repeat. `ingestion/postgres` is valid; `/ingestion` and `ingestion//postgres` are not.
+
+## Filtering with the selection syntax
+
+Beyond clicking a single group, the asset graph and catalog accept a selection syntax in the filter input. You can match a whole hierarchy of groups with a wildcard, where `*` matches any sequence of characters including `/`:
+
+```
+group:"ingestion/*"
+```
+
+This selects every asset under `ingestion`, including `ingestion/postgres` and `ingestion/apis`.
+
+You can also select assets by structural type with the `is:` filter:
+
+```
+is:external
+is:materializable
+```
+
+`is:external` matches assets Dagster observes but does not materialize, such as source tables, while `is:materializable` matches assets Dagster executes. These filters compose with `group:`, `tag:`, and `kind:` selections, letting you narrow a large graph down to exactly the assets you care about.
