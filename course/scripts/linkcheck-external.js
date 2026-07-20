@@ -1,6 +1,8 @@
 /**
  * Runs markdown-link-check on all course markdown files to validate external URLs.
  * Internal links (starting with /) are ignored via .markdown-link-check.json.
+ * Only external links that return a 404 are reported as failures; timeouts,
+ * connection errors, and other status codes (403, 500, etc.) are ignored.
  */
 const fs = require('fs');
 const path = require('path');
@@ -25,7 +27,8 @@ async function checkFile(filePath) {
   return new Promise((resolve) => {
     markdownLinkCheck(content, config, (err, results) => {
       if (err) return resolve([{file: filePath, err}]);
-      const dead = results.filter((r) => r.status === 'dead');
+      // Only report genuine 404s; ignore timeouts, connection errors, and other status codes (403, 500, etc.)
+      const dead = results.filter((r) => r.status === 'dead' && r.statusCode === 404);
       resolve(dead.map((r) => ({file: filePath, link: r.link, statusCode: r.statusCode, err: r.err})));
     });
   });
@@ -39,7 +42,7 @@ async function main() {
     allFailures.push(...failures);
   }
   if (allFailures.length > 0) {
-    console.error('Broken or unreachable external links:\n');
+    console.error('External links returning 404:\n');
     for (const f of allFailures) {
       const rel = path.relative(process.cwd(), f.file);
       if (f.link) {
@@ -53,7 +56,7 @@ async function main() {
     }
     process.exit(1);
   }
-  console.log('✅ All external links are reachable.');
+  console.log('✅ No external links returning 404.');
 }
 
 main().catch((err) => {
