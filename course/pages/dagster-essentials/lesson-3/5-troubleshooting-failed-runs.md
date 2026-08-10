@@ -77,7 +77,7 @@ To home in on what went wrong, let’s take a closer look at the logs. We’ll u
 
   To fix this, uncomment the `from dagster_essentials.defs.assets import constants` line in the `trips.py` file and save it.
 
-  In the Dagster UI, click **OK** to close the popover window from the run logs.
+  In the Dagster UI, click **Done** to close the popover window from the run logs.
 
 - ![Full stacktrace error displayed in the Dagster UI after clicking  View full message in the Run logs](/images/dagster-essentials/lesson-3/stacktrace-error.png) {% rowspan=2 %}
 
