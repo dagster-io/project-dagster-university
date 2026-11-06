@@ -10,7 +10,7 @@ dependencies = [
     "dagster-webserver",
     "dagster-cloud",
     "dagster-duckdb",
-    "geopandas>=1.0.1,<1.1.0",
+    "geopandas>=1.1.2,<1.2.0",
     "pandas[parquet]",
     "shapely>=2.0.0",
     "matplotlib",
