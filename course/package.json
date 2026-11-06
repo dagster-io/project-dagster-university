@@ -1,10 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx pages components",
     "ts": "tsc -p .",
     "prettier": "prettier . --write",
     "md-format": "remark --rc-path ./.remarkrc.js \"./pages/**/*.md\" --output --silent",
@@ -17,7 +17,7 @@
     "@markdoc/markdoc": "latest",
     "@markdoc/next.js": "latest",
     "fast-glob": "^3.2.5",
-    "next": "14.2.35",
+    "next": "16.4.5",
     "prismjs": "latest",
     "react": "latest",
     "react-dom": "latest",
