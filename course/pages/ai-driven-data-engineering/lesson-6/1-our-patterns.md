@@ -10,7 +10,7 @@ The dignified-python skill encodes a set of Python best practices and philosophi
 
 ## Where to see the patterns
 
-The full set of patterns lives in the [Dagster Skills repository](https://github.com/dagster-io/skills); the dignified-python skill and its rules are in the [skills/](https://github.com/dagster-io/skills/tree/master/skills) directory.
+The skills we publish live in the [Dagster Skills repository](https://github.com/dagster-io/skills), under the [plugins/](https://github.com/dagster-io/skills/tree/master/plugins) directory. The dignified-python skill is no longer published there; it is maintained internally at Dagster, so the blog post below is the best public description of its rules.
 
 For a shorter, narrative overview aimed at improving LLM-generated code, see the blog post:
 
