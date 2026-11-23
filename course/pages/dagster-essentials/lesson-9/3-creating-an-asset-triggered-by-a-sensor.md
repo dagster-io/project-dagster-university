@@ -51,7 +51,7 @@ Now that you’ve defined how the asset can be materialized, let’s create the 
      For example:
 
      ```python
-     query = f"""
+     query = """
        select
          date_part('hour', pickup_datetime) as hour_of_day,
          date_part('dayofweek', pickup_datetime) as day_of_week_num,
@@ -67,23 +67,25 @@ Now that you’ve defined how the asset can be materialized, let’s create the 
          count(*) as num_trips
        from trips
        left join zones on trips.pickup_zone_id = zones.zone_id
-       where pickup_datetime >= '{config.start_date}'
-       and pickup_datetime < '{config.end_date}'
+       where pickup_datetime >= ?
+       and pickup_datetime < ?
        and pickup_zone_id in (
          select zone_id
          from zones
-         where borough = '{config.borough}'
+         where borough = ?
        )
        group by 1, 2
        order by 1, 2 asc
      """
      ```
 
-5. Next, run the query in DuckDB and store the results as a DataFrame:
+5. Next, run the query in DuckDB and store the results as a DataFrame. The config values fill the `?` placeholders as query parameters rather than being formatted into the SQL string, so a request can’t change the query:
 
    ```python
    with database.get_connection() as conn:
-       results = conn.execute(query).fetch_df()
+       results = conn.execute(
+           query, [config.start_date, config.end_date, config.borough]
+       ).fetch_df()
    ```
 
 6. Now that the query data is stored as a DataFrame in the `results` variable, use the Matplotlib library to visualize the frequency of trips at each time of the day for the borough, stratified by the day of the week:
@@ -141,7 +143,7 @@ def adhoc_request(config: AdhocRequestConfig, database: DuckDBResource) -> None:
     file_path = constants.REQUEST_DESTINATION_TEMPLATE_FILE_PATH.format(config.filename.split('.')[0])
 
     # count the number of trips that picked up in a given borough, aggregated by time of day and hour of day
-    query = f"""
+    query = """
         select
           date_part('hour', pickup_datetime) as hour_of_day,
           date_part('dayofweek', pickup_datetime) as day_of_week_num,
@@ -157,19 +159,22 @@ def adhoc_request(config: AdhocRequestConfig, database: DuckDBResource) -> None:
           count(*) as num_trips
         from trips
         left join zones on trips.pickup_zone_id = zones.zone_id
-        where pickup_datetime >= '{config.start_date}'
-        and pickup_datetime < '{config.end_date}'
+        where pickup_datetime >= ?
+        and pickup_datetime < ?
         and pickup_zone_id in (
           select zone_id
           from zones
-          where borough = '{config.borough}'
+          where borough = ?
         )
         group by 1, 2
         order by 1, 2 asc
     """
 
+    # pass the config values as query parameters, so they can't change the SQL itself
     with database.get_connection() as conn:
-        results = conn.execute(query).fetch_df()
+        results = conn.execute(
+            query, [config.start_date, config.end_date, config.borough]
+        ).fetch_df()
 
     fig, ax = plt.subplots(figsize=(10, 6))
     

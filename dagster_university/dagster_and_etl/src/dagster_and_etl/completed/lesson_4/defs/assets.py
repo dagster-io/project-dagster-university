@@ -87,7 +87,7 @@ def duckdb_table(
             ) 
         """
         conn.execute(table_query)
-        conn.execute(f"copy {table_name} from '{asteroids_file}'")
+        conn.execute(f"copy {table_name} from ?", [str(asteroids_file)])
 
 
 nasa_partitions_def = dg.DailyPartitionsDefinition(

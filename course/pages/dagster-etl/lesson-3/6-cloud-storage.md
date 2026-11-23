@@ -81,7 +81,9 @@ def duckdb_table_s3(
             ) 
         """
         conn.execute(table_query)
-        conn.execute(f"copy {table_name} from '{import_file_s3}' (format csv, header);")
+        conn.execute(
+            f"copy {table_name} from ? (format csv, header);", [import_file_s3]
+        )
 ```
 
 Not much needs to change when moving from local files to cloud storage. The main takeaway is that loading static files from S3 closely mirrors loading them from the local filesystem. All the patterns and tools we've already applied (partitions, schedules, sensors) still apply. Whether the file is local or in S3 bucket, the logic for defining and orchestrating data assets remains largely the same.
