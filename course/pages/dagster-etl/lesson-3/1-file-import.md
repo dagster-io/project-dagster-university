@@ -107,14 +107,14 @@ def duckdb_table(
             ) 
         """
         conn.execute(table_query)
-        conn.execute(f"copy {table_name} from '{import_file}';")
+        conn.execute(f"copy {table_name} from ?;", [import_file])
 ```
 
 The code above does the following:
 
 1. Connects to DuckDB using the Dagster resource `DuckDBResource`.
 2. Uses the DuckDB connection to create a table `raw_data` if that tables does not already exist. We define the schema of the table ourselves, knowing the structure of the data.
-3. Runs a `COPY` for file path from the `import_file` asset into the `raw_data` table. `COPY` is an append command so if we run the command twice, the data will be loaded again.
+3. Runs a `COPY` for file path from the `import_file` asset into the `raw_data` table. `COPY` is an append command so if we run the command twice, the data will be loaded again. The file path fills the `?` placeholder as a query parameter rather than being formatted into the SQL string, so a path from the run configuration can’t change the query.
 
 ## Executing the assets
 

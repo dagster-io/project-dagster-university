@@ -24,15 +24,17 @@ def trips_by_week(context: dg.AssetExecutionContext, database: DuckDBResource):
     period_to_fetch = context.partition_key
 
     # get all trips for the week
-    query = f"""
+    query = """
         select vendor_id, total_amount, trip_distance, passenger_count
         from trips
-        where pickup_datetime >= '{period_to_fetch}'
-            and pickup_datetime < '{period_to_fetch}'::date + interval '1 week'
+        where pickup_datetime >= ?
+            and pickup_datetime < ?::date + interval '1 week'
     """
 
     with database.get_connection() as conn:
-        data_for_week = conn.execute(query).fetch_df()
+        data_for_week = conn.execute(
+            query, [period_to_fetch, period_to_fetch]
+        ).fetch_df()
 
     aggregate = (
         data_for_week.agg(

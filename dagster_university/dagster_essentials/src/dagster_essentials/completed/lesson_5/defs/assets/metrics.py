@@ -29,15 +29,17 @@ def trips_by_week() -> None:
 
     while current_date < end_date:
         current_date_str = current_date.strftime(constants.DATE_FORMAT)
-        query = f"""
+        query = """
             select
                 vendor_id, total_amount, trip_distance, passenger_count
             from trips
-            where pickup_datetime >= '{current_date_str}'::date
-              and pickup_datetime < '{current_date_str}'::date + interval '1 week'
+            where pickup_datetime >= ?::date
+              and pickup_datetime < ?::date + interval '1 week'
         """
 
-        data_for_week = conn.execute(query).fetch_df()
+        data_for_week = conn.execute(
+            query, [current_date_str, current_date_str]
+        ).fetch_df()
 
         aggregate = (
             data_for_week.agg(

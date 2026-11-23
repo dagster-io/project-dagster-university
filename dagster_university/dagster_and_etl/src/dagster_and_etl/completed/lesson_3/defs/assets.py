@@ -68,7 +68,7 @@ def duckdb_table(
             ) 
         """
         conn.execute(table_query)
-        conn.execute(f"copy {table_name} from '{import_file}';")
+        conn.execute(f"copy {table_name} from ?;", [import_file])
 
 
 # Example 2 - Scheduled Partition
@@ -117,9 +117,9 @@ def duckdb_partition_table(
         """
         conn.execute(table_query)
         conn.execute(
-            f"delete from {table_name} where date = '{context.partition_key}';"
+            f"delete from {table_name} where date = ?;", [context.partition_key]
         )
-        conn.execute(f"copy {table_name} from '{import_partition_file}';")
+        conn.execute(f"copy {table_name} from ?;", [import_partition_file])
 
 
 # Example 3 - Event Driven Partition
@@ -165,9 +165,9 @@ def duckdb_dynamic_partition_table(
         """
         conn.execute(table_query)
         conn.execute(
-            f"delete from {table_name} where date = '{context.partition_key}';"
+            f"delete from {table_name} where date = ?;", [context.partition_key]
         )
-        conn.execute(f"copy {table_name} from '{import_dynamic_partition_file}';")
+        conn.execute(f"copy {table_name} from ?;", [import_dynamic_partition_file])
 
 
 # Example 4 - Cloud Storage
@@ -212,4 +212,6 @@ def duckdb_table_s3(
             ) 
         """
         conn.execute(table_query)
-        conn.execute(f"copy {table_name} from '{import_file_s3}' (format csv, header);")
+        conn.execute(
+            f"copy {table_name} from ? (format csv, header);", [import_file_s3]
+        )

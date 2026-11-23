@@ -103,12 +103,12 @@ def test_import_dynamic_partition_file_assets_query(duckdb_mock_resource):
         instance=instance,
     )
 
-    executed_query = duckdb_mock_resource[
+    executed_query, parameters = duckdb_mock_resource[
         "database"
-    ].get_connection.return_value.__enter__.return_value.execute.call_args[0][0]
+    ].get_connection.return_value.__enter__.return_value.execute.call_args[0]
 
-    assert executed_query.startswith("copy raw_dynamic_partition_data")
-    assert executed_query.endswith("2018-01-22.csv';")
+    assert executed_query == "copy raw_dynamic_partition_data from ?;"
+    assert parameters[0].endswith("2018-01-22.csv")
 
 
 @patch(

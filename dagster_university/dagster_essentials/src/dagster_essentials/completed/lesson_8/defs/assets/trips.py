@@ -94,22 +94,32 @@ def taxi_trips(context: dg.AssetExecutionContext, database: DuckDBResource):
     partition_date_str = context.partition_key
     month_to_fetch = partition_date_str[:-3]
 
-    query = f"""
+    create_query = """
         create table if not exists trips (
             vendor_id integer, pickup_zone_id integer, dropoff_zone_id integer,
             rate_code_id double, payment_type integer, dropoff_datetime timestamp,
             pickup_datetime timestamp, trip_distance double, passenger_count double,
             total_amount double, partition_date varchar
         );
+    """
 
-        delete from trips where partition_date = '{month_to_fetch}';
-    
+    delete_query = "delete from trips where partition_date = ?;"
+
+    insert_query = """
         insert into trips
         select
             VendorID, PULocationID, DOLocationID, RatecodeID, payment_type, tpep_dropoff_datetime, 
-            tpep_pickup_datetime, trip_distance, passenger_count, total_amount, '{month_to_fetch}' as partition_date
-        from '{constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch)}';
+            tpep_pickup_datetime, trip_distance, passenger_count, total_amount, ? as partition_date
+        from read_parquet(?);
     """
 
     with database.get_connection() as conn:
-        conn.execute(query)
+        conn.execute(create_query)
+        conn.execute(delete_query, [month_to_fetch])
+        conn.execute(
+            insert_query,
+            [
+                month_to_fetch,
+                constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch),
+            ],
+        )

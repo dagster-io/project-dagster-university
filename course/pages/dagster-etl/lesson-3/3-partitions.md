@@ -81,9 +81,9 @@ def duckdb_partition_table(
         """
         conn.execute(table_query)
         conn.execute(
-            f"delete from {table_name} where date = '{context.partition_key}';"
+            f"delete from {table_name} where date = ?;", [context.partition_key]
         )
-        conn.execute(f"copy {table_name} from '{import_partition_file}';")
+        conn.execute(f"copy {table_name} from ?;", [import_partition_file])
 ```
 
 This is very similar to our original logic except for are two key differences:
