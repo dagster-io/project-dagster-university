@@ -14,6 +14,10 @@ on:
         required: false
         type: string
         default: uv run pytest -v
+      python_versions:
+        required: false
+        type: string
+        default: '["3.11", "3.12", "3.13"]'
 
 jobs:
   check:
@@ -25,11 +29,7 @@ jobs:
         os:
           - windows-latest
           - ubuntu-latest
-        python-version:
-          - "3.10"
-          - "3.11"
-          - "3.12"
-          - "3.13"
+        python-version: ${{ fromJSON(inputs.python_versions) }}
 
     steps:
 

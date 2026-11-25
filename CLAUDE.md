@@ -76,4 +76,4 @@ make test_all     # from repo root — runs pytest for all courses
 
 ## CI
 
-Each course has GitHub Actions workflows that run `uv sync` → `ruff check` → `pytest` on Ubuntu and Windows across Python 3.10–3.13.
+Each course has GitHub Actions workflows that run `uv sync` → `ruff check` → `pytest` on Ubuntu and Windows across Python 3.11–3.13 (the testing course also runs on 3.10).
