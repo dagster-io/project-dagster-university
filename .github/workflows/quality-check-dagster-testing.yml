@@ -15,5 +15,6 @@ jobs:
     uses: ./.github/workflows/template-quality-check.yml
     with:
       working_directory: ./dagster_university/dagster_testing
+      python_versions: '["3.10", "3.11", "3.12", "3.13"]'
       ubuntu_pytest_cmd: uv run pytest tests/completed -v -m "not integration"
       windows_pytest_cmd: uv run pytest tests/completed -v -m "not integration"
