@@ -5,7 +5,7 @@ lesson: '2'
 
 # Set up local
 
-This will set up Dagster for you local machine. If you would prefer to do this course in Github Codespaces, please follow [that guide](/installation/set-up-codespace).
+This will set up Dagster for your local machine. If you would prefer to do this course in Github Codespaces, please follow [that guide](/installation/set-up-codespace).
 
 - **To install git.** Refer to the [Git documentation](https://github.com/git-guides/install-git) if you don’t have this installed.
 - **To have Python installed.**  Dagster supports Python 3.11 - 3.13 (3.12 recommended).
