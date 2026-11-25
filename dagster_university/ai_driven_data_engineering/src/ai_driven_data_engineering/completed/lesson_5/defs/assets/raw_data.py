@@ -11,12 +11,15 @@ def _make_raw_asset(name: str, url: str) -> dg.AssetsDefinition:
     def _asset(
         context: dg.AssetExecutionContext, duckdb: DuckDBResource
     ) -> dg.MaterializeResult:
+        # DuckDB cannot bind a table name, so quote it as an identifier. The
+        # URL is a bound parameter so it is never parsed as SQL.
+        table = '"' + name.replace('"', '""') + '"'
         with duckdb.get_connection() as conn:
-            conn.execute(f"""
-                CREATE OR REPLACE TABLE {name} AS
-                SELECT * FROM read_csv_auto('{url}')
-            """)
-            row_count = conn.execute(f"SELECT COUNT(*) FROM {name}").fetchone()[0]
+            conn.execute(
+                f"CREATE OR REPLACE TABLE {table} AS SELECT * FROM read_csv_auto(?)",
+                [url],
+            )
+            row_count = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
 
         context.log.info(f"Loaded {row_count} rows into {name}")
         return dg.MaterializeResult(
