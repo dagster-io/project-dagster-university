@@ -117,6 +117,23 @@ def test_raw_customers_row_count(duckdb_resource):
     assert row_count > 0
 
 
+def test_raw_asset_handles_reserved_word_name_and_quote_in_url(
+    duckdb_resource, tmp_path
+):
+    csv_path = tmp_path / "it's.csv"
+    csv_path.write_text("id,name\n1,a\n2,b\n")
+    table_name = "order"
+
+    result = dg.materialize(
+        assets=[raw_data._make_raw_asset(table_name, str(csv_path))],
+        resources={"duckdb": duckdb_resource},
+    )
+
+    assert result.success
+    materializations = result.asset_materializations_for_node(table_name)
+    assert materializations[0].metadata["row_count"].value == 2
+
+
 # --- schedule ---
 
 
